@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="form-group mt-3">
-            <input :id="id" :value="returnYear" class="form-control mt-2" :style="(fontSize) ? {'font-size': fontSize} : '' "
+            <input :id="id" :value="returnYear" class="form-control mt-2"
                    type="text" placeholder="Select Date.."
                    @change="updateCalendarInputValue()">
         </div>

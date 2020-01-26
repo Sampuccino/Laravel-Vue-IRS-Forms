@@ -2561,6 +2561,47 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Form_8974",
@@ -2570,7 +2611,9 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       ein: '',
-      maxRows: [1, 2, 3, 4, 5]
+      maxRows: [1, 2, 3, 4, 5],
+      partTwoIds: ['p2_7,p2_8,p2_9,p2_10,p2_11,p2_12'],
+      partTwoFieldInfo: ['Enter the amount from Part 1, line 6(g) .', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' + '944 (944(SP)), line 4a, Column 2 ', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5b, Column 2; or Form 944 (944(SP)), line 4b,\n' + 'Column 2', 'Add lines 8 and 9', 'Multiply line 10 by 50% (0.50).', 'Credit. Enter the smaller of line 7 or line 11. Also enter this amount on Form 941 (941-PR\n' + 'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8']
     };
   },
   computed: {
@@ -60907,7 +60950,6 @@ var render = function() {
     _c("div", { staticClass: "form-group mt-3" }, [
       _c("input", {
         staticClass: "form-control mt-2",
-        style: _vm.fontSize ? { "font-size": _vm.fontSize } : "",
         attrs: { id: _vm.id, type: "text", placeholder: "Select Date.." },
         domProps: { value: _vm.returnYear },
         on: {
@@ -61074,6 +61116,12 @@ var render = function() {
               [
                 _vm._l(_vm.maxRows, function(index, row) {
                   return _c("tr", [
+                    _c("td", [
+                      _c("div", { staticClass: "mt-4" }, [
+                        _c("b", [_vm._v(_vm._s(index))])
+                      ])
+                    ]),
+                    _vm._v(" "),
                     _c(
                       "td",
                       { attrs: { scope: "row", colspan: "1" } },
@@ -61124,7 +61172,26 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" })
+      _c(
+        "div",
+        { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
+        [
+          _vm._m(12),
+          _vm._v(" "),
+          _vm._l(_vm.partTwoFieldInfo, function(info, index) {
+            return _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-8 bg-light p-2" }, [
+                _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index))]),
+                _vm._v(" " + _vm._s(info) + "\n\n                    "),
+                index === 4 ? _c("div", [_vm._m(13, true)]) : _vm._e()
+              ]),
+              _vm._v(" "),
+              _vm._m(14, true)
+            ])
+          })
+        ],
+        2
+      )
     ])
   ])
 }
@@ -61288,6 +61355,8 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
+        _c("th"),
+        _vm._v(" "),
         _c("th", [
           _vm._v(
             "(a)\n                            Ending date\n                            of income\n                            tax period"
@@ -61306,15 +61375,15 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("th", [
+        _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
             "(d)\n                            EIN\n                            used on\n                            Form 6765"
           )
         ]),
         _vm._v(" "),
-        _c("th", [
+        _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(e)\n                            Amount from\n                            Form 6765, line 44\n                        "
+            "(e)\n                            Amount from\n                            Form 6765, line 44,\n                            or if applicable,\n                            the amount that\n                            was allocated\n                            to your EIN\n                        "
           )
         ]),
         _vm._v(" "),
@@ -61324,7 +61393,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("th", [
+        _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
             "(g)\n                            Remaining credit\n                            (subtract column (f)\n                            from column (e)) "
           )
@@ -61350,7 +61419,7 @@ var staticRenderFns = [
     return _c("td", [
       _c("input", {
         staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "12-456789" }
+        attrs: { type: "text", name: "", placeholder: "" }
       })
     ])
   },
@@ -61361,7 +61430,7 @@ var staticRenderFns = [
     return _c("td", [
       _c("input", {
         staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "12-456789" }
+        attrs: { type: "text", name: "", placeholder: "" }
       })
     ])
   },
@@ -61372,7 +61441,7 @@ var staticRenderFns = [
     return _c("td", { attrs: { colspan: "1" } }, [
       _c("input", {
         staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "12-456789" }
+        attrs: { type: "text", name: "", placeholder: "" }
       })
     ])
   },
@@ -61380,8 +61449,8 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "disabled" }, [
-      _c("b", { staticClass: "mt-3 my-auto" }, [_vm._v("Auto Calc")])
+    return _c("td", [
+      _c("div", { staticClass: "mt-4" }, [_c("b", [_vm._v("Auto Calc")])])
     ])
   },
   function() {
@@ -61390,15 +61459,73 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("tr", [
       _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
+        _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
         _vm._v(
-          "\n                        Add lines 1(g) through 5(g) and enter the total here\n                    "
+          "Add lines 1(g) through 5(g) and enter the total here\n                    "
         )
       ]),
       _vm._v(" "),
       _c("td", { staticClass: "bg-success ", attrs: { colspan: "2" } }, [
-        _vm._v(
-          "\n                        Lorem ipsum dolor.\n                    "
-        )
+        _vm._v("\n                        Total\n                    ")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bg-dark p-2 text-white" }, [
+      _vm._v("Part 2 "),
+      _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
+        _vm._v("Determine the credit that you can use this period.")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-check mt-3" }, [
+      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "radio", name: "checkThisBox" }
+        }),
+        _vm._v(" "),
+        _c("b", [
+          _vm._v("Check this box if you're a third-party payer of sick pay")
+        ])
+      ]),
+      _vm._v(" "),
+      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "radio", name: "checkThisBox" }
+        }),
+        _vm._v(" "),
+        _c("b", [
+          _vm._v(
+            "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                instructions before completing line 11"
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-4 text-center p-2 my-auto" }, [
+      _c("div", { staticClass: "form-group" }, [
+        _c("input", {
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            name: "",
+            "aria-describedby": "helpId",
+            placeholder: ""
+          }
+        })
       ])
     ])
   }
