@@ -11,6 +11,7 @@
                             <div class="row">
                                 <div class="col-3">
                                     <img :src="t1" class="img-fluid" alt="">
+                                    <a :href="t1">View</a>
                                 </div>
                                 <div class="col-9 my-auto">
                                     <h4><span class="text-primary">Form 8974:</span> Qualified Small Business Payroll Tax Credit for Increasing Research Activities</h4>

@@ -2312,10 +2312,10 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/flatpickr.js");
-/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(flatpickr__WEBPACK_IMPORTED_MODULE_0__);
-//
-//
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/flatpickr.js");
+/* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flatpickr__WEBPACK_IMPORTED_MODULE_1__);
 //
 //
 //
@@ -2327,21 +2327,28 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
 /* harmony default export */ __webpack_exports__["default"] = ({
+  props: {
+    timeFormat: String,
+    id: String,
+    fontSize: String
+  },
   data: function data() {
     return {
       calendarYear: 'today'
     };
   },
   mounted: function mounted() {
-    flatpickr__WEBPACK_IMPORTED_MODULE_0___default()('#event_calendar', {
+    console.warn(this.timeFormat);
+    console.warn(this.id);
+    flatpickr__WEBPACK_IMPORTED_MODULE_1___default()("#".concat(this.id), {
       enableTime: false,
-      inline: true
+      dateFormat: this.timeFormat
     });
   },
   methods: {
-    updateCalendarInputValue: function updateCalendarInputValue() {
-      this.calendarYear = event.target.value.split('-')[0];
+    updateCalendarInputValue: function updateCalendarInputValue() {// this.calendarYear = event.target.value.split('-')[0];
     }
   },
   computed: {
@@ -2475,6 +2482,85 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Form_8974",
@@ -2483,8 +2569,15 @@ __webpack_require__.r(__webpack_exports__);
   },
   data: function data() {
     return {
-      ein: null
+      ein: '',
+      maxRows: [1, 2, 3, 4, 5]
     };
+  },
+  computed: {
+    limitEIN: function limitEIN() {
+      if (this.ein.length === 2) this.ein += ' - '; // console.log(this.ein.slice(0,2), ' - ', this.ein.slice(3));
+      // return (this.ein.slice(0,2) + ' - ' + this.ein.slice(3));
+    }
   }
 });
 
@@ -2604,6 +2697,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _IRS_Forms_Form_8974__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IRS Forms/Form_8974 */ "./resources/js/components/IRS Forms/Form_8974.vue");
+//
 //
 //
 //
@@ -7268,6 +7362,25 @@ __webpack_require__.r(__webpack_exports__);
 
 })));
 //# sourceMappingURL=bootstrap.js.map
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.col-lg-12[data-v-21ebfa70] {\n    /*max-width: 130%;*/\n    /*flex: 0 0 130%;*/\n}\n", ""]);
+
+// exports
 
 
 /***/ }),
@@ -59902,6 +60015,36 @@ try {
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SelectFormTemplate.vue?vue&type=style&index=0&id=0cc775b6&scoped=true&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SelectFormTemplate.vue?vue&type=style&index=0&id=0cc775b6&scoped=true&lang=css& ***!
@@ -60762,51 +60905,21 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "form-group mt-3" }, [
-      _vm._m(0),
-      _vm._v(" "),
       _c("input", {
         staticClass: "form-control mt-2",
-        attrs: {
-          id: "event_calendar",
-          type: "text",
-          placeholder: "Select Date..",
-          readonly: "readonly"
-        },
+        style: _vm.fontSize ? { "font-size": _vm.fontSize } : "",
+        attrs: { id: _vm.id, type: "text", placeholder: "Select Date.." },
         domProps: { value: _vm.returnYear },
         on: {
           change: function($event) {
             return _vm.updateCalendarInputValue()
           }
         }
-      }),
-      _vm._v(" "),
-      _c(
-        "small",
-        { staticClass: "form-text text-muted", attrs: { id: "helpId" } },
-        [_vm._v("Help text")]
-      )
+      })
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "label",
-      { staticClass: "bg-dark p-2 text-white", attrs: { for: "" } },
-      [
-        _vm._v("Calendar year "),
-        _c("small", [
-          _vm._v(
-            "You must select a quarter if you file Form 941, 941-PR, or 941-SS."
-          )
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -60877,9 +60990,11 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-3 p-3" }, [
+      _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-7" }, [
+            _c("p", [_vm._v(_vm._s(_vm.limitEIN))]),
+            _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c(
                 "label",
@@ -60898,6 +61013,8 @@ var render = function() {
                 ],
                 staticClass: "form-control mt-2",
                 attrs: {
+                  maxlength: "12",
+                  minlength: "12",
                   type: "text",
                   name: "",
                   placeholder: "",
@@ -60926,9 +61043,88 @@ var render = function() {
             _vm._m(1)
           ]),
           _vm._v(" "),
-          _vm._m(2)
+          _c(
+            "div",
+            { staticClass: "col-5" },
+            [
+              _vm._m(2),
+              _vm._v(" "),
+              _vm._m(3),
+              _vm._v(" "),
+              _c("flatpickr", {
+                attrs: { timeFormat: "Y", id: "calendar_year_select" }
+              })
+            ],
+            1
+          )
         ])
-      ])
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-12 col-12 bg-white mt-4 p-3" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "table table-striped table-responsive text-center" },
+          [
+            _vm._m(5),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              [
+                _vm._l(_vm.maxRows, function(index, row) {
+                  return _c("tr", [
+                    _c(
+                      "td",
+                      { attrs: { scope: "row", colspan: "1" } },
+                      [
+                        _c("flatpickr", {
+                          attrs: {
+                            timeFormat: "Y-m-d",
+                            id: "a" + index,
+                            fontSize: ".5rem"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._m(6, true),
+                    _vm._v(" "),
+                    _c(
+                      "td",
+                      { attrs: { scope: "row" } },
+                      [
+                        _c("flatpickr", {
+                          attrs: {
+                            timeFormat: "Y-m-d",
+                            id: "c" + index,
+                            fontSize: ".5rem"
+                          }
+                        })
+                      ],
+                      1
+                    ),
+                    _vm._v(" "),
+                    _vm._m(7, true),
+                    _vm._v(" "),
+                    _vm._m(8, true),
+                    _vm._v(" "),
+                    _vm._m(9, true),
+                    _vm._v(" "),
+                    _vm._m(10, true)
+                  ])
+                }),
+                _vm._v(" "),
+                _vm._m(11)
+              ],
+              2
+            )
+          ]
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" })
     ])
   ])
 }
@@ -60978,7 +61174,7 @@ var staticRenderFns = [
           attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
         }),
         _vm._v(
-          "\n                                Form 941, 941-PR, or 941-SS\n                            "
+          "\n                            Form 941, 941-PR, or 941-SS\n                        "
         )
       ]),
       _vm._v(" "),
@@ -60988,7 +61184,7 @@ var staticRenderFns = [
           attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
         }),
         _vm._v(
-          "\n                                Form 943 or 943-PR\n                            "
+          "\n                            Form 943 or 943-PR\n                        "
         )
       ]),
       _vm._v(" "),
@@ -60998,7 +61194,7 @@ var staticRenderFns = [
           attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
         }),
         _vm._v(
-          "\n                                Form 944 or 944(SP)\n                            "
+          "\n                            Form 944 or 944(SP)\n                        "
         )
       ])
     ])
@@ -61007,101 +61203,201 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-5" }, [
-      _c("div", { staticClass: "form-check" }, [
-        _c(
-          "h6",
-          { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
-          [
-            _vm._v("Report for this quarter "),
-            _c("small", [_vm._v("check only one box")])
-          ]
-        ),
-        _vm._v(" "),
-        _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: {
-              type: "radio",
-              name: "quarterReport",
-              value: "checkedValue"
-            }
-          }),
-          _vm._v(
-            "\n                                1: January, February, March\n                            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: {
-              type: "radio",
-              name: "quarterReport",
-              value: "checkedValue"
-            }
-          }),
-          _vm._v(
-            "\n                                2: April, May, June\n                            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: {
-              type: "radio",
-              name: "quarterReport",
-              value: "checkedValue"
-            }
-          }),
-          _vm._v(
-            "\n                                3: July, August, September\n                            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-          _c("input", {
-            staticClass: "form-check-input",
-            attrs: {
-              type: "radio",
-              name: "quarterReport",
-              value: "checkedValue"
-            }
-          }),
-          _vm._v(
-            "\n                                4: October, November, December\n                            "
-          )
-        ])
+    return _c("div", { staticClass: "form-check" }, [
+      _c(
+        "h6",
+        { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
+        [
+          _vm._v("Report for this quarter "),
+          _c("small", [_vm._v("check only one box")])
+        ]
+      ),
+      _vm._v(" "),
+      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
+        }),
+        _vm._v(
+          "\n                            1: January, February, March\n                        "
+        )
       ]),
       _vm._v(" "),
-      _c("div", { staticClass: "form-group mt-3" }, [
-        _c(
-          "label",
-          { staticClass: "bg-dark p-2 text-white", attrs: { for: "" } },
-          [
-            _vm._v("Calendar year "),
-            _c("small", [
-              _vm._v(
-                "You must select a quarter if you file Form 941, 941-PR, or 941-SS."
-              )
-            ])
-          ]
-        ),
-        _vm._v(" "),
+      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
         _c("input", {
-          staticClass: "form-control mt-2",
-          attrs: {
-            id: "event_calendar",
-            type: "text",
-            placeholder: "Enter Year"
-          }
+          staticClass: "form-check-input",
+          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
         }),
+        _vm._v(
+          "\n                            2: April, May, June\n                        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
+        }),
+        _vm._v(
+          "\n                            3: July, August, September\n                        "
+        )
+      ]),
+      _vm._v(" "),
+      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+        _c("input", {
+          staticClass: "form-check-input",
+          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
+        }),
+        _vm._v(
+          "\n                            4: October, November, December\n                        "
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "label",
+      { staticClass: "bg-dark p-2 text-white mt-4", attrs: { for: "" } },
+      [
+        _vm._v("Calendar year "),
+        _c("small", [
+          _vm._v(
+            "You must select a quarter if you file Form 941, 941-PR, or 941-SS."
+          )
+        ])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bg-dark p-2 text-white" }, [
+      _vm._v("Part 1 "),
+      _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
+        _vm._v("Tell us about your income tax return")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [
+          _vm._v(
+            "(a)\n                            Ending date\n                            of income\n                            tax period"
+          )
+        ]),
         _vm._v(" "),
-        _c(
-          "small",
-          { staticClass: "form-text text-muted", attrs: { id: "helpId" } },
-          [_vm._v("Help text")]
+        _c("th", [
+          _vm._v(
+            "(b)\n                            Income\n                            tax return\n                            filed that\n                            included\n                            Form 6765"
+          )
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _vm._v(
+            "(c)\n                            Date income\n                            tax return\n                            was filed"
+          )
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _vm._v(
+            "(d)\n                            EIN\n                            used on\n                            Form 6765"
+          )
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _vm._v(
+            "(e)\n                            Amount from\n                            Form 6765, line 44\n                        "
+          )
+        ]),
+        _vm._v(" "),
+        _c("th", { attrs: { width: "12.5%" } }, [
+          _vm._v(
+            "(f)\n                            Amount of credit\n                            from column (e)\n                            taken on a\n                            previous period(s) "
+          )
+        ]),
+        _vm._v(" "),
+        _c("th", [
+          _vm._v(
+            "(g)\n                            Remaining credit\n                            (subtract column (f)\n                            from column (e)) "
+          )
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "my-auto" }, [
+      _c("input", {
+        staticClass: "form-control mt-3",
+        attrs: { type: "text", name: "" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", {
+        staticClass: "form-control mt-3",
+        attrs: { type: "text", name: "", placeholder: "12-456789" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("input", {
+        staticClass: "form-control mt-3",
+        attrs: { type: "text", name: "", placeholder: "12-456789" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { attrs: { colspan: "1" } }, [
+      _c("input", {
+        staticClass: "form-control mt-3",
+        attrs: { type: "text", name: "", placeholder: "12-456789" }
+      })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", { staticClass: "disabled" }, [
+      _c("b", { staticClass: "mt-3 my-auto" }, [_vm._v("Auto Calc")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
+        _vm._v(
+          "\n                        Add lines 1(g) through 5(g) and enter the total here\n                    "
+        )
+      ]),
+      _vm._v(" "),
+      _c("td", { staticClass: "bg-success ", attrs: { colspan: "2" } }, [
+        _vm._v(
+          "\n                        Lorem ipsum dolor.\n                    "
         )
       ])
     ])
@@ -61172,7 +61468,9 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       attrs: { src: _vm.t1, alt: "" }
-                    })
+                    }),
+                    _vm._v(" "),
+                    _c("a", { attrs: { href: _vm.t1 } }, [_vm._v("View")])
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-9 my-auto" }, [
@@ -73660,7 +73958,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Form_8974_vue_vue_type_template_id_21ebfa70_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form_8974.vue?vue&type=template&id=21ebfa70&scoped=true& */ "./resources/js/components/IRS Forms/Form_8974.vue?vue&type=template&id=21ebfa70&scoped=true&");
 /* harmony import */ var _Form_8974_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form_8974.vue?vue&type=script&lang=js& */ "./resources/js/components/IRS Forms/Form_8974.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Form_8974_vue_vue_type_style_index_0_id_21ebfa70_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css& */ "./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -73668,7 +73968,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Form_8974_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Form_8974_vue_vue_type_template_id_21ebfa70_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Form_8974_vue_vue_type_template_id_21ebfa70_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -73697,6 +73997,22 @@ component.options.__file = "resources/js/components/IRS Forms/Form_8974.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_8974.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_8974.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css& ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_style_index_0_id_21ebfa70_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_8974.vue?vue&type=style&index=0&id=21ebfa70&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_style_index_0_id_21ebfa70_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_style_index_0_id_21ebfa70_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_style_index_0_id_21ebfa70_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_style_index_0_id_21ebfa70_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_8974_vue_vue_type_style_index_0_id_21ebfa70_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
