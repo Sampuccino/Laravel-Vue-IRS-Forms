@@ -2,22 +2,16 @@
 
 @section('content')
 <div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">Dashboard</div>
-
-                <div class="card-body">
-                    @if (session('status'))
-                        <div class="alert alert-success" role="alert">
-                            {{ session('status') }}
-                        </div>
-                    @endif
-
-                    You are logged in!
-                </div>
-            </div>
-        </div>
-    </div>
+    <select-form-template :type_8974="'{{ asset('Filliable-Form-8974.pdf') }}'"></select-form-template>
 </div>
+
+
+{{--                    <modify-document></modify-document>--}}
+
 @endsection
+<script>
+  import SelectFormTemplate from "../js/components/SelectFormTemplate";
+  export default {
+    components: {SelectFormTemplate}
+  }
+</script>
