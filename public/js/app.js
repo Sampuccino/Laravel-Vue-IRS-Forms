@@ -2403,7 +2403,54 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Calendar/Flatpickr */ "./resources/js/components/Calendar/Flatpickr.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var pdf_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pdf-lib */ "./node_modules/pdf-lib/es/index.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! downloadjs */ "./node_modules/downloadjs/download.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Calendar/Flatpickr */ "./resources/js/components/Calendar/Flatpickr.vue");
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2603,23 +2650,200 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Form_8974",
   components: {
-    Flatpickr: _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Flatpickr: _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_4__["default"]
+  },
+  mounted: function mounted() {
+    this.calendarYear = jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val();
   },
   data: function data() {
     return {
+      url: 'https://irsforms.dev/Filliable-Form-8974.pdf',
+
+      /* MAIN FORM FIELDS ######################## */
       ein: '',
+      creditTypeBox: null,
+      name: '',
+      reportForThisQuarter: null,
+      calendarYear: '',
+
+      /* ######################################### */
       maxRows: [1, 2, 3, 4, 5],
       partTwoIds: ['p2_7,p2_8,p2_9,p2_10,p2_11,p2_12'],
-      partTwoFieldInfo: ['Enter the amount from Part 1, line 6(g) .', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' + '944 (944(SP)), line 4a, Column 2 ', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5b, Column 2; or Form 944 (944(SP)), line 4b,\n' + 'Column 2', 'Add lines 8 and 9', 'Multiply line 10 by 50% (0.50).', 'Credit. Enter the smaller of line 7 or line 11. Also enter this amount on Form 941 (941-PR\n' + 'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8']
+      partTwoFieldInfo: ['Enter the amount from Part 1, line 6(g) .', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' + '944 (944(SP)), line 4a, Column 2 ', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5b, Column 2; or Form 944 (944(SP)), line 4b,\n' + 'Column 2', 'Add lines 8 and 9', 'Multiply line 10 by 50% (0.50).', 'Credit. Enter the smaller of line 7 or line 11. Also enter this amount on Form 941 (941-PR\n' + 'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8'],
+      validation: {
+        EIN_MAX_LENGTH: 12
+      }
     };
   },
   computed: {
     limitEIN: function limitEIN() {
       if (this.ein.length === 2) this.ein += ' - '; // console.log(this.ein.slice(0,2), ' - ', this.ein.slice(3));
       // return (this.ein.slice(0,2) + ' - ' + this.ein.slice(3));
+    }
+  },
+  methods: {
+    exportToPDF: function () {
+      var _exportToPDF = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, i, ein_XCoord, ctYCoord, rqYCoord, pdfBytes;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                /*  TODO Validate all fields before exporting */
+                validated = this.validateFormFields();
+                /*EIN*/
+
+                console.log(validated);
+
+                if (validated) {
+                  _context.next = 6;
+                  break;
+                }
+
+                /* Prompt Error */
+                console.error('Form errors!');
+                _context.next = 30;
+                break;
+
+              case 6:
+                console.log(this.reportForThisQuarter);
+                /* Write all contents to Final PDF */
+
+                _context.next = 9;
+                return fetch(this.url).then(function (res) {
+                  return res.arrayBuffer();
+                });
+
+              case 9:
+                existingPdfBytes = _context.sent;
+                _context.next = 12;
+                return pdf_lib__WEBPACK_IMPORTED_MODULE_1__["PDFDocument"].load(existingPdfBytes);
+
+              case 12:
+                pdfDoc = _context.sent;
+                _context.next = 15;
+                return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["StandardFonts"].Helvetica);
+
+              case 15:
+                helveticaFont = _context.sent;
+                pages = pdfDoc.getPages();
+                firstPage = pages[0];
+                _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                /* Draw EIN */
+
+                for (i = 0; i < 9; i++) {
+                  ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+                  firstPage.drawText(this.ein[i], {
+                    x: ein_XCoord[i],
+                    y: height / 2 + 312.5,
+                    size: 8,
+                    font: helveticaFont,
+                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                  });
+                }
+                /*Draw Name*/
+
+
+                firstPage.drawText(this.name, {
+                  x: 150,
+                  y: height / 2 + 288,
+                  size: 8,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /*Draw Credit Type*/
+
+                ctYCoord = [252, 228, 204];
+                firstPage.drawText('X', {
+                  x: 180,
+                  y: height / 2 + ctYCoord[this.creditTypeBox - 1],
+                  size: 15,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /* Draw Report For This Quarter */
+
+                rqYCoord = [283, 265, 247, 229];
+                firstPage.drawText('X', {
+                  x: 424,
+                  y: height / 2 + rqYCoord[this.reportForThisQuarter - 1],
+                  size: 15,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /*Draw Calendar year*/
+
+                firstPage.drawText(this.calendarYear, {
+                  x: 110,
+                  y: height / 2 + 180,
+                  size: 8,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /* Save report and Download*/
+
+                _context.next = 28;
+                return pdfDoc.save();
+
+              case 28:
+                pdfBytes = _context.sent;
+                // Trigger the browser to download the PDF document
+                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+                /* TODO Clear out the form */
+
+              case 30:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function exportToPDF() {
+        return _exportToPDF.apply(this, arguments);
+      }
+
+      return exportToPDF;
+    }(),
+    validateFormFields: function validateFormFields() {
+      console.warn(this.creditTypeBox);
+      /* Validate fields */
+
+      /* Finish computing or cleaning final output here */
+
+      /*EIN validator*/
+
+      if (this.ein.length < this.validation.EIN_MAX_LENGTH) return false;
+      /*NAME*/
+
+      if (this.name.trim().length === 0 || this.name === null) return false;
+      /*CREDIT TYPE*/
+
+      if (!this.creditTypeBox) return false;
+      /*Report for this quarter*/
+
+      if (!this.reportForThisQuarter) return false;
+      /*CALENDAR YEAR*/
+
+      if (this.calendarYear.trim().length === 0 || this.calendarYear === null) return false;
+      /* All Validation Passed */
+
+      /* Mutate EIN */
+
+      /*EIN*/
+
+      var ein_mutated = this.ein.replace(' - ', '');
+      this.ein = ein_mutated.split('');
+      return true;
     }
   }
 });
@@ -7421,7 +7645,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\n.col-lg-12[data-v-21ebfa70] {\n    /*max-width: 130%;*/\n    /*flex: 0 0 130%;*/\n}\n", ""]);
+exports.push([module.i, "\nbutton[data-v-21ebfa70] {\n    border-radius: 0;\n}\n.clear[data-v-21ebfa70] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-21ebfa70] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n.col-lg-12[data-v-21ebfa70] {\n    /*max-width: 130%;*/\n    /*flex: 0 0 130%;*/\n}\n", ""]);
 
 // exports
 
@@ -61031,6 +61255,34 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      {
+        staticClass: "position-fixed",
+        staticStyle: { right: "1rem", bottom: "1rem" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._m(1),
+        _vm._v(" "),
+        _vm._m(2),
+        _vm._v(" "),
+        _vm._m(3),
+        _vm._v(" "),
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary d-inline export",
+              on: { click: _vm.exportToPDF }
+            },
+            [_vm._v("Export")]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" }, [
         _c("div", { staticClass: "row" }, [
@@ -61080,21 +61332,253 @@ var render = function() {
               )
             ]),
             _vm._v(" "),
-            _vm._m(0),
+            _c("div", { staticClass: "form-group mt-3" }, [
+              _c(
+                "label",
+                { staticClass: "bg-dark p-2 text-white", attrs: { for: "" } },
+                [_vm._v("Name (not your trade name)")]
+              ),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.name,
+                    expression: "name"
+                  }
+                ],
+                staticClass: "form-control mt-2",
+                attrs: { type: "text" },
+                domProps: { value: _vm.name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.name = $event.target.value
+                  }
+                }
+              }),
+              _vm._v(" "),
+              _c(
+                "small",
+                {
+                  staticClass: "form-text text-muted",
+                  attrs: { id: "helpId" }
+                },
+                [_vm._v("Help text")]
+              )
+            ]),
             _vm._v(" "),
-            _vm._m(1)
+            _c("div", { staticClass: "form-check mt-3" }, [
+              _c(
+                "h6",
+                { staticClass: "font-weight-bold bg-dark p-2 text-white" },
+                [
+                  _vm._v(
+                    "The credit from Part 2, line 12, will be\n                            reported on (check only one box):"
+                  )
+                ]
+              ),
+              _vm._v(" "),
+              _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.creditTypeBox,
+                      expression: "creditTypeBox"
+                    }
+                  ],
+                  staticClass: "form-check-input",
+                  attrs: { type: "radio", name: "creditType", value: "1" },
+                  domProps: { checked: _vm._q(_vm.creditTypeBox, "1") },
+                  on: {
+                    change: function($event) {
+                      _vm.creditTypeBox = "1"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                            Form 941, 941-PR, or 941-SS\n                        "
+                )
+              ]),
+              _vm._v(" "),
+              _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.creditTypeBox,
+                      expression: "creditTypeBox"
+                    }
+                  ],
+                  staticClass: "form-check-input",
+                  attrs: { type: "radio", name: "creditType", value: "2" },
+                  domProps: { checked: _vm._q(_vm.creditTypeBox, "2") },
+                  on: {
+                    change: function($event) {
+                      _vm.creditTypeBox = "2"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                            Form 943 or 943-PR\n                        "
+                )
+              ]),
+              _vm._v(" "),
+              _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.creditTypeBox,
+                      expression: "creditTypeBox"
+                    }
+                  ],
+                  staticClass: "form-check-input",
+                  attrs: { type: "radio", name: "creditType", value: "3" },
+                  domProps: { checked: _vm._q(_vm.creditTypeBox, "3") },
+                  on: {
+                    change: function($event) {
+                      _vm.creditTypeBox = "3"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                            Form 944 or 944(SP)\n                        "
+                )
+              ])
+            ])
           ]),
           _vm._v(" "),
           _c(
             "div",
             { staticClass: "col-5" },
             [
-              _vm._m(2),
+              _c("div", { staticClass: "form-check" }, [
+                _vm._m(4),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "1" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "1")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "1"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            1: January, February, March\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "2" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "2")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "2"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            2: April, May, June\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "3" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "3")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "3"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            3: July, August, September\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "4" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "4")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "4"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            4: October, November, December\n                        "
+                  )
+                ])
+              ]),
               _vm._v(" "),
-              _vm._m(3),
+              _vm._m(5),
               _vm._v(" "),
               _c("flatpickr", {
-                attrs: { timeFormat: "Y", id: "calendar_year_select" }
+                attrs: { timeFormat: "Y", id: "calendar_year_select" },
+                model: {
+                  value: _vm.calendarYear,
+                  callback: function($$v) {
+                    _vm.calendarYear = $$v
+                  },
+                  expression: "calendarYear"
+                }
               })
             ],
             1
@@ -61103,13 +61587,13 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-12 col-12 bg-white mt-4 p-3" }, [
-        _vm._m(4),
+        _vm._m(6),
         _vm._v(" "),
         _c(
           "table",
           { staticClass: "table table-striped table-responsive text-center" },
           [
-            _vm._m(5),
+            _vm._m(7),
             _vm._v(" "),
             _c(
               "tbody",
@@ -61128,7 +61612,7 @@ var render = function() {
                       [
                         _c("flatpickr", {
                           attrs: {
-                            timeFormat: "Y-m-d",
+                            timeFormat: "m-d-Y",
                             id: "a" + index,
                             fontSize: ".5rem"
                           }
@@ -61137,7 +61621,7 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(6, true),
+                    _vm._m(8, true),
                     _vm._v(" "),
                     _c(
                       "td",
@@ -61145,7 +61629,7 @@ var render = function() {
                       [
                         _c("flatpickr", {
                           attrs: {
-                            timeFormat: "Y-m-d",
+                            timeFormat: "m-d-Y",
                             id: "c" + index,
                             fontSize: ".5rem"
                           }
@@ -61154,17 +61638,17 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(7, true),
-                    _vm._v(" "),
-                    _vm._m(8, true),
-                    _vm._v(" "),
                     _vm._m(9, true),
                     _vm._v(" "),
-                    _vm._m(10, true)
+                    _vm._m(10, true),
+                    _vm._v(" "),
+                    _vm._m(11, true),
+                    _vm._v(" "),
+                    _vm._m(12, true)
                   ])
                 }),
                 _vm._v(" "),
-                _vm._m(11)
+                _vm._m(13)
               ],
               2
             )
@@ -61176,17 +61660,17 @@ var render = function() {
         "div",
         { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
         [
-          _vm._m(12),
+          _vm._m(14),
           _vm._v(" "),
           _vm._l(_vm.partTwoFieldInfo, function(info, index) {
             return _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-8 bg-light p-2" }, [
                 _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index))]),
                 _vm._v(" " + _vm._s(info) + "\n\n                    "),
-                index === 4 ? _c("div", [_vm._m(13, true)]) : _vm._e()
+                index === 4 ? _c("div", [_vm._m(15, true)]) : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(14, true)
+              _vm._m(16, true)
             ])
           })
         ],
@@ -61200,28 +61684,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-group mt-3" }, [
+    return _c("div", [
       _c(
-        "label",
-        { staticClass: "bg-dark p-2 text-white", attrs: { for: "" } },
-        [_vm._v("Name (not your trade name)")]
-      ),
-      _vm._v(" "),
-      _c("input", {
-        staticClass: "form-control mt-2",
-        attrs: {
-          type: "text",
-          name: "",
-          id: "",
-          "aria-describedby": "helpId",
-          placeholder: ""
-        }
-      }),
-      _vm._v(" "),
-      _c(
-        "small",
-        { staticClass: "form-text text-muted", attrs: { id: "helpId" } },
-        [_vm._v("Help text")]
+        "button",
+        {
+          staticClass: "btn btn-danger d-inline clear",
+          staticStyle: { width: "68.77px" }
+        },
+        [_vm._v("Clear")]
       )
     ])
   },
@@ -61229,97 +61699,59 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check mt-3" }, [
-      _c("h6", { staticClass: "font-weight-bold bg-dark p-2 text-white" }, [
-        _vm._v("Report for this quarter "),
-        _c("small", [_vm._v("check only one box")])
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
-        }),
-        _vm._v(
-          "\n                            Form 941, 941-PR, or 941-SS\n                        "
-        )
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
-        }),
-        _vm._v(
-          "\n                            Form 943 or 943-PR\n                        "
-        )
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
-        }),
-        _vm._v(
-          "\n                            Form 944 or 944(SP)\n                        "
-        )
-      ])
+    return _c("div", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-warning d-inline",
+          staticStyle: { width: "68.77px" }
+        },
+        [_vm._v("Color")]
+      )
     ])
   },
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check" }, [
+    return _c("div", [
       _c(
-        "h6",
-        { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
-        [
-          _vm._v("Report for this quarter "),
-          _c("small", [_vm._v("check only one box")])
-        ]
-      ),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
-        }),
-        _vm._v(
-          "\n                            1: January, February, March\n                        "
-        )
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
-        }),
-        _vm._v(
-          "\n                            2: April, May, June\n                        "
-        )
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
-        }),
-        _vm._v(
-          "\n                            3: July, August, September\n                        "
-        )
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "quarterReport", value: "checkedValue" }
-        }),
-        _vm._v(
-          "\n                            4: October, November, December\n                        "
-        )
-      ])
+        "button",
+        {
+          staticClass: "btn btn-dark d-inline",
+          staticStyle: { width: "68.77px" }
+        },
+        [_vm._v("Font")]
+      )
     ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c(
+        "button",
+        {
+          staticClass: "btn btn-success d-inline save",
+          staticStyle: { width: "68.77px" }
+        },
+        [_vm._v("Save")]
+      )
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h6",
+      { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
+      [
+        _vm._v("Report for this quarter "),
+        _c("small", [_vm._v("check\n                            only one box")])
+      ]
+    )
   },
   function() {
     var _vm = this
@@ -61332,7 +61764,7 @@ var staticRenderFns = [
         _vm._v("Calendar year "),
         _c("small", [
           _vm._v(
-            "You must select a quarter if you file Form 941, 941-PR, or 941-SS."
+            "You must select a quarter\n                        if you file Form 941, 941-PR, or 941-SS."
           )
         ])
       ]
@@ -61359,43 +61791,43 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(a)\n                            Ending date\n                            of income\n                            tax period"
+            "(a)\n                        Ending date\n                        of income\n                        tax period\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(b)\n                            Income\n                            tax return\n                            filed that\n                            included\n                            Form 6765"
+            "(b)\n                        Income\n                        tax return\n                        filed that\n                        included\n                        Form 6765\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(c)\n                            Date income\n                            tax return\n                            was filed"
+            "(c)\n                        Date income\n                        tax return\n                        was filed\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(d)\n                            EIN\n                            used on\n                            Form 6765"
+            "(d)\n                        EIN\n                        used on\n                        Form 6765\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(e)\n                            Amount from\n                            Form 6765, line 44,\n                            or if applicable,\n                            the amount that\n                            was allocated\n                            to your EIN\n                        "
+            "(e)\n                        Amount from\n                        Form 6765, line 44,\n                        or if applicable,\n                        the amount that\n                        was allocated\n                        to your EIN\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(f)\n                            Amount of credit\n                            from column (e)\n                            taken on a\n                            previous period(s) "
+            "(f)\n                        Amount of credit\n                        from column (e)\n                        taken on a\n                        previous period(s)\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(g)\n                            Remaining credit\n                            (subtract column (f)\n                            from column (e)) "
+            "(g)\n                        Remaining credit\n                        (subtract column (f)\n                        from column (e))\n                    "
           )
         ])
       ])
@@ -61505,7 +61937,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("b", [
           _vm._v(
-            "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                instructions before completing line 11"
+            "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
           )
         ])
       ])

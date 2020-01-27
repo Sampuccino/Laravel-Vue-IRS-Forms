@@ -1,5 +1,22 @@
 <template>
     <div class="container">
+        <div class="position-fixed" style="right: 1rem; bottom:1rem;">
+            <div>
+                <button class="btn btn-danger d-inline clear" style="width: 68.77px">Clear</button>
+            </div>
+            <div>
+                <button class="btn btn-warning d-inline" style="width: 68.77px">Color</button>
+            </div>
+            <div>
+                <button class="btn btn-dark d-inline" style="width: 68.77px">Font</button>
+            </div>
+            <div>
+                <button class="btn btn-success d-inline save" style="width: 68.77px">Save</button>
+            </div>
+            <div>
+                <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
+            </div>
+        </div>
         <div class="row justify-content-center">
 
             <!--TOP OF FORM-->
@@ -10,60 +27,69 @@
                         <!--EIN-->
                         <div class="form-group">
                             <label for="" class="bg-dark p-2 text-white">Employer identification number (EIN)</label>
-                            <input maxlength="12" minlength="12" type="text" v-model="ein" name="" class="form-control mt-2" placeholder="" aria-describedby="helpId">
+                            <input maxlength="12" minlength="12" type="text" v-model="ein" name=""
+                                   class="form-control mt-2" placeholder="" aria-describedby="helpId">
                             <small id="helpId" class="text-muted">Help text</small>
                         </div>
 
                         <!--Name-->
                         <div class="form-group mt-3">
                             <label for="" class="bg-dark p-2 text-white">Name (not your trade name)</label>
-                            <input type="text" class="form-control mt-2" name="" id="" aria-describedby="helpId"
-                                   placeholder="">
+                            <input type="text" class="form-control mt-2" v-model="name">
                             <small id="helpId" class="form-text text-muted">Help text</small>
                         </div>
 
                         <!--Credity Type-->
                         <div class="form-check mt-3">
-                            <h6 class="font-weight-bold bg-dark p-2 text-white">Report for this quarter <small>check only one box</small></h6>
+                            <h6 class="font-weight-bold bg-dark p-2 text-white">The credit from Part 2, line 12, will be
+                                reported on (check only one box):</h6>
                             <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport" value="checkedValue">
+                                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType" value="1">
                                 Form 941, 941-PR, or 941-SS
                             </label>
                             <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport" value="checkedValue">
+                                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType" value="2">
                                 Form 943 or 943-PR
                             </label>
                             <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport" value="checkedValue">
+                                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType"
+                                       value="3">
                                 Form 944 or 944(SP)
                             </label>
                         </div>
 
                     </div>
+                    <!--Report For This Quarter-->
                     <div class="col-5">
                         <div class="form-check">
-                            <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Report for this quarter <small>check only one box</small></h6>
+                            <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Report for this quarter <small>check
+                                only one box</small></h6>
                             <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport" value="checkedValue">
+                                <input type="radio" class="form-check-input" name="quarterReport"
+                                       v-model="reportForThisQuarter" value="1">
                                 1: January, February, March
                             </label>
                             <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport" value="checkedValue">
+                                <input type="radio" class="form-check-input" name="quarterReport"
+                                       v-model="reportForThisQuarter" value="2">
                                 2: April, May, June
                             </label>
                             <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport" value="checkedValue">
+                                <input type="radio" class="form-check-input" name="quarterReport"
+                                       v-model="reportForThisQuarter" value="3">
                                 3: July, August, September
                             </label>
                             <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport" value="checkedValue">
+                                <input type="radio" class="form-check-input" name="quarterReport"
+                                       v-model="reportForThisQuarter" value="4">
                                 4: October, November, December
                             </label>
                         </div>
 
                         <!--Calendar Year-->
-                        <label for="" class="bg-dark p-2 text-white mt-4">Calendar year <small>You must select a quarter if you file Form 941, 941-PR, or 941-SS.</small> </label>
-                        <flatpickr timeFormat="Y" id="calendar_year_select"/>
+                        <label for="" class="bg-dark p-2 text-white mt-4">Calendar year <small>You must select a quarter
+                            if you file Form 941, 941-PR, or 941-SS.</small> </label>
+                        <flatpickr timeFormat="Y" v-model="calendarYear" id="calendar_year_select"/>
 
                     </div>
                 </div>
@@ -71,48 +97,55 @@
 
             <!--MID or PART 1-->
             <div class="col-lg-12 col-12 bg-white mt-4 p-3">
-                <div class="bg-dark p-2 text-white">Part 1 <span class="bg-white text-dark p-1 ml-2">Tell us about your income tax return</span> </div>
+                <div class="bg-dark p-2 text-white">Part 1 <span class="bg-white text-dark p-1 ml-2">Tell us about your income tax return</span>
+                </div>
                 <!--PART 1 : Table-->
                 <table class="table table-striped table-responsive text-center">
                     <thead>
-                        <tr>
-                            <th></th>
-                            <th>(a)
-                                Ending date
-                                of income
-                                tax period</th>
-                            <th>(b)
-                                Income
-                                tax return
-                                filed that
-                                included
-                                Form 6765</th>
-                            <th>(c)
-                                Date income
-                                tax return
-                                was filed</th>
-                            <th width="12.5%">(d)
-                                EIN
-                                used on
-                                Form 6765</th>
-                            <th width="12.5%">(e)
-                                Amount from
-                                Form 6765, line 44,
-                                or if applicable,
-                                the amount that
-                                was allocated
-                                to your EIN
-                            </th>
-                            <th width="12.5%">(f)
-                                Amount of credit
-                                from column (e)
-                                taken on a
-                                previous period(s) </th>
-                            <th width="12.5%">(g)
-                                Remaining credit
-                                (subtract column (f)
-                                from column (e)) </th>
-                        </tr>
+                    <tr>
+                        <th></th>
+                        <th>(a)
+                            Ending date
+                            of income
+                            tax period
+                        </th>
+                        <th>(b)
+                            Income
+                            tax return
+                            filed that
+                            included
+                            Form 6765
+                        </th>
+                        <th>(c)
+                            Date income
+                            tax return
+                            was filed
+                        </th>
+                        <th width="12.5%">(d)
+                            EIN
+                            used on
+                            Form 6765
+                        </th>
+                        <th width="12.5%">(e)
+                            Amount from
+                            Form 6765, line 44,
+                            or if applicable,
+                            the amount that
+                            was allocated
+                            to your EIN
+                        </th>
+                        <th width="12.5%">(f)
+                            Amount of credit
+                            from column (e)
+                            taken on a
+                            previous period(s)
+                        </th>
+                        <th width="12.5%">(g)
+                            Remaining credit
+                            (subtract column (f)
+                            from column (e))
+                        </th>
+                    </tr>
                     </thead>
                     <tbody>
                     <tr v-for="(index, row) in maxRows">
@@ -122,13 +155,13 @@
                             </div>
                         </td>
                         <td scope="row" colspan="1">
-                            <flatpickr timeFormat="Y-m-d" :id="`a${index}`" fontSize=".5rem" />
+                            <flatpickr timeFormat="m-d-Y" :id="`a${index}`" fontSize=".5rem"/>
                         </td>
                         <td class="my-auto">
                             <input type="text" class="form-control mt-3" name="">
                         </td>
                         <td scope="row">
-                            <flatpickr timeFormat="Y-m-d" :id="`c${index}`" fontSize=".5rem" />
+                            <flatpickr timeFormat="m-d-Y" :id="`c${index}`" fontSize=".5rem"/>
                         </td>
                         <td>
                             <input type="text" class="form-control mt-3" name="" placeholder="">
@@ -148,7 +181,7 @@
                     <!--TOTAL-->
                     <tr>
                         <td colspan="6" class="text-left">
-                           <b class="mr-4">6</b>Add lines 1(g) through 5(g) and enter the total here
+                            <b class="mr-4">6</b>Add lines 1(g) through 5(g) and enter the total here
                         </td>
                         <td colspan="2" class="bg-success ">
                             Total
@@ -161,13 +194,14 @@
 
             <!--BOTTOM or PART 2-->
             <div class="col-lg-9 col-12 bg-white mt-4 p-3">
-                <div class="bg-dark p-2 text-white">Part 2 <span class="bg-white text-dark p-1 ml-2">Determine the credit that you can use this period.</span> </div>
+                <div class="bg-dark p-2 text-white">Part 2 <span class="bg-white text-dark p-1 ml-2">Determine the credit that you can use this period.</span>
+                </div>
                 <div v-for="(info, index) in partTwoFieldInfo" class="row">
                     <div class="col-8 bg-light p-2">
                         <b class="mr-2">{{ index }}</b> {{ info }}
 
                         <div v-if="index === 4">
-                        <!--CHECK THIS BOX-->
+                            <!--CHECK THIS BOX-->
                             <div class="form-check mt-3">
                                 <label class="form-check-label d-block mt-2">
                                     <input type="radio" class="form-check-input" name="checkThisBox">
@@ -176,7 +210,7 @@
                                 <label class="form-check-label d-block mt-2">
                                     <input type="radio" class="form-check-input" name="checkThisBox">
                                     <b>Check this box if you received a Section 3121(q) Notice and Demand. See the
-                                    instructions before completing line 11</b>
+                                        instructions before completing line 11</b>
                                 </label>
                             </div>
 
@@ -197,20 +231,34 @@
 </template>
 
 <script>
+  import {degrees, PDFDocument, rgb, StandardFonts} from 'pdf-lib';
+  import download from 'downloadjs';
+  import * as $ from 'jquery';
   import Flatpickr from "../Calendar/Flatpickr";
+
   export default {
     name: "Form_8974",
     components: {Flatpickr},
+    mounted(){
+      this.calendarYear = $('#calendar_year_select').val();
+    },
     data: function () {
       return {
+        url: 'https://irsforms.dev/Filliable-Form-8974.pdf',
+        /* MAIN FORM FIELDS ######################## */
         ein: '',
-        maxRows: [1,2,3,4,5],
+        creditTypeBox: null,
+        name: '',
+        reportForThisQuarter: null,
+        calendarYear: '',
+        /* ######################################### */
+        maxRows: [1, 2, 3, 4, 5],
         partTwoIds: ['p2_7,p2_8,p2_9,p2_10,p2_11,p2_12'],
         partTwoFieldInfo: [
           'Enter the amount from Part 1, line 6(g) .',
-            'Enter the amount from Form 941 (941-PR or 941-SS),\n' +
-            'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' +
-            '944 (944(SP)), line 4a, Column 2 ',
+          'Enter the amount from Form 941 (941-PR or 941-SS),\n' +
+          'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' +
+          '944 (944(SP)), line 4a, Column 2 ',
           'Enter the amount from Form 941 (941-PR or 941-SS),\n' +
           'line 5b, Column 2; or Form 944 (944(SP)), line 4b,\n' +
           'Column 2',
@@ -218,7 +266,10 @@
           'Multiply line 10 by 50% (0.50).',
           'Credit. Enter the smaller of line 7 or line 11. Also enter this amount on Form 941 (941-PR\n' +
           'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8'
-        ]
+        ],
+        validation: {
+          EIN_MAX_LENGTH: 12
+        }
       }
     },
     computed: {
@@ -228,11 +279,143 @@
         // console.log(this.ein.slice(0,2), ' - ', this.ein.slice(3));
         // return (this.ein.slice(0,2) + ' - ' + this.ein.slice(3));
       }
+    },
+    methods: {
+      exportToPDF: async function () {
+
+        /*  TODO Validate all fields before exporting */
+        const validated = this.validateFormFields();
+
+        /*EIN*/
+        console.log(validated);
+        if (!validated) {
+          /* Prompt Error */
+          console.error('Form errors!');
+        } else {
+          console.log(this.reportForThisQuarter);
+
+          /* Write all contents to Final PDF */
+          const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
+
+          const pdfDoc = await PDFDocument.load(existingPdfBytes);
+          const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+          const pages = pdfDoc.getPages();
+          const firstPage = pages[0];
+          const {width, height} = firstPage.getSize();
+
+          /* Draw EIN */
+          for (let i = 0; i < 9; i++) {
+            let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+
+            firstPage.drawText(this.ein[i], {
+              x: ein_XCoord[i],
+              y: height / 2 + 312.5,
+              size: 8,
+              font: helveticaFont,
+              color: rgb(0.95, 0.1, 0.1),
+            });
+
+          }
+
+          /*Draw Name*/
+          firstPage.drawText(this.name, {
+            x: 150,
+            y: height / 2 + 288,
+            size: 8,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          });
+
+          /*Draw Credit Type*/
+          const ctYCoord = [252,228,204];
+          firstPage.drawText('X', {
+            x: 180,
+            y: height / 2 + ctYCoord[this.creditTypeBox-1],
+            size: 15,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          });
+
+          /* Draw Report For This Quarter */
+          const rqYCoord = [283,265,247,229];
+            firstPage.drawText('X', {
+              x: 424,
+              y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
+              size: 15,
+              font: helveticaFont,
+              color: rgb(0.95, 0.1, 0.1),
+            });
+
+          /*Draw Calendar year*/
+          firstPage.drawText(this.calendarYear, {
+            x: 110,
+            y: height / 2 + 180,
+            size: 8,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          });
+
+          /* Save report and Download*/
+          const pdfBytes = await pdfDoc.save();
+          // Trigger the browser to download the PDF document
+          download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+
+          /* TODO Clear out the form */
+        }
+      },
+      validateFormFields() {
+        console.warn(this.creditTypeBox);
+        /* Validate fields */
+        /* Finish computing or cleaning final output here */
+
+        /*EIN validator*/
+        if (this.ein.length < this.validation.EIN_MAX_LENGTH) return false;
+
+        /*NAME*/
+        if (this.name.trim().length === 0 || this.name === null) return false;
+
+        /*CREDIT TYPE*/
+        if (!this.creditTypeBox) return false;
+
+        /*Report for this quarter*/
+        if (!this.reportForThisQuarter) return false;
+
+        /*CALENDAR YEAR*/
+        if (this.calendarYear.trim().length === 0 || this.calendarYear === null) return false;
+
+        /* All Validation Passed */
+        /* Mutate EIN */
+        /*EIN*/
+        let ein_mutated = this.ein.replace(' - ', '');
+        this.ein = ein_mutated.split('');
+        return true;
+      }
     }
   }
 </script>
 
 <style scoped>
+    button {
+        border-radius: 0;
+    }
+
+    .clear {
+        border-top-left-radius: 1rem;
+        border-top-right-radius: 1rem;
+        -moz-border-radius-topright: 1rem !important;
+        -moz-border-radius-topleft: 1rem !important;
+        -webkit-border-top-left-radius: 1rem !important;
+    }
+
+    .export {
+        border-bottom-left-radius: 1rem;
+        border-bottom-right-radius: 1rem;
+        -moz-border-radius-bottomright: 1rem !important;
+        -moz-border-radius-bottomleft: 1rem !important;
+        -webkit-border-bottom-left-radius: 1rem !important;
+    }
+
     .col-lg-12 {
         /*max-width: 130%;*/
         /*flex: 0 0 130%;*/
