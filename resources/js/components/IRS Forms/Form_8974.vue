@@ -23,20 +23,18 @@
             <div class="col-lg-9 col-12 bg-white mt-4 p-3">
                 <div class="row">
                     <div class="col-7">
-                        <p>{{ limitEIN }}</p>
+                        {{ limitEIN }}
                         <!--EIN-->
                         <div class="form-group">
                             <label for="" class="bg-dark p-2 text-white">Employer identification number (EIN)</label>
-                            <input maxlength="12" minlength="12" type="text" v-model="ein" name=""
+                            <input maxlength="12" minlength="12" type="text" v-model="ein"
                                    class="form-control mt-2" placeholder="" aria-describedby="helpId">
-                            <small id="helpId" class="text-muted">Help text</small>
                         </div>
 
                         <!--Name-->
                         <div class="form-group mt-3">
                             <label for="" class="bg-dark p-2 text-white">Name (not your trade name)</label>
                             <input type="text" class="form-control mt-2" v-model="name">
-                            <small id="helpId" class="form-text text-muted">Help text</small>
                         </div>
 
                         <!--Credity Type-->
@@ -109,7 +107,7 @@
                             of income
                             tax period
                         </th>
-                        <th>(b)
+                        <th width="12.5%">(b)
                             Income
                             tax return
                             filed that
@@ -121,7 +119,7 @@
                             tax return
                             was filed
                         </th>
-                        <th width="12.5%">(d)
+                        <th width="14.5%">(d)
                             EIN
                             used on
                             Form 6765
@@ -157,24 +155,60 @@
                         <td scope="row" colspan="1">
                             <flatpickr timeFormat="m-d-Y" :id="`a${index}`" fontSize=".5rem"/>
                         </td>
-                        <td class="my-auto">
-                            <input type="text" class="form-control mt-3" name="">
+                        <td>
+                            <select class="mt-3 form-control" :id="`b${index}`">
+                                <option disabled value="" selected>Please select one</option>
+                                <option>1040</option>
+                                <option>1040EZ</option>
+                                <option>1040A</option>
+                            </select>
                         </td>
                         <td scope="row">
                             <flatpickr timeFormat="m-d-Y" :id="`c${index}`" fontSize=".5rem"/>
                         </td>
                         <td>
-                            <input type="text" class="form-control mt-3" name="" placeholder="">
+                            <div v-if="index===1">
+                                {{ limitEIND1 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d1">
+                            </div>
+                            <div v-if="index===2">
+                                {{ limitEIND2 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d2">
+                            </div>
+                            <div v-if="index===3">
+                                {{ limitEIND3 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d3">
+                            </div>
+                            <div v-if="index===4">
+                                {{ limitEIND4 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d4">
+                            </div>
+                            <div v-if="index===5">
+                                {{ limitEIND5 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d5">
+                            </div>
                         </td>
                         <td>
-                            <input type="text" class="form-control mt-3" name="" placeholder="">
+                            <input v-if="index === 1" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e1" name="" placeholder="">
+                            <input v-if="index === 2" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e2" name="" placeholder="">
+                            <input v-if="index === 3" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e3" name="" placeholder="">
+                            <input v-if="index === 4" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e4" name="" placeholder="">
+                            <input v-if="index === 5" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e5" name="" placeholder="">
                         </td>
                         <td colspan="1">
-                            <input type="text" class="form-control mt-3" name="" placeholder="">
+                            <input v-if="index === 1" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f1" placeholder="">
+                            <input v-if="index === 2" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f2" placeholder="">
+                            <input v-if="index === 3" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f3" placeholder="">
+                            <input v-if="index === 4" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f4" placeholder="">
+                            <input v-if="index === 5" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f5" placeholder="">
                         </td>
                         <td>
                             <div class="mt-4">
-                                <b>Auto Calc</b>
+                                <b v-if="index === 1">{{ remainingRowA }}</b>
+                                <b v-else-if="index === 2">{{ remainingRowB }}</b>
+                                <b v-else-if="index === 3">{{ remainingRowC }}</b>
+                                <b v-else-if="index === 4">{{ remainingRowD }}</b>
+                                <b v-else-if="index === 5">{{ remainingRowE }}</b>
                             </div>
                         </td>
                     </tr>
@@ -183,8 +217,8 @@
                         <td colspan="6" class="text-left">
                             <b class="mr-4">6</b>Add lines 1(g) through 5(g) and enter the total here
                         </td>
-                        <td colspan="2" class="bg-success ">
-                            Total
+                        <td colspan="2" class="bg-dark text-white font-weight-bold">
+                            {{ rowSixTotal }}
                         </td>
                     </tr>
                     </tbody>
@@ -198,7 +232,7 @@
                 </div>
                 <div v-for="(info, index) in partTwoFieldInfo" class="row">
                     <div class="col-8 bg-light p-2">
-                        <b class="mr-2">{{ index }}</b> {{ info }}
+                        <b class="mr-2">{{ index + 7 }}</b> {{ info }}
 
                         <div v-if="index === 4">
                             <!--CHECK THIS BOX-->
@@ -251,9 +285,58 @@
         name: '',
         reportForThisQuarter: null,
         calendarYear: '',
+        endingDateIncomeTax: {
+          a1: null,
+          a2: null,
+          a3: null,
+          a4: null,
+          a5: null,
+        },
+        incomeTaxReturntype: {
+          b1: null,
+          b2: null,
+          b3: null,
+          b4: null,
+          b5: null,
+        },
+        incomeTaxDateFiled: {
+          c1: null,
+          c2: null,
+          c3: null,
+          c4: null,
+          c5: null,
+        },
+        einUsed: {
+          d1: '',
+          d2: '',
+          d3: '',
+          d4: '',
+          d5: '',
+        },
+        amountFromForm: {
+          e1: null,
+          e2: null,
+          e3: null,
+          e4: null,
+          e5: null,
+        },
+        amountOfCredit: {
+          f1: null,
+          f2: null,
+          f3: null,
+          f4: null,
+          f5: null,
+        },
+        remainingCredit: {
+          g1: null,
+          g2: null,
+          g3: null,
+          g4: null,
+          g5: null,
+        },
+        total: null,
         /* ######################################### */
         maxRows: [1, 2, 3, 4, 5],
-        partTwoIds: ['p2_7,p2_8,p2_9,p2_10,p2_11,p2_12'],
         partTwoFieldInfo: [
           'Enter the amount from Part 1, line 6(g) .',
           'Enter the amount from Form 941 (941-PR or 941-SS),\n' +
@@ -276,8 +359,45 @@
       limitEIN: function () {
         if (this.ein.length === 2)
           this.ein += ' - ';
-        // console.log(this.ein.slice(0,2), ' - ', this.ein.slice(3));
-        // return (this.ein.slice(0,2) + ' - ' + this.ein.slice(3));
+      },
+      limitEIND1: function () {
+        if (this.einUsed.d1.length === 2)
+          this.einUsed.d1 += '-';
+      },
+      limitEIND2: function () {
+        if (this.einUsed.d2.length === 2)
+          this.einUsed.d2 += '-';
+      },
+      limitEIND3: function () {
+        if (this.einUsed.d3.length === 2)
+          this.einUsed.d3 += '-';
+      },
+      limitEIND4: function () {
+        if (this.einUsed.d4.length === 2)
+          this.einUsed.d4 += '-';
+      },
+      limitEIND5: function () {
+        if (this.einUsed.d5.length === 2)
+          this.einUsed.d5 += '-';
+      },
+      remainingRowA: function() {
+        return Number((this.amountFromForm.e1 - this.amountOfCredit.f1).toFixed(2));
+      },
+      remainingRowB: function() {
+        return Number((this.amountFromForm.e2 - this.amountOfCredit.f2).toFixed(2));
+      },
+      remainingRowC: function() {
+        return Number((this.amountFromForm.e3 - this.amountOfCredit.f3).toFixed(2));
+      },
+      remainingRowD: function() {
+        return Number((this.amountFromForm.e4 - this.amountOfCredit.f4).toFixed(2));
+      },
+      remainingRowE: function() {
+        return Number((this.amountFromForm.e5 - this.amountOfCredit.f5).toFixed(2));
+      },
+      rowSixTotal: function () {
+        const rowTotals = [this.remainingRowA, this.remainingRowB, this.remainingRowC, this.remainingRowD, this.remainingRowE];
+        return rowTotals.reduce((a,b) => a+b,0);
       }
     },
     methods: {
@@ -292,74 +412,72 @@
           /* Prompt Error */
           console.error('Form errors!');
         } else {
-          console.log(this.reportForThisQuarter);
-
-          /* Write all contents to Final PDF */
-          const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
-
-          const pdfDoc = await PDFDocument.load(existingPdfBytes);
-          const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-
-          const pages = pdfDoc.getPages();
-          const firstPage = pages[0];
-          const {width, height} = firstPage.getSize();
-
-          /* Draw EIN */
-          for (let i = 0; i < 9; i++) {
-            let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-
-            firstPage.drawText(this.ein[i], {
-              x: ein_XCoord[i],
-              y: height / 2 + 312.5,
-              size: 8,
-              font: helveticaFont,
-              color: rgb(0.95, 0.1, 0.1),
-            });
-
-          }
-
-          /*Draw Name*/
-          firstPage.drawText(this.name, {
-            x: 150,
-            y: height / 2 + 288,
-            size: 8,
-            font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
-          });
-
-          /*Draw Credit Type*/
-          const ctYCoord = [252,228,204];
-          firstPage.drawText('X', {
-            x: 180,
-            y: height / 2 + ctYCoord[this.creditTypeBox-1],
-            size: 15,
-            font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
-          });
-
-          /* Draw Report For This Quarter */
-          const rqYCoord = [283,265,247,229];
-            firstPage.drawText('X', {
-              x: 424,
-              y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
-              size: 15,
-              font: helveticaFont,
-              color: rgb(0.95, 0.1, 0.1),
-            });
-
-          /*Draw Calendar year*/
-          firstPage.drawText(this.calendarYear, {
-            x: 110,
-            y: height / 2 + 180,
-            size: 8,
-            font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
-          });
-
-          /* Save report and Download*/
-          const pdfBytes = await pdfDoc.save();
-          // Trigger the browser to download the PDF document
-          download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+          // /* Write all contents to Final PDF */
+          // const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
+          //
+          // const pdfDoc = await PDFDocument.load(existingPdfBytes);
+          // const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+          //
+          // const pages = pdfDoc.getPages();
+          // const firstPage = pages[0];
+          // const {width, height} = firstPage.getSize();
+          //
+          // /* Draw EIN */
+          // for (let i = 0; i < 9; i++) {
+          //   let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+          //
+          //   firstPage.drawText(this.ein[i], {
+          //     x: ein_XCoord[i],
+          //     y: height / 2 + 312.5,
+          //     size: 8,
+          //     font: helveticaFont,
+          //     color: rgb(0.95, 0.1, 0.1),
+          //   });
+          //
+          // }
+          //
+          // /*Draw Name*/
+          // firstPage.drawText(this.name, {
+          //   x: 150,
+          //   y: height / 2 + 288,
+          //   size: 8,
+          //   font: helveticaFont,
+          //   color: rgb(0.95, 0.1, 0.1),
+          // });
+          //
+          // /*Draw Credit Type*/
+          // const ctYCoord = [252,228,204];
+          // firstPage.drawText('X', {
+          //   x: 180,
+          //   y: height / 2 + ctYCoord[this.creditTypeBox-1],
+          //   size: 15,
+          //   font: helveticaFont,
+          //   color: rgb(0.95, 0.1, 0.1),
+          // });
+          //
+          // /* Draw Report For This Quarter */
+          // const rqYCoord = [283,265,247,229];
+          //   firstPage.drawText('X', {
+          //     x: 424,
+          //     y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
+          //     size: 15,
+          //     font: helveticaFont,
+          //     color: rgb(0.95, 0.1, 0.1),
+          //   });
+          //
+          // /*Draw Calendar year*/
+          // firstPage.drawText(this.calendarYear, {
+          //   x: 110,
+          //   y: height / 2 + 180,
+          //   size: 8,
+          //   font: helveticaFont,
+          //   color: rgb(0.95, 0.1, 0.1),
+          // });
+          //
+          // /* Save report and Download*/
+          // const pdfBytes = await pdfDoc.save();
+          // // Trigger the browser to download the PDF document
+          // download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
 
           /* TODO Clear out the form */
         }
@@ -390,6 +508,10 @@
         let ein_mutated = this.ein.replace(' - ', '');
         this.ein = ein_mutated.split('');
         return true;
+      },
+      formatEIN() {
+        console.warn('Changed');
+        // this.einUsed.d1 = this.einUsed.d1
       }
     }
   }

@@ -2649,6 +2649,40 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2671,10 +2705,59 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       name: '',
       reportForThisQuarter: null,
       calendarYear: '',
+      endingDateIncomeTax: {
+        a1: null,
+        a2: null,
+        a3: null,
+        a4: null,
+        a5: null
+      },
+      incomeTaxReturntype: {
+        b1: null,
+        b2: null,
+        b3: null,
+        b4: null,
+        b5: null
+      },
+      incomeTaxDateFiled: {
+        c1: null,
+        c2: null,
+        c3: null,
+        c4: null,
+        c5: null
+      },
+      einUsed: {
+        d1: '',
+        d2: '',
+        d3: '',
+        d4: '',
+        d5: ''
+      },
+      amountFromForm: {
+        e1: null,
+        e2: null,
+        e3: null,
+        e4: null,
+        e5: null
+      },
+      amountOfCredit: {
+        f1: null,
+        f2: null,
+        f3: null,
+        f4: null,
+        f5: null
+      },
+      remainingCredit: {
+        g1: null,
+        g2: null,
+        g3: null,
+        g4: null,
+        g5: null
+      },
+      total: null,
 
       /* ######################################### */
       maxRows: [1, 2, 3, 4, 5],
-      partTwoIds: ['p2_7,p2_8,p2_9,p2_10,p2_11,p2_12'],
       partTwoFieldInfo: ['Enter the amount from Part 1, line 6(g) .', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' + '944 (944(SP)), line 4a, Column 2 ', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5b, Column 2; or Form 944 (944(SP)), line 4b,\n' + 'Column 2', 'Add lines 8 and 9', 'Multiply line 10 by 50% (0.50).', 'Credit. Enter the smaller of line 7 or line 11. Also enter this amount on Form 941 (941-PR\n' + 'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8'],
       validation: {
         EIN_MAX_LENGTH: 12
@@ -2683,8 +2766,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     limitEIN: function limitEIN() {
-      if (this.ein.length === 2) this.ein += ' - '; // console.log(this.ein.slice(0,2), ' - ', this.ein.slice(3));
-      // return (this.ein.slice(0,2) + ' - ' + this.ein.slice(3));
+      if (this.ein.length === 2) this.ein += ' - ';
+    },
+    limitEIND1: function limitEIND1() {
+      if (this.einUsed.d1.length === 2) this.einUsed.d1 += '-';
+    },
+    limitEIND2: function limitEIND2() {
+      if (this.einUsed.d2.length === 2) this.einUsed.d2 += '-';
+    },
+    limitEIND3: function limitEIND3() {
+      if (this.einUsed.d3.length === 2) this.einUsed.d3 += '-';
+    },
+    limitEIND4: function limitEIND4() {
+      if (this.einUsed.d4.length === 2) this.einUsed.d4 += '-';
+    },
+    limitEIND5: function limitEIND5() {
+      if (this.einUsed.d5.length === 2) this.einUsed.d5 += '-';
+    },
+    remainingRowA: function remainingRowA() {
+      return Number((this.amountFromForm.e1 - this.amountOfCredit.f1).toFixed(2));
+    },
+    remainingRowB: function remainingRowB() {
+      return Number((this.amountFromForm.e2 - this.amountOfCredit.f2).toFixed(2));
+    },
+    remainingRowC: function remainingRowC() {
+      return Number((this.amountFromForm.e3 - this.amountOfCredit.f3).toFixed(2));
+    },
+    remainingRowD: function remainingRowD() {
+      return Number((this.amountFromForm.e4 - this.amountOfCredit.f4).toFixed(2));
+    },
+    remainingRowE: function remainingRowE() {
+      return Number((this.amountFromForm.e5 - this.amountOfCredit.f5).toFixed(2));
+    },
+    rowSixTotal: function rowSixTotal() {
+      var rowTotals = [this.remainingRowA, this.remainingRowB, this.remainingRowC, this.remainingRowD, this.remainingRowE];
+      return rowTotals.reduce(function (a, b) {
+        return a + b;
+      }, 0);
     }
   },
   methods: {
@@ -2692,8 +2810,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, i, ein_XCoord, ctYCoord, rqYCoord, pdfBytes;
-
+        var validated;
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2704,103 +2821,80 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 console.log(validated);
 
-                if (validated) {
-                  _context.next = 6;
-                  break;
+                if (!validated) {
+                  /* Prompt Error */
+                  console.error('Form errors!');
+                } else {// /* Write all contents to Final PDF */
+                  // const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
+                  //
+                  // const pdfDoc = await PDFDocument.load(existingPdfBytes);
+                  // const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+                  //
+                  // const pages = pdfDoc.getPages();
+                  // const firstPage = pages[0];
+                  // const {width, height} = firstPage.getSize();
+                  //
+                  // /* Draw EIN */
+                  // for (let i = 0; i < 9; i++) {
+                  //   let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+                  //
+                  //   firstPage.drawText(this.ein[i], {
+                  //     x: ein_XCoord[i],
+                  //     y: height / 2 + 312.5,
+                  //     size: 8,
+                  //     font: helveticaFont,
+                  //     color: rgb(0.95, 0.1, 0.1),
+                  //   });
+                  //
+                  // }
+                  //
+                  // /*Draw Name*/
+                  // firstPage.drawText(this.name, {
+                  //   x: 150,
+                  //   y: height / 2 + 288,
+                  //   size: 8,
+                  //   font: helveticaFont,
+                  //   color: rgb(0.95, 0.1, 0.1),
+                  // });
+                  //
+                  // /*Draw Credit Type*/
+                  // const ctYCoord = [252,228,204];
+                  // firstPage.drawText('X', {
+                  //   x: 180,
+                  //   y: height / 2 + ctYCoord[this.creditTypeBox-1],
+                  //   size: 15,
+                  //   font: helveticaFont,
+                  //   color: rgb(0.95, 0.1, 0.1),
+                  // });
+                  //
+                  // /* Draw Report For This Quarter */
+                  // const rqYCoord = [283,265,247,229];
+                  //   firstPage.drawText('X', {
+                  //     x: 424,
+                  //     y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
+                  //     size: 15,
+                  //     font: helveticaFont,
+                  //     color: rgb(0.95, 0.1, 0.1),
+                  //   });
+                  //
+                  // /*Draw Calendar year*/
+                  // firstPage.drawText(this.calendarYear, {
+                  //   x: 110,
+                  //   y: height / 2 + 180,
+                  //   size: 8,
+                  //   font: helveticaFont,
+                  //   color: rgb(0.95, 0.1, 0.1),
+                  // });
+                  //
+                  // /* Save report and Download*/
+                  // const pdfBytes = await pdfDoc.save();
+                  // // Trigger the browser to download the PDF document
+                  // download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+
+                  /* TODO Clear out the form */
                 }
 
-                /* Prompt Error */
-                console.error('Form errors!');
-                _context.next = 30;
-                break;
-
-              case 6:
-                console.log(this.reportForThisQuarter);
-                /* Write all contents to Final PDF */
-
-                _context.next = 9;
-                return fetch(this.url).then(function (res) {
-                  return res.arrayBuffer();
-                });
-
-              case 9:
-                existingPdfBytes = _context.sent;
-                _context.next = 12;
-                return pdf_lib__WEBPACK_IMPORTED_MODULE_1__["PDFDocument"].load(existingPdfBytes);
-
-              case 12:
-                pdfDoc = _context.sent;
-                _context.next = 15;
-                return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["StandardFonts"].Helvetica);
-
-              case 15:
-                helveticaFont = _context.sent;
-                pages = pdfDoc.getPages();
-                firstPage = pages[0];
-                _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
-                /* Draw EIN */
-
-                for (i = 0; i < 9; i++) {
-                  ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-                  firstPage.drawText(this.ein[i], {
-                    x: ein_XCoord[i],
-                    y: height / 2 + 312.5,
-                    size: 8,
-                    font: helveticaFont,
-                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                  });
-                }
-                /*Draw Name*/
-
-
-                firstPage.drawText(this.name, {
-                  x: 150,
-                  y: height / 2 + 288,
-                  size: 8,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
-                /*Draw Credit Type*/
-
-                ctYCoord = [252, 228, 204];
-                firstPage.drawText('X', {
-                  x: 180,
-                  y: height / 2 + ctYCoord[this.creditTypeBox - 1],
-                  size: 15,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
-                /* Draw Report For This Quarter */
-
-                rqYCoord = [283, 265, 247, 229];
-                firstPage.drawText('X', {
-                  x: 424,
-                  y: height / 2 + rqYCoord[this.reportForThisQuarter - 1],
-                  size: 15,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
-                /*Draw Calendar year*/
-
-                firstPage.drawText(this.calendarYear, {
-                  x: 110,
-                  y: height / 2 + 180,
-                  size: 8,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
-                /* Save report and Download*/
-
-                _context.next = 28;
-                return pdfDoc.save();
-
-              case 28:
-                pdfBytes = _context.sent;
-                // Trigger the browser to download the PDF document
-                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
-                /* TODO Clear out the form */
-
-              case 30:
+              case 3:
               case "end":
                 return _context.stop();
             }
@@ -2844,6 +2938,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var ein_mutated = this.ein.replace(' - ', '');
       this.ein = ein_mutated.split('');
       return true;
+    },
+    formatEIN: function formatEIN() {
+      console.warn('Changed'); // this.einUsed.d1 = this.einUsed.d1
     }
   }
 });
@@ -61287,7 +61384,11 @@ var render = function() {
       _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-7" }, [
-            _c("p", [_vm._v(_vm._s(_vm.limitEIN))]),
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.limitEIN) +
+                "\n                    "
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c(
@@ -61310,7 +61411,6 @@ var render = function() {
                   maxlength: "12",
                   minlength: "12",
                   type: "text",
-                  name: "",
                   placeholder: "",
                   "aria-describedby": "helpId"
                 },
@@ -61323,13 +61423,7 @@ var render = function() {
                     _vm.ein = $event.target.value
                   }
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "small",
-                { staticClass: "text-muted", attrs: { id: "helpId" } },
-                [_vm._v("Help text")]
-              )
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group mt-3" }, [
@@ -61359,16 +61453,7 @@ var render = function() {
                     _vm.name = $event.target.value
                   }
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "small",
-                {
-                  staticClass: "form-text text-muted",
-                  attrs: { id: "helpId" }
-                },
-                [_vm._v("Help text")]
-              )
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-check mt-3" }, [
@@ -61621,7 +61706,30 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(8, true),
+                    _c("td", [
+                      _c(
+                        "select",
+                        {
+                          staticClass: "mt-3 form-control",
+                          attrs: { id: "b" + index }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { disabled: "", value: "", selected: "" }
+                            },
+                            [_vm._v("Please select one")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("1040")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("1040EZ")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("1040A")])
+                        ]
+                      )
+                    ]),
                     _vm._v(" "),
                     _c(
                       "td",
@@ -61638,17 +61746,573 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(9, true),
+                    _c("td", [
+                      index === 1
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND1) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d1,
+                                  expression: "einUsed.d1"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d1 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d1",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 2
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND2) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d2,
+                                  expression: "einUsed.d2"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d2 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d2",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 3
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND3) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d3,
+                                  expression: "einUsed.d3"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d3 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d3",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 4
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND4) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d4,
+                                  expression: "einUsed.d4"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d4 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d4",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 5
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND5) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d5,
+                                  expression: "einUsed.d5"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d5 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d5",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm._m(10, true),
+                    _c("td", [
+                      index === 1
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e1,
+                                expression: "amountFromForm.e1"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e1 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e1",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 2
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e2,
+                                expression: "amountFromForm.e2"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e2 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 3
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e3,
+                                expression: "amountFromForm.e3"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e3 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e3",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 4
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e4,
+                                expression: "amountFromForm.e4"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e4 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e4",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 5
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e5,
+                                expression: "amountFromForm.e5"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e5 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e5",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm._m(11, true),
+                    _c("td", { attrs: { colspan: "1" } }, [
+                      index === 1
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f1,
+                                expression: "amountOfCredit.f1"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f1 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f1",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 2
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f2,
+                                expression: "amountOfCredit.f2"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f2 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 3
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f3,
+                                expression: "amountOfCredit.f3"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f3 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f3",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 4
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f4,
+                                expression: "amountOfCredit.f4"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f4 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f4",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 5
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f5,
+                                expression: "amountOfCredit.f5"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f5 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f5",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm._m(12, true)
+                    _c("td", [
+                      _c("div", { staticClass: "mt-4" }, [
+                        index === 1
+                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowA))])
+                          : index === 2
+                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowB))])
+                          : index === 3
+                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowC))])
+                          : index === 4
+                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowD))])
+                          : index === 5
+                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowE))])
+                          : _vm._e()
+                      ])
+                    ])
                   ])
                 }),
                 _vm._v(" "),
-                _vm._m(13)
+                _c("tr", [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "bg-dark text-white font-weight-bold",
+                      attrs: { colspan: "2" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.rowSixTotal) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                ])
               ],
               2
             )
@@ -61660,17 +62324,17 @@ var render = function() {
         "div",
         { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
         [
-          _vm._m(14),
+          _vm._m(9),
           _vm._v(" "),
           _vm._l(_vm.partTwoFieldInfo, function(info, index) {
             return _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-8 bg-light p-2" }, [
-                _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index))]),
+                _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index + 7))]),
                 _vm._v(" " + _vm._s(info) + "\n\n                    "),
-                index === 4 ? _c("div", [_vm._m(15, true)]) : _vm._e()
+                index === 4 ? _c("div", [_vm._m(10, true)]) : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(16, true)
+              _vm._m(11, true)
             ])
           })
         ],
@@ -61795,7 +62459,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("th", [
+        _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
             "(b)\n                        Income\n                        tax return\n                        filed that\n                        included\n                        Form 6765\n                    "
           )
@@ -61807,7 +62471,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "12.5%" } }, [
+        _c("th", { attrs: { width: "14.5%" } }, [
           _vm._v(
             "(d)\n                        EIN\n                        used on\n                        Form 6765\n                    "
           )
@@ -61837,69 +62501,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "my-auto" }, [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "1" } }, [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("div", { staticClass: "mt-4" }, [_c("b", [_vm._v("Auto Calc")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
-        _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
-        _vm._v(
-          "Add lines 1(g) through 5(g) and enter the total here\n                    "
-        )
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "bg-success ", attrs: { colspan: "2" } }, [
-        _vm._v("\n                        Total\n                    ")
-      ])
+    return _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
+      _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
+      _vm._v(
+        "Add lines 1(g) through 5(g) and enter the total here\n                    "
+      )
     ])
   },
   function() {
