@@ -204,11 +204,11 @@
                         </td>
                         <td>
                             <div class="mt-4">
-                                <b v-if="index === 1">{{ remainingRowA }}</b>
-                                <b v-else-if="index === 2">{{ remainingRowB }}</b>
-                                <b v-else-if="index === 3">{{ remainingRowC }}</b>
-                                <b v-else-if="index === 4">{{ remainingRowD }}</b>
-                                <b v-else-if="index === 5">{{ remainingRowE }}</b>
+                                <b v-if="index === 1" :id="`g${index}`">{{ remainingRowA }}</b>
+                                <b v-else-if="index === 2" :id="`g${index}`">{{ remainingRowB }}</b>
+                                <b v-else-if="index === 3" :id="`g${index}`">{{ remainingRowC }}</b>
+                                <b v-else-if="index === 4" :id="`g${index}`">{{ remainingRowD }}</b>
+                                <b v-else-if="index === 5" :id="`g${index}`">{{ remainingRowE }}</b>
                             </div>
                         </td>
                     </tr>
@@ -412,72 +412,156 @@
           /* Prompt Error */
           console.error('Form errors!');
         } else {
-          // /* Write all contents to Final PDF */
-          // const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
-          //
-          // const pdfDoc = await PDFDocument.load(existingPdfBytes);
-          // const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-          //
-          // const pages = pdfDoc.getPages();
-          // const firstPage = pages[0];
-          // const {width, height} = firstPage.getSize();
-          //
-          // /* Draw EIN */
-          // for (let i = 0; i < 9; i++) {
-          //   let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-          //
-          //   firstPage.drawText(this.ein[i], {
-          //     x: ein_XCoord[i],
-          //     y: height / 2 + 312.5,
-          //     size: 8,
-          //     font: helveticaFont,
-          //     color: rgb(0.95, 0.1, 0.1),
-          //   });
-          //
+          /* Write all contents to Final PDF */
+          const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
+
+          const pdfDoc = await PDFDocument.load(existingPdfBytes);
+          const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+          const pages = pdfDoc.getPages();
+          const firstPage = pages[0];
+          const {width, height} = firstPage.getSize();
+
+          /* Draw EIN */
+          for (let i = 0; i < 9; i++) {
+            let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+
+            firstPage.drawText(this.ein[i], {
+              x: ein_XCoord[i],
+              y: height / 2 + 312.5,
+              size: 8,
+              font: helveticaFont,
+              color: rgb(0.95, 0.1, 0.1),
+            });
+
+          }
+
+          /*Draw Name*/
+          firstPage.drawText(this.name, {
+            x: 145,
+            y: height / 2 + 288,
+            size: 8,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          });
+
+          /*Draw Credit Type*/
+          const ctYCoord = [252,228,204];
+          firstPage.drawText('X', {
+            x: 180,
+            y: height / 2 + ctYCoord[this.creditTypeBox-1],
+            size: 15,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          });
+
+          /* Draw Report For This Quarter */
+          const rqYCoord = [283,265,247,229];
+            firstPage.drawText('X', {
+              x: 424,
+              y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
+              size: 15,
+              font: helveticaFont,
+              color: rgb(0.95, 0.1, 0.1),
+            });
+
+          /*Draw Calendar year*/
+          firstPage.drawText(this.calendarYear, {
+            x: 110,
+            y: height / 2 + 180,
+            size: 8,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          });
+
+          /* Draw Table Rows <Only draw rows where column (g) has a value! */
+          /* Checks
+           * 1. If value is a double
+           * 2. If NOT, fill in 00 for remainder change
+           * X offset is 70
+           * X offset for b and d is 60
+           * Y offset is 18
+           * */
+          // 440
           // }
-          //
-          // /*Draw Name*/
-          // firstPage.drawText(this.name, {
-          //   x: 150,
-          //   y: height / 2 + 288,
-          //   size: 8,
-          //   font: helveticaFont,
-          //   color: rgb(0.95, 0.1, 0.1),
-          // });
-          //
-          // /*Draw Credit Type*/
-          // const ctYCoord = [252,228,204];
-          // firstPage.drawText('X', {
-          //   x: 180,
-          //   y: height / 2 + ctYCoord[this.creditTypeBox-1],
-          //   size: 15,
-          //   font: helveticaFont,
-          //   color: rgb(0.95, 0.1, 0.1),
-          // });
-          //
-          // /* Draw Report For This Quarter */
-          // const rqYCoord = [283,265,247,229];
-          //   firstPage.drawText('X', {
-          //     x: 424,
-          //     y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
-          //     size: 15,
-          //     font: helveticaFont,
-          //     color: rgb(0.95, 0.1, 0.1),
-          //   });
-          //
-          // /*Draw Calendar year*/
-          // firstPage.drawText(this.calendarYear, {
-          //   x: 110,
-          //   y: height / 2 + 180,
-          //   size: 8,
-          //   font: helveticaFont,
-          //   color: rgb(0.95, 0.1, 0.1),
-          // });
-          //
-          // /* Save report and Download*/
-          // const pdfBytes = await pdfDoc.save();
-          // // Trigger the browser to download the PDF document
-          // download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+
+          for(let idx=1; idx <= 5; idx++){
+            console.warn('LOOP ON ', idx);
+            const xOffset = 70;
+            const xOffsetSp = 60;
+            const yOffset = 18;
+            const START_X = 80;
+            const baseOptions = {
+              size: 10,
+              font: helveticaFont,
+              color: rgb(0.95, 0.1, 0.1),
+            };
+            switch (idx) {
+              case 1:
+                if (this.remainingRowA > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText($(`#a${idx}`).val(), {
+                    x: START_X,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText($(`#c${idx}`).val(), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText($(`#e${idx}`).val(), {
+                    x: START_X + (xOffset*4),
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText($(`#f${idx}`).val(), {
+                    x: START_X + (xOffset*5) + 17,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 23,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                }
+                break;
+              case 2:
+                break;
+              case 3:
+                break;
+              case 4:
+                break;
+              case 5:
+                break;
+            }
+
+
+          }
+
+          /* Save report and Download*/
+          const pdfBytes = await pdfDoc.save();
+          // Trigger the browser to download the PDF document
+          download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
 
           /* TODO Clear out the form */
         }
@@ -509,9 +593,9 @@
         this.ein = ein_mutated.split('');
         return true;
       },
-      formatEIN() {
-        console.warn('Changed');
-        // this.einUsed.d1 = this.einUsed.d1
+      convertToStringAndAddDecimal(columnG) {
+        let _toString = columnG.toString();
+        return (_toString.includes('.')) ? _toString : _toString+='.00';
       }
     }
   }

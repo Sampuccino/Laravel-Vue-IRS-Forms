@@ -2413,6 +2413,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Calendar/Flatpickr */ "./resources/js/components/Calendar/Flatpickr.vue");
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
@@ -2810,7 +2816,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, i, ein_XCoord, ctYCoord, rqYCoord, idx, xOffset, xOffsetSp, yOffset, START_X, baseOptions, formattedColG, pdfBytes;
+
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
@@ -2821,80 +2828,200 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 console.log(validated);
 
-                if (!validated) {
-                  /* Prompt Error */
-                  console.error('Form errors!');
-                } else {// /* Write all contents to Final PDF */
-                  // const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
-                  //
-                  // const pdfDoc = await PDFDocument.load(existingPdfBytes);
-                  // const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
-                  //
-                  // const pages = pdfDoc.getPages();
-                  // const firstPage = pages[0];
-                  // const {width, height} = firstPage.getSize();
-                  //
-                  // /* Draw EIN */
-                  // for (let i = 0; i < 9; i++) {
-                  //   let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-                  //
-                  //   firstPage.drawText(this.ein[i], {
-                  //     x: ein_XCoord[i],
-                  //     y: height / 2 + 312.5,
-                  //     size: 8,
-                  //     font: helveticaFont,
-                  //     color: rgb(0.95, 0.1, 0.1),
-                  //   });
-                  //
-                  // }
-                  //
-                  // /*Draw Name*/
-                  // firstPage.drawText(this.name, {
-                  //   x: 150,
-                  //   y: height / 2 + 288,
-                  //   size: 8,
-                  //   font: helveticaFont,
-                  //   color: rgb(0.95, 0.1, 0.1),
-                  // });
-                  //
-                  // /*Draw Credit Type*/
-                  // const ctYCoord = [252,228,204];
-                  // firstPage.drawText('X', {
-                  //   x: 180,
-                  //   y: height / 2 + ctYCoord[this.creditTypeBox-1],
-                  //   size: 15,
-                  //   font: helveticaFont,
-                  //   color: rgb(0.95, 0.1, 0.1),
-                  // });
-                  //
-                  // /* Draw Report For This Quarter */
-                  // const rqYCoord = [283,265,247,229];
-                  //   firstPage.drawText('X', {
-                  //     x: 424,
-                  //     y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
-                  //     size: 15,
-                  //     font: helveticaFont,
-                  //     color: rgb(0.95, 0.1, 0.1),
-                  //   });
-                  //
-                  // /*Draw Calendar year*/
-                  // firstPage.drawText(this.calendarYear, {
-                  //   x: 110,
-                  //   y: height / 2 + 180,
-                  //   size: 8,
-                  //   font: helveticaFont,
-                  //   color: rgb(0.95, 0.1, 0.1),
-                  // });
-                  //
-                  // /* Save report and Download*/
-                  // const pdfBytes = await pdfDoc.save();
-                  // // Trigger the browser to download the PDF document
-                  // download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
-
-                  /* TODO Clear out the form */
+                if (validated) {
+                  _context.next = 6;
+                  break;
                 }
 
-              case 3:
+                /* Prompt Error */
+                console.error('Form errors!');
+                _context.next = 49;
+                break;
+
+              case 6:
+                _context.next = 8;
+                return fetch(this.url).then(function (res) {
+                  return res.arrayBuffer();
+                });
+
+              case 8:
+                existingPdfBytes = _context.sent;
+                _context.next = 11;
+                return pdf_lib__WEBPACK_IMPORTED_MODULE_1__["PDFDocument"].load(existingPdfBytes);
+
+              case 11:
+                pdfDoc = _context.sent;
+                _context.next = 14;
+                return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["StandardFonts"].Helvetica);
+
+              case 14:
+                helveticaFont = _context.sent;
+                pages = pdfDoc.getPages();
+                firstPage = pages[0];
+                _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                /* Draw EIN */
+
+                for (i = 0; i < 9; i++) {
+                  ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+                  firstPage.drawText(this.ein[i], {
+                    x: ein_XCoord[i],
+                    y: height / 2 + 312.5,
+                    size: 8,
+                    font: helveticaFont,
+                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                  });
+                }
+                /*Draw Name*/
+
+
+                firstPage.drawText(this.name, {
+                  x: 145,
+                  y: height / 2 + 288,
+                  size: 8,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /*Draw Credit Type*/
+
+                ctYCoord = [252, 228, 204];
+                firstPage.drawText('X', {
+                  x: 180,
+                  y: height / 2 + ctYCoord[this.creditTypeBox - 1],
+                  size: 15,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /* Draw Report For This Quarter */
+
+                rqYCoord = [283, 265, 247, 229];
+                firstPage.drawText('X', {
+                  x: 424,
+                  y: height / 2 + rqYCoord[this.reportForThisQuarter - 1],
+                  size: 15,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /*Draw Calendar year*/
+
+                firstPage.drawText(this.calendarYear, {
+                  x: 110,
+                  y: height / 2 + 180,
+                  size: 8,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                });
+                /* Draw Table Rows <Only draw rows where column (g) has a value! */
+
+                /* Checks
+                 * 1. If value is a double
+                 * 2. If NOT, fill in 00 for remainder change
+                 * X offset is 70
+                 * X offset for b and d is 60
+                 * Y offset is 18
+                 * */
+                // 440
+                // }
+
+                idx = 1;
+
+              case 26:
+                if (!(idx <= 5)) {
+                  _context.next = 45;
+                  break;
+                }
+
+                console.warn('LOOP ON ', idx);
+                xOffset = 70;
+                xOffsetSp = 60;
+                yOffset = 18;
+                START_X = 80;
+                baseOptions = {
+                  size: 10,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                };
+                _context.t0 = idx;
+                _context.next = _context.t0 === 1 ? 36 : _context.t0 === 2 ? 38 : _context.t0 === 3 ? 39 : _context.t0 === 4 ? 40 : _context.t0 === 5 ? 41 : 42;
+                break;
+
+              case 36:
+                if (this.remainingRowA > 0) {
+                  formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
+                  console.warn(formattedColG);
+                  /* Draw A */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val(), _objectSpread({
+                    x: START_X,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw B */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#b".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw C */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 2 - 10,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw D */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#d".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 3 - 7,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw E */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 4,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw F */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 5 + 17,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw G */
+
+                  firstPage.drawText(formattedColG, _objectSpread({
+                    x: START_X + xOffset * 6 + 23,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                }
+
+                return _context.abrupt("break", 42);
+
+              case 38:
+                return _context.abrupt("break", 42);
+
+              case 39:
+                return _context.abrupt("break", 42);
+
+              case 40:
+                return _context.abrupt("break", 42);
+
+              case 41:
+                return _context.abrupt("break", 42);
+
+              case 42:
+                idx++;
+                _context.next = 26;
+                break;
+
+              case 45:
+                _context.next = 47;
+                return pdfDoc.save();
+
+              case 47:
+                pdfBytes = _context.sent;
+                // Trigger the browser to download the PDF document
+                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+                /* TODO Clear out the form */
+
+              case 49:
               case "end":
                 return _context.stop();
             }
@@ -2939,8 +3066,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       this.ein = ein_mutated.split('');
       return true;
     },
-    formatEIN: function formatEIN() {
-      console.warn('Changed'); // this.einUsed.d1 = this.einUsed.d1
+    convertToStringAndAddDecimal: function convertToStringAndAddDecimal(columnG) {
+      var _toString = columnG.toString();
+
+      return _toString.includes('.') ? _toString : _toString += '.00';
     }
   }
 });
@@ -62280,15 +62409,25 @@ var render = function() {
                     _c("td", [
                       _c("div", { staticClass: "mt-4" }, [
                         index === 1
-                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowA))])
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowA))
+                            ])
                           : index === 2
-                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowB))])
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowB))
+                            ])
                           : index === 3
-                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowC))])
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowC))
+                            ])
                           : index === 4
-                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowD))])
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowD))
+                            ])
                           : index === 5
-                          ? _c("b", [_vm._v(_vm._s(_vm.remainingRowE))])
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowE))
+                            ])
                           : _vm._e()
                       ])
                     ])
@@ -62633,9 +62772,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       attrs: { src: _vm.t1, alt: "" }
-                    }),
-                    _vm._v(" "),
-                    _c("a", { attrs: { href: _vm.t1 } }, [_vm._v("View")])
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-9 my-auto" }, [
