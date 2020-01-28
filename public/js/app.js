@@ -2813,13 +2813,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var rowTotals = [this.remainingRowA, this.remainingRowB, this.remainingRowC, this.remainingRowD, this.remainingRowE];
       return rowTotals.reduce(function (a, b) {
         return a + b;
-      }, 0);
+      }, 0).toFixed(2);
     },
     sumOfPartTwoEightAndNine: function sumOfPartTwoEightAndNine() {
-      return Number(this.partTwoEight) + Number(this.partTwoNine);
+      return (Number(this.partTwoEight) + Number(this.partTwoNine)).toFixed(2);
     },
     partTwoGreaterThan: function partTwoGreaterThan() {
-      return this.rowSixTotal > this.sumOfPartTwoEightAndNine ? this.rowSixTotal : this.sumOfPartTwoEightAndNine;
+      return this.rowSixTotal > this.sumOfPartTwoEightAndNine ? this.sumOfPartTwoEightAndNine : this.rowSixTotal;
     },
     partTwoLineElevenPercentage: function partTwoLineElevenPercentage() {
       return this.sumOfPartTwoEightAndNine * .50;
@@ -2830,7 +2830,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, baseOptions, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, baseOptions, baseOptionsSM, baseOptionsLG, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -2849,7 +2849,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 64;
+                _context.next = 66;
                 break;
 
               case 6:
@@ -2873,57 +2873,57 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 pages = pdfDoc.getPages();
                 firstPage = pages[0];
                 _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                baseOptions = {
+                  size: 10,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                };
+                baseOptionsSM = {
+                  size: 8,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                };
+                baseOptionsLG = {
+                  size: 15,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                };
                 /* Draw EIN */
 
                 for (i = 0; i < 9; i++) {
                   ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-                  firstPage.drawText(this.ein[i], {
+                  firstPage.drawText(this.ein[i], _objectSpread({
                     x: ein_XCoord[i],
-                    y: height / 2 + 312.5,
-                    size: 8,
-                    font: helveticaFont,
-                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                  });
+                    y: height / 2 + 312.5
+                  }, baseOptionsSM));
                 }
                 /*Draw Name*/
 
 
-                firstPage.drawText(this.name, {
+                firstPage.drawText(this.name, _objectSpread({
                   x: 145,
-                  y: height / 2 + 288,
-                  size: 8,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                  y: height / 2 + 288
+                }, baseOptionsSM));
                 /*Draw Credit Type*/
 
                 ctYCoord = [252, 228, 204];
-                firstPage.drawText('X', {
+                firstPage.drawText('X', _objectSpread({
                   x: 180,
-                  y: height / 2 + ctYCoord[this.creditTypeBox - 1],
-                  size: 15,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                  y: height / 2 + ctYCoord[this.creditTypeBox - 1]
+                }, baseOptionsLG));
                 /* Draw Report For This Quarter */
 
                 rqYCoord = [283, 265, 247, 229];
-                firstPage.drawText('X', {
+                firstPage.drawText('X', _objectSpread({
                   x: 424,
-                  y: height / 2 + rqYCoord[this.reportForThisQuarter - 1],
-                  size: 15,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                  y: height / 2 + rqYCoord[this.reportForThisQuarter - 1]
+                }, baseOptionsLG));
                 /*Draw Calendar year*/
 
-                firstPage.drawText(this.calendarYear, {
+                firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val(), _objectSpread({
                   x: 110,
-                  y: height / 2 + 180,
-                  size: 8,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                  y: height / 2 + 180
+                }, baseOptionsSM));
                 /* Draw Table Rows <Only draw rows where column (g) has a value! */
 
                 /* Checks
@@ -2940,25 +2940,20 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 xOffsetSp = 60;
                 yOffset = 18;
                 START_X = 80;
-                baseOptions = {
-                  size: 10,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                };
                 idx = 1;
 
-              case 31:
+              case 33:
                 if (!(idx <= 6)) {
-                  _context.next = 53;
+                  _context.next = 55;
                   break;
                 }
 
                 console.warn('LOOP ON ', idx);
                 _context.t0 = idx;
-                _context.next = _context.t0 === 1 ? 36 : _context.t0 === 2 ? 38 : _context.t0 === 3 ? 40 : _context.t0 === 4 ? 42 : _context.t0 === 5 ? 44 : _context.t0 === 6 ? 46 : 50;
+                _context.next = _context.t0 === 1 ? 38 : _context.t0 === 2 ? 40 : _context.t0 === 3 ? 42 : _context.t0 === 4 ? 44 : _context.t0 === 5 ? 46 : _context.t0 === 6 ? 48 : 52;
                 break;
 
-              case 36:
+              case 38:
                 if (this.remainingRowA > 0) {
                   formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
                   console.warn(formattedColG);
@@ -2988,27 +2983,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw E */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 4,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
                     y: height / 2 + 54
                   }, baseOptions));
                   /* Draw F */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 5 + 17,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 17 - 10,
                     y: height / 2 + 54
                   }, baseOptions));
                   /* Draw G */
 
                   firstPage.drawText(formattedColG, _objectSpread({
-                    x: START_X + xOffset * 6 + 23,
+                    x: START_X + xOffset * 6 + 10,
                     y: height / 2 + 54
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 50);
+                return _context.abrupt("break", 52);
 
-              case 38:
+              case 40:
                 if (this.remainingRowB > 0) {
                   _formattedColG = this.convertToStringAndAddDecimal(this.remainingRowB);
                   console.warn(_formattedColG);
@@ -3038,27 +3033,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw E */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 4,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
                     y: height / 2 + 54 - yOffset
                   }, baseOptions));
                   /* Draw F */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 5 + 17,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
                     y: height / 2 + 54 - yOffset
                   }, baseOptions));
                   /* Draw G */
 
                   firstPage.drawText(_formattedColG, _objectSpread({
-                    x: START_X + xOffset * 6 + 23,
+                    x: START_X + xOffset * 6 + 10,
                     y: height / 2 + 54 - yOffset
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 50);
+                return _context.abrupt("break", 52);
 
-              case 40:
+              case 42:
                 if (this.remainingRowC > 0) {
                   _formattedColG2 = this.convertToStringAndAddDecimal(this.remainingRowC);
                   console.warn(_formattedColG2);
@@ -3088,27 +3083,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw E */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 4,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
                     y: height / 2 + 54 - yOffset * 2
                   }, baseOptions));
                   /* Draw F */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 5 + 17,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
                     y: height / 2 + 54 - yOffset * 2
                   }, baseOptions));
                   /* Draw G */
 
                   firstPage.drawText(_formattedColG2, _objectSpread({
-                    x: START_X + xOffset * 6 + 23,
+                    x: START_X + xOffset * 6 + 10,
                     y: height / 2 + 54 - yOffset * 2
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 50);
+                return _context.abrupt("break", 52);
 
-              case 42:
+              case 44:
                 if (this.remainingRowD > 0) {
                   _formattedColG3 = this.convertToStringAndAddDecimal(this.remainingRowD);
                   console.warn(_formattedColG3);
@@ -3138,27 +3133,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw E */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 4,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
                     y: height / 2 + 54 - yOffset * 3
                   }, baseOptions));
                   /* Draw F */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 5 + 17,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
                     y: height / 2 + 54 - yOffset * 3
                   }, baseOptions));
                   /* Draw G */
 
                   firstPage.drawText(_formattedColG3, _objectSpread({
-                    x: START_X + xOffset * 6 + 23,
+                    x: START_X + xOffset * 6 + 10,
                     y: height / 2 + 54 - yOffset * 3
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 50);
+                return _context.abrupt("break", 52);
 
-              case 44:
+              case 46:
                 if (this.remainingRowE > 0) {
                   _formattedColG4 = this.convertToStringAndAddDecimal(this.remainingRowE);
                   console.warn(_formattedColG4);
@@ -3188,27 +3183,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw E */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 4,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
                     y: height / 2 + 54 - yOffset * 4
                   }, baseOptions));
                   /* Draw F */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val(), _objectSpread({
-                    x: START_X + xOffset * 5 + 17,
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
                     y: height / 2 + 54 - yOffset * 4
                   }, baseOptions));
                   /* Draw G */
 
                   firstPage.drawText(_formattedColG4, _objectSpread({
-                    x: START_X + xOffset * 6 + 23,
+                    x: START_X + xOffset * 6 + 10,
                     y: height / 2 + 54 - yOffset * 4
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 50);
+                return _context.abrupt("break", 52);
 
-              case 46:
+              case 48:
                 /* Map Totals and Part 2-7 */
                 total = this.convertToStringAndAddDecimal(this.rowSixTotal);
                 firstPage.drawText(total, _objectSpread({
@@ -3221,14 +3216,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   x: START_X + xOffset * 6 - 5,
                   y: height / 2 + 54 - yOffset * 7 - 5
                 }, baseOptions));
-                return _context.abrupt("break", 50);
+                return _context.abrupt("break", 52);
 
-              case 50:
+              case 52:
                 idx++;
-                _context.next = 31;
+                _context.next = 33;
                 break;
 
-              case 53:
+              case 55:
                 /* Draw 8 */
                 firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), _objectSpread({
                   x: START_X + xOffset * 4 - 10,
@@ -3249,25 +3244,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /* Draw 10 CHECKBOX 1 IF Selected */
 
                 if (Number(this.partTwoOptional) === 1) {
-                  firstPage.drawText('X', {
+                  firstPage.drawText('X', _objectSpread({
                     x: START_X + xOffset * 2 + 32,
-                    y: height / 2 + 54 - yOffset * 17 + 17,
-                    size: 15,
-                    font: helveticaFont,
-                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                  });
+                    y: height / 2 + 54 - yOffset * 17 + 17
+                  }, baseOptionsLG));
                 }
                 /* Draw 10 CHECKBOX 2 IF Selected */
 
 
                 if (Number(this.partTwoOptional) === 2) {
-                  firstPage.drawText('X', {
+                  firstPage.drawText('X', _objectSpread({
                     x: START_X + xOffset - 23,
-                    y: height / 2 + 54 - yOffset * 17 + 3,
-                    size: 15,
-                    font: helveticaFont,
-                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                  });
+                    y: height / 2 + 54 - yOffset * 17 + 3
+                  }, baseOptionsLG));
                 }
                 /* Draw 11 */
 
@@ -3284,16 +3273,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }, baseOptions));
                 /* Save report and Download*/
 
-                _context.next = 62;
+                _context.next = 64;
                 return pdfDoc.save();
 
-              case 62:
+              case 64:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
                 /* TODO Clear out the form */
 
-              case 64:
+              case 66:
               case "end":
                 return _context.stop();
             }
@@ -3339,9 +3328,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return true;
     },
     convertToStringAndAddDecimal: function convertToStringAndAddDecimal(columnG) {
-      var _toString = columnG.toString();
-
-      return _toString.includes('.') ? _toString : _toString += '.00';
+      var formatToString = columnG.toString();
+      var formatToCurrency = formatToString.includes('.') ? formatToString : formatToString += '.00';
+      return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
     },
     reformatDateToForwardslash: function reformatDateToForwardslash(d) {
       return d.replace(/-/g, '/');
