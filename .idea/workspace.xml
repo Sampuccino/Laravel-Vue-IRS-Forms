@@ -3,11 +3,8 @@
   <component name="ChangeListManager">
     <list default="true" id="f57c7d6b-7fc5-421d-9cbc-5b5f57a7fa99" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/Filliable-Form-8974.pdf" beforeDir="false" afterPath="$PROJECT_DIR$/public/Filliable-Form-8974.pdf" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/IRS Forms/Form_8974.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/IRS Forms/Form_8974.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/SelectFormTemplate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SelectFormTemplate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -232,7 +229,7 @@
       <workItem from="1579933859948" duration="4274000" />
       <workItem from="1579938834964" duration="4658000" />
       <workItem from="1580003279870" duration="42101000" />
-      <workItem from="1580174779392" duration="9045000" />
+      <workItem from="1580174779392" duration="10347000" />
     </task>
     <servers />
   </component>

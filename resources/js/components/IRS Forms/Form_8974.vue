@@ -327,13 +327,6 @@
           f4: null,
           f5: null,
         },
-        remainingCredit: {
-          g1: null,
-          g2: null,
-          g3: null,
-          g4: null,
-          g5: null,
-        },
         total: null,
         /* ######################################### */
         maxRows: [1, 2, 3, 4, 5],
@@ -485,7 +478,7 @@
           // 440
           // }
 
-          for(let idx=1; idx <= 5; idx++){
+          for(let idx=1; idx <= 6; idx++){
             console.warn('LOOP ON ', idx);
             const xOffset = 70;
             const xOffsetSp = 60;
@@ -546,12 +539,205 @@
                 }
                 break;
               case 2:
+                if (this.remainingRowB > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowB);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText($(`#a${idx}`).val(), {
+                    x: START_X,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText($(`#c${idx}`).val(), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText($(`#e${idx}`).val(), {
+                    x: START_X + (xOffset*4),
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText($(`#f${idx}`).val(), {
+                    x: START_X + (xOffset*5) + 17,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 23,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                }
                 break;
               case 3:
+                if (this.remainingRowC > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowC);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText($(`#a${idx}`).val(), {
+                    x: START_X,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText($(`#c${idx}`).val(), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText($(`#e${idx}`).val(), {
+                    x: START_X + (xOffset*4),
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText($(`#f${idx}`).val(), {
+                    x: START_X + (xOffset*5) + 17,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 23,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                }
                 break;
               case 4:
+                if (this.remainingRowD > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowD);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText($(`#a${idx}`).val(), {
+                    x: START_X,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText($(`#c${idx}`).val(), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText($(`#e${idx}`).val(), {
+                    x: START_X + (xOffset*4),
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText($(`#f${idx}`).val(), {
+                    x: START_X + (xOffset*5) + 17,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 23,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                }
                 break;
               case 5:
+                if (this.remainingRowE > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowE);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText($(`#a${idx}`).val(), {
+                    x: START_X,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText($(`#c${idx}`).val(), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText($(`#e${idx}`).val(), {
+                    x: START_X + (xOffset*4),
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText($(`#f${idx}`).val(), {
+                    x: START_X + (xOffset*5) + 17,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 23,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                }
+                break;
+              case 6:
+                /*Map Totals*/
+                const total = this.convertToStringAndAddDecimal(this.rowSixTotal);
+                firstPage.drawText(total, {
+                  x: START_X + (xOffset*6) + 10,
+                  y: height / 2 + 54 - (yOffset*5),
+                  ...baseOptions
+                });
                 break;
             }
 
