@@ -157,7 +157,7 @@
                         </td>
                         <td>
                             <select class="mt-3 form-control" :id="`b${index}`">
-                                <option disabled value="" selected>Please select one</option>
+                                <option disabled value="" selected>Select ...</option>
                                 <option>1040</option>
                                 <option>1040EZ</option>
                                 <option>1040A</option>
@@ -252,10 +252,18 @@
 
                     </div>
                     <div class="col-4 text-center p-2 my-auto">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="" aria-describedby="helpId"
-                                   placeholder="">
+                        <div v-if="index === 0" class="font-weight-bold">{{ rowSixTotal }}</div>
+                        <div v-else-if="index === 1" class="form-group">
+                            <input type="text" class="form-control" v-model="partTwoEight">
                         </div>
+                        <div v-else-if="index === 2" class="form-group">
+                            <input type="text" class="form-control" v-model="partTwoNine">
+                        </div>
+                        <div v-else-if="index === 3" class="form-group">{{ sumOfPartTwoEightAndNine }}</div>
+                        <div v-else-if="index === 4" class="form-group">
+                            <input type="text" class="form-control" v-model="partTwoEleven" value="4">
+                        </div>
+                        <div v-else-if="index === 5" class="form-group">{{ partTwoGreaterThan }}</div>
                     </div>
                 </div>
             </div>
@@ -328,6 +336,11 @@
           f5: null,
         },
         total: null,
+        partTwoEight: null,
+        partTwoNine: null,
+        thirdPartyPayer: null,
+        noticeOfDemand: null,
+        partTwoEleven: null,
         /* ######################################### */
         maxRows: [1, 2, 3, 4, 5],
         partTwoFieldInfo: [
@@ -391,6 +404,12 @@
       rowSixTotal: function () {
         const rowTotals = [this.remainingRowA, this.remainingRowB, this.remainingRowC, this.remainingRowD, this.remainingRowE];
         return rowTotals.reduce((a,b) => a+b,0);
+      },
+      sumOfPartTwoEightAndNine: function () {
+        return Number(this.partTwoEight) + Number(this.partTwoNine);
+      },
+      partTwoGreaterThan: function(){
+        return ( this.rowSixTotal > this.sumOfPartTwoEightAndNine ) ? this.rowSixTotal : this.sumOfPartTwoEightAndNine;
       }
     },
     methods: {
@@ -477,25 +496,25 @@
            * */
           // 440
           // }
+          const xOffset = 70;
+          const xOffsetSp = 60;
+          const yOffset = 18;
+          const START_X = 80;
+          const baseOptions = {
+            size: 10,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          };
 
           for(let idx=1; idx <= 6; idx++){
             console.warn('LOOP ON ', idx);
-            const xOffset = 70;
-            const xOffsetSp = 60;
-            const yOffset = 18;
-            const START_X = 80;
-            const baseOptions = {
-              size: 10,
-              font: helveticaFont,
-              color: rgb(0.95, 0.1, 0.1),
-            };
             switch (idx) {
               case 1:
                 if (this.remainingRowA > 0) {
                   let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
                   console.warn(formattedColG);
                   /* Draw A */
-                  firstPage.drawText($(`#a${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
                     y: height / 2 + 54,
                     ...baseOptions
@@ -507,7 +526,7 @@
                     ...baseOptions
                   });
                   /* Draw C */
-                  firstPage.drawText($(`#c${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
                     x: START_X + (xOffset*2) - 10,
                     y: height / 2 + 54,
                     ...baseOptions
@@ -543,7 +562,7 @@
                   let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowB);
                   console.warn(formattedColG);
                   /* Draw A */
-                  firstPage.drawText($(`#a${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
                     y: height / 2 + 54 - yOffset,
                     ...baseOptions
@@ -555,7 +574,7 @@
                     ...baseOptions
                   });
                   /* Draw C */
-                  firstPage.drawText($(`#c${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
                     x: START_X + (xOffset*2) - 10,
                     y: height / 2 + 54 - yOffset,
                     ...baseOptions
@@ -591,7 +610,7 @@
                   let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowC);
                   console.warn(formattedColG);
                   /* Draw A */
-                  firstPage.drawText($(`#a${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
                     y: height / 2 + 54 - (yOffset*2),
                     ...baseOptions
@@ -603,7 +622,7 @@
                     ...baseOptions
                   });
                   /* Draw C */
-                  firstPage.drawText($(`#c${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
                     x: START_X + (xOffset*2) - 10,
                     y: height / 2 + 54 - (yOffset*2),
                     ...baseOptions
@@ -639,7 +658,7 @@
                   let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowD);
                   console.warn(formattedColG);
                   /* Draw A */
-                  firstPage.drawText($(`#a${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
                     y: height / 2 + 54 - (yOffset*3),
                     ...baseOptions
@@ -651,7 +670,7 @@
                     ...baseOptions
                   });
                   /* Draw C */
-                  firstPage.drawText($(`#c${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
                     x: START_X + (xOffset*2) - 10,
                     y: height / 2 + 54 - (yOffset*3),
                     ...baseOptions
@@ -687,7 +706,7 @@
                   let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowE);
                   console.warn(formattedColG);
                   /* Draw A */
-                  firstPage.drawText($(`#a${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
                     y: height / 2 + 54 - (yOffset*4),
                     ...baseOptions
@@ -699,7 +718,7 @@
                     ...baseOptions
                   });
                   /* Draw C */
-                  firstPage.drawText($(`#c${idx}`).val(), {
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
                     x: START_X + (xOffset*2) - 10,
                     y: height / 2 + 54 - (yOffset*4),
                     ...baseOptions
@@ -731,18 +750,43 @@
                 }
                 break;
               case 6:
-                /*Map Totals*/
+                /* Map Totals and Part 2-7 */
                 const total = this.convertToStringAndAddDecimal(this.rowSixTotal);
                 firstPage.drawText(total, {
                   x: START_X + (xOffset*6) + 10,
                   y: height / 2 + 54 - (yOffset*5),
                   ...baseOptions
                 });
+                /*P2-7*/
+                firstPage.drawText(total, {
+                  x: START_X + (xOffset*6) - 5,
+                  y: height / 2 + 54 - (yOffset*7) - 5,
+                  ...baseOptions
+                });
                 break;
             }
-
-
           }
+
+          /* Draw 8 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), {
+            x: START_X + (xOffset*4) - 10,
+            y: height / 2 + 54 - (yOffset*10) + 1,
+            ...baseOptions
+          });
+
+          /* Draw 9 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoNine), {
+            x: START_X + (xOffset*4) - 10,
+            y: height / 2 + 54 - (yOffset*13) + 7,
+            ...baseOptions
+          });
+
+          /* Draw 10 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine), {
+            x: START_X + (xOffset*4) - 10,
+            y: height / 2 + 54 - (yOffset*15) + 13,
+            ...baseOptions
+          });
 
           /* Save report and Download*/
           const pdfBytes = await pdfDoc.save();
@@ -782,6 +826,9 @@
       convertToStringAndAddDecimal(columnG) {
         let _toString = columnG.toString();
         return (_toString.includes('.')) ? _toString : _toString+='.00';
+      },
+      reformatDateToForwardslash(d){
+        return d.replace(/-/g, '/');
       }
     }
   }

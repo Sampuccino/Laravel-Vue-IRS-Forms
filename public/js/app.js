@@ -2689,6 +2689,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2754,6 +2762,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         f5: null
       },
       total: null,
+      partTwoEight: null,
+      partTwoNine: null,
+      thirdPartyPayer: null,
+      noticeOfDemand: null,
+      partTwoEleven: null,
 
       /* ######################################### */
       maxRows: [1, 2, 3, 4, 5],
@@ -2802,6 +2815,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return rowTotals.reduce(function (a, b) {
         return a + b;
       }, 0);
+    },
+    sumOfPartTwoEightAndNine: function sumOfPartTwoEightAndNine() {
+      return Number(this.partTwoEight) + Number(this.partTwoNine);
+    },
+    partTwoGreaterThan: function partTwoGreaterThan() {
+      return this.rowSixTotal > this.sumOfPartTwoEightAndNine ? this.rowSixTotal : this.sumOfPartTwoEightAndNine;
     }
   },
   methods: {
@@ -2809,7 +2828,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, i, ein_XCoord, ctYCoord, rqYCoord, idx, xOffset, xOffsetSp, yOffset, START_X, baseOptions, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, baseOptions, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -2828,7 +2847,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 56;
+                _context.next = 60;
                 break;
 
               case 6:
@@ -2915,15 +2934,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 // 440
                 // }
 
-                idx = 1;
-
-              case 26:
-                if (!(idx <= 6)) {
-                  _context.next = 52;
-                  break;
-                }
-
-                console.warn('LOOP ON ', idx);
                 xOffset = 70;
                 xOffsetSp = 60;
                 yOffset = 18;
@@ -2933,8 +2943,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   font: helveticaFont,
                   color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
                 };
+                idx = 1;
+
+              case 31:
+                if (!(idx <= 6)) {
+                  _context.next = 53;
+                  break;
+                }
+
+                console.warn('LOOP ON ', idx);
                 _context.t0 = idx;
-                _context.next = _context.t0 === 1 ? 36 : _context.t0 === 2 ? 38 : _context.t0 === 3 ? 40 : _context.t0 === 4 ? 42 : _context.t0 === 5 ? 44 : _context.t0 === 6 ? 46 : 49;
+                _context.next = _context.t0 === 1 ? 36 : _context.t0 === 2 ? 38 : _context.t0 === 3 ? 40 : _context.t0 === 4 ? 42 : _context.t0 === 5 ? 44 : _context.t0 === 6 ? 46 : 50;
                 break;
 
               case 36:
@@ -2943,7 +2962,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.warn(formattedColG);
                   /* Draw A */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
                     x: START_X,
                     y: height / 2 + 54
                   }, baseOptions));
@@ -2955,7 +2974,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw C */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
                     x: START_X + xOffset * 2 - 10,
                     y: height / 2 + 54
                   }, baseOptions));
@@ -2985,7 +3004,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 49);
+                return _context.abrupt("break", 50);
 
               case 38:
                 if (this.remainingRowB > 0) {
@@ -2993,7 +3012,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.warn(_formattedColG);
                   /* Draw A */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
                     x: START_X,
                     y: height / 2 + 54 - yOffset
                   }, baseOptions));
@@ -3005,7 +3024,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw C */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
                     x: START_X + xOffset * 2 - 10,
                     y: height / 2 + 54 - yOffset
                   }, baseOptions));
@@ -3035,7 +3054,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 49);
+                return _context.abrupt("break", 50);
 
               case 40:
                 if (this.remainingRowC > 0) {
@@ -3043,7 +3062,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.warn(_formattedColG2);
                   /* Draw A */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
                     x: START_X,
                     y: height / 2 + 54 - yOffset * 2
                   }, baseOptions));
@@ -3055,7 +3074,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw C */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
                     x: START_X + xOffset * 2 - 10,
                     y: height / 2 + 54 - yOffset * 2
                   }, baseOptions));
@@ -3085,7 +3104,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 49);
+                return _context.abrupt("break", 50);
 
               case 42:
                 if (this.remainingRowD > 0) {
@@ -3093,7 +3112,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.warn(_formattedColG3);
                   /* Draw A */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
                     x: START_X,
                     y: height / 2 + 54 - yOffset * 3
                   }, baseOptions));
@@ -3105,7 +3124,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw C */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
                     x: START_X + xOffset * 2 - 10,
                     y: height / 2 + 54 - yOffset * 3
                   }, baseOptions));
@@ -3135,7 +3154,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 49);
+                return _context.abrupt("break", 50);
 
               case 44:
                 if (this.remainingRowE > 0) {
@@ -3143,7 +3162,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   console.warn(_formattedColG4);
                   /* Draw A */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
                     x: START_X,
                     y: height / 2 + 54 - yOffset * 4
                   }, baseOptions));
@@ -3155,7 +3174,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                   /* Draw C */
 
-                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val(), _objectSpread({
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
                     x: START_X + xOffset * 2 - 10,
                     y: height / 2 + 54 - yOffset * 4
                   }, baseOptions));
@@ -3185,33 +3204,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 49);
+                return _context.abrupt("break", 50);
 
               case 46:
-                /*Map Totals*/
+                /* Map Totals and Part 2-7 */
                 total = this.convertToStringAndAddDecimal(this.rowSixTotal);
                 firstPage.drawText(total, _objectSpread({
                   x: START_X + xOffset * 6 + 10,
                   y: height / 2 + 54 - yOffset * 5
                 }, baseOptions));
-                return _context.abrupt("break", 49);
+                /*P2-7*/
 
-              case 49:
+                firstPage.drawText(total, _objectSpread({
+                  x: START_X + xOffset * 6 - 5,
+                  y: height / 2 + 54 - yOffset * 7 - 5
+                }, baseOptions));
+                return _context.abrupt("break", 50);
+
+              case 50:
                 idx++;
-                _context.next = 26;
+                _context.next = 31;
                 break;
 
-              case 52:
-                _context.next = 54;
+              case 53:
+                /* Draw 8 */
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), _objectSpread({
+                  x: START_X + xOffset * 4 - 10,
+                  y: height / 2 + 54 - yOffset * 10 + 1
+                }, baseOptions));
+                /* Draw 9 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoNine), _objectSpread({
+                  x: START_X + xOffset * 4 - 10,
+                  y: height / 2 + 54 - yOffset * 13 + 7
+                }, baseOptions));
+                /* Draw 10 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine), _objectSpread({
+                  x: START_X + xOffset * 4 - 10,
+                  y: height / 2 + 54 - yOffset * 15 + 13
+                }, baseOptions));
+                /* Save report and Download*/
+
+                _context.next = 58;
                 return pdfDoc.save();
 
-              case 54:
+              case 58:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
                 /* TODO Clear out the form */
 
-              case 56:
+              case 60:
               case "end":
                 return _context.stop();
             }
@@ -3260,6 +3304,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _toString = columnG.toString();
 
       return _toString.includes('.') ? _toString : _toString += '.00';
+    },
+    reformatDateToForwardslash: function reformatDateToForwardslash(d) {
+      return d.replace(/-/g, '/');
     }
   }
 });
@@ -62038,7 +62085,7 @@ var render = function() {
                             {
                               attrs: { disabled: "", value: "", selected: "" }
                             },
-                            [_vm._v("Please select one")]
+                            [_vm._v("Select ...")]
                           ),
                           _vm._v(" "),
                           _c("option", [_vm._v("1040")]),
@@ -62663,7 +62710,93 @@ var render = function() {
                 index === 4 ? _c("div", [_vm._m(10, true)]) : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(11, true)
+              _c("div", { staticClass: "col-4 text-center p-2 my-auto" }, [
+                index === 0
+                  ? _c("div", { staticClass: "font-weight-bold" }, [
+                      _vm._v(_vm._s(_vm.rowSixTotal))
+                    ])
+                  : index === 1
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.partTwoEight,
+                            expression: "partTwoEight"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.partTwoEight },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.partTwoEight = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  : index === 2
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.partTwoNine,
+                            expression: "partTwoNine"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.partTwoNine },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.partTwoNine = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  : index === 3
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _vm._v(_vm._s(_vm.sumOfPartTwoEightAndNine))
+                    ])
+                  : index === 4
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.partTwoEleven,
+                            expression: "partTwoEleven"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text", value: "4" },
+                        domProps: { value: _vm.partTwoEleven },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.partTwoEleven = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  : index === 5
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _vm._v(_vm._s(_vm.partTwoGreaterThan))
+                    ])
+                  : _vm._e()
+              ])
             ])
           })
         ],
@@ -62875,24 +63008,6 @@ var staticRenderFns = [
             "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
           )
         ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4 text-center p-2 my-auto" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "",
-            "aria-describedby": "helpId",
-            placeholder: ""
-          }
-        })
       ])
     ])
   }
