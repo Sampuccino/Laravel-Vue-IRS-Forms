@@ -238,11 +238,11 @@
                             <!--CHECK THIS BOX-->
                             <div class="form-check mt-3">
                                 <label class="form-check-label d-block mt-2">
-                                    <input type="radio" class="form-check-input" name="checkThisBox">
+                                    <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b1" value="1" name="checkThisBox">
                                     <b>Check this box if you're a third-party payer of sick pay</b>
                                 </label>
                                 <label class="form-check-label d-block mt-2">
-                                    <input type="radio" class="form-check-input" name="checkThisBox">
+                                    <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b2" value="2" name="checkThisBox">
                                     <b>Check this box if you received a Section 3121(q) Notice and Demand. See the
                                         instructions before completing line 11</b>
                                 </label>
@@ -260,9 +260,7 @@
                             <input type="text" class="form-control" v-model="partTwoNine">
                         </div>
                         <div v-else-if="index === 3" class="form-group">{{ sumOfPartTwoEightAndNine }}</div>
-                        <div v-else-if="index === 4" class="form-group">
-                            <input type="text" class="form-control" v-model="partTwoEleven" value="4">
-                        </div>
+                        <div v-else-if="index === 4" class="form-group">{{ partTwoLineElevenPercentage }}</div>
                         <div v-else-if="index === 5" class="form-group">{{ partTwoGreaterThan }}</div>
                     </div>
                 </div>
@@ -339,6 +337,7 @@
         partTwoEight: null,
         partTwoNine: null,
         thirdPartyPayer: null,
+        partTwoOptional: null,
         noticeOfDemand: null,
         partTwoEleven: null,
         /* ######################################### */
@@ -410,6 +409,9 @@
       },
       partTwoGreaterThan: function(){
         return ( this.rowSixTotal > this.sumOfPartTwoEightAndNine ) ? this.rowSixTotal : this.sumOfPartTwoEightAndNine;
+      },
+      partTwoLineElevenPercentage: function () {
+        return this.sumOfPartTwoEightAndNine * .50
       }
     },
     methods: {
@@ -785,6 +787,42 @@
           firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine), {
             x: START_X + (xOffset*4) - 10,
             y: height / 2 + 54 - (yOffset*15) + 13,
+            ...baseOptions
+          });
+
+          /* Draw 10 CHECKBOX 1 IF Selected */
+          if(Number(this.partTwoOptional) === 1 ) {
+            firstPage.drawText('X', {
+              x: START_X + (xOffset*2) + 32,
+              y: height / 2 + 54 - (yOffset*17) + 17,
+              size: 15,
+              font: helveticaFont,
+              color: rgb(0.95, 0.1, 0.1),
+            });
+          }
+
+          /* Draw 10 CHECKBOX 2 IF Selected */
+          if(Number(this.partTwoOptional) === 2 ) {
+            firstPage.drawText('X', {
+              x: START_X + (xOffset) - 23,
+              y: height / 2 + 54 - (yOffset*17) + 3,
+              size: 15,
+              font: helveticaFont,
+              color: rgb(0.95, 0.1, 0.1),
+            });
+          }
+
+          /* Draw 11 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine * .50), {
+            x: START_X + (xOffset*6) - 10,
+            y: height / 2 + 54 - (yOffset*18) + 6,
+            ...baseOptions
+          });
+
+          /* Draw 12 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoGreaterThan), {
+            x: START_X + (xOffset*6) - 10,
+            y: height / 2 + 54 - (yOffset*20) + 5,
             ...baseOptions
           });
 

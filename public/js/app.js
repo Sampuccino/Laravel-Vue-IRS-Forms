@@ -2695,8 +2695,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
 
 
 
@@ -2765,6 +2763,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       partTwoEight: null,
       partTwoNine: null,
       thirdPartyPayer: null,
+      partTwoOptional: null,
       noticeOfDemand: null,
       partTwoEleven: null,
 
@@ -2821,6 +2820,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     partTwoGreaterThan: function partTwoGreaterThan() {
       return this.rowSixTotal > this.sumOfPartTwoEightAndNine ? this.rowSixTotal : this.sumOfPartTwoEightAndNine;
+    },
+    partTwoLineElevenPercentage: function partTwoLineElevenPercentage() {
+      return this.sumOfPartTwoEightAndNine * .50;
     }
   },
   methods: {
@@ -2847,7 +2849,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 60;
+                _context.next = 64;
                 break;
 
               case 6:
@@ -3244,18 +3246,54 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   x: START_X + xOffset * 4 - 10,
                   y: height / 2 + 54 - yOffset * 15 + 13
                 }, baseOptions));
+                /* Draw 10 CHECKBOX 1 IF Selected */
+
+                if (Number(this.partTwoOptional) === 1) {
+                  firstPage.drawText('X', {
+                    x: START_X + xOffset * 2 + 32,
+                    y: height / 2 + 54 - yOffset * 17 + 17,
+                    size: 15,
+                    font: helveticaFont,
+                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                  });
+                }
+                /* Draw 10 CHECKBOX 2 IF Selected */
+
+
+                if (Number(this.partTwoOptional) === 2) {
+                  firstPage.drawText('X', {
+                    x: START_X + xOffset - 23,
+                    y: height / 2 + 54 - yOffset * 17 + 3,
+                    size: 15,
+                    font: helveticaFont,
+                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                  });
+                }
+                /* Draw 11 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine * .50), _objectSpread({
+                  x: START_X + xOffset * 6 - 10,
+                  y: height / 2 + 54 - yOffset * 18 + 6
+                }, baseOptions));
+                /* Draw 12 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoGreaterThan), _objectSpread({
+                  x: START_X + xOffset * 6 - 10,
+                  y: height / 2 + 54 - yOffset * 20 + 5
+                }, baseOptions));
                 /* Save report and Download*/
 
-                _context.next = 58;
+                _context.next = 62;
                 return pdfDoc.save();
 
-              case 58:
+              case 62:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
                 /* TODO Clear out the form */
 
-              case 60:
+              case 64:
               case "end":
                 return _context.stop();
             }
@@ -62707,7 +62745,87 @@ var render = function() {
               _c("div", { staticClass: "col-8 bg-light p-2" }, [
                 _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index + 7))]),
                 _vm._v(" " + _vm._s(info) + "\n\n                    "),
-                index === 4 ? _c("div", [_vm._m(10, true)]) : _vm._e()
+                index === 4
+                  ? _c("div", [
+                      _c("div", { staticClass: "form-check mt-3" }, [
+                        _c(
+                          "label",
+                          { staticClass: "form-check-label d-block mt-2" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.partTwoOptional,
+                                  expression: "partTwoOptional"
+                                }
+                              ],
+                              staticClass: "form-check-input",
+                              attrs: {
+                                type: "radio",
+                                id: "p2b1",
+                                value: "1",
+                                name: "checkThisBox"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.partTwoOptional, "1")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.partTwoOptional = "1"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("b", [
+                              _vm._v(
+                                "Check this box if you're a third-party payer of sick pay"
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          { staticClass: "form-check-label d-block mt-2" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.partTwoOptional,
+                                  expression: "partTwoOptional"
+                                }
+                              ],
+                              staticClass: "form-check-input",
+                              attrs: {
+                                type: "radio",
+                                id: "p2b2",
+                                value: "2",
+                                name: "checkThisBox"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.partTwoOptional, "2")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.partTwoOptional = "2"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("b", [
+                              _vm._v(
+                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-4 text-center p-2 my-auto" }, [
@@ -62769,27 +62887,7 @@ var render = function() {
                     ])
                   : index === 4
                   ? _c("div", { staticClass: "form-group" }, [
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.partTwoEleven,
-                            expression: "partTwoEleven"
-                          }
-                        ],
-                        staticClass: "form-control",
-                        attrs: { type: "text", value: "4" },
-                        domProps: { value: _vm.partTwoEleven },
-                        on: {
-                          input: function($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.partTwoEleven = $event.target.value
-                          }
-                        }
-                      })
+                      _vm._v(_vm._s(_vm.partTwoLineElevenPercentage))
                     ])
                   : index === 5
                   ? _c("div", { staticClass: "form-group" }, [
@@ -62978,36 +63076,6 @@ var staticRenderFns = [
       _vm._v("Part 2 "),
       _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
         _vm._v("Determine the credit that you can use this period.")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check mt-3" }, [
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "checkThisBox" }
-        }),
-        _vm._v(" "),
-        _c("b", [
-          _vm._v("Check this box if you're a third-party payer of sick pay")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "checkThisBox" }
-        }),
-        _vm._v(" "),
-        _c("b", [
-          _vm._v(
-            "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
-          )
-        ])
       ])
     ])
   }
