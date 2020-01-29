@@ -2,7 +2,7 @@
 
 @section('content')
 <div class="container">
-    <select-form-template :type_8974="'{{ asset('Filliable-Form-8974.pdf') }}'"></select-form-template>
+    <select-form-template :type_8974="'{{ asset('FORM_8974.png') }}'"></select-form-template>
 </div>
 
 

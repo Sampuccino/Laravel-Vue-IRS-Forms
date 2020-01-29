@@ -2413,10 +2413,56 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../Calendar/Flatpickr */ "./resources/js/components/Calendar/Flatpickr.vue");
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -2671,10 +2717,58 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       name: '',
       reportForThisQuarter: null,
       calendarYear: '',
+      endingDateIncomeTax: {
+        a1: null,
+        a2: null,
+        a3: null,
+        a4: null,
+        a5: null
+      },
+      incomeTaxReturntype: {
+        b1: null,
+        b2: null,
+        b3: null,
+        b4: null,
+        b5: null
+      },
+      incomeTaxDateFiled: {
+        c1: null,
+        c2: null,
+        c3: null,
+        c4: null,
+        c5: null
+      },
+      einUsed: {
+        d1: '',
+        d2: '',
+        d3: '',
+        d4: '',
+        d5: ''
+      },
+      amountFromForm: {
+        e1: null,
+        e2: null,
+        e3: null,
+        e4: null,
+        e5: null
+      },
+      amountOfCredit: {
+        f1: null,
+        f2: null,
+        f3: null,
+        f4: null,
+        f5: null
+      },
+      total: null,
+      partTwoEight: null,
+      partTwoNine: null,
+      thirdPartyPayer: null,
+      partTwoOptional: null,
+      noticeOfDemand: null,
+      partTwoEleven: null,
 
       /* ######################################### */
       maxRows: [1, 2, 3, 4, 5],
-      partTwoIds: ['p2_7,p2_8,p2_9,p2_10,p2_11,p2_12'],
       partTwoFieldInfo: ['Enter the amount from Part 1, line 6(g) .', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' + '944 (944(SP)), line 4a, Column 2 ', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5b, Column 2; or Form 944 (944(SP)), line 4b,\n' + 'Column 2', 'Add lines 8 and 9', 'Multiply line 10 by 50% (0.50).', 'Credit. Enter the smaller of line 7 or line 11. Also enter this amount on Form 941 (941-PR\n' + 'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8'],
       validation: {
         EIN_MAX_LENGTH: 12
@@ -2683,8 +2777,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   computed: {
     limitEIN: function limitEIN() {
-      if (this.ein.length === 2) this.ein += ' - '; // console.log(this.ein.slice(0,2), ' - ', this.ein.slice(3));
-      // return (this.ein.slice(0,2) + ' - ' + this.ein.slice(3));
+      if (this.ein.length === 2) this.ein += ' - ';
+    },
+    limitEIND1: function limitEIND1() {
+      if (this.einUsed.d1.length === 2) this.einUsed.d1 += '-';
+    },
+    limitEIND2: function limitEIND2() {
+      if (this.einUsed.d2.length === 2) this.einUsed.d2 += '-';
+    },
+    limitEIND3: function limitEIND3() {
+      if (this.einUsed.d3.length === 2) this.einUsed.d3 += '-';
+    },
+    limitEIND4: function limitEIND4() {
+      if (this.einUsed.d4.length === 2) this.einUsed.d4 += '-';
+    },
+    limitEIND5: function limitEIND5() {
+      if (this.einUsed.d5.length === 2) this.einUsed.d5 += '-';
+    },
+    remainingRowA: function remainingRowA() {
+      return Number((this.amountFromForm.e1 - this.amountOfCredit.f1).toFixed(2));
+    },
+    remainingRowB: function remainingRowB() {
+      return Number((this.amountFromForm.e2 - this.amountOfCredit.f2).toFixed(2));
+    },
+    remainingRowC: function remainingRowC() {
+      return Number((this.amountFromForm.e3 - this.amountOfCredit.f3).toFixed(2));
+    },
+    remainingRowD: function remainingRowD() {
+      return Number((this.amountFromForm.e4 - this.amountOfCredit.f4).toFixed(2));
+    },
+    remainingRowE: function remainingRowE() {
+      return Number((this.amountFromForm.e5 - this.amountOfCredit.f5).toFixed(2));
+    },
+    rowSixTotal: function rowSixTotal() {
+      var rowTotals = [this.remainingRowA, this.remainingRowB, this.remainingRowC, this.remainingRowD, this.remainingRowE];
+      return rowTotals.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2);
+    },
+    sumOfPartTwoEightAndNine: function sumOfPartTwoEightAndNine() {
+      return (Number(this.partTwoEight) + Number(this.partTwoNine)).toFixed(2);
+    },
+    partTwoGreaterThan: function partTwoGreaterThan() {
+      return this.rowSixTotal > this.sumOfPartTwoEightAndNine ? this.sumOfPartTwoEightAndNine : this.rowSixTotal;
+    },
+    partTwoLineElevenPercentage: function partTwoLineElevenPercentage() {
+      return this.sumOfPartTwoEightAndNine * .50;
     }
   },
   methods: {
@@ -2692,7 +2830,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, i, ein_XCoord, ctYCoord, rqYCoord, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, baseOptions, baseOptionsSM, baseOptionsLG, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -2711,96 +2849,440 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 30;
+                _context.next = 66;
                 break;
 
               case 6:
-                console.log(this.reportForThisQuarter);
-                /* Write all contents to Final PDF */
-
-                _context.next = 9;
+                _context.next = 8;
                 return fetch(this.url).then(function (res) {
                   return res.arrayBuffer();
                 });
 
-              case 9:
+              case 8:
                 existingPdfBytes = _context.sent;
-                _context.next = 12;
+                _context.next = 11;
                 return pdf_lib__WEBPACK_IMPORTED_MODULE_1__["PDFDocument"].load(existingPdfBytes);
 
-              case 12:
+              case 11:
                 pdfDoc = _context.sent;
-                _context.next = 15;
+                _context.next = 14;
                 return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["StandardFonts"].Helvetica);
 
-              case 15:
+              case 14:
                 helveticaFont = _context.sent;
                 pages = pdfDoc.getPages();
                 firstPage = pages[0];
                 _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                baseOptions = {
+                  size: 10,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                };
+                baseOptionsSM = {
+                  size: 8,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                };
+                baseOptionsLG = {
+                  size: 15,
+                  font: helveticaFont,
+                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                };
                 /* Draw EIN */
 
                 for (i = 0; i < 9; i++) {
                   ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-                  firstPage.drawText(this.ein[i], {
+                  firstPage.drawText(this.ein[i], _objectSpread({
                     x: ein_XCoord[i],
-                    y: height / 2 + 312.5,
-                    size: 8,
-                    font: helveticaFont,
-                    color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                  });
+                    y: height / 2 + 312.5
+                  }, baseOptionsSM));
                 }
                 /*Draw Name*/
 
 
-                firstPage.drawText(this.name, {
-                  x: 150,
-                  y: height / 2 + 288,
-                  size: 8,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                firstPage.drawText(this.name, _objectSpread({
+                  x: 145,
+                  y: height / 2 + 288
+                }, baseOptionsSM));
                 /*Draw Credit Type*/
 
                 ctYCoord = [252, 228, 204];
-                firstPage.drawText('X', {
+                firstPage.drawText('X', _objectSpread({
                   x: 180,
-                  y: height / 2 + ctYCoord[this.creditTypeBox - 1],
-                  size: 15,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                  y: height / 2 + ctYCoord[this.creditTypeBox - 1]
+                }, baseOptionsLG));
                 /* Draw Report For This Quarter */
 
                 rqYCoord = [283, 265, 247, 229];
-                firstPage.drawText('X', {
+                firstPage.drawText('X', _objectSpread({
                   x: 424,
-                  y: height / 2 + rqYCoord[this.reportForThisQuarter - 1],
-                  size: 15,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                  y: height / 2 + rqYCoord[this.reportForThisQuarter - 1]
+                }, baseOptionsLG));
                 /*Draw Calendar year*/
 
-                firstPage.drawText(this.calendarYear, {
+                firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val(), _objectSpread({
                   x: 110,
-                  y: height / 2 + 180,
-                  size: 8,
-                  font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
-                });
+                  y: height / 2 + 180
+                }, baseOptionsSM));
+                /* Draw Table Rows <Only draw rows where column (g) has a value! */
+
+                /* Checks
+                 * 1. If value is a double
+                 * 2. If NOT, fill in 00 for remainder change
+                 * X offset is 70
+                 * X offset for b and d is 60
+                 * Y offset is 18
+                 * */
+                // 440
+                // }
+
+                xOffset = 70;
+                xOffsetSp = 60;
+                yOffset = 18;
+                START_X = 80;
+                idx = 1;
+
+              case 33:
+                if (!(idx <= 6)) {
+                  _context.next = 55;
+                  break;
+                }
+
+                console.warn('LOOP ON ', idx);
+                _context.t0 = idx;
+                _context.next = _context.t0 === 1 ? 38 : _context.t0 === 2 ? 40 : _context.t0 === 3 ? 42 : _context.t0 === 4 ? 44 : _context.t0 === 5 ? 46 : _context.t0 === 6 ? 48 : 52;
+                break;
+
+              case 38:
+                if (this.remainingRowA > 0) {
+                  formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
+                  console.warn(formattedColG);
+                  /* Draw A */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
+                    x: START_X,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw B */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#b".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw C */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
+                    x: START_X + xOffset * 2 - 10,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw D */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#d".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 3 - 7,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw E */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw F */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 17 - 10,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                  /* Draw G */
+
+                  firstPage.drawText(formattedColG, _objectSpread({
+                    x: START_X + xOffset * 6 + 10,
+                    y: height / 2 + 54
+                  }, baseOptions));
+                }
+
+                return _context.abrupt("break", 52);
+
+              case 40:
+                if (this.remainingRowB > 0) {
+                  _formattedColG = this.convertToStringAndAddDecimal(this.remainingRowB);
+                  console.warn(_formattedColG);
+                  /* Draw A */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
+                    x: START_X,
+                    y: height / 2 + 54 - yOffset
+                  }, baseOptions));
+                  /* Draw B */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#b".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - yOffset
+                  }, baseOptions));
+                  /* Draw C */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
+                    x: START_X + xOffset * 2 - 10,
+                    y: height / 2 + 54 - yOffset
+                  }, baseOptions));
+                  /* Draw D */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#d".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 3 - 7,
+                    y: height / 2 + 54 - yOffset
+                  }, baseOptions));
+                  /* Draw E */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
+                    y: height / 2 + 54 - yOffset
+                  }, baseOptions));
+                  /* Draw F */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
+                    y: height / 2 + 54 - yOffset
+                  }, baseOptions));
+                  /* Draw G */
+
+                  firstPage.drawText(_formattedColG, _objectSpread({
+                    x: START_X + xOffset * 6 + 10,
+                    y: height / 2 + 54 - yOffset
+                  }, baseOptions));
+                }
+
+                return _context.abrupt("break", 52);
+
+              case 42:
+                if (this.remainingRowC > 0) {
+                  _formattedColG2 = this.convertToStringAndAddDecimal(this.remainingRowC);
+                  console.warn(_formattedColG2);
+                  /* Draw A */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
+                    x: START_X,
+                    y: height / 2 + 54 - yOffset * 2
+                  }, baseOptions));
+                  /* Draw B */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#b".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - yOffset * 2
+                  }, baseOptions));
+                  /* Draw C */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
+                    x: START_X + xOffset * 2 - 10,
+                    y: height / 2 + 54 - yOffset * 2
+                  }, baseOptions));
+                  /* Draw D */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#d".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 3 - 7,
+                    y: height / 2 + 54 - yOffset * 2
+                  }, baseOptions));
+                  /* Draw E */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
+                    y: height / 2 + 54 - yOffset * 2
+                  }, baseOptions));
+                  /* Draw F */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
+                    y: height / 2 + 54 - yOffset * 2
+                  }, baseOptions));
+                  /* Draw G */
+
+                  firstPage.drawText(_formattedColG2, _objectSpread({
+                    x: START_X + xOffset * 6 + 10,
+                    y: height / 2 + 54 - yOffset * 2
+                  }, baseOptions));
+                }
+
+                return _context.abrupt("break", 52);
+
+              case 44:
+                if (this.remainingRowD > 0) {
+                  _formattedColG3 = this.convertToStringAndAddDecimal(this.remainingRowD);
+                  console.warn(_formattedColG3);
+                  /* Draw A */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
+                    x: START_X,
+                    y: height / 2 + 54 - yOffset * 3
+                  }, baseOptions));
+                  /* Draw B */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#b".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - yOffset * 3
+                  }, baseOptions));
+                  /* Draw C */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
+                    x: START_X + xOffset * 2 - 10,
+                    y: height / 2 + 54 - yOffset * 3
+                  }, baseOptions));
+                  /* Draw D */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#d".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 3 - 7,
+                    y: height / 2 + 54 - yOffset * 3
+                  }, baseOptions));
+                  /* Draw E */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
+                    y: height / 2 + 54 - yOffset * 3
+                  }, baseOptions));
+                  /* Draw F */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
+                    y: height / 2 + 54 - yOffset * 3
+                  }, baseOptions));
+                  /* Draw G */
+
+                  firstPage.drawText(_formattedColG3, _objectSpread({
+                    x: START_X + xOffset * 6 + 10,
+                    y: height / 2 + 54 - yOffset * 3
+                  }, baseOptions));
+                }
+
+                return _context.abrupt("break", 52);
+
+              case 46:
+                if (this.remainingRowE > 0) {
+                  _formattedColG4 = this.convertToStringAndAddDecimal(this.remainingRowE);
+                  console.warn(_formattedColG4);
+                  /* Draw A */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#a".concat(idx)).val()), _objectSpread({
+                    x: START_X,
+                    y: height / 2 + 54 - yOffset * 4
+                  }, baseOptions));
+                  /* Draw B */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#b".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - yOffset * 4
+                  }, baseOptions));
+                  /* Draw C */
+
+                  firstPage.drawText(this.reformatDateToForwardslash(jquery__WEBPACK_IMPORTED_MODULE_3__("#c".concat(idx)).val()), _objectSpread({
+                    x: START_X + xOffset * 2 - 10,
+                    y: height / 2 + 54 - yOffset * 4
+                  }, baseOptions));
+                  /* Draw D */
+
+                  firstPage.drawText(jquery__WEBPACK_IMPORTED_MODULE_3__("#d".concat(idx)).val(), _objectSpread({
+                    x: START_X + xOffset * 3 - 7,
+                    y: height / 2 + 54 - yOffset * 4
+                  }, baseOptions));
+                  /* Draw E */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#e".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 4 - 10,
+                    y: height / 2 + 54 - yOffset * 4
+                  }, baseOptions));
+                  /* Draw F */
+
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number(jquery__WEBPACK_IMPORTED_MODULE_3__("#f".concat(idx)).val())), _objectSpread({
+                    x: START_X + xOffset * 5 + 5,
+                    y: height / 2 + 54 - yOffset * 4
+                  }, baseOptions));
+                  /* Draw G */
+
+                  firstPage.drawText(_formattedColG4, _objectSpread({
+                    x: START_X + xOffset * 6 + 10,
+                    y: height / 2 + 54 - yOffset * 4
+                  }, baseOptions));
+                }
+
+                return _context.abrupt("break", 52);
+
+              case 48:
+                /* Map Totals and Part 2-7 */
+                total = this.convertToStringAndAddDecimal(this.rowSixTotal);
+                firstPage.drawText(total, _objectSpread({
+                  x: START_X + xOffset * 6 + 10,
+                  y: height / 2 + 54 - yOffset * 5
+                }, baseOptions));
+                /*P2-7*/
+
+                firstPage.drawText(total, _objectSpread({
+                  x: START_X + xOffset * 6 - 5,
+                  y: height / 2 + 54 - yOffset * 7 - 5
+                }, baseOptions));
+                return _context.abrupt("break", 52);
+
+              case 52:
+                idx++;
+                _context.next = 33;
+                break;
+
+              case 55:
+                /* Draw 8 */
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), _objectSpread({
+                  x: START_X + xOffset * 4 - 10,
+                  y: height / 2 + 54 - yOffset * 10 + 1
+                }, baseOptions));
+                /* Draw 9 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoNine), _objectSpread({
+                  x: START_X + xOffset * 4 - 10,
+                  y: height / 2 + 54 - yOffset * 13 + 7
+                }, baseOptions));
+                /* Draw 10 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine), _objectSpread({
+                  x: START_X + xOffset * 4 - 10,
+                  y: height / 2 + 54 - yOffset * 15 + 13
+                }, baseOptions));
+                /* Draw 10 CHECKBOX 1 IF Selected */
+
+                if (Number(this.partTwoOptional) === 1) {
+                  firstPage.drawText('X', _objectSpread({
+                    x: START_X + xOffset * 2 + 32,
+                    y: height / 2 + 54 - yOffset * 17 + 17
+                  }, baseOptionsLG));
+                }
+                /* Draw 10 CHECKBOX 2 IF Selected */
+
+
+                if (Number(this.partTwoOptional) === 2) {
+                  firstPage.drawText('X', _objectSpread({
+                    x: START_X + xOffset - 23,
+                    y: height / 2 + 54 - yOffset * 17 + 3
+                  }, baseOptionsLG));
+                }
+                /* Draw 11 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine * .50), _objectSpread({
+                  x: START_X + xOffset * 6 - 10,
+                  y: height / 2 + 54 - yOffset * 18 + 6
+                }, baseOptions));
+                /* Draw 12 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoGreaterThan), _objectSpread({
+                  x: START_X + xOffset * 6 - 10,
+                  y: height / 2 + 54 - yOffset * 20 + 5
+                }, baseOptions));
                 /* Save report and Download*/
 
-                _context.next = 28;
+                _context.next = 64;
                 return pdfDoc.save();
 
-              case 28:
+              case 64:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
                 /* TODO Clear out the form */
 
-              case 30:
+              case 66:
               case "end":
                 return _context.stop();
             }
@@ -2844,6 +3326,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var ein_mutated = this.ein.replace(' - ', '');
       this.ein = ein_mutated.split('');
       return true;
+    },
+    convertToStringAndAddDecimal: function convertToStringAndAddDecimal(columnG) {
+      var formatToString = columnG.toString();
+      var formatToCurrency = formatToString.includes('.') ? formatToString : formatToString += '.00';
+      return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    },
+    reformatDateToForwardslash: function reformatDateToForwardslash(d) {
+      return d.replace(/-/g, '/');
     }
   }
 });
@@ -61287,7 +61777,11 @@ var render = function() {
       _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-7" }, [
-            _c("p", [_vm._v(_vm._s(_vm.limitEIN))]),
+            _vm._v(
+              "\n                    " +
+                _vm._s(_vm.limitEIN) +
+                "\n                    "
+            ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c(
@@ -61310,7 +61804,6 @@ var render = function() {
                   maxlength: "12",
                   minlength: "12",
                   type: "text",
-                  name: "",
                   placeholder: "",
                   "aria-describedby": "helpId"
                 },
@@ -61323,13 +61816,7 @@ var render = function() {
                     _vm.ein = $event.target.value
                   }
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "small",
-                { staticClass: "text-muted", attrs: { id: "helpId" } },
-                [_vm._v("Help text")]
-              )
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-group mt-3" }, [
@@ -61359,16 +61846,7 @@ var render = function() {
                     _vm.name = $event.target.value
                   }
                 }
-              }),
-              _vm._v(" "),
-              _c(
-                "small",
-                {
-                  staticClass: "form-text text-muted",
-                  attrs: { id: "helpId" }
-                },
-                [_vm._v("Help text")]
-              )
+              })
             ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-check mt-3" }, [
@@ -61621,7 +62099,30 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(8, true),
+                    _c("td", [
+                      _c(
+                        "select",
+                        {
+                          staticClass: "mt-3 form-control",
+                          attrs: { id: "b" + index }
+                        },
+                        [
+                          _c(
+                            "option",
+                            {
+                              attrs: { disabled: "", value: "", selected: "" }
+                            },
+                            [_vm._v("Select ...")]
+                          ),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("1040")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("1040EZ")]),
+                          _vm._v(" "),
+                          _c("option", [_vm._v("1040A")])
+                        ]
+                      )
+                    ]),
                     _vm._v(" "),
                     _c(
                       "td",
@@ -61638,17 +62139,583 @@ var render = function() {
                       1
                     ),
                     _vm._v(" "),
-                    _vm._m(9, true),
+                    _c("td", [
+                      index === 1
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND1) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d1,
+                                  expression: "einUsed.d1"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d1 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d1",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 2
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND2) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d2,
+                                  expression: "einUsed.d2"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d2 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d2",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 3
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND3) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d3,
+                                  expression: "einUsed.d3"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d3 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d3",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 4
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND4) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d4,
+                                  expression: "einUsed.d4"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d4 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d4",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 5
+                        ? _c("div", [
+                            _vm._v(
+                              "\n                            " +
+                                _vm._s(_vm.limitEIND5) +
+                                "\n                            "
+                            ),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.einUsed.d5,
+                                  expression: "einUsed.d5"
+                                }
+                              ],
+                              staticClass: "form-control mt-3",
+                              attrs: {
+                                maxlength: "10",
+                                minlength: "10",
+                                type: "text",
+                                id: "d" + index
+                              },
+                              domProps: { value: _vm.einUsed.d5 },
+                              on: {
+                                input: function($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.einUsed,
+                                    "d5",
+                                    $event.target.value
+                                  )
+                                }
+                              }
+                            })
+                          ])
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm._m(10, true),
+                    _c("td", [
+                      index === 1
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e1,
+                                expression: "amountFromForm.e1"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e1 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e1",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 2
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e2,
+                                expression: "amountFromForm.e2"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e2 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 3
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e3,
+                                expression: "amountFromForm.e3"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e3 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e3",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 4
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e4,
+                                expression: "amountFromForm.e4"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e4 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e4",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 5
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountFromForm.e5,
+                                expression: "amountFromForm.e5"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "e" + index,
+                              name: "",
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountFromForm.e5 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountFromForm,
+                                  "e5",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm._m(11, true),
+                    _c("td", { attrs: { colspan: "1" } }, [
+                      index === 1
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f1,
+                                expression: "amountOfCredit.f1"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f1 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f1",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 2
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f2,
+                                expression: "amountOfCredit.f2"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f2 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f2",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 3
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f3,
+                                expression: "amountOfCredit.f3"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f3 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f3",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 4
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f4,
+                                expression: "amountOfCredit.f4"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f4 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f4",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e(),
+                      _vm._v(" "),
+                      index === 5
+                        ? _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.amountOfCredit.f5,
+                                expression: "amountOfCredit.f5"
+                              }
+                            ],
+                            staticClass: "form-control mt-3",
+                            attrs: {
+                              type: "text",
+                              id: "f" + index,
+                              placeholder: ""
+                            },
+                            domProps: { value: _vm.amountOfCredit.f5 },
+                            on: {
+                              input: function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.amountOfCredit,
+                                  "f5",
+                                  $event.target.value
+                                )
+                              }
+                            }
+                          })
+                        : _vm._e()
+                    ]),
                     _vm._v(" "),
-                    _vm._m(12, true)
+                    _c("td", [
+                      _c("div", { staticClass: "mt-4" }, [
+                        index === 1
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowA))
+                            ])
+                          : index === 2
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowB))
+                            ])
+                          : index === 3
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowC))
+                            ])
+                          : index === 4
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowD))
+                            ])
+                          : index === 5
+                          ? _c("b", { attrs: { id: "g" + index } }, [
+                              _vm._v(_vm._s(_vm.remainingRowE))
+                            ])
+                          : _vm._e()
+                      ])
+                    ])
                   ])
                 }),
                 _vm._v(" "),
-                _vm._m(13)
+                _c("tr", [
+                  _vm._m(8),
+                  _vm._v(" "),
+                  _c(
+                    "td",
+                    {
+                      staticClass: "bg-dark text-white font-weight-bold",
+                      attrs: { colspan: "2" }
+                    },
+                    [
+                      _vm._v(
+                        "\n                        " +
+                          _vm._s(_vm.rowSixTotal) +
+                          "\n                    "
+                      )
+                    ]
+                  )
+                ])
               ],
               2
             )
@@ -61660,17 +62727,163 @@ var render = function() {
         "div",
         { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
         [
-          _vm._m(14),
+          _vm._m(9),
           _vm._v(" "),
           _vm._l(_vm.partTwoFieldInfo, function(info, index) {
             return _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-8 bg-light p-2" }, [
-                _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index))]),
+                _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index + 7))]),
                 _vm._v(" " + _vm._s(info) + "\n\n                    "),
-                index === 4 ? _c("div", [_vm._m(15, true)]) : _vm._e()
+                index === 4
+                  ? _c("div", [
+                      _c("div", { staticClass: "form-check mt-3" }, [
+                        _c(
+                          "label",
+                          { staticClass: "form-check-label d-block mt-2" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.partTwoOptional,
+                                  expression: "partTwoOptional"
+                                }
+                              ],
+                              staticClass: "form-check-input",
+                              attrs: {
+                                type: "radio",
+                                id: "p2b1",
+                                value: "1",
+                                name: "checkThisBox"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.partTwoOptional, "1")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.partTwoOptional = "1"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("b", [
+                              _vm._v(
+                                "Check this box if you're a third-party payer of sick pay"
+                              )
+                            ])
+                          ]
+                        ),
+                        _vm._v(" "),
+                        _c(
+                          "label",
+                          { staticClass: "form-check-label d-block mt-2" },
+                          [
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.partTwoOptional,
+                                  expression: "partTwoOptional"
+                                }
+                              ],
+                              staticClass: "form-check-input",
+                              attrs: {
+                                type: "radio",
+                                id: "p2b2",
+                                value: "2",
+                                name: "checkThisBox"
+                              },
+                              domProps: {
+                                checked: _vm._q(_vm.partTwoOptional, "2")
+                              },
+                              on: {
+                                change: function($event) {
+                                  _vm.partTwoOptional = "2"
+                                }
+                              }
+                            }),
+                            _vm._v(" "),
+                            _c("b", [
+                              _vm._v(
+                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
+                              )
+                            ])
+                          ]
+                        )
+                      ])
+                    ])
+                  : _vm._e()
               ]),
               _vm._v(" "),
-              _vm._m(16, true)
+              _c("div", { staticClass: "col-4 text-center p-2 my-auto" }, [
+                index === 0
+                  ? _c("div", { staticClass: "font-weight-bold" }, [
+                      _vm._v(_vm._s(_vm.rowSixTotal))
+                    ])
+                  : index === 1
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.partTwoEight,
+                            expression: "partTwoEight"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.partTwoEight },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.partTwoEight = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  : index === 2
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.partTwoNine,
+                            expression: "partTwoNine"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: { type: "text" },
+                        domProps: { value: _vm.partTwoNine },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.partTwoNine = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  : index === 3
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _vm._v(_vm._s(_vm.sumOfPartTwoEightAndNine))
+                    ])
+                  : index === 4
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _vm._v(_vm._s(_vm.partTwoLineElevenPercentage))
+                    ])
+                  : index === 5
+                  ? _c("div", { staticClass: "form-group" }, [
+                      _vm._v(_vm._s(_vm.partTwoGreaterThan))
+                    ])
+                  : _vm._e()
+              ])
             ])
           })
         ],
@@ -61795,7 +63008,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("th", [
+        _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
             "(b)\n                        Income\n                        tax return\n                        filed that\n                        included\n                        Form 6765\n                    "
           )
@@ -61807,7 +63020,7 @@ var staticRenderFns = [
           )
         ]),
         _vm._v(" "),
-        _c("th", { attrs: { width: "12.5%" } }, [
+        _c("th", { attrs: { width: "14.5%" } }, [
           _vm._v(
             "(d)\n                        EIN\n                        used on\n                        Form 6765\n                    "
           )
@@ -61837,69 +63050,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("td", { staticClass: "my-auto" }, [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", { attrs: { colspan: "1" } }, [
-      _c("input", {
-        staticClass: "form-control mt-3",
-        attrs: { type: "text", name: "", placeholder: "" }
-      })
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("td", [
-      _c("div", { staticClass: "mt-4" }, [_c("b", [_vm._v("Auto Calc")])])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("tr", [
-      _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
-        _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
-        _vm._v(
-          "Add lines 1(g) through 5(g) and enter the total here\n                    "
-        )
-      ]),
-      _vm._v(" "),
-      _c("td", { staticClass: "bg-success ", attrs: { colspan: "2" } }, [
-        _vm._v("\n                        Total\n                    ")
-      ])
+    return _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
+      _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
+      _vm._v(
+        "Add lines 1(g) through 5(g) and enter the total here\n                    "
+      )
     ])
   },
   function() {
@@ -61910,54 +63065,6 @@ var staticRenderFns = [
       _vm._v("Part 2 "),
       _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
         _vm._v("Determine the credit that you can use this period.")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-check mt-3" }, [
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "checkThisBox" }
-        }),
-        _vm._v(" "),
-        _c("b", [
-          _vm._v("Check this box if you're a third-party payer of sick pay")
-        ])
-      ]),
-      _vm._v(" "),
-      _c("label", { staticClass: "form-check-label d-block mt-2" }, [
-        _c("input", {
-          staticClass: "form-check-input",
-          attrs: { type: "radio", name: "checkThisBox" }
-        }),
-        _vm._v(" "),
-        _c("b", [
-          _vm._v(
-            "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
-          )
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-4 text-center p-2 my-auto" }, [
-      _c("div", { staticClass: "form-group" }, [
-        _c("input", {
-          staticClass: "form-control",
-          attrs: {
-            type: "text",
-            name: "",
-            "aria-describedby": "helpId",
-            placeholder: ""
-          }
-        })
       ])
     ])
   }
@@ -62027,9 +63134,7 @@ var render = function() {
                     _c("img", {
                       staticClass: "img-fluid",
                       attrs: { src: _vm.t1, alt: "" }
-                    }),
-                    _vm._v(" "),
-                    _c("a", { attrs: { href: _vm.t1 } }, [_vm._v("View")])
+                    })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-9 my-auto" }, [

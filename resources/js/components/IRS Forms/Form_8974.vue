@@ -23,20 +23,18 @@
             <div class="col-lg-9 col-12 bg-white mt-4 p-3">
                 <div class="row">
                     <div class="col-7">
-                        <p>{{ limitEIN }}</p>
+                        {{ limitEIN }}
                         <!--EIN-->
                         <div class="form-group">
                             <label for="" class="bg-dark p-2 text-white">Employer identification number (EIN)</label>
-                            <input maxlength="12" minlength="12" type="text" v-model="ein" name=""
+                            <input maxlength="12" minlength="12" type="text" v-model="ein"
                                    class="form-control mt-2" placeholder="" aria-describedby="helpId">
-                            <small id="helpId" class="text-muted">Help text</small>
                         </div>
 
                         <!--Name-->
                         <div class="form-group mt-3">
                             <label for="" class="bg-dark p-2 text-white">Name (not your trade name)</label>
                             <input type="text" class="form-control mt-2" v-model="name">
-                            <small id="helpId" class="form-text text-muted">Help text</small>
                         </div>
 
                         <!--Credity Type-->
@@ -109,7 +107,7 @@
                             of income
                             tax period
                         </th>
-                        <th>(b)
+                        <th width="12.5%">(b)
                             Income
                             tax return
                             filed that
@@ -121,7 +119,7 @@
                             tax return
                             was filed
                         </th>
-                        <th width="12.5%">(d)
+                        <th width="14.5%">(d)
                             EIN
                             used on
                             Form 6765
@@ -157,24 +155,60 @@
                         <td scope="row" colspan="1">
                             <flatpickr timeFormat="m-d-Y" :id="`a${index}`" fontSize=".5rem"/>
                         </td>
-                        <td class="my-auto">
-                            <input type="text" class="form-control mt-3" name="">
+                        <td>
+                            <select class="mt-3 form-control" :id="`b${index}`">
+                                <option disabled value="" selected>Select ...</option>
+                                <option>1040</option>
+                                <option>1040EZ</option>
+                                <option>1040A</option>
+                            </select>
                         </td>
                         <td scope="row">
                             <flatpickr timeFormat="m-d-Y" :id="`c${index}`" fontSize=".5rem"/>
                         </td>
                         <td>
-                            <input type="text" class="form-control mt-3" name="" placeholder="">
+                            <div v-if="index===1">
+                                {{ limitEIND1 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d1">
+                            </div>
+                            <div v-if="index===2">
+                                {{ limitEIND2 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d2">
+                            </div>
+                            <div v-if="index===3">
+                                {{ limitEIND3 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d3">
+                            </div>
+                            <div v-if="index===4">
+                                {{ limitEIND4 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d4">
+                            </div>
+                            <div v-if="index===5">
+                                {{ limitEIND5 }}
+                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d5">
+                            </div>
                         </td>
                         <td>
-                            <input type="text" class="form-control mt-3" name="" placeholder="">
+                            <input v-if="index === 1" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e1" name="" placeholder="">
+                            <input v-if="index === 2" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e2" name="" placeholder="">
+                            <input v-if="index === 3" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e3" name="" placeholder="">
+                            <input v-if="index === 4" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e4" name="" placeholder="">
+                            <input v-if="index === 5" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e5" name="" placeholder="">
                         </td>
                         <td colspan="1">
-                            <input type="text" class="form-control mt-3" name="" placeholder="">
+                            <input v-if="index === 1" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f1" placeholder="">
+                            <input v-if="index === 2" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f2" placeholder="">
+                            <input v-if="index === 3" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f3" placeholder="">
+                            <input v-if="index === 4" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f4" placeholder="">
+                            <input v-if="index === 5" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f5" placeholder="">
                         </td>
                         <td>
                             <div class="mt-4">
-                                <b>Auto Calc</b>
+                                <b v-if="index === 1" :id="`g${index}`">{{ remainingRowA }}</b>
+                                <b v-else-if="index === 2" :id="`g${index}`">{{ remainingRowB }}</b>
+                                <b v-else-if="index === 3" :id="`g${index}`">{{ remainingRowC }}</b>
+                                <b v-else-if="index === 4" :id="`g${index}`">{{ remainingRowD }}</b>
+                                <b v-else-if="index === 5" :id="`g${index}`">{{ remainingRowE }}</b>
                             </div>
                         </td>
                     </tr>
@@ -183,8 +217,8 @@
                         <td colspan="6" class="text-left">
                             <b class="mr-4">6</b>Add lines 1(g) through 5(g) and enter the total here
                         </td>
-                        <td colspan="2" class="bg-success ">
-                            Total
+                        <td colspan="2" class="bg-dark text-white font-weight-bold">
+                            {{ rowSixTotal }}
                         </td>
                     </tr>
                     </tbody>
@@ -198,17 +232,17 @@
                 </div>
                 <div v-for="(info, index) in partTwoFieldInfo" class="row">
                     <div class="col-8 bg-light p-2">
-                        <b class="mr-2">{{ index }}</b> {{ info }}
+                        <b class="mr-2">{{ index + 7 }}</b> {{ info }}
 
                         <div v-if="index === 4">
                             <!--CHECK THIS BOX-->
                             <div class="form-check mt-3">
                                 <label class="form-check-label d-block mt-2">
-                                    <input type="radio" class="form-check-input" name="checkThisBox">
+                                    <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b1" value="1" name="checkThisBox">
                                     <b>Check this box if you're a third-party payer of sick pay</b>
                                 </label>
                                 <label class="form-check-label d-block mt-2">
-                                    <input type="radio" class="form-check-input" name="checkThisBox">
+                                    <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b2" value="2" name="checkThisBox">
                                     <b>Check this box if you received a Section 3121(q) Notice and Demand. See the
                                         instructions before completing line 11</b>
                                 </label>
@@ -218,10 +252,16 @@
 
                     </div>
                     <div class="col-4 text-center p-2 my-auto">
-                        <div class="form-group">
-                            <input type="text" class="form-control" name="" aria-describedby="helpId"
-                                   placeholder="">
+                        <div v-if="index === 0" class="font-weight-bold">{{ rowSixTotal }}</div>
+                        <div v-else-if="index === 1" class="form-group">
+                            <input type="text" class="form-control" v-model="partTwoEight">
                         </div>
+                        <div v-else-if="index === 2" class="form-group">
+                            <input type="text" class="form-control" v-model="partTwoNine">
+                        </div>
+                        <div v-else-if="index === 3" class="form-group">{{ sumOfPartTwoEightAndNine }}</div>
+                        <div v-else-if="index === 4" class="form-group">{{ partTwoLineElevenPercentage }}</div>
+                        <div v-else-if="index === 5" class="form-group">{{ partTwoGreaterThan }}</div>
                     </div>
                 </div>
             </div>
@@ -251,9 +291,57 @@
         name: '',
         reportForThisQuarter: null,
         calendarYear: '',
+        endingDateIncomeTax: {
+          a1: null,
+          a2: null,
+          a3: null,
+          a4: null,
+          a5: null,
+        },
+        incomeTaxReturntype: {
+          b1: null,
+          b2: null,
+          b3: null,
+          b4: null,
+          b5: null,
+        },
+        incomeTaxDateFiled: {
+          c1: null,
+          c2: null,
+          c3: null,
+          c4: null,
+          c5: null,
+        },
+        einUsed: {
+          d1: '',
+          d2: '',
+          d3: '',
+          d4: '',
+          d5: '',
+        },
+        amountFromForm: {
+          e1: null,
+          e2: null,
+          e3: null,
+          e4: null,
+          e5: null,
+        },
+        amountOfCredit: {
+          f1: null,
+          f2: null,
+          f3: null,
+          f4: null,
+          f5: null,
+        },
+        total: null,
+        partTwoEight: null,
+        partTwoNine: null,
+        thirdPartyPayer: null,
+        partTwoOptional: null,
+        noticeOfDemand: null,
+        partTwoEleven: null,
         /* ######################################### */
         maxRows: [1, 2, 3, 4, 5],
-        partTwoIds: ['p2_7,p2_8,p2_9,p2_10,p2_11,p2_12'],
         partTwoFieldInfo: [
           'Enter the amount from Part 1, line 6(g) .',
           'Enter the amount from Form 941 (941-PR or 941-SS),\n' +
@@ -276,8 +364,54 @@
       limitEIN: function () {
         if (this.ein.length === 2)
           this.ein += ' - ';
-        // console.log(this.ein.slice(0,2), ' - ', this.ein.slice(3));
-        // return (this.ein.slice(0,2) + ' - ' + this.ein.slice(3));
+      },
+      limitEIND1: function () {
+        if (this.einUsed.d1.length === 2)
+          this.einUsed.d1 += '-';
+      },
+      limitEIND2: function () {
+        if (this.einUsed.d2.length === 2)
+          this.einUsed.d2 += '-';
+      },
+      limitEIND3: function () {
+        if (this.einUsed.d3.length === 2)
+          this.einUsed.d3 += '-';
+      },
+      limitEIND4: function () {
+        if (this.einUsed.d4.length === 2)
+          this.einUsed.d4 += '-';
+      },
+      limitEIND5: function () {
+        if (this.einUsed.d5.length === 2)
+          this.einUsed.d5 += '-';
+      },
+      remainingRowA: function() {
+        return Number((this.amountFromForm.e1 - this.amountOfCredit.f1).toFixed(2));
+      },
+      remainingRowB: function() {
+        return Number((this.amountFromForm.e2 - this.amountOfCredit.f2).toFixed(2));
+      },
+      remainingRowC: function() {
+        return Number((this.amountFromForm.e3 - this.amountOfCredit.f3).toFixed(2));
+      },
+      remainingRowD: function() {
+        return Number((this.amountFromForm.e4 - this.amountOfCredit.f4).toFixed(2));
+      },
+      remainingRowE: function() {
+        return Number((this.amountFromForm.e5 - this.amountOfCredit.f5).toFixed(2));
+      },
+      rowSixTotal: function () {
+        const rowTotals = [this.remainingRowA, this.remainingRowB, this.remainingRowC, this.remainingRowD, this.remainingRowE];
+        return (rowTotals.reduce((a,b) => a+b,0)).toFixed(2);
+      },
+      sumOfPartTwoEightAndNine: function () {
+        return (Number(this.partTwoEight) + Number(this.partTwoNine)).toFixed(2);
+      },
+      partTwoGreaterThan: function(){
+        return ( this.rowSixTotal > this.sumOfPartTwoEightAndNine ) ? this.sumOfPartTwoEightAndNine : this.rowSixTotal;
+      },
+      partTwoLineElevenPercentage: function () {
+        return this.sumOfPartTwoEightAndNine * .50
       }
     },
     methods: {
@@ -292,8 +426,6 @@
           /* Prompt Error */
           console.error('Form errors!');
         } else {
-          console.log(this.reportForThisQuarter);
-
           /* Write all contents to Final PDF */
           const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
 
@@ -303,6 +435,21 @@
           const pages = pdfDoc.getPages();
           const firstPage = pages[0];
           const {width, height} = firstPage.getSize();
+          const baseOptions = {
+            size: 10,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          };
+          const baseOptionsSM = {
+            size: 8,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          };
+          const baseOptionsLG = {
+            size: 15,
+            font: helveticaFont,
+            color: rgb(0.95, 0.1, 0.1),
+          };
 
           /* Draw EIN */
           for (let i = 0; i < 9; i++) {
@@ -311,20 +458,16 @@
             firstPage.drawText(this.ein[i], {
               x: ein_XCoord[i],
               y: height / 2 + 312.5,
-              size: 8,
-              font: helveticaFont,
-              color: rgb(0.95, 0.1, 0.1),
+              ...baseOptionsSM
             });
 
           }
 
           /*Draw Name*/
           firstPage.drawText(this.name, {
-            x: 150,
+            x: 145,
             y: height / 2 + 288,
-            size: 8,
-            font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
+            ...baseOptionsSM
           });
 
           /*Draw Credit Type*/
@@ -332,9 +475,7 @@
           firstPage.drawText('X', {
             x: 180,
             y: height / 2 + ctYCoord[this.creditTypeBox-1],
-            size: 15,
-            font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
+            ...baseOptionsLG
           });
 
           /* Draw Report For This Quarter */
@@ -342,18 +483,343 @@
             firstPage.drawText('X', {
               x: 424,
               y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
-              size: 15,
-              font: helveticaFont,
-              color: rgb(0.95, 0.1, 0.1),
+              ...baseOptionsLG
             });
 
           /*Draw Calendar year*/
-          firstPage.drawText(this.calendarYear, {
+          firstPage.drawText($('#calendar_year_select').val(), {
             x: 110,
             y: height / 2 + 180,
-            size: 8,
-            font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
+            ...baseOptionsSM
+          });
+
+          /* Draw Table Rows <Only draw rows where column (g) has a value! */
+          /* Checks
+           * 1. If value is a double
+           * 2. If NOT, fill in 00 for remainder change
+           * X offset is 70
+           * X offset for b and d is 60
+           * Y offset is 18
+           * */
+          // 440
+          // }
+          const xOffset = 70;
+          const xOffsetSp = 60;
+          const yOffset = 18;
+          const START_X = 80;
+
+          for(let idx=1; idx <= 6; idx++){
+            console.warn('LOOP ON ', idx);
+            switch (idx) {
+              case 1:
+                if (this.remainingRowA > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
+                    x: START_X,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
+                    x: START_X + (xOffset*4) - 10,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
+                    x: START_X + (xOffset*5) + 17 - 10,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 10,
+                    y: height / 2 + 54,
+                    ...baseOptions
+                  });
+                }
+                break;
+              case 2:
+                if (this.remainingRowB > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowB);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
+                    x: START_X,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
+                    x: START_X + (xOffset*4) - 10,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
+                    x: START_X + (xOffset*5) + 5,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 10,
+                    y: height / 2 + 54 - yOffset,
+                    ...baseOptions
+                  });
+                }
+                break;
+              case 3:
+                if (this.remainingRowC > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowC);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
+                    x: START_X,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
+                    x: START_X + (xOffset*4) - 10,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
+                    x: START_X + (xOffset*5) + 5,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 10,
+                    y: height / 2 + 54 - (yOffset*2),
+                    ...baseOptions
+                  });
+                }
+                break;
+              case 4:
+                if (this.remainingRowD > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowD);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
+                    x: START_X,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
+                    x: START_X + (xOffset*4) - 10,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
+                    x: START_X + (xOffset*5) + 5,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 10,
+                    y: height / 2 + 54 - (yOffset*3),
+                    ...baseOptions
+                  });
+                }
+                break;
+              case 5:
+                if (this.remainingRowE > 0) {
+                  let formattedColG = this.convertToStringAndAddDecimal(this.remainingRowE);
+                  console.warn(formattedColG);
+                  /* Draw A */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
+                    x: START_X,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw B */
+                  firstPage.drawText($(`#b${idx}`).val(), {
+                    x: START_X + xOffset,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw C */
+                  firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
+                    x: START_X + (xOffset*2) - 10,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw D */
+                  firstPage.drawText($(`#d${idx}`).val(), {
+                    x: START_X + (xOffset*3) - 7,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw E */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
+                    x: START_X + (xOffset*4) - 10,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw F */
+                  firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
+                    x: START_X + (xOffset*5) + 5,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                  /* Draw G */
+                  firstPage.drawText(formattedColG, {
+                    x: START_X + (xOffset*6) + 10,
+                    y: height / 2 + 54 - (yOffset*4),
+                    ...baseOptions
+                  });
+                }
+                break;
+              case 6:
+                /* Map Totals and Part 2-7 */
+                const total = this.convertToStringAndAddDecimal(this.rowSixTotal);
+                firstPage.drawText(total, {
+                  x: START_X + (xOffset*6) + 10,
+                  y: height / 2 + 54 - (yOffset*5),
+                  ...baseOptions
+                });
+                /*P2-7*/
+                firstPage.drawText(total, {
+                  x: START_X + (xOffset*6) - 5,
+                  y: height / 2 + 54 - (yOffset*7) - 5,
+                  ...baseOptions
+                });
+                break;
+            }
+          }
+
+          /* Draw 8 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), {
+            x: START_X + (xOffset*4) - 10,
+            y: height / 2 + 54 - (yOffset*10) + 1,
+            ...baseOptions
+          });
+
+          /* Draw 9 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoNine), {
+            x: START_X + (xOffset*4) - 10,
+            y: height / 2 + 54 - (yOffset*13) + 7,
+            ...baseOptions
+          });
+
+          /* Draw 10 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine), {
+            x: START_X + (xOffset*4) - 10,
+            y: height / 2 + 54 - (yOffset*15) + 13,
+            ...baseOptions
+          });
+
+          /* Draw 10 CHECKBOX 1 IF Selected */
+          if(Number(this.partTwoOptional) === 1 ) {
+            firstPage.drawText('X', {
+              x: START_X + (xOffset*2) + 32,
+              y: height / 2 + 54 - (yOffset*17) + 17,
+              ...baseOptionsLG
+            });
+          }
+
+          /* Draw 10 CHECKBOX 2 IF Selected */
+          if(Number(this.partTwoOptional) === 2 ) {
+            firstPage.drawText('X', {
+              x: START_X + (xOffset) - 23,
+              y: height / 2 + 54 - (yOffset*17) + 3,
+              ...baseOptionsLG
+            });
+          }
+
+          /* Draw 11 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine * .50), {
+            x: START_X + (xOffset*6) - 10,
+            y: height / 2 + 54 - (yOffset*18) + 6,
+            ...baseOptions
+          });
+
+          /* Draw 12 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoGreaterThan), {
+            x: START_X + (xOffset*6) - 10,
+            y: height / 2 + 54 - (yOffset*20) + 5,
+            ...baseOptions
           });
 
           /* Save report and Download*/
@@ -390,6 +856,15 @@
         let ein_mutated = this.ein.replace(' - ', '');
         this.ein = ein_mutated.split('');
         return true;
+      },
+      convertToStringAndAddDecimal(columnG) {
+        let formatToString = columnG.toString();
+        let formatToCurrency = (formatToString.includes('.')) ? formatToString : formatToString+='.00';
+        return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+
+      },
+      reformatDateToForwardslash(d){
+        return d.replace(/-/g, '/');
       }
     }
   }
