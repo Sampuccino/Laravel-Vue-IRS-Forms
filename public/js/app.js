@@ -3366,6 +3366,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     reformatDateToForwardslash: function reformatDateToForwardslash(d) {
       return d.replace(/-/g, '/');
+    },
+    clearFields: function clearFields() {
+      this.ein = this.name = this.calendarYear = '';
+      this.creditTypeBox = this.reportForThisQuarter = this.endingDateIncomeTax = this.incomeTaxReturntype = this.incomeTaxDateFiled = this.total;
+      this.partTwoEight = this.partTwoNine = this.thirdPartyPayer = this.partTwoOptional = this.noticeOfDemand = this.partTwoEleven = this.validation.ein = this.validation.name = this.validation.partOne = this.validation.partTwo = null;
     }
   }
 });
@@ -61814,7 +61819,21 @@ var render = function() {
           )
         ]),
         _vm._v(" "),
-        _vm._m(0),
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger d-inline clear",
+              staticStyle: { width: "68.77px" },
+              on: {
+                click: function($event) {
+                  return _vm.clearFields()
+                }
+              }
+            },
+            [_vm._v("Clear")]
+          )
+        ]),
         _vm._v(" "),
         _c("div", [
           _c(
@@ -61995,7 +62014,7 @@ var render = function() {
             { staticClass: "col-5" },
             [
               _c("div", { staticClass: "form-check" }, [
-                _vm._m(1),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("label", { staticClass: "form-check-label d-block mt-2" }, [
                   _c("input", {
@@ -62102,7 +62121,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(2),
+              _vm._m(1),
               _vm._v(" "),
               _c("flatpickr", {
                 attrs: { timeFormat: "Y", id: "calendar_year_select" },
@@ -62121,13 +62140,13 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-12 col-12 bg-white mt-4 p-3" }, [
-        _vm._m(3),
+        _vm._m(2),
         _vm._v(" "),
         _c(
           "table",
           { staticClass: "table table-striped table-responsive text-center" },
           [
-            _vm._m(4),
+            _vm._m(3),
             _vm._v(" "),
             _c(
               "tbody",
@@ -62755,7 +62774,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("tr", [
-                  _vm._m(5),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -62783,7 +62802,7 @@ var render = function() {
         "div",
         { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
         [
-          _vm._m(6),
+          _vm._m(5),
           _vm._v(" "),
           _vm._l(_vm.partTwoFieldInfo, function(info, index) {
             return _c("div", { staticClass: "row" }, [
@@ -62955,21 +62974,6 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-danger d-inline clear",
-          staticStyle: { width: "68.77px" }
-        },
-        [_vm._v("Clear")]
-      )
-    ])
-  },
   function() {
     var _vm = this
     var _h = _vm.$createElement

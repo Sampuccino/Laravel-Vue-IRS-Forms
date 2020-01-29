@@ -10,7 +10,7 @@
             </div>
 
             <div>
-                <button class="btn btn-danger d-inline clear" style="width: 68.77px">Clear</button>
+                <button class="btn btn-danger d-inline clear" style="width: 68.77px" @click="clearFields()">Clear</button>
             </div>
 <!--            <div>-->
 <!--                <button class="btn btn-warning d-inline" style="width: 68.77px">Color</button>-->
@@ -896,6 +896,18 @@
       },
       reformatDateToForwardslash(d){
         return d.replace(/-/g, '/');
+      },
+      clearFields() {
+        this.ein = this.name = this.calendarYear = '';
+        this.creditTypeBox = this.reportForThisQuarter = this.endingDateIncomeTax = this.incomeTaxReturntype =
+        this.incomeTaxDateFiled = this.total;
+        this.partTwoEight =
+        this.partTwoNine =
+        this.thirdPartyPayer =
+        this.partTwoOptional =
+        this.noticeOfDemand =
+        this.partTwoEleven =
+        this.validation.ein = this.validation.name = this.validation.partOne = this.validation.partTwo = null;
       }
     }
   }
