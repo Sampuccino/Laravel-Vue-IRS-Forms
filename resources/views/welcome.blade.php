@@ -10,6 +10,7 @@
         <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
 
         <!-- Styles -->
+        <link href="{{asset('css/app.css')}}" rel="stylesheet">
         <style>
             html, body {
                 background-color: #fff;
@@ -81,19 +82,25 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Laravel
+                    Fast IRS-8974
                 </div>
 
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-6 my-auto">
+                            <h4>How does it work</h4>
+                            <p>Use the simple Form-8974 to easily and interactively fill out your form and export to PDF format. It includes auto calculations, number formatting and easy to use.</p>
+
+                            <h4 class="mt-3">How can I use it</h4>
+                            <p>Simply create and account and you can start your form today!</p>
+                        </div>
+                        <div class="col-6">
+                            <img src="{{asset('img/2356505.png')}}" class="img-fluid" alt="">
+                        </div>
+                    </div>
                 </div>
+
+
             </div>
         </div>
     </body>
