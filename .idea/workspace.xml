@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f57c7d6b-7fc5-421d-9cbc-5b5f57a7fa99" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Archive 2.zip" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/Archive.zip" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -253,7 +253,8 @@
       <workItem from="1580350490400" duration="1224000" />
       <workItem from="1580367052631" duration="1650000" />
       <workItem from="1580369874699" duration="12000" />
-      <workItem from="1580400489184" duration="1452000" />
+      <workItem from="1580400489184" duration="2807000" />
+      <workItem from="1580424192665" duration="120000" />
     </task>
     <servers />
   </component>
