@@ -11,10 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Route::get('/', 'HomeController@welcome');
+
+//Auth::routes();
+Route::group([
+    'middleware' => ['cors'],
+], function ($router) {
+    //Add you routes here, for example:
+    Route::get('/home', 'HomeController@index')->name('home');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

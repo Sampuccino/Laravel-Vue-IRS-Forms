@@ -2,7 +2,7 @@
     <div class="container">
         <div class="position-fixed" style="right: 1rem; bottom:1rem;">
 
-            <div class="bg-white text-center mb-3 p-2">
+            <div class="bg-dark text-center mb-3 p-2">
                 <div :class="(validation.ein) ? 'alert-success' : 'alert-danger'">EIN</div>
                 <div :class="(validation.name) ? 'alert-success' : 'alert-danger'">Name</div>
                 <div :class="(validation.partOne) ? 'alert-success' : 'alert-danger'">Part 1</div>
@@ -10,7 +10,7 @@
             </div>
 
             <div>
-                <button class="btn btn-danger d-inline clear" style="width: 68.77px" @click="clearFields()">Clear</button>
+                <button class="btn btn-danger d-inline clear" @click="clearFields()">Clear</button>
             </div>
 <!--            <div>-->
 <!--                <button class="btn btn-warning d-inline" style="width: 68.77px">Color</button>-->
@@ -166,9 +166,9 @@
                         <td>
                             <select class="mt-3 form-control" :id="`b${index}`">
                                 <option disabled value="" selected>Select ...</option>
-                                <option>1040</option>
-                                <option>1040EZ</option>
-                                <option>1040A</option>
+                                <option>1065</option>
+                                <option>1120</option>
+                                <option>1120S</option>
                             </select>
                         </td>
                         <td scope="row">
@@ -293,7 +293,8 @@
     },
     data: function () {
       return {
-        url: 'https://irsforms.dev/Filliable-Form-8974.pdf',
+        // url: 'https://irsforms.dev/Form-8974.pdf',
+        url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
         /* MAIN FORM FIELDS ######################## */
         ein: '',
         creditTypeBox: null,
@@ -421,7 +422,7 @@
         return (Number(this.partTwoEight) + Number(this.partTwoNine)).toFixed(2);
       },
       partTwoGreaterThan: function(){
-        return ( this.rowSixTotal > this.sumOfPartTwoEightAndNine ) ? this.sumOfPartTwoEightAndNine : this.rowSixTotal;
+        return ( Number(this.rowSixTotal) > Number(this.partTwoLineElevenPercentage) ) ? this.partTwoLineElevenPercentage : this.rowSixTotal;
       },
       partTwoLineElevenPercentage: function () {
         return (Number(this.sumOfPartTwoEightAndNine * .50)).toFixed(2);
@@ -466,10 +467,15 @@
           };
 
           /* Draw EIN */
+          /* All Validation Passed */
+          /* Mutate EIN */
+          /*EIN*/
+          let ein_mutated = this.ein.slice(0).replace(' - ', '');
+          ein_mutated.split('');
           for (let i = 0; i < 9; i++) {
             let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
 
-            firstPage.drawText(this.ein[i], {
+            firstPage.drawText(ein_mutated[i], {
               x: ein_XCoord[i],
               y: height / 2 + 312.5,
               ...baseOptionsSM
@@ -880,12 +886,6 @@
           return false;
         } else this.validation.partTwo = true;
 
-        /* All Validation Passed */
-        /* Mutate EIN */
-        /*EIN*/
-        let ein_mutated = this.ein.replace(' - ', '');
-        this.ein = ein_mutated.split('');
-
         return true;
       },
       convertToStringAndAddDecimal(columnG) {
@@ -916,6 +916,7 @@
 <style scoped>
     button {
         border-radius: 0;
+        width: 5rem !important;
     }
 
     .clear {

@@ -14,7 +14,14 @@ class HomeController extends Controller
      */
     public function __construct()
     {
-        $this->middleware('auth');
+//         $this->middleware('auth');
+    }
+
+    /**
+     *
+     */
+    public function welcome(){
+        return view('welcome');
     }
 
     /**
@@ -24,9 +31,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-//        dd(Storage::exists('/public/Peanut.jpeg'));
-//        echo asset('storage/Peanut.jpeg');
-//        return Storage::url('Peanut.jpeg');
         return view('home');
     }
 }
