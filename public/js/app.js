@@ -2695,6 +2695,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2771,7 +2780,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       maxRows: [1, 2, 3, 4, 5],
       partTwoFieldInfo: ['Enter the amount from Part 1, line 6(g) .', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5a, Column 2; Form 943 (943-PR), line 3; or Form\n' + '944 (944(SP)), line 4a, Column 2 ', 'Enter the amount from Form 941 (941-PR or 941-SS),\n' + 'line 5b, Column 2; or Form 944 (944(SP)), line 4b,\n' + 'Column 2', 'Add lines 8 and 9', 'Multiply line 10 by 50% (0.50).', 'Credit. Enter the smaller of line 7 or line 11. Also enter this amount on Form 941 (941-PR\n' + 'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8'],
       validation: {
-        EIN_MAX_LENGTH: 12
+        EIN_MAX_LENGTH: 12,
+        ein: null,
+        name: null,
+        partOne: null,
+        partTwo: null
       }
     };
   },
@@ -2822,7 +2835,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return this.rowSixTotal > this.sumOfPartTwoEightAndNine ? this.sumOfPartTwoEightAndNine : this.rowSixTotal;
     },
     partTwoLineElevenPercentage: function partTwoLineElevenPercentage() {
-      return this.sumOfPartTwoEightAndNine * .50;
+      return Number(this.sumOfPartTwoEightAndNine * .50).toFixed(2);
     }
   },
   methods: {
@@ -2830,7 +2843,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, baseOptions, baseOptionsSM, baseOptionsLG, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, COLOR, baseOptions, baseOptionsSM, baseOptionsLG, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -2849,7 +2862,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 66;
+                _context.next = 67;
                 break;
 
               case 6:
@@ -2873,20 +2886,21 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 pages = pdfDoc.getPages();
                 firstPage = pages[0];
                 _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0, 0, 0);
                 baseOptions = {
                   size: 10,
                   font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                  color: COLOR
                 };
                 baseOptionsSM = {
                   size: 8,
                   font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                  color: COLOR
                 };
                 baseOptionsLG = {
                   size: 15,
                   font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1)
+                  color: COLOR
                 };
                 /* Draw EIN */
 
@@ -2942,18 +2956,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 START_X = 80;
                 idx = 1;
 
-              case 33:
+              case 34:
                 if (!(idx <= 6)) {
-                  _context.next = 55;
+                  _context.next = 56;
                   break;
                 }
 
                 console.warn('LOOP ON ', idx);
                 _context.t0 = idx;
-                _context.next = _context.t0 === 1 ? 38 : _context.t0 === 2 ? 40 : _context.t0 === 3 ? 42 : _context.t0 === 4 ? 44 : _context.t0 === 5 ? 46 : _context.t0 === 6 ? 48 : 52;
+                _context.next = _context.t0 === 1 ? 39 : _context.t0 === 2 ? 41 : _context.t0 === 3 ? 43 : _context.t0 === 4 ? 45 : _context.t0 === 5 ? 47 : _context.t0 === 6 ? 49 : 53;
                 break;
 
-              case 38:
+              case 39:
                 if (this.remainingRowA > 0) {
                   formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
                   console.warn(formattedColG);
@@ -3001,9 +3015,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 52);
+                return _context.abrupt("break", 53);
 
-              case 40:
+              case 41:
                 if (this.remainingRowB > 0) {
                   _formattedColG = this.convertToStringAndAddDecimal(this.remainingRowB);
                   console.warn(_formattedColG);
@@ -3051,9 +3065,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 52);
+                return _context.abrupt("break", 53);
 
-              case 42:
+              case 43:
                 if (this.remainingRowC > 0) {
                   _formattedColG2 = this.convertToStringAndAddDecimal(this.remainingRowC);
                   console.warn(_formattedColG2);
@@ -3101,9 +3115,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 52);
+                return _context.abrupt("break", 53);
 
-              case 44:
+              case 45:
                 if (this.remainingRowD > 0) {
                   _formattedColG3 = this.convertToStringAndAddDecimal(this.remainingRowD);
                   console.warn(_formattedColG3);
@@ -3151,9 +3165,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 52);
+                return _context.abrupt("break", 53);
 
-              case 46:
+              case 47:
                 if (this.remainingRowE > 0) {
                   _formattedColG4 = this.convertToStringAndAddDecimal(this.remainingRowE);
                   console.warn(_formattedColG4);
@@ -3201,9 +3215,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 52);
+                return _context.abrupt("break", 53);
 
-              case 48:
+              case 49:
                 /* Map Totals and Part 2-7 */
                 total = this.convertToStringAndAddDecimal(this.rowSixTotal);
                 firstPage.drawText(total, _objectSpread({
@@ -3216,14 +3230,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   x: START_X + xOffset * 6 - 5,
                   y: height / 2 + 54 - yOffset * 7 - 5
                 }, baseOptions));
-                return _context.abrupt("break", 52);
+                return _context.abrupt("break", 53);
 
-              case 52:
+              case 53:
                 idx++;
-                _context.next = 33;
+                _context.next = 34;
                 break;
 
-              case 55:
+              case 56:
                 /* Draw 8 */
                 firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), _objectSpread({
                   x: START_X + xOffset * 4 - 10,
@@ -3261,7 +3275,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /* Draw 11 */
 
 
-                firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine * .50), _objectSpread({
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoLineElevenPercentage), _objectSpread({
                   x: START_X + xOffset * 6 - 10,
                   y: height / 2 + 54 - yOffset * 18 + 6
                 }, baseOptions));
@@ -3273,16 +3287,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }, baseOptions));
                 /* Save report and Download*/
 
-                _context.next = 64;
+                _context.next = 65;
                 return pdfDoc.save();
 
-              case 64:
+              case 65:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
-                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-8974-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 66:
+              case 67:
               case "end":
                 return _context.stop();
             }
@@ -3297,18 +3311,24 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return exportToPDF;
     }(),
     validateFormFields: function validateFormFields() {
-      console.warn(this.creditTypeBox);
       /* Validate fields */
 
       /* Finish computing or cleaning final output here */
 
       /*EIN validator*/
-
-      if (this.ein.length < this.validation.EIN_MAX_LENGTH) return false;
+      if (this.ein.length < this.validation.EIN_MAX_LENGTH) {
+        this.validation.ein = false;
+        return false;
+      } else this.validation.ein = true;
       /*NAME*/
 
-      if (this.name.trim().length === 0 || this.name === null) return false;
+
+      if (this.name.trim().length === 0 || this.name === null) {
+        this.validation.name = false;
+        return false;
+      } else this.validation.name = true;
       /*CREDIT TYPE*/
+
 
       if (!this.creditTypeBox) return false;
       /*Report for this quarter*/
@@ -3317,11 +3337,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       /*CALENDAR YEAR*/
 
       if (this.calendarYear.trim().length === 0 || this.calendarYear === null) return false;
+      /*PART 1*/
+
+      if (this.rowSixTotal <= 0.00 || this.rowSixTotal <= '0.00') {
+        this.validation.partOne = false;
+        return false;
+      } else this.validation.partOne = true;
+
+      if (this.sumOfPartTwoEightAndNine <= 0.00 || this.sumOfPartTwoEightAndNine <= '0.00') {
+        this.validation.partTwo = false;
+        return false;
+      } else this.validation.partTwo = true;
       /* All Validation Passed */
 
       /* Mutate EIN */
 
       /*EIN*/
+
 
       var ein_mutated = this.ein.replace(' - ', '');
       this.ein = ein_mutated.split('');
@@ -3334,6 +3366,11 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     },
     reformatDateToForwardslash: function reformatDateToForwardslash(d) {
       return d.replace(/-/g, '/');
+    },
+    clearFields: function clearFields() {
+      this.ein = this.name = this.calendarYear = '';
+      this.creditTypeBox = this.reportForThisQuarter = this.endingDateIncomeTax = this.incomeTaxReturntype = this.incomeTaxDateFiled = this.total;
+      this.partTwoEight = this.partTwoNine = this.thirdPartyPayer = this.partTwoOptional = this.noticeOfDemand = this.partTwoEleven = this.validation.ein = this.validation.name = this.validation.partOne = this.validation.partTwo = null;
     }
   }
 });
@@ -3498,14 +3535,14 @@ __webpack_require__.r(__webpack_exports__);
   data: function data() {
     return {
       t1: this.type_8974,
-      activeForm: true
+      activeForm: false
     };
   },
   methods: {
     setActiveForm: function setActiveForm(arg) {
       switch (arg) {
         case 8974:
-          this.activeForm = true;
+          this.activeForm = !this.activeForm;
           break;
       }
     }
@@ -61752,13 +61789,51 @@ var render = function() {
         staticStyle: { right: "1rem", bottom: "1rem" }
       },
       [
-        _vm._m(0),
+        _c("div", { staticClass: "bg-white text-center mb-3 p-2" }, [
+          _c(
+            "div",
+            { class: _vm.validation.ein ? "alert-success" : "alert-danger" },
+            [_vm._v("EIN")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            { class: _vm.validation.name ? "alert-success" : "alert-danger" },
+            [_vm._v("Name")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              class: _vm.validation.partOne ? "alert-success" : "alert-danger"
+            },
+            [_vm._v("Part 1")]
+          ),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              class: _vm.validation.partTwo ? "alert-success" : "alert-danger"
+            },
+            [_vm._v("Part 2")]
+          )
+        ]),
         _vm._v(" "),
-        _vm._m(1),
-        _vm._v(" "),
-        _vm._m(2),
-        _vm._v(" "),
-        _vm._m(3),
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-danger d-inline clear",
+              staticStyle: { width: "68.77px" },
+              on: {
+                click: function($event) {
+                  return _vm.clearFields()
+                }
+              }
+            },
+            [_vm._v("Clear")]
+          )
+        ]),
         _vm._v(" "),
         _c("div", [
           _c(
@@ -61778,9 +61853,9 @@ var render = function() {
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-7" }, [
             _vm._v(
-              "\n                    " +
+              "\n                        " +
                 _vm._s(_vm.limitEIN) +
-                "\n                    "
+                "\n                        "
             ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -61855,7 +61930,7 @@ var render = function() {
                 { staticClass: "font-weight-bold bg-dark p-2 text-white" },
                 [
                   _vm._v(
-                    "The credit from Part 2, line 12, will be\n                            reported on (check only one box):"
+                    "The credit from Part 2, line 12, will be\n                                reported on (check only one box):"
                   )
                 ]
               ),
@@ -61880,7 +61955,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                            Form 941, 941-PR, or 941-SS\n                        "
+                  "\n                                Form 941, 941-PR, or 941-SS\n                            "
                 )
               ]),
               _vm._v(" "),
@@ -61904,7 +61979,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                            Form 943 or 943-PR\n                        "
+                  "\n                                Form 943 or 943-PR\n                            "
                 )
               ]),
               _vm._v(" "),
@@ -61928,7 +62003,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                            Form 944 or 944(SP)\n                        "
+                  "\n                                Form 944 or 944(SP)\n                            "
                 )
               ])
             ])
@@ -61939,7 +62014,7 @@ var render = function() {
             { staticClass: "col-5" },
             [
               _c("div", { staticClass: "form-check" }, [
-                _vm._m(4),
+                _vm._m(0),
                 _vm._v(" "),
                 _c("label", { staticClass: "form-check-label d-block mt-2" }, [
                   _c("input", {
@@ -61963,7 +62038,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                            1: January, February, March\n                        "
+                    "\n                                1: January, February, March\n                            "
                   )
                 ]),
                 _vm._v(" "),
@@ -61989,7 +62064,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                            2: April, May, June\n                        "
+                    "\n                                2: April, May, June\n                            "
                   )
                 ]),
                 _vm._v(" "),
@@ -62015,7 +62090,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                            3: July, August, September\n                        "
+                    "\n                                3: July, August, September\n                            "
                   )
                 ]),
                 _vm._v(" "),
@@ -62041,12 +62116,12 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                            4: October, November, December\n                        "
+                    "\n                                4: October, November, December\n                            "
                   )
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(5),
+              _vm._m(1),
               _vm._v(" "),
               _c("flatpickr", {
                 attrs: { timeFormat: "Y", id: "calendar_year_select" },
@@ -62065,13 +62140,13 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-12 col-12 bg-white mt-4 p-3" }, [
-        _vm._m(6),
+        _vm._m(2),
         _vm._v(" "),
         _c(
           "table",
           { staticClass: "table table-striped table-responsive text-center" },
           [
-            _vm._m(7),
+            _vm._m(3),
             _vm._v(" "),
             _c(
               "tbody",
@@ -62143,9 +62218,9 @@ var render = function() {
                       index === 1
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n                                " +
                                 _vm._s(_vm.limitEIND1) +
-                                "\n                            "
+                                "\n                                "
                             ),
                             _c("input", {
                               directives: [
@@ -62183,9 +62258,9 @@ var render = function() {
                       index === 2
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n                                " +
                                 _vm._s(_vm.limitEIND2) +
-                                "\n                            "
+                                "\n                                "
                             ),
                             _c("input", {
                               directives: [
@@ -62223,9 +62298,9 @@ var render = function() {
                       index === 3
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n                                " +
                                 _vm._s(_vm.limitEIND3) +
-                                "\n                            "
+                                "\n                                "
                             ),
                             _c("input", {
                               directives: [
@@ -62263,9 +62338,9 @@ var render = function() {
                       index === 4
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n                                " +
                                 _vm._s(_vm.limitEIND4) +
-                                "\n                            "
+                                "\n                                "
                             ),
                             _c("input", {
                               directives: [
@@ -62303,9 +62378,9 @@ var render = function() {
                       index === 5
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n                                " +
                                 _vm._s(_vm.limitEIND5) +
-                                "\n                            "
+                                "\n                                "
                             ),
                             _c("input", {
                               directives: [
@@ -62699,7 +62774,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("tr", [
-                  _vm._m(8),
+                  _vm._m(4),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -62709,9 +62784,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                        " +
+                        "\n                            " +
                           _vm._s(_vm.rowSixTotal) +
-                          "\n                    "
+                          "\n                        "
                       )
                     ]
                   )
@@ -62727,13 +62802,13 @@ var render = function() {
         "div",
         { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
         [
-          _vm._m(9),
+          _vm._m(5),
           _vm._v(" "),
           _vm._l(_vm.partTwoFieldInfo, function(info, index) {
             return _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-8 bg-light p-2" }, [
                 _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index + 7))]),
-                _vm._v(" " + _vm._s(info) + "\n\n                    "),
+                _vm._v(" " + _vm._s(info) + "\n\n                        "),
                 index === 4
                   ? _c("div", [
                       _c("div", { staticClass: "form-check mt-3" }, [
@@ -62807,7 +62882,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("b", [
                               _vm._v(
-                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
+                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                        instructions before completing line 11"
                               )
                             ])
                           ]
@@ -62871,17 +62946,23 @@ var render = function() {
                       })
                     ])
                   : index === 3
-                  ? _c("div", { staticClass: "form-group" }, [
-                      _vm._v(_vm._s(_vm.sumOfPartTwoEightAndNine))
-                    ])
+                  ? _c(
+                      "div",
+                      { staticClass: "form-group font-weight-bolder" },
+                      [_vm._v(_vm._s(_vm.sumOfPartTwoEightAndNine))]
+                    )
                   : index === 4
-                  ? _c("div", { staticClass: "form-group" }, [
-                      _vm._v(_vm._s(_vm.partTwoLineElevenPercentage))
-                    ])
+                  ? _c(
+                      "div",
+                      { staticClass: "form-group font-weight-bolder" },
+                      [_vm._v(_vm._s(_vm.partTwoLineElevenPercentage))]
+                    )
                   : index === 5
-                  ? _c("div", { staticClass: "form-group" }, [
-                      _vm._v(_vm._s(_vm.partTwoGreaterThan))
-                    ])
+                  ? _c(
+                      "div",
+                      { staticClass: "form-group font-weight-bolder" },
+                      [_vm._v(_vm._s(_vm.partTwoGreaterThan))]
+                    )
                   : _vm._e()
               ])
             ])
@@ -62897,72 +62978,14 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-danger d-inline clear",
-          staticStyle: { width: "68.77px" }
-        },
-        [_vm._v("Clear")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-warning d-inline",
-          staticStyle: { width: "68.77px" }
-        },
-        [_vm._v("Color")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-dark d-inline",
-          staticStyle: { width: "68.77px" }
-        },
-        [_vm._v("Font")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", [
-      _c(
-        "button",
-        {
-          staticClass: "btn btn-success d-inline save",
-          staticStyle: { width: "68.77px" }
-        },
-        [_vm._v("Save")]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "h6",
       { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
       [
         _vm._v("Report for this quarter "),
-        _c("small", [_vm._v("check\n                            only one box")])
+        _c("small", [
+          _vm._v("check\n                                only one box")
+        ])
       ]
     )
   },
@@ -62977,7 +63000,7 @@ var staticRenderFns = [
         _vm._v("Calendar year "),
         _c("small", [
           _vm._v(
-            "You must select a quarter\n                        if you file Form 941, 941-PR, or 941-SS."
+            "You must select a quarter\n                            if you file Form 941, 941-PR, or 941-SS."
           )
         ])
       ]
@@ -63004,43 +63027,43 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(a)\n                        Ending date\n                        of income\n                        tax period\n                    "
+            "(a)\n                            Ending date\n                            of income\n                            tax period\n                        "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(b)\n                        Income\n                        tax return\n                        filed that\n                        included\n                        Form 6765\n                    "
+            "(b)\n                            Income\n                            tax return\n                            filed that\n                            included\n                            Form 6765\n                        "
           )
         ]),
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(c)\n                        Date income\n                        tax return\n                        was filed\n                    "
+            "(c)\n                            Date income\n                            tax return\n                            was filed\n                        "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "14.5%" } }, [
           _vm._v(
-            "(d)\n                        EIN\n                        used on\n                        Form 6765\n                    "
+            "(d)\n                            EIN\n                            used on\n                            Form 6765\n                        "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(e)\n                        Amount from\n                        Form 6765, line 44,\n                        or if applicable,\n                        the amount that\n                        was allocated\n                        to your EIN\n                    "
+            "(e)\n                            Amount from\n                            Form 6765, line 44,\n                            or if applicable,\n                            the amount that\n                            was allocated\n                            to your EIN\n                        "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(f)\n                        Amount of credit\n                        from column (e)\n                        taken on a\n                        previous period(s)\n                    "
+            "(f)\n                            Amount of credit\n                            from column (e)\n                            taken on a\n                            previous period(s)\n                        "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(g)\n                        Remaining credit\n                        (subtract column (f)\n                        from column (e))\n                    "
+            "(g)\n                            Remaining credit\n                            (subtract column (f)\n                            from column (e))\n                        "
           )
         ])
       ])
@@ -63053,7 +63076,7 @@ var staticRenderFns = [
     return _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
       _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
       _vm._v(
-        "Add lines 1(g) through 5(g) and enter the total here\n                    "
+        "Add lines 1(g) through 5(g) and enter the total here\n                        "
       )
     ])
   },

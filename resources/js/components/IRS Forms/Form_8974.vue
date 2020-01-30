@@ -1,18 +1,26 @@
 <template>
     <div class="container">
         <div class="position-fixed" style="right: 1rem; bottom:1rem;">
-            <div>
-                <button class="btn btn-danger d-inline clear" style="width: 68.77px">Clear</button>
+
+            <div class="bg-white text-center mb-3 p-2">
+                <div :class="(validation.ein) ? 'alert-success' : 'alert-danger'">EIN</div>
+                <div :class="(validation.name) ? 'alert-success' : 'alert-danger'">Name</div>
+                <div :class="(validation.partOne) ? 'alert-success' : 'alert-danger'">Part 1</div>
+                <div :class="(validation.partTwo) ? 'alert-success' : 'alert-danger'">Part 2</div>
             </div>
+
             <div>
-                <button class="btn btn-warning d-inline" style="width: 68.77px">Color</button>
+                <button class="btn btn-danger d-inline clear" style="width: 68.77px" @click="clearFields()">Clear</button>
             </div>
-            <div>
-                <button class="btn btn-dark d-inline" style="width: 68.77px">Font</button>
-            </div>
-            <div>
-                <button class="btn btn-success d-inline save" style="width: 68.77px">Save</button>
-            </div>
+<!--            <div>-->
+<!--                <button class="btn btn-warning d-inline" style="width: 68.77px">Color</button>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <button class="btn btn-dark d-inline" style="width: 68.77px">Font</button>-->
+<!--            </div>-->
+<!--            <div>-->
+<!--                <button class="btn btn-success d-inline save" style="width: 68.77px">Save</button>-->
+<!--            </div>-->
             <div>
                 <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
             </div>
@@ -259,9 +267,9 @@
                         <div v-else-if="index === 2" class="form-group">
                             <input type="text" class="form-control" v-model="partTwoNine">
                         </div>
-                        <div v-else-if="index === 3" class="form-group">{{ sumOfPartTwoEightAndNine }}</div>
-                        <div v-else-if="index === 4" class="form-group">{{ partTwoLineElevenPercentage }}</div>
-                        <div v-else-if="index === 5" class="form-group">{{ partTwoGreaterThan }}</div>
+                        <div v-else-if="index === 3" class="form-group font-weight-bolder">{{ sumOfPartTwoEightAndNine }}</div>
+                        <div v-else-if="index === 4" class="form-group font-weight-bolder">{{ partTwoLineElevenPercentage }}</div>
+                        <div v-else-if="index === 5" class="form-group font-weight-bolder">{{ partTwoGreaterThan }}</div>
                     </div>
                 </div>
             </div>
@@ -269,6 +277,7 @@
         </div>
     </div>
 </template>
+
 
 <script>
   import {degrees, PDFDocument, rgb, StandardFonts} from 'pdf-lib';
@@ -356,7 +365,11 @@
           'or 941-SS), line 11; Form 943 (943-PR), line 12; or Form 944 (944(SP)), line 8'
         ],
         validation: {
-          EIN_MAX_LENGTH: 12
+          EIN_MAX_LENGTH: 12,
+          ein: null,
+          name: null,
+          partOne: null,
+          partTwo: null
         }
       }
     },
@@ -411,7 +424,7 @@
         return ( this.rowSixTotal > this.sumOfPartTwoEightAndNine ) ? this.sumOfPartTwoEightAndNine : this.rowSixTotal;
       },
       partTwoLineElevenPercentage: function () {
-        return this.sumOfPartTwoEightAndNine * .50
+        return (Number(this.sumOfPartTwoEightAndNine * .50)).toFixed(2);
       }
     },
     methods: {
@@ -435,20 +448,21 @@
           const pages = pdfDoc.getPages();
           const firstPage = pages[0];
           const {width, height} = firstPage.getSize();
+          const COLOR = rgb(0, 0, 0);
           const baseOptions = {
             size: 10,
             font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
+            color: COLOR,
           };
           const baseOptionsSM = {
             size: 8,
             font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
+            color: COLOR,
           };
           const baseOptionsLG = {
             size: 15,
             font: helveticaFont,
-            color: rgb(0.95, 0.1, 0.1),
+            color: COLOR,
           };
 
           /* Draw EIN */
@@ -809,7 +823,7 @@
           }
 
           /* Draw 11 */
-          firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine * .50), {
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoLineElevenPercentage), {
             x: START_X + (xOffset*6) - 10,
             y: height / 2 + 54 - (yOffset*18) + 6,
             ...baseOptions
@@ -825,21 +839,26 @@
           /* Save report and Download*/
           const pdfBytes = await pdfDoc.save();
           // Trigger the browser to download the PDF document
-          download(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+          download(pdfBytes, `IRS-8974-${Date.now()}.pdf`, "application/pdf");
 
           /* TODO Clear out the form */
         }
       },
       validateFormFields() {
-        console.warn(this.creditTypeBox);
         /* Validate fields */
         /* Finish computing or cleaning final output here */
 
         /*EIN validator*/
-        if (this.ein.length < this.validation.EIN_MAX_LENGTH) return false;
+        if (this.ein.length < this.validation.EIN_MAX_LENGTH) {
+          this.validation.ein = false;
+          return false;
+        } else this.validation.ein = true;
 
         /*NAME*/
-        if (this.name.trim().length === 0 || this.name === null) return false;
+        if (this.name.trim().length === 0 || this.name === null) {
+          this.validation.name = false;
+          return false;
+        } else this.validation.name = true;
 
         /*CREDIT TYPE*/
         if (!this.creditTypeBox) return false;
@@ -850,11 +869,23 @@
         /*CALENDAR YEAR*/
         if (this.calendarYear.trim().length === 0 || this.calendarYear === null) return false;
 
+        /*PART 1*/
+        if (this.rowSixTotal <= 0.00 || this.rowSixTotal <= '0.00' ) {
+          this.validation.partOne = false;
+          return false;
+        } else this.validation.partOne = true;
+
+        if (this.sumOfPartTwoEightAndNine <= 0.00 || this.sumOfPartTwoEightAndNine <= '0.00' ) {
+          this.validation.partTwo = false;
+          return false;
+        } else this.validation.partTwo = true;
+
         /* All Validation Passed */
         /* Mutate EIN */
         /*EIN*/
         let ein_mutated = this.ein.replace(' - ', '');
         this.ein = ein_mutated.split('');
+
         return true;
       },
       convertToStringAndAddDecimal(columnG) {
@@ -865,6 +896,18 @@
       },
       reformatDateToForwardslash(d){
         return d.replace(/-/g, '/');
+      },
+      clearFields() {
+        this.ein = this.name = this.calendarYear = '';
+        this.creditTypeBox = this.reportForThisQuarter = this.endingDateIncomeTax = this.incomeTaxReturntype =
+        this.incomeTaxDateFiled = this.total;
+        this.partTwoEight =
+        this.partTwoNine =
+        this.thirdPartyPayer =
+        this.partTwoOptional =
+        this.noticeOfDemand =
+        this.partTwoEleven =
+        this.validation.ein = this.validation.name = this.validation.partOne = this.validation.partTwo = null;
       }
     }
   }

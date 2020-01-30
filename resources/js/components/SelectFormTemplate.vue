@@ -41,14 +41,14 @@
     data: function() {
       return {
         t1: this.type_8974,
-        activeForm: true
+        activeForm: false
       }
     },
     methods: {
       setActiveForm(arg) {
         switch (arg) {
           case 8974:
-            this.activeForm = true;
+            this.activeForm = !this.activeForm;
             break;
         }
       }
