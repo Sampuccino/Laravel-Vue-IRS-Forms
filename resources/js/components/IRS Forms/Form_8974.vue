@@ -12,20 +12,16 @@
             <div>
                 <button class="btn btn-danger d-inline clear" @click="clearFields()">Clear</button>
             </div>
-<!--            <div>-->
-<!--                <button class="btn btn-warning d-inline" style="width: 68.77px">Color</button>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <button class="btn btn-dark d-inline" style="width: 68.77px">Font</button>-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <button class="btn btn-success d-inline save" style="width: 68.77px">Save</button>-->
-<!--            </div>-->
+
             <div>
                 <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
             </div>
         </div>
         <div class="row justify-content-center">
+
+            <div class="col-12 mt-3">
+                <h4 class="alert-info p-2 text-center">Form 8974</h4>
+            </div>
 
             <!--TOP OF FORM-->
             <div class="col-lg-9 col-12 bg-white mt-4 p-3">

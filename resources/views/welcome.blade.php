@@ -72,17 +72,17 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Fast IRS-8974
+                    Interactive IRS Forms
                 </div>
 
                 <div class="container">
                     <div class="row">
                         <div class="col-6 my-auto">
                             <h4>How does it work</h4>
-                            <p>Use the simple Form-8974 to easily and interactively fill out your form and export to PDF format. It includes auto calculations, number formatting and easy to use.</p>
+                            <p>Select any of our current IRS Forms to easily and interactively fill out your form and export to PDF format. It includes auto calculations, number formatting and easy to use.</p>
 
                             <h4 class="mt-3">How can I use it</h4>
-                            <p>Simply create and account and you can start your form today!</p>
+                            <p>Simply select a form and you can start your form today!</p>
                         </div>
                         <div class="col-6">
                             <img src="{{asset('img/2356505.png')}}" class="img-fluid" alt="">
