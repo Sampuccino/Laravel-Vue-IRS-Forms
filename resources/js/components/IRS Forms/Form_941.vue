@@ -196,7 +196,7 @@
                             <div class="col-6">
                                 <input type="text" class="form-control" v-model="taxableSSTips">
                             </div>
-                            <div class="col-6 my-auto" v-model="taxableSSTipsPercentage">AUTOCALC**</div>
+                            <div class="col-6 my-auto">{{taxable5B}}</div>
                         </div>
                     </div>
                 </div>
@@ -213,7 +213,7 @@
                             <div class="col-6">
                                 <input type="text" class="form-control" v-model="taxableMedicalWages">
                             </div>
-                            <div class="col-6 my-auto" v-model="taxableMedicalWagesPercentage">AUTOCALC**</div>
+                            <div class="col-6 my-auto">{{taxable5C}}</div>
                         </div>
                     </div>
                 </div>
@@ -230,7 +230,7 @@
                             <div class="col-6">
                                 <input type="text" class="form-control" v-model="taxableAMTWithholding">
                             </div>
-                            <div class="col-6 my-auto" v-model="taxableAMTWithholdingPercentage">AUTOCALC**</div>
+                            <div class="col-6 my-auto">{{taxable5D}}</div>
                         </div>
                     </div>
                 </div>
@@ -242,9 +242,7 @@
                     <div class="col-8 my-auto">
                         <b class="mr-3">{{partTwoFieldInfo[8].id}}</b>{{partTwoFieldInfo[8].description}}
                     </div>
-                    <div class="col-4 my-auto text-center" v-model="sumOfRows5aTo5d">
-                        AUTOCALC**
-                    </div>
+                    <div class="col-4 my-auto text-center">{{ line5E }}</div>
                 </div>
 
                 <!--###########-->
@@ -266,9 +264,7 @@
                     <div class="col-8 my-auto">
                         <b class="mr-3">{{partTwoFieldInfo[10].id}}</b>{{partTwoFieldInfo[10].description}}
                     </div>
-                    <div class="col-4 my-auto text-center" v-model="taxBeforeAdjustments">
-                        AUTOCALC**
-                    </div>
+                    <div class="col-4 my-auto text-center">{{totalTaxesBeforeAdjustments}}</div>
                 </div>
 
                 <!--###########-->
@@ -314,9 +310,7 @@
                     <div class="col-8 my-auto">
                         <b class="mr-3">{{partTwoFieldInfo[14].id}}</b>{{partTwoFieldInfo[14].description}}
                     </div>
-                    <div class="col-4 my-auto text-center" v-model="totalTaxesAfterAdjustments">
-                        AUTOCALC**
-                    </div>
+                    <div class="col-4 my-auto text-center">{{line10Sum}}</div>
                 </div>
 
                 <!--###########-->
@@ -338,9 +332,7 @@
                     <div class="col-8 my-auto">
                         <b class="mr-3">{{partTwoFieldInfo[16].id}}</b>{{partTwoFieldInfo[16].description}}
                     </div>
-                    <div class="col-4 my-auto text-center">
-                        <input type="text" class="form-control" placeholder="Fill in" v-model="totalTaxesAfterAdjustmentsAndCredits">
-                    </div>
+                    <div class="col-4 my-auto text-center">{{ line12TotalTaxesAfterAdjustments }}</div>
                 </div>
 
                 <!--###########-->
@@ -362,23 +354,19 @@
                     <div class="col-8 my-auto">
                         <b class="mr-3">{{partTwoFieldInfo[18].id}}</b>{{partTwoFieldInfo[18].description}}
                     </div>
-                    <div class="col-4 my-auto text-center">
-                        <input type="text" class="form-control" placeholder="Fill in" v-model="balanceDue">
-                    </div>
+                    <div class="col-4 my-auto text-center">{{ line14BalanceDue }}</div>
                 </div>
 
                 <!--###########-->
                 <!--15 #########-->
                 <!--###########-->
-                <div class="row mb-2">
-                    <div class="col-8 my-auto">
+                <div class="row mb-2 bg-light">
+                    <div class="col-8">
                         <b class="mr-3">{{partTwoFieldInfo[19].id}}</b>{{partTwoFieldInfo[19].description}}
                     </div>
-                    <div class="col-4 my-auto text-center">
+                    <div class="col-4 text-center">
                         <div class="row">
-                            <div class="col-12 mb-2">
-                                <input type="text" class="form-control" v-model="overpayment">
-                            </div>
+                            <div class="col-12 mb-2">{{line15Overpayment}}</div>
                             <div class="col-6">
                                 <div class="form-check">
                                     <label class="form-check-label">
@@ -412,12 +400,20 @@
 </template>
 
 <script>
+  import {degrees, PDFDocument, rgb, StandardFonts} from 'pdf-lib';
+  import download from 'downloadjs';
+
   export default {
     name: "Form_941",
+    props: {
+      formUrl: String
+    },
+    mounted(){
+      this.url = this.formUrl;
+    },
     data(){
       return {
-        MAX_ROWS: 20,
-        dissallow: ['4', '5a', '5b', '5c', '5d', '5e', '6', '10', '12', '14', '15'],
+        url: null,
         partTwoFieldInfo: [
           { id: '1', model: 'f5f', description: 'Number of employees who received wages, tips, or other compensation for the pay period including: Mar. 12 (Quarter 1), June 12 (Quarter 2), Sept. 12 (Quarter 3), or Dec. 12 (Quarter 4)' },
           { id: '2', model: 'f5f', description: 'Wages, tips, and other compensation' },
@@ -455,40 +451,120 @@
         /* Field ID for generated fields in Part1 */
         numberOfEmployees: null,
         totalWages: null,
-        withheldTax: null,
+        withheldTax: 0,
         noWages: null,
         taxableSSWages: null,
-        taxableSSWagesPercentage: null,
         taxableSSTips: null,
-        taxableSSTipsPercentage: null,
         taxableMedicalWages: null,
-        taxableMedicalWagesPercentage: null,
         taxableAMTWithholding: null,
-        taxableAMTWithholdingPercentage: null,
-        sumOfRows5aTo5d: null,
-        section3121: null,
-        taxBeforeAdjustments: null,
-        currentFractionsOfCents: null,
-        currentSickPay: null,
-        currentTipAndGroupTerm: null,
-        totalTaxesAfterAdjustments: null,
-        qualifiedSmallBusinessPayroll: null,
-        totalTaxesAfterAdjustmentsAndCredits: null,
-        totalQuarterDeposits: null,
-        balanceDue: null,
-        overpayment: null,
+        section3121: 0,
+        currentFractionsOfCents: 0,
+        currentSickPay: 0,
+        currentTipAndGroupTerm: 0,
+        qualifiedSmallBusinessPayroll: 0,
+        totalQuarterDeposits: 0,
         overpaymentOption: null,
 
       }
     },
     computed: {
       taxable5A: function () {
-       return Number(this.taxableSSWages * 0.124).toFixed(2)
+       return Number((this.taxableSSWages * 0.124).toFixed(2))
+      },
+      taxable5B: function () {
+       return Number((this.taxableSSTips * 0.124).toFixed(2))
+      },
+      taxable5C: function () {
+       return Number((this.taxableMedicalWages * 0.029).toFixed(2))
+      },
+      taxable5D: function () {
+       return Number((this.taxableAMTWithholding * 0.009).toFixed(2))
+      },
+      line5E: function () {
+        const sums = [this.taxable5A, this.taxable5B, this.taxable5C, this.taxable5D];
+        return parseFloat((sums.reduce((a,b) => a+b,0)))
+      },
+      totalTaxesBeforeAdjustments: function () {
+        const amounts = [parseFloat(this.withheldTax), this.line5E, parseFloat(this.section3121)];
+        return (amounts.reduce((a,b) => a+b,0)).toFixed(2)
+      },
+      line10Sum: function() {
+        const amounts = [parseFloat(this.totalTaxesBeforeAdjustments), parseFloat(this.currentFractionsOfCents), parseFloat(this.currentSickPay), parseFloat(this.currentTipAndGroupTerm)];
+        const total = (amounts.reduce((a,b) => a+b,0)).toFixed(2);
+        this.totalQuarterDeposits = total;
+        return total;
+      },
+      line12TotalTaxesAfterAdjustments: function() {
+        return (parseFloat(this.line10Sum) - parseFloat(this.qualifiedSmallBusinessPayroll)).toFixed(2)
+      },
+      line14BalanceDue: function () {
+        // console.log()
+        if(parseFloat(this.line12TotalTaxesAfterAdjustments) > parseFloat(this.totalQuarterDeposits)) {
+          return (parseFloat(this.line12TotalTaxesAfterAdjustments) - parseFloat(this.totalQuarterDeposits)).toFixed(2)
+        } else return 0
+      },
+      line15Overpayment: function () {
+        if(parseFloat(this.totalQuarterDeposits) > parseFloat(this.line12TotalTaxesAfterAdjustments)) {
+          return (parseFloat(this.totalQuarterDeposits) - parseFloat(this.line12TotalTaxesAfterAdjustments)).toFixed(2)
+        } else return 0
       }
     },
     methods: {
-      exportToPDF() {
-        console.log('Exporting...');
+      validation: function(){
+
+        /* REQUIREMENTS
+        * EIN
+        * Name
+        * Address
+        * City
+        * State
+        * Zip
+        * 1
+        * 2
+        * 3
+        * 5a - 5d
+        * 6
+        * 10
+        * 12
+        * 13
+        * 15
+        * */
+
+      },
+      exportToPDF: async function () {
+
+        /*  TODO Validate all fields before exporting */
+        // const validated = this.validateFormFields();
+
+        /*EIN*/
+        console.log(validated);
+        if (!validated) {
+          /* Prompt Error */
+          console.error('Form errors!');
+        } else {
+          /* Write all contents to Final PDF */
+          const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
+
+          const pdfDoc = await PDFDocument.load(existingPdfBytes);
+          const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+          const pages = pdfDoc.getPages();
+          const firstPage = pages[0];
+          const {width, height} = firstPage.getSize();
+          const COLOR = rgb(0, 0, 0);
+          const baseOptions = {
+            size: 10,
+            font: helveticaFont,
+            color: COLOR,
+          };
+
+          /* Save report and Download*/
+          const pdfBytes = await pdfDoc.save();
+          // Trigger the browser to download the PDF document
+          download(pdfBytes, `IRS-941-${Date.now()}.pdf`, "application/pdf");
+
+          /* TODO Clear out the form */
+        }
       },
 
     }

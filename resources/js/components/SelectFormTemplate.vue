@@ -27,7 +27,7 @@
         </div>
 
         <form_8974 v-show="activeForm_8974"/>
-        <form_941  v-show="activeForm_941"/>
+        <form_941  v-show="activeForm_941" :formUrl="type_941_url"/>
         <form_941-s v-show="activeForm_941_Schedule_B"/>
 
     </div>
@@ -43,6 +43,7 @@
     props: {
       type_8974: String,
       type_941: String,
+      type_941_url: String,
       type_941s: String
     },
     data: function() {

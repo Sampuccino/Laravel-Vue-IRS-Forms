@@ -3384,6 +3384,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var pdf_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pdf-lib */ "./node_modules/pdf-lib/es/index.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! downloadjs */ "./node_modules/downloadjs/download.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
 //
 //
 //
@@ -3785,24 +3796,19 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Form_941",
+  props: {
+    formUrl: String
+  },
+  mounted: function mounted() {
+    this.url = this.formUrl;
+  },
   data: function data() {
     return {
-      MAX_ROWS: 20,
-      dissallow: ['4', '5a', '5b', '5c', '5d', '5e', '6', '10', '12', '14', '15'],
+      url: null,
       partTwoFieldInfo: [{
         id: '1',
         model: 'f5f',
@@ -3901,40 +3907,167 @@ __webpack_require__.r(__webpack_exports__);
       /* Field ID for generated fields in Part1 */
       numberOfEmployees: null,
       totalWages: null,
-      withheldTax: null,
+      withheldTax: 0,
       noWages: null,
       taxableSSWages: null,
-      taxableSSWagesPercentage: null,
       taxableSSTips: null,
-      taxableSSTipsPercentage: null,
       taxableMedicalWages: null,
-      taxableMedicalWagesPercentage: null,
       taxableAMTWithholding: null,
-      taxableAMTWithholdingPercentage: null,
-      sumOfRows5aTo5d: null,
-      section3121: null,
-      taxBeforeAdjustments: null,
-      currentFractionsOfCents: null,
-      currentSickPay: null,
-      currentTipAndGroupTerm: null,
-      totalTaxesAfterAdjustments: null,
-      qualifiedSmallBusinessPayroll: null,
-      totalTaxesAfterAdjustmentsAndCredits: null,
-      totalQuarterDeposits: null,
-      balanceDue: null,
-      overpayment: null,
+      section3121: 0,
+      currentFractionsOfCents: 0,
+      currentSickPay: 0,
+      currentTipAndGroupTerm: 0,
+      qualifiedSmallBusinessPayroll: 0,
+      totalQuarterDeposits: 0,
       overpaymentOption: null
     };
   },
   computed: {
     taxable5A: function taxable5A() {
-      return Number(this.taxableSSWages * 0.124).toFixed(2);
+      return Number((this.taxableSSWages * 0.124).toFixed(2));
+    },
+    taxable5B: function taxable5B() {
+      return Number((this.taxableSSTips * 0.124).toFixed(2));
+    },
+    taxable5C: function taxable5C() {
+      return Number((this.taxableMedicalWages * 0.029).toFixed(2));
+    },
+    taxable5D: function taxable5D() {
+      return Number((this.taxableAMTWithholding * 0.009).toFixed(2));
+    },
+    line5E: function line5E() {
+      var sums = [this.taxable5A, this.taxable5B, this.taxable5C, this.taxable5D];
+      return parseFloat(sums.reduce(function (a, b) {
+        return a + b;
+      }, 0));
+    },
+    totalTaxesBeforeAdjustments: function totalTaxesBeforeAdjustments() {
+      var amounts = [parseFloat(this.withheldTax), this.line5E, parseFloat(this.section3121)];
+      return amounts.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2);
+    },
+    line10Sum: function line10Sum() {
+      var amounts = [parseFloat(this.totalTaxesBeforeAdjustments), parseFloat(this.currentFractionsOfCents), parseFloat(this.currentSickPay), parseFloat(this.currentTipAndGroupTerm)];
+      var total = amounts.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2);
+      this.totalQuarterDeposits = total;
+      return total;
+    },
+    line12TotalTaxesAfterAdjustments: function line12TotalTaxesAfterAdjustments() {
+      return (parseFloat(this.line10Sum) - parseFloat(this.qualifiedSmallBusinessPayroll)).toFixed(2);
+    },
+    line14BalanceDue: function line14BalanceDue() {
+      // console.log()
+      if (parseFloat(this.line12TotalTaxesAfterAdjustments) > parseFloat(this.totalQuarterDeposits)) {
+        return (parseFloat(this.line12TotalTaxesAfterAdjustments) - parseFloat(this.totalQuarterDeposits)).toFixed(2);
+      } else return 0;
+    },
+    line15Overpayment: function line15Overpayment() {
+      if (parseFloat(this.totalQuarterDeposits) > parseFloat(this.line12TotalTaxesAfterAdjustments)) {
+        return (parseFloat(this.totalQuarterDeposits) - parseFloat(this.line12TotalTaxesAfterAdjustments)).toFixed(2);
+      } else return 0;
     }
   },
   methods: {
-    exportToPDF: function exportToPDF() {
-      console.log('Exporting...');
-    }
+    validation: function validation() {
+      /* REQUIREMENTS
+      * EIN
+      * Name
+      * Address
+      * City
+      * State
+      * Zip
+      * 1
+      * 2
+      * 3
+      * 5a - 5d
+      * 6
+      * 10
+      * 12
+      * 13
+      * 15
+      * */
+    },
+    exportToPDF: function () {
+      var _exportToPDF = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, COLOR, baseOptions, pdfBytes;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                /*  TODO Validate all fields before exporting */
+                // const validated = this.validateFormFields();
+
+                /*EIN*/
+                console.log(validated);
+
+                if (validated) {
+                  _context.next = 5;
+                  break;
+                }
+
+                /* Prompt Error */
+                console.error('Form errors!');
+                _context.next = 23;
+                break;
+
+              case 5:
+                _context.next = 7;
+                return fetch(this.url).then(function (res) {
+                  return res.arrayBuffer();
+                });
+
+              case 7:
+                existingPdfBytes = _context.sent;
+                _context.next = 10;
+                return pdf_lib__WEBPACK_IMPORTED_MODULE_1__["PDFDocument"].load(existingPdfBytes);
+
+              case 10:
+                pdfDoc = _context.sent;
+                _context.next = 13;
+                return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["StandardFonts"].Helvetica);
+
+              case 13:
+                helveticaFont = _context.sent;
+                pages = pdfDoc.getPages();
+                firstPage = pages[0];
+                _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0, 0, 0);
+                baseOptions = {
+                  size: 10,
+                  font: helveticaFont,
+                  color: COLOR
+                };
+                /* Save report and Download*/
+
+                _context.next = 21;
+                return pdfDoc.save();
+
+              case 21:
+                pdfBytes = _context.sent;
+                // Trigger the browser to download the PDF document
+                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
+                /* TODO Clear out the form */
+
+              case 23:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function exportToPDF() {
+        return _exportToPDF.apply(this, arguments);
+      }
+
+      return exportToPDF;
+    }()
   }
 });
 
@@ -4018,6 +4151,7 @@ __webpack_require__.r(__webpack_exports__);
   props: {
     type_8974: String,
     type_941: String,
+    type_941_url: String,
     type_941s: String
   },
   data: function data() {
@@ -64350,20 +64484,9 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-6 my-auto",
-                  model: {
-                    value: _vm.taxableSSTipsPercentage,
-                    callback: function($$v) {
-                      _vm.taxableSSTipsPercentage = $$v
-                    },
-                    expression: "taxableSSTipsPercentage"
-                  }
-                },
-                [_vm._v("AUTOCALC**")]
-              )
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5B))
+              ])
             ])
           ])
         ]),
@@ -64404,20 +64527,9 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-6 my-auto",
-                  model: {
-                    value: _vm.taxableMedicalWagesPercentage,
-                    callback: function($$v) {
-                      _vm.taxableMedicalWagesPercentage = $$v
-                    },
-                    expression: "taxableMedicalWagesPercentage"
-                  }
-                },
-                [_vm._v("AUTOCALC**")]
-              )
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5C))
+              ])
             ])
           ])
         ]),
@@ -64458,20 +64570,9 @@ var render = function() {
                 })
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                {
-                  staticClass: "col-6 my-auto",
-                  model: {
-                    value: _vm.taxableAMTWithholdingPercentage,
-                    callback: function($$v) {
-                      _vm.taxableAMTWithholdingPercentage = $$v
-                    },
-                    expression: "taxableAMTWithholdingPercentage"
-                  }
-                },
-                [_vm._v("AUTOCALC**")]
-              )
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5D))
+              ])
             ])
           ])
         ]),
@@ -64486,20 +64587,9 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "col-4 my-auto text-center",
-              model: {
-                value: _vm.sumOfRows5aTo5d,
-                callback: function($$v) {
-                  _vm.sumOfRows5aTo5d = $$v
-                },
-                expression: "sumOfRows5aTo5d"
-              }
-            },
-            [_vm._v("\n                    AUTOCALC**\n                ")]
-          )
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _vm._v(_vm._s(_vm.line5E))
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row mb-2" }, [
@@ -64548,20 +64638,9 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "col-4 my-auto text-center",
-              model: {
-                value: _vm.taxBeforeAdjustments,
-                callback: function($$v) {
-                  _vm.taxBeforeAdjustments = $$v
-                },
-                expression: "taxBeforeAdjustments"
-              }
-            },
-            [_vm._v("\n                    AUTOCALC**\n                ")]
-          )
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _vm._v(_vm._s(_vm.totalTaxesBeforeAdjustments))
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row mb-2" }, [
@@ -64683,20 +64762,9 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c(
-            "div",
-            {
-              staticClass: "col-4 my-auto text-center",
-              model: {
-                value: _vm.totalTaxesAfterAdjustments,
-                callback: function($$v) {
-                  _vm.totalTaxesAfterAdjustments = $$v
-                },
-                expression: "totalTaxesAfterAdjustments"
-              }
-            },
-            [_vm._v("\n                    AUTOCALC**\n                ")]
-          )
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _vm._v(_vm._s(_vm.line10Sum))
+          ])
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row mb-2" }, [
@@ -64747,27 +64815,7 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-4 my-auto text-center" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.totalTaxesAfterAdjustmentsAndCredits,
-                  expression: "totalTaxesAfterAdjustmentsAndCredits"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Fill in" },
-              domProps: { value: _vm.totalTaxesAfterAdjustmentsAndCredits },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.totalTaxesAfterAdjustmentsAndCredits = $event.target.value
-                }
-              }
-            })
+            _vm._v(_vm._s(_vm.line12TotalTaxesAfterAdjustments))
           ])
         ]),
         _vm._v(" "),
@@ -64819,32 +64867,12 @@ var render = function() {
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col-4 my-auto text-center" }, [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.balanceDue,
-                  expression: "balanceDue"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text", placeholder: "Fill in" },
-              domProps: { value: _vm.balanceDue },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.balanceDue = $event.target.value
-                }
-              }
-            })
+            _vm._v(_vm._s(_vm.line14BalanceDue))
           ])
         ]),
         _vm._v(" "),
-        _c("div", { staticClass: "row mb-2" }, [
-          _c("div", { staticClass: "col-8 my-auto" }, [
+        _c("div", { staticClass: "row mb-2 bg-light" }, [
+          _c("div", { staticClass: "col-8" }, [
             _c("b", { staticClass: "mr-3" }, [
               _vm._v(_vm._s(_vm.partTwoFieldInfo[19].id))
             ]),
@@ -64854,30 +64882,10 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+          _c("div", { staticClass: "col-4 text-center" }, [
             _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-12 mb-2" }, [
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.overpayment,
-                      expression: "overpayment"
-                    }
-                  ],
-                  staticClass: "form-control",
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.overpayment },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.overpayment = $event.target.value
-                    }
-                  }
-                })
+                _vm._v(_vm._s(_vm.line15Overpayment))
               ]),
               _vm._v(" "),
               _c("div", { staticClass: "col-6" }, [
@@ -65131,7 +65139,8 @@ var render = function() {
             value: _vm.activeForm_941,
             expression: "activeForm_941"
           }
-        ]
+        ],
+        attrs: { formUrl: _vm.type_941_url }
       }),
       _vm._v(" "),
       _c("form_941-s", {
