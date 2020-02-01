@@ -3532,80 +3532,409 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Form_941",
   data: function data() {
     return {
-      reportForThisQuarter: null,
-      dissallow: ['4', '5aa', '5bb', '5cc', '5dd', '5e', '6', '10', '12', '14', '15'],
+      MAX_ROWS: 20,
+      dissallow: ['4', '5a', '5b', '5c', '5d', '5e', '6', '10', '12', '14', '15'],
       partTwoFieldInfo: [{
         id: '1',
+        model: 'f5f',
         description: 'Number of employees who received wages, tips, or other compensation for the pay period including: Mar. 12 (Quarter 1), June 12 (Quarter 2), Sept. 12 (Quarter 3), or Dec. 12 (Quarter 4)'
       }, {
         id: '2',
+        model: 'f5f',
         description: 'Wages, tips, and other compensation'
       }, {
         id: '3',
+        model: 'f5f',
         description: 'Federal income tax withheld from wages, tips, and other compensation '
       }, {
         id: '4',
+        model: 'f5f',
         description: 'If no wages, tips, and other compensation are subject to social security or Medicare tax'
       }, {
         id: '5a',
+        model: 'f5f',
         description: 'Taxable social security wages'
       }, {
         id: '5b',
+        model: 'f5f',
         description: 'Taxable social security tips .'
       }, {
         id: '5c',
+        model: 'f5f',
         description: 'Taxable Medicare wages & tips'
       }, {
         id: '5d',
+        model: 'f5f',
         description: 'Taxable wages & tips subject to Additional Medicare Tax withholding'
       }, {
         id: '5e',
+        model: 'f5f',
         description: 'Add Column 2 from lines 5a, 5b, 5c, and 5d'
       }, {
         id: '5f',
+        model: 'f5f',
         description: 'Section 3121(q) Notice and Demand—Tax due on unreported tips (see instructions)'
       }, {
         id: '6',
+        model: 'f5f',
         description: 'Total taxes before adjustments. Add lines 3, 5e, and 5f'
       }, {
         id: '7',
+        model: 'f5f',
         description: 'Current quarter’s adjustment for fractions of cents'
       }, {
         id: '8',
+        model: 'f5f',
         description: 'Current quarter’s adjustment for sick pay'
       }, {
         id: '9',
+        model: 'f5f',
         description: 'Current quarter’s adjustments for tips and group-term life insurance'
       }, {
         id: '10',
+        model: 'f5f',
         description: 'Total taxes after adjustments. Combine lines 6 through 9'
       }, {
         id: '11',
+        model: 'f5f',
         description: 'Qualified small business payroll tax credit for increasing research activities. Attach Form 8974'
       }, {
         id: '12',
+        model: 'f5f',
         description: 'Total taxes after adjustments and credits. Subtract line 11 from line 10'
       }, {
         id: '13',
+        model: 'f5f',
         description: 'Total deposits for this quarter, including overpayment applied from a prior quarter and overpayments applied from Form 941-X, 941-X (PR), 944-X, or 944-X (SP) filed in the current quarter'
       }, {
         id: '14',
+        model: 'f5f',
         description: 'Balance due. If line 12 is more than line 13, enter the difference and see instructions'
       }, {
         id: '15',
+        model: 'f5f',
         description: 'Overpayment. If line 13 is more than line 12, enter the difference'
-      }, {
-        id: '15R',
-        description: 'Apply to next return'
-      }, {
-        id: '15S',
-        description: 'Send a refund'
-      }]
+      }],
+
+      /* Form Variables */
+      employerIdentificationNumber: null,
+      name: null,
+      tradeName: null,
+      address: null,
+      city: null,
+      state: null,
+      zip: null,
+      f_countryName: null,
+      f_countryProvince: null,
+      f_countryZIP: null,
+      reportForThisQuarter: null,
+
+      /* Field ID for generated fields in Part1 */
+      numberOfEmployees: null,
+      totalWages: null,
+      withheldTax: null,
+      noWages: null,
+      taxableSSWages: null,
+      taxableSSWagesPercentage: null,
+      taxableSSTips: null,
+      taxableSSTipsPercentage: null,
+      taxableMedicalWages: null,
+      taxableMedicalWagesPercentage: null,
+      taxableAMTWithholding: null,
+      taxableAMTWithholdingPercentage: null,
+      sumOfRows5aTo5d: null,
+      section3121: null,
+      taxBeforeAdjustments: null,
+      currentFractionsOfCents: null,
+      currentSickPay: null,
+      currentTipAndGroupTerm: null,
+      totalTaxesAfterAdjustments: null,
+      qualifiedSmallBusinessPayroll: null,
+      totalTaxesAfterAdjustmentsAndCredits: null,
+      totalQuarterDeposits: null,
+      balanceDue: null,
+      overpayment: null,
+      overpaymentOption: null
     };
+  },
+  computed: {
+    taxable5A: function taxable5A() {
+      return Number(this.taxableSSWages * 0.124).toFixed(2);
+    }
+  },
+  methods: {
+    exportToPDF: function exportToPDF() {
+      console.log('Exporting...');
+    }
   }
 });
 
@@ -63363,7 +63692,27 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _vm._m(0),
+    _c(
+      "div",
+      {
+        staticClass: "position-fixed",
+        staticStyle: { right: "1rem", bottom: "1rem" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary d-inline export",
+              on: { click: _vm.exportToPDF }
+            },
+            [_vm._v("Export")]
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
       _vm._m(1),
@@ -63373,11 +63722,293 @@ var render = function() {
         { staticClass: "col-lg-10 col-12 bg-white mt-4 p-3 text-left" },
         [
           _c("div", { staticClass: "row" }, [
-            _vm._m(2),
+            _c("div", { staticClass: "col-8" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Employer identification number\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.numberOfEmployees,
+                        expression: "numberOfEmployees"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.numberOfEmployees },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.numberOfEmployees = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Name\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name"
+                      }
+                    ],
+                    staticClass: "form-control mb-2",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.name = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Trade Name\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tradeName,
+                        expression: "tradeName"
+                      }
+                    ],
+                    staticClass: "form-control mb-2",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.tradeName },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.tradeName = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Address\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.address,
+                            expression: "address"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Number     Street"
+                        },
+                        domProps: { value: _vm.address },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.address = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.city,
+                            expression: "city"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: { type: "text", placeholder: "City" },
+                        domProps: { value: _vm.city },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.city = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.state,
+                            expression: "state"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: { type: "text", placeholder: "State" },
+                        domProps: { value: _vm.state },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.state = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.zip,
+                            expression: "zip"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: { type: "text", placeholder: "ZIP" },
+                        domProps: { value: _vm.zip },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.zip = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.f_countryName,
+                            expression: "f_countryName"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Foreign country name"
+                        },
+                        domProps: { value: _vm.f_countryName },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.f_countryName = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.f_countryProvince,
+                            expression: "f_countryProvince"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Foreign province/country"
+                        },
+                        domProps: { value: _vm.f_countryProvince },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.f_countryProvince = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.f_countryZIP,
+                            expression: "f_countryZIP"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Foreign postal code"
+                        },
+                        domProps: { value: _vm.f_countryZIP },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.f_countryZIP = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "col-4" }, [
               _c("div", { staticClass: "form-check" }, [
-                _vm._m(3),
+                _vm._m(2),
                 _vm._v(" "),
                 _c("label", { staticClass: "form-check-label d-block mt-2" }, [
                   _c("input", {
@@ -63401,7 +64032,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                1: January, February, March\n                            "
+                    "\n                            1: January, February, March\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -63427,7 +64058,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                2: April, May, June\n                            "
+                    "\n                            2: April, May, June\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -63453,7 +64084,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                3: July, August, September\n                            "
+                    "\n                            3: July, August, September\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -63479,7 +64110,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                4: October, November, December\n                            "
+                    "\n                            4: October, November, December\n                        "
                   )
                 ])
               ])
@@ -63488,35 +64119,836 @@ var render = function() {
         ]
       ),
       _vm._v(" "),
-      _vm._m(4),
-      _vm._v(" "),
-      _c(
-        "div",
-        { staticClass: "col-lg-10 col-12 bg-white mt-4" },
-        _vm._l(_vm.partTwoFieldInfo, function(field) {
-          return _c("div", { staticClass: "row mb-2" }, [
-            _c("div", { staticClass: "col-8 my-auto" }, [
-              _c("b", [_vm._v(_vm._s(field.id))]),
-              _vm._v(" " + _vm._s(field.description) + "\n                    ")
+      _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4 p-3" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[0].id))
             ]),
-            _vm._v(" "),
-            !_vm.dissallow.includes(field.id)
-              ? _c("div", { staticClass: "col-4" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "Fill in" }
-                  })
-                ])
-              : _c("div", { staticClass: "col-4" }, [
-                  _c("input", {
-                    staticClass: "form-control",
-                    attrs: { type: "text", placeholder: "_AUTOFILL**" }
-                  })
-                ])
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[0].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.numberOfEmployees,
+                  expression: "numberOfEmployees"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.numberOfEmployees },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.numberOfEmployees = $event.target.value
+                }
+              }
+            })
           ])
-        }),
-        0
-      )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[1].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[1].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.totalWages,
+                  expression: "totalWages"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.totalWages },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.totalWages = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[2].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[2].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.withheldTax,
+                  expression: "withheldTax"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.withheldTax },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.withheldTax = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[3].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[3].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "form-check" }, [
+              _c("label", { staticClass: "form-check-label" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.noWages,
+                      expression: "noWages"
+                    }
+                  ],
+                  staticClass: "form-check-input",
+                  attrs: {
+                    type: "radio",
+                    name: "",
+                    id: "",
+                    value: "checkedValue"
+                  },
+                  domProps: { checked: _vm._q(_vm.noWages, "checkedValue") },
+                  on: {
+                    change: function($event) {
+                      _vm.noWages = "checkedValue"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                            Check and go to line 6\n                        "
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[4].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[4].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableSSWages,
+                      expression: "taxableSSWages"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableSSWages },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableSSWages = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5A))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[5].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[5].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableSSTips,
+                      expression: "taxableSSTips"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableSSTips },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableSSTips = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-6 my-auto",
+                  model: {
+                    value: _vm.taxableSSTipsPercentage,
+                    callback: function($$v) {
+                      _vm.taxableSSTipsPercentage = $$v
+                    },
+                    expression: "taxableSSTipsPercentage"
+                  }
+                },
+                [_vm._v("AUTOCALC**")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[6].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[6].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableMedicalWages,
+                      expression: "taxableMedicalWages"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableMedicalWages },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableMedicalWages = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-6 my-auto",
+                  model: {
+                    value: _vm.taxableMedicalWagesPercentage,
+                    callback: function($$v) {
+                      _vm.taxableMedicalWagesPercentage = $$v
+                    },
+                    expression: "taxableMedicalWagesPercentage"
+                  }
+                },
+                [_vm._v("AUTOCALC**")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[7].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[7].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableAMTWithholding,
+                      expression: "taxableAMTWithholding"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableAMTWithholding },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableAMTWithholding = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                {
+                  staticClass: "col-6 my-auto",
+                  model: {
+                    value: _vm.taxableAMTWithholdingPercentage,
+                    callback: function($$v) {
+                      _vm.taxableAMTWithholdingPercentage = $$v
+                    },
+                    expression: "taxableAMTWithholdingPercentage"
+                  }
+                },
+                [_vm._v("AUTOCALC**")]
+              )
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[8].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[8].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-4 my-auto text-center",
+              model: {
+                value: _vm.sumOfRows5aTo5d,
+                callback: function($$v) {
+                  _vm.sumOfRows5aTo5d = $$v
+                },
+                expression: "sumOfRows5aTo5d"
+              }
+            },
+            [_vm._v("\n                    AUTOCALC**\n                ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[9].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[9].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.section3121,
+                  expression: "section3121"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.section3121 },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.section3121 = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[10].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[10].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-4 my-auto text-center",
+              model: {
+                value: _vm.taxBeforeAdjustments,
+                callback: function($$v) {
+                  _vm.taxBeforeAdjustments = $$v
+                },
+                expression: "taxBeforeAdjustments"
+              }
+            },
+            [_vm._v("\n                    AUTOCALC**\n                ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[11].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[11].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.currentFractionsOfCents,
+                  expression: "currentFractionsOfCents"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.currentFractionsOfCents },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.currentFractionsOfCents = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[12].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[12].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.currentSickPay,
+                  expression: "currentSickPay"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.currentSickPay },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.currentSickPay = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[13].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[13].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.currentTipAndGroupTerm,
+                  expression: "currentTipAndGroupTerm"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.currentTipAndGroupTerm },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.currentTipAndGroupTerm = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[14].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[14].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-4 my-auto text-center",
+              model: {
+                value: _vm.totalTaxesAfterAdjustments,
+                callback: function($$v) {
+                  _vm.totalTaxesAfterAdjustments = $$v
+                },
+                expression: "totalTaxesAfterAdjustments"
+              }
+            },
+            [_vm._v("\n                    AUTOCALC**\n                ")]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[15].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[15].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.qualifiedSmallBusinessPayroll,
+                  expression: "qualifiedSmallBusinessPayroll"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.qualifiedSmallBusinessPayroll },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.qualifiedSmallBusinessPayroll = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[16].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[16].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.totalTaxesAfterAdjustmentsAndCredits,
+                  expression: "totalTaxesAfterAdjustmentsAndCredits"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.totalTaxesAfterAdjustmentsAndCredits },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.totalTaxesAfterAdjustmentsAndCredits = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[17].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[17].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.totalQuarterDeposits,
+                  expression: "totalQuarterDeposits"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.totalQuarterDeposits },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.totalQuarterDeposits = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[18].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[18].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.balanceDue,
+                  expression: "balanceDue"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.balanceDue },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.balanceDue = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[19].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[19].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12 mb-2" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.overpayment,
+                      expression: "overpayment"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.overpayment },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.overpayment = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("div", { staticClass: "form-check" }, [
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.overpaymentOption,
+                          expression: "overpaymentOption"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "radio",
+                        name: "OverpaymentOption",
+                        value: "1"
+                      },
+                      domProps: { checked: _vm._q(_vm.overpaymentOption, "1") },
+                      on: {
+                        change: function($event) {
+                          _vm.overpaymentOption = "1"
+                        }
+                      }
+                    }),
+                    _vm._v(
+                      "\n                                    Apply to next return\n                                "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("div", { staticClass: "form-check" }, [
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.overpaymentOption,
+                          expression: "overpaymentOption"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "radio",
+                        name: "OverpaymentOption",
+                        value: "2"
+                      },
+                      domProps: { checked: _vm._q(_vm.overpaymentOption, "2") },
+                      on: {
+                        change: function($event) {
+                          _vm.overpaymentOption = "2"
+                        }
+                      }
+                    }),
+                    _vm._v(
+                      "\n                                    Send a refund\n                                "
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(4)
     ])
   ])
 }
@@ -63525,26 +64957,11 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "position-fixed",
-        staticStyle: { right: "1rem", bottom: "1rem" }
-      },
-      [
-        _c("div", [
-          _c("button", { staticClass: "btn btn-danger d-inline clear" }, [
-            _vm._v("Clear")
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", [
-          _c("button", { staticClass: "btn btn-primary d-inline export" }, [
-            _vm._v("Export")
-          ])
-        ])
-      ]
-    )
+    return _c("div", [
+      _c("button", { staticClass: "btn btn-danger d-inline clear" }, [
+        _vm._v("Clear")
+      ])
+    ])
   },
   function() {
     var _vm = this
@@ -63560,117 +64977,12 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-8" }, [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
-          _vm._v(
-            "\n                                Employer identification number\n                            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-7 my-auto" }, [
-          _c("input", { staticClass: "form-control", attrs: { type: "text" } })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
-          _vm._v(
-            "\n                                Name\n                            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-7 my-auto" }, [
-          _c("input", {
-            staticClass: "form-control mb-2",
-            attrs: { type: "text" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
-          _vm._v(
-            "\n                                Trade Name\n                            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-7 my-auto" }, [
-          _c("input", {
-            staticClass: "form-control mb-2",
-            attrs: { type: "text" }
-          })
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
-          _vm._v(
-            "\n                                Address\n                            "
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "col-7 my-auto" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "Number     Street" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "City" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "State" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "ZIP" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "Foreign country name" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "Foreign province/country" }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-12" }, [
-              _c("input", {
-                staticClass: "form-control mb-2",
-                attrs: { type: "text", placeholder: "Foreign postal code" }
-              })
-            ])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
     return _c(
       "h6",
       { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
       [
         _vm._v("Report for this quarter "),
-        _c("small", [
-          _vm._v("check\n                                only one box")
-        ])
+        _c("small", [_vm._v("check\n                            only one box")])
       ]
     )
   },
@@ -63678,11 +64990,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4 p-3" }, [
+    return _c("div", { staticClass: "bg-dark p-2 text-white mb-3" }, [
+      _vm._v("Part 1 "),
+      _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
+        _vm._v("Answer these questions for this quarter")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4" }, [
       _c("div", { staticClass: "bg-dark p-2 text-white" }, [
-        _vm._v("Part 1 "),
+        _vm._v("Part 2 "),
         _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
-          _vm._v("Answer these questions for this quarter")
+          _vm._v(
+            "Tell us about your deposit schedule and tax liability for this quarter"
+          )
         ])
       ])
     ])
