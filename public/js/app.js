@@ -3391,10 +3391,50 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
 
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3919,7 +3959,28 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       currentTipAndGroupTerm: 0,
       qualifiedSmallBusinessPayroll: 0,
       totalQuarterDeposits: 0,
-      overpaymentOption: null
+      overpaymentOption: null,
+      errors: {
+        ein: null,
+        name: null,
+        address: null,
+        city: null,
+        state: null,
+        zip: null,
+        numberOfEmployees: null,
+        totalWages: null,
+        withheldTax: null,
+        taxableSSWages: null,
+        taxableSSTips: null,
+        taxableMedicalWages: null,
+        taxableAMTWithholding: null,
+        line5E: null,
+        totalTaxesBeforeAdjustments: null,
+        line10Sum: null,
+        line12TotalTaxesAfterAdjustments: null,
+        totalQuarterDeposits: null,
+        line15Overpayment: null
+      }
     };
   },
   computed: {
@@ -3971,7 +4032,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     }
   },
   methods: {
-    validation: function validation() {
+    validateFormFields: function validateFormFields() {
+      console.log(this.numberOfEmployees);
+      console.log(this.totalWages);
       /* REQUIREMENTS
       * EIN
       * Name
@@ -3989,53 +4052,111 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       * 13
       * 15
       * */
+
+      if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
+        this.errors.ein = true;
+        return false;
+      } else this.errors.ein = false;
+
+      if (this.name === null || this.name.trim().length < 1) {
+        this.errors.name = true;
+        return false;
+      } else this.errors.name = false;
+
+      if (this.tradeName === null || this.tradeName.trim().length < 1) {
+        this.errors.tradeName = true;
+        return false;
+      } else this.errors.tradeName = false; // if (this.address === null || this.address.trim().length < 1) {
+      //   this.errors.address = true;
+      //   return false
+      // } else this.errors.address = false;
+      //
+      // if (this.city === null || this.city.trim().length < 1) {
+      //   this.errors.city = true;
+      //   return false
+      // } else this.errors.city = false;
+      //
+      // if (this.state === null || this.state.trim().length < 1) {
+      //   this.errors.state = true;
+      //   return false
+      // } else this.errors.state = false;
+      //
+      // if (this.zip === null || this.zip.trim().length < 1) {
+      //   this.errors.zip = true;
+      //   return false
+      // } else this.errors.zip = false;
+      //
+      // if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+      //   this.errors.numberOfEmployees = true;
+      //   return false
+      // } else this.errors.numberOfEmployees = false;
+      //
+      // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+      //   this.errors.totalWages = true;
+      //   return false
+      // } else this.errors.totalWages = false;
+      //
+      // if (parseFloat(this.withheldTax) < 0) {
+      //   this.errors.withheldTax = true;
+      //   return false
+      // } else this.errors.withheldTax = false;
+      //
+      // /*5E*/
+      // if (parseFloat(this.line5E) < 0) {
+      //   this.errors.line5E = true;
+      //   return false
+      // } else this.errors.line5E = false;
+
+
+      return true;
     },
     exportToPDF: function () {
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, COLOR, baseOptions, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, COLOR, baseOptions, baseYOffset, ein_mutated, i, ein_XCoord, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
                 /*  TODO Validate all fields before exporting */
-                // const validated = this.validateFormFields();
-
+                validated = this.validateFormFields();
                 /*EIN*/
+
                 console.log(validated);
 
                 if (validated) {
-                  _context.next = 5;
+                  _context.next = 6;
                   break;
                 }
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 23;
+                _context.next = 30;
                 break;
 
-              case 5:
-                _context.next = 7;
+              case 6:
+                _context.next = 8;
                 return fetch(this.url).then(function (res) {
                   return res.arrayBuffer();
                 });
 
-              case 7:
+              case 8:
                 existingPdfBytes = _context.sent;
-                _context.next = 10;
+                _context.next = 11;
                 return pdf_lib__WEBPACK_IMPORTED_MODULE_1__["PDFDocument"].load(existingPdfBytes);
 
-              case 10:
+              case 11:
                 pdfDoc = _context.sent;
-                _context.next = 13;
+                _context.next = 14;
                 return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["StandardFonts"].Helvetica);
 
-              case 13:
+              case 14:
                 helveticaFont = _context.sent;
                 pages = pdfDoc.getPages();
                 firstPage = pages[0];
+                secondPage = pages[1];
                 _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
                 COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0, 0, 0);
                 baseOptions = {
@@ -4043,18 +4164,43 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   font: helveticaFont,
                   color: COLOR
                 };
+                baseYOffset = 23;
+                /*EIN
+                * clone name
+                * mutate
+                * output
+                * */
+
+                ein_mutated = this.employerIdentificationNumber.split('');
+
+                for (i = 0; i < 9; i++) {
+                  ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+                  firstPage.drawText(ein_mutated[i], _objectSpread({
+                    x: ein_XCoord[i],
+                    y: height / 2 + 318
+                  }, baseOptions));
+                }
+
+                firstPage.drawText(this.name, _objectSpread({
+                  x: 150,
+                  y: height / 2 + 295
+                }, baseOptions));
+                firstPage.drawText(this.tradeName, _objectSpread({
+                  x: 135,
+                  y: height / 2 + 270
+                }, baseOptions));
                 /* Save report and Download*/
 
-                _context.next = 21;
+                _context.next = 28;
                 return pdfDoc.save();
 
-              case 21:
+              case 28:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 23:
+              case 30:
               case "end":
                 return _context.stop();
             }
@@ -63870,19 +64016,23 @@ var render = function() {
                       {
                         name: "model",
                         rawName: "v-model",
-                        value: _vm.numberOfEmployees,
-                        expression: "numberOfEmployees"
+                        value: _vm.employerIdentificationNumber,
+                        expression: "employerIdentificationNumber"
                       }
                     ],
                     staticClass: "form-control",
-                    attrs: { type: "text" },
-                    domProps: { value: _vm.numberOfEmployees },
+                    class: {
+                      "is-invalid": _vm.errors.ein,
+                      "is-valid": _vm.errors.ein === false
+                    },
+                    attrs: { type: "text", minlength: "9", maxlength: "9" },
+                    domProps: { value: _vm.employerIdentificationNumber },
                     on: {
                       input: function($event) {
                         if ($event.target.composing) {
                           return
                         }
-                        _vm.numberOfEmployees = $event.target.value
+                        _vm.employerIdentificationNumber = $event.target.value
                       }
                     }
                   })
@@ -63905,7 +64055,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control mb-2",
-                    attrs: { type: "text" },
+                    class: {
+                      "is-invalid": _vm.errors.name,
+                      "is-valid": _vm.errors.name === false
+                    },
+                    attrs: { type: "text", minlength: "1" },
                     domProps: { value: _vm.name },
                     on: {
                       input: function($event) {
@@ -63935,7 +64089,11 @@ var render = function() {
                       }
                     ],
                     staticClass: "form-control mb-2",
-                    attrs: { type: "text" },
+                    class: {
+                      "is-invalid": _vm.errors.tradeName,
+                      "is-valid": _vm.errors.tradeName === false
+                    },
+                    attrs: { type: "text", minlength: "1" },
                     domProps: { value: _vm.tradeName },
                     on: {
                       input: function($event) {
@@ -63967,9 +64125,14 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control mb-2",
+                        class: {
+                          "is-invalid": _vm.errors.address,
+                          "is-valid": _vm.errors.address === false
+                        },
                         attrs: {
                           type: "text",
-                          placeholder: "Number     Street"
+                          placeholder: "Number     Street",
+                          minlength: "1"
                         },
                         domProps: { value: _vm.address },
                         on: {
@@ -63994,6 +64157,10 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control mb-2",
+                        class: {
+                          "is-invalid": _vm.errors.city,
+                          "is-valid": _vm.errors.city === false
+                        },
                         attrs: { type: "text", placeholder: "City" },
                         domProps: { value: _vm.city },
                         on: {
@@ -64018,6 +64185,10 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control mb-2",
+                        class: {
+                          "is-invalid": _vm.errors.state,
+                          "is-valid": _vm.errors.state === false
+                        },
                         attrs: { type: "text", placeholder: "State" },
                         domProps: { value: _vm.state },
                         on: {
@@ -64042,6 +64213,10 @@ var render = function() {
                           }
                         ],
                         staticClass: "form-control mb-2",
+                        class: {
+                          "is-invalid": _vm.errors.zip,
+                          "is-valid": _vm.errors.zip === false
+                        },
                         attrs: { type: "text", placeholder: "ZIP" },
                         domProps: { value: _vm.zip },
                         on: {
@@ -64277,6 +64452,10 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
+              class: {
+                "is-invalid": _vm.errors.numberOfEmployees,
+                "is-valid": _vm.errors.numberOfEmployees === false
+              },
               attrs: { type: "text", placeholder: "Fill in" },
               domProps: { value: _vm.numberOfEmployees },
               on: {
@@ -64312,6 +64491,10 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
+              class: {
+                "is-invalid": _vm.errors.totalWages,
+                "is-valid": _vm.errors.totalWages === false
+              },
               attrs: { type: "text", placeholder: "Fill in" },
               domProps: { value: _vm.totalWages },
               on: {
@@ -64347,6 +64530,10 @@ var render = function() {
                 }
               ],
               staticClass: "form-control",
+              class: {
+                "is-invalid": _vm.errors.withheldTax,
+                "is-valid": _vm.errors.withheldTax === false
+              },
               attrs: { type: "text", placeholder: "Fill in" },
               domProps: { value: _vm.withheldTax },
               on: {
@@ -64587,9 +64774,17 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 my-auto text-center" }, [
-            _vm._v(_vm._s(_vm.line5E))
-          ])
+          _c(
+            "div",
+            {
+              staticClass: "col-4 my-auto text-center",
+              class: {
+                "alert-danger": _vm.errors.line5E,
+                "alert-success": _vm.errors.line5E === false
+              }
+            },
+            [_vm._v(_vm._s(_vm.line5E))]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row mb-2" }, [

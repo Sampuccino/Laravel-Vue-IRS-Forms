@@ -26,7 +26,11 @@
                                 Employer identification number
                             </div>
                             <div class="col-7 my-auto">
-                                <input type="text" class="form-control" v-model="numberOfEmployees">
+                                <input type="text" class="form-control"
+                                       :class="{'is-invalid': errors.ein, 'is-valid': (errors.ein===false)}"
+                                       v-model="employerIdentificationNumber"
+                                       minlength="9"
+                                       maxlength="9">
                             </div>
 
                             <!--Name-->
@@ -34,7 +38,10 @@
                                 Name
                             </div>
                             <div class="col-7 my-auto">
-                                <input type="text" class="form-control mb-2" v-model="name">
+                                <input type="text" class="form-control mb-2"
+                                       :class="{'is-invalid': errors.name, 'is-valid': (errors.name===false)}"
+                                       minlength="1"
+                                       v-model="name">
                             </div>
 
                             <!--Trade Name-->
@@ -42,7 +49,10 @@
                                 Trade Name
                             </div>
                             <div class="col-7 my-auto">
-                                <input type="text" class="form-control mb-2" v-model="tradeName">
+                                <input type="text" class="form-control mb-2"
+                                       :class="{'is-invalid': errors.tradeName, 'is-valid': (errors.tradeName===false)}"
+                                       minlength="1"
+                                       v-model="tradeName">
                             </div>
 
                             <!--Address-->
@@ -53,16 +63,29 @@
 
                                 <div class="row">
                                     <div class="col-12">
-                                        <input type="text" placeholder="Number     Street" class="form-control mb-2" v-model="address">
+                                        <input type="text" placeholder="Number     Street"
+                                               class="form-control mb-2"
+                                               :class="{'is-invalid': errors.address, 'is-valid': (errors.address===false)}"
+                                               minlength="1"
+                                               v-model="address">
                                     </div>
                                     <div class="col-12">
-                                        <input type="text" placeholder="City" class="form-control mb-2" v-model="city">
+                                        <input type="text" placeholder="City"
+                                               class="form-control mb-2"
+                                               :class="{'is-invalid': errors.city, 'is-valid': (errors.city===false)}"
+                                               v-model="city">
                                     </div>
                                     <div class="col-12">
-                                        <input type="text" placeholder="State" class="form-control mb-2" v-model="state">
+                                        <input type="text" placeholder="State"
+                                               class="form-control mb-2"
+                                               :class="{'is-invalid': errors.state, 'is-valid': (errors.state===false)}"
+                                               v-model="state">
                                     </div>
                                     <div class="col-12">
-                                        <input type="text" placeholder="ZIP" class="form-control mb-2" v-model="zip">
+                                        <input type="text" placeholder="ZIP"
+                                               class="form-control mb-2"
+                                               :class="{'is-invalid': errors.zip, 'is-valid': (errors.zip===false)}"
+                                               v-model="zip">
                                     </div>
                                     <div class="col-12">
                                         <input type="text" placeholder="Foreign country name" class="form-control mb-2" v-model="f_countryName">
@@ -122,7 +145,10 @@
                         <b class="mr-3">{{partTwoFieldInfo[0].id}}</b>{{partTwoFieldInfo[0].description}}
                     </div>
                     <div class="col-4 my-auto">
-                        <input type="text" placeholder="Fill in" class="form-control" v-model="numberOfEmployees">
+                        <input type="text" placeholder="Fill in"
+                               class="form-control"
+                               :class="{'is-invalid': errors.numberOfEmployees, 'is-valid': (errors.numberOfEmployees===false)}"
+                               v-model="numberOfEmployees">
                     </div>
                 </div>
 
@@ -134,7 +160,10 @@
                         <b class="mr-3">{{partTwoFieldInfo[1].id}}</b>{{partTwoFieldInfo[1].description}}
                     </div>
                     <div class="col-4 my-auto">
-                        <input type="text" placeholder="Fill in" class="form-control" v-model="totalWages">
+                        <input type="text" placeholder="Fill in"
+                               class="form-control"
+                               :class="{'is-invalid': errors.totalWages, 'is-valid': (errors.totalWages===false)}"
+                               v-model="totalWages">
                     </div>
                 </div>
 
@@ -146,7 +175,10 @@
                         <b class="mr-3">{{partTwoFieldInfo[2].id}}</b>{{partTwoFieldInfo[2].description}}
                     </div>
                     <div class="col-4 my-auto">
-                        <input type="text" placeholder="Fill in" class="form-control" v-model="withheldTax">
+                        <input type="text" placeholder="Fill in"
+                               class="form-control"
+                               :class="{'is-invalid': errors.withheldTax, 'is-valid': (errors.withheldTax===false)}"
+                               v-model="withheldTax">
                     </div>
                 </div>
 
@@ -242,7 +274,9 @@
                     <div class="col-8 my-auto">
                         <b class="mr-3">{{partTwoFieldInfo[8].id}}</b>{{partTwoFieldInfo[8].description}}
                     </div>
-                    <div class="col-4 my-auto text-center">{{ line5E }}</div>
+                    <div class="col-4 my-auto text-center"
+                         :class="{'alert-danger': errors.line5E, 'alert-success': (errors.line5E===false)}"
+                    >{{ line5E }}</div>
                 </div>
 
                 <!--###########-->
@@ -464,7 +498,27 @@
         qualifiedSmallBusinessPayroll: 0,
         totalQuarterDeposits: 0,
         overpaymentOption: null,
-
+        errors: {
+          ein: null,
+          name: null,
+          address: null,
+          city: null,
+          state: null,
+          zip: null,
+          numberOfEmployees: null,
+          totalWages: null,
+          withheldTax: null,
+          taxableSSWages: null,
+          taxableSSTips: null,
+          taxableMedicalWages: null,
+          taxableAMTWithholding: null,
+          line5E: null,
+          totalTaxesBeforeAdjustments: null,
+          line10Sum: null,
+          line12TotalTaxesAfterAdjustments: null,
+          totalQuarterDeposits: null,
+          line15Overpayment: null,
+        }
       }
     },
     computed: {
@@ -510,8 +564,9 @@
       }
     },
     methods: {
-      validation: function(){
-
+      validateFormFields: function(){
+        console.log(this.numberOfEmployees)
+        console.log(this.totalWages)
         /* REQUIREMENTS
         * EIN
         * Name
@@ -529,12 +584,68 @@
         * 13
         * 15
         * */
+        if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
+          this.errors.ein = true;
+          return false
+        } else this.errors.ein = false;
 
+        if (this.name === null || this.name.trim().length < 1) {
+          this.errors.name = true;
+          return false
+        } else this.errors.name = false;
+
+        if (this.tradeName === null || this.tradeName.trim().length < 1) {
+          this.errors.tradeName = true;
+          return false
+        } else this.errors.tradeName = false;
+
+        // if (this.address === null || this.address.trim().length < 1) {
+        //   this.errors.address = true;
+        //   return false
+        // } else this.errors.address = false;
+        //
+        // if (this.city === null || this.city.trim().length < 1) {
+        //   this.errors.city = true;
+        //   return false
+        // } else this.errors.city = false;
+        //
+        // if (this.state === null || this.state.trim().length < 1) {
+        //   this.errors.state = true;
+        //   return false
+        // } else this.errors.state = false;
+        //
+        // if (this.zip === null || this.zip.trim().length < 1) {
+        //   this.errors.zip = true;
+        //   return false
+        // } else this.errors.zip = false;
+        //
+        // if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+        //   this.errors.numberOfEmployees = true;
+        //   return false
+        // } else this.errors.numberOfEmployees = false;
+        //
+        // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+        //   this.errors.totalWages = true;
+        //   return false
+        // } else this.errors.totalWages = false;
+        //
+        // if (parseFloat(this.withheldTax) < 0) {
+        //   this.errors.withheldTax = true;
+        //   return false
+        // } else this.errors.withheldTax = false;
+        //
+        // /*5E*/
+        // if (parseFloat(this.line5E) < 0) {
+        //   this.errors.line5E = true;
+        //   return false
+        // } else this.errors.line5E = false;
+
+        return true;
       },
       exportToPDF: async function () {
 
         /*  TODO Validate all fields before exporting */
-        // const validated = this.validateFormFields();
+        const validated = this.validateFormFields();
 
         /*EIN*/
         console.log(validated);
@@ -550,6 +661,7 @@
 
           const pages = pdfDoc.getPages();
           const firstPage = pages[0];
+          const secondPage = pages[1];
           const {width, height} = firstPage.getSize();
           const COLOR = rgb(0, 0, 0);
           const baseOptions = {
@@ -557,6 +669,36 @@
             font: helveticaFont,
             color: COLOR,
           };
+          const baseYOffset = 23;
+
+          /*EIN
+          * clone name
+          * mutate
+          * output
+          * */
+          let ein_mutated = this.employerIdentificationNumber.split('');
+          for (let i = 0; i < 9; i++) {
+            let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+
+            firstPage.drawText(ein_mutated[i], {
+              x: ein_XCoord[i],
+              y: height / 2 + 318,
+              ...baseOptions
+            });
+          }
+
+          firstPage.drawText(this.name, {
+            x: 150,
+            y: height / 2 + 295,
+            ...baseOptions
+          });
+
+          firstPage.drawText(this.tradeName, {
+            x: 135,
+            y: height / 2 + 270,
+            ...baseOptions
+          });
+
 
           /* Save report and Download*/
           const pdfBytes = await pdfDoc.save();
