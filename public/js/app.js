@@ -3836,6 +3836,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -4063,35 +4065,30 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return false;
       } else this.errors.name = false;
 
-      if (this.tradeName === null || this.tradeName.trim().length < 1) {
-        this.errors.tradeName = true;
+      if (this.address === null || this.address.trim().length < 1) {
+        this.errors.address = true;
         return false;
-      } else this.errors.tradeName = false; // if (this.address === null || this.address.trim().length < 1) {
-      //   this.errors.address = true;
-      //   return false
-      // } else this.errors.address = false;
-      //
-      // if (this.city === null || this.city.trim().length < 1) {
-      //   this.errors.city = true;
-      //   return false
-      // } else this.errors.city = false;
-      //
-      // if (this.state === null || this.state.trim().length < 1) {
-      //   this.errors.state = true;
-      //   return false
-      // } else this.errors.state = false;
-      //
-      // if (this.zip === null || this.zip.trim().length < 1) {
-      //   this.errors.zip = true;
-      //   return false
-      // } else this.errors.zip = false;
-      //
-      // if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
-      //   this.errors.numberOfEmployees = true;
-      //   return false
-      // } else this.errors.numberOfEmployees = false;
-      //
-      // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+      } else this.errors.address = false;
+
+      if (this.city === null || this.city.trim().length < 1) {
+        this.errors.city = true;
+        return false;
+      } else this.errors.city = false;
+
+      if (this.state === null || this.state.trim().length < 1) {
+        this.errors.state = true;
+        return false;
+      } else this.errors.state = false;
+
+      if (this.zip === null || this.zip.trim().length < 1) {
+        this.errors.zip = true;
+        return false;
+      } else this.errors.zip = false;
+
+      if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+        this.errors.numberOfEmployees = true;
+        return false;
+      } else this.errors.numberOfEmployees = false; // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
       //   this.errors.totalWages = true;
       //   return false
       // } else this.errors.totalWages = false;
@@ -4133,7 +4130,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 30;
+                _context.next = 34;
                 break;
 
               case 6:
@@ -4185,22 +4182,78 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   x: 150,
                   y: height / 2 + 295
                 }, baseOptions));
-                firstPage.drawText(this.tradeName, _objectSpread({
-                  x: 135,
-                  y: height / 2 + 270
+                /*  IF – TradeName */
+                // firstPage.drawText(this.tradeName, {
+                //   x: 135,
+                //   y: height / 2 + 270,
+                //   ...baseOptions
+                // });
+
+                /*Address*/
+
+                firstPage.drawText(this.address, _objectSpread({
+                  x: 95,
+                  y: height / 2 + 245
+                }, baseOptions));
+                /*City*/
+
+                firstPage.drawText(this.city, _objectSpread({
+                  x: 95,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /*State*/
+
+                firstPage.drawText(this.state, _objectSpread({
+                  x: 285,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /*ZIP*/
+
+                firstPage.drawText(this.zip, _objectSpread({
+                  x: 325,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /* IF – Foreign Country*/
+                // firstPage.drawText(this.f_countryName, {
+                //   x: 95,
+                //   y: height / 2 + 185,
+                //   ...baseOptions
+                // });
+
+                /* IF – Foreign Province*/
+                // firstPage.drawText(this.f_countryProvince, {
+                //   x: 235,
+                //   y: height / 2 + 185,
+                //   ...baseOptions
+                // });
+
+                /* IF – Foreign Province*/
+                // firstPage.drawText(this.f_countryZIP, {
+                //   x: 335,
+                //   y: height / 2 + 185,
+                //   ...baseOptions
+                // });
+
+                /* Report For Quarter */
+
+                /* Number Of Employees */
+
+                firstPage.drawText(this.numberOfEmployees, _objectSpread({
+                  x: 455,
+                  y: height / 2 + 115
                 }, baseOptions));
                 /* Save report and Download*/
 
-                _context.next = 28;
+                _context.next = 32;
                 return pdfDoc.save();
 
-              case 28:
+              case 32:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 30:
+              case 34:
               case "end":
                 return _context.stop();
             }
@@ -64184,12 +64237,17 @@ var render = function() {
                             expression: "state"
                           }
                         ],
-                        staticClass: "form-control mb-2",
+                        staticClass: "form-control mb-2 text-uppercase",
                         class: {
                           "is-invalid": _vm.errors.state,
                           "is-valid": _vm.errors.state === false
                         },
-                        attrs: { type: "text", placeholder: "State" },
+                        attrs: {
+                          type: "text",
+                          placeholder: "State",
+                          minlength: "2",
+                          maxlength: "2"
+                        },
                         domProps: { value: _vm.state },
                         on: {
                           input: function($event) {
@@ -64217,7 +64275,12 @@ var render = function() {
                           "is-invalid": _vm.errors.zip,
                           "is-valid": _vm.errors.zip === false
                         },
-                        attrs: { type: "text", placeholder: "ZIP" },
+                        attrs: {
+                          type: "text",
+                          placeholder: "ZIP",
+                          minlength: "5",
+                          maxlength: "5"
+                        },
                         domProps: { value: _vm.zip },
                         on: {
                           input: function($event) {

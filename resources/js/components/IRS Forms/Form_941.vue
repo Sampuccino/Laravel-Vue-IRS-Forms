@@ -77,14 +77,16 @@
                                     </div>
                                     <div class="col-12">
                                         <input type="text" placeholder="State"
-                                               class="form-control mb-2"
+                                               class="form-control mb-2 text-uppercase"
                                                :class="{'is-invalid': errors.state, 'is-valid': (errors.state===false)}"
+                                               minlength="2" maxlength="2"
                                                v-model="state">
                                     </div>
                                     <div class="col-12">
                                         <input type="text" placeholder="ZIP"
                                                class="form-control mb-2"
                                                :class="{'is-invalid': errors.zip, 'is-valid': (errors.zip===false)}"
+                                               minlength="5" maxlength="5"
                                                v-model="zip">
                                     </div>
                                     <div class="col-12">
@@ -594,36 +596,31 @@
           return false
         } else this.errors.name = false;
 
-        if (this.tradeName === null || this.tradeName.trim().length < 1) {
-          this.errors.tradeName = true;
+        if (this.address === null || this.address.trim().length < 1) {
+          this.errors.address = true;
           return false
-        } else this.errors.tradeName = false;
+        } else this.errors.address = false;
 
-        // if (this.address === null || this.address.trim().length < 1) {
-        //   this.errors.address = true;
-        //   return false
-        // } else this.errors.address = false;
-        //
-        // if (this.city === null || this.city.trim().length < 1) {
-        //   this.errors.city = true;
-        //   return false
-        // } else this.errors.city = false;
-        //
-        // if (this.state === null || this.state.trim().length < 1) {
-        //   this.errors.state = true;
-        //   return false
-        // } else this.errors.state = false;
-        //
-        // if (this.zip === null || this.zip.trim().length < 1) {
-        //   this.errors.zip = true;
-        //   return false
-        // } else this.errors.zip = false;
-        //
-        // if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
-        //   this.errors.numberOfEmployees = true;
-        //   return false
-        // } else this.errors.numberOfEmployees = false;
-        //
+        if (this.city === null || this.city.trim().length < 1) {
+          this.errors.city = true;
+          return false
+        } else this.errors.city = false;
+
+        if (this.state === null || this.state.trim().length < 1) {
+          this.errors.state = true;
+          return false
+        } else this.errors.state = false;
+
+        if (this.zip === null || this.zip.trim().length < 1) {
+          this.errors.zip = true;
+          return false
+        } else this.errors.zip = false;
+
+        if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+          this.errors.numberOfEmployees = true;
+          return false
+        } else this.errors.numberOfEmployees = false;
+
         // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
         //   this.errors.totalWages = true;
         //   return false
@@ -693,9 +690,68 @@
             ...baseOptions
           });
 
-          firstPage.drawText(this.tradeName, {
-            x: 135,
-            y: height / 2 + 270,
+          /*  IF – TradeName */
+          // firstPage.drawText(this.tradeName, {
+          //   x: 135,
+          //   y: height / 2 + 270,
+          //   ...baseOptions
+          // });
+
+          /*Address*/
+          firstPage.drawText(this.address, {
+            x: 95,
+            y: height / 2 + 245,
+            ...baseOptions
+          });
+
+          /*City*/
+          firstPage.drawText(this.city, {
+            x: 95,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /*State*/
+          firstPage.drawText(this.state, {
+            x: 285 ,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /*ZIP*/
+          firstPage.drawText(this.zip, {
+            x: 325 ,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /* IF – Foreign Country*/
+          // firstPage.drawText(this.f_countryName, {
+          //   x: 95,
+          //   y: height / 2 + 185,
+          //   ...baseOptions
+          // });
+
+          /* IF – Foreign Province*/
+          // firstPage.drawText(this.f_countryProvince, {
+          //   x: 235,
+          //   y: height / 2 + 185,
+          //   ...baseOptions
+          // });
+
+          /* IF – Foreign Province*/
+          // firstPage.drawText(this.f_countryZIP, {
+          //   x: 335,
+          //   y: height / 2 + 185,
+          //   ...baseOptions
+          // });
+
+          /* Report For Quarter */
+
+          /* Number Of Employees */
+          firstPage.drawText(this.numberOfEmployees, {
+            x: 455,
+            y: height / 2 + 115,
             ...baseOptions
           });
 
