@@ -2700,10 +2700,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -2718,7 +2714,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   data: function data() {
     return {
-      url: 'https://irsforms.dev/Filliable-Form-8974.pdf',
+      // url: 'https://irsforms.dev/Form-8974.pdf',
+      url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
 
       /* MAIN FORM FIELDS ######################## */
       ein: '',
@@ -2832,7 +2829,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return (Number(this.partTwoEight) + Number(this.partTwoNine)).toFixed(2);
     },
     partTwoGreaterThan: function partTwoGreaterThan() {
-      return this.rowSixTotal > this.sumOfPartTwoEightAndNine ? this.sumOfPartTwoEightAndNine : this.rowSixTotal;
+      return Number(this.rowSixTotal) > Number(this.partTwoLineElevenPercentage) ? this.partTwoLineElevenPercentage : this.rowSixTotal;
     },
     partTwoLineElevenPercentage: function partTwoLineElevenPercentage() {
       return Number(this.sumOfPartTwoEightAndNine * .50).toFixed(2);
@@ -2843,7 +2840,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, COLOR, baseOptions, baseOptionsSM, baseOptionsLG, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, COLOR, baseOptions, baseOptionsSM, baseOptionsLG, ein_mutated, i, ein_XCoord, ctYCoord, rqYCoord, xOffset, xOffsetSp, yOffset, START_X, idx, formattedColG, _formattedColG, _formattedColG2, _formattedColG3, _formattedColG4, total, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -2862,7 +2859,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 67;
+                _context.next = 69;
                 break;
 
               case 6:
@@ -2904,9 +2901,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 };
                 /* Draw EIN */
 
+                /* All Validation Passed */
+
+                /* Mutate EIN */
+
+                /*EIN*/
+
+                ein_mutated = this.ein.slice(0).replace(' - ', '');
+                ein_mutated.split('');
+
                 for (i = 0; i < 9; i++) {
                   ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-                  firstPage.drawText(this.ein[i], _objectSpread({
+                  firstPage.drawText(ein_mutated[i], _objectSpread({
                     x: ein_XCoord[i],
                     y: height / 2 + 312.5
                   }, baseOptionsSM));
@@ -2956,18 +2962,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 START_X = 80;
                 idx = 1;
 
-              case 34:
+              case 36:
                 if (!(idx <= 6)) {
-                  _context.next = 56;
+                  _context.next = 58;
                   break;
                 }
 
                 console.warn('LOOP ON ', idx);
                 _context.t0 = idx;
-                _context.next = _context.t0 === 1 ? 39 : _context.t0 === 2 ? 41 : _context.t0 === 3 ? 43 : _context.t0 === 4 ? 45 : _context.t0 === 5 ? 47 : _context.t0 === 6 ? 49 : 53;
+                _context.next = _context.t0 === 1 ? 41 : _context.t0 === 2 ? 43 : _context.t0 === 3 ? 45 : _context.t0 === 4 ? 47 : _context.t0 === 5 ? 49 : _context.t0 === 6 ? 51 : 55;
                 break;
 
-              case 39:
+              case 41:
                 if (this.remainingRowA > 0) {
                   formattedColG = this.convertToStringAndAddDecimal(this.remainingRowA);
                   console.warn(formattedColG);
@@ -3015,9 +3021,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 53);
+                return _context.abrupt("break", 55);
 
-              case 41:
+              case 43:
                 if (this.remainingRowB > 0) {
                   _formattedColG = this.convertToStringAndAddDecimal(this.remainingRowB);
                   console.warn(_formattedColG);
@@ -3065,9 +3071,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 53);
+                return _context.abrupt("break", 55);
 
-              case 43:
+              case 45:
                 if (this.remainingRowC > 0) {
                   _formattedColG2 = this.convertToStringAndAddDecimal(this.remainingRowC);
                   console.warn(_formattedColG2);
@@ -3115,9 +3121,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 53);
+                return _context.abrupt("break", 55);
 
-              case 45:
+              case 47:
                 if (this.remainingRowD > 0) {
                   _formattedColG3 = this.convertToStringAndAddDecimal(this.remainingRowD);
                   console.warn(_formattedColG3);
@@ -3165,9 +3171,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 53);
+                return _context.abrupt("break", 55);
 
-              case 47:
+              case 49:
                 if (this.remainingRowE > 0) {
                   _formattedColG4 = this.convertToStringAndAddDecimal(this.remainingRowE);
                   console.warn(_formattedColG4);
@@ -3215,9 +3221,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   }, baseOptions));
                 }
 
-                return _context.abrupt("break", 53);
+                return _context.abrupt("break", 55);
 
-              case 49:
+              case 51:
                 /* Map Totals and Part 2-7 */
                 total = this.convertToStringAndAddDecimal(this.rowSixTotal);
                 firstPage.drawText(total, _objectSpread({
@@ -3230,14 +3236,14 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   x: START_X + xOffset * 6 - 5,
                   y: height / 2 + 54 - yOffset * 7 - 5
                 }, baseOptions));
-                return _context.abrupt("break", 53);
+                return _context.abrupt("break", 55);
 
-              case 53:
+              case 55:
                 idx++;
-                _context.next = 34;
+                _context.next = 36;
                 break;
 
-              case 56:
+              case 58:
                 /* Draw 8 */
                 firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), _objectSpread({
                   x: START_X + xOffset * 4 - 10,
@@ -3287,16 +3293,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }, baseOptions));
                 /* Save report and Download*/
 
-                _context.next = 65;
+                _context.next = 67;
                 return pdfDoc.save();
 
-              case 65:
+              case 67:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-8974-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 67:
+              case 69:
               case "end":
                 return _context.stop();
             }
@@ -3348,15 +3354,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         this.validation.partTwo = false;
         return false;
       } else this.validation.partTwo = true;
-      /* All Validation Passed */
 
-      /* Mutate EIN */
-
-      /*EIN*/
-
-
-      var ein_mutated = this.ein.replace(' - ', '');
-      this.ein = ein_mutated.split('');
       return true;
     },
     convertToStringAndAddDecimal: function convertToStringAndAddDecimal(columnG) {
@@ -3377,10 +3375,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 /***/ }),
 
-/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModifyDocument.vue?vue&type=script&lang=js&":
-/*!*************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ModifyDocument.vue?vue&type=script&lang=js& ***!
-  \*************************************************************************************************************************************************************************/
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=script&lang=js&":
+/*!*****************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941.vue?vue&type=script&lang=js& ***!
+  \*****************************************************************************************************************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -3392,6 +3390,12 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! downloadjs */ "./node_modules/downloadjs/download.js");
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
 
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -3405,64 +3409,851 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Form_941",
+  props: {
+    formUrl: String
+  },
+  mounted: function mounted() {
+    this.url = this.formUrl;
+  },
   data: function data() {
     return {
-      // url: 'https://shiftdownbucket.s3-us-west-1.amazonaws.com/Filliable-Form-8974.pdf'
-      url: 'https://irsforms.dev/Filliable-Form-8974.pdf'
+      url: null,
+      partTwoFieldInfo: [{
+        id: '1',
+        model: 'f5f',
+        description: 'Number of employees who received wages, tips, or other compensation for the pay period including: Mar. 12 (Quarter 1), June 12 (Quarter 2), Sept. 12 (Quarter 3), or Dec. 12 (Quarter 4)'
+      }, {
+        id: '2',
+        model: 'f5f',
+        description: 'Wages, tips, and other compensation'
+      }, {
+        id: '3',
+        model: 'f5f',
+        description: 'Federal income tax withheld from wages, tips, and other compensation '
+      }, {
+        id: '4',
+        model: 'f5f',
+        description: 'If no wages, tips, and other compensation are subject to social security or Medicare tax'
+      }, {
+        id: '5a',
+        model: 'f5f',
+        description: 'Taxable social security wages'
+      }, {
+        id: '5b',
+        model: 'f5f',
+        description: 'Taxable social security tips .'
+      }, {
+        id: '5c',
+        model: 'f5f',
+        description: 'Taxable Medicare wages & tips'
+      }, {
+        id: '5d',
+        model: 'f5f',
+        description: 'Taxable wages & tips subject to Additional Medicare Tax withholding'
+      }, {
+        id: '5e',
+        model: 'f5f',
+        description: 'Add Column 2 from lines 5a, 5b, 5c, and 5d'
+      }, {
+        id: '5f',
+        model: 'f5f',
+        description: 'Section 3121(q) Notice and Demand—Tax due on unreported tips (see instructions)'
+      }, {
+        id: '6',
+        model: 'f5f',
+        description: 'Total taxes before adjustments. Add lines 3, 5e, and 5f'
+      }, {
+        id: '7',
+        model: 'f5f',
+        description: 'Current quarter’s adjustment for fractions of cents'
+      }, {
+        id: '8',
+        model: 'f5f',
+        description: 'Current quarter’s adjustment for sick pay'
+      }, {
+        id: '9',
+        model: 'f5f',
+        description: 'Current quarter’s adjustments for tips and group-term life insurance'
+      }, {
+        id: '10',
+        model: 'f5f',
+        description: 'Total taxes after adjustments. Combine lines 6 through 9'
+      }, {
+        id: '11',
+        model: 'f5f',
+        description: 'Qualified small business payroll tax credit for increasing research activities. Attach Form 8974'
+      }, {
+        id: '12',
+        model: 'f5f',
+        description: 'Total taxes after adjustments and credits. Subtract line 11 from line 10'
+      }, {
+        id: '13',
+        model: 'f5f',
+        description: 'Total deposits for this quarter, including overpayment applied from a prior quarter and overpayments applied from Form 941-X, 941-X (PR), 944-X, or 944-X (SP) filed in the current quarter'
+      }, {
+        id: '14',
+        model: 'f5f',
+        description: 'Balance due. If line 12 is more than line 13, enter the difference and see instructions'
+      }, {
+        id: '15',
+        model: 'f5f',
+        description: 'Overpayment. If line 13 is more than line 12, enter the difference'
+      }],
+
+      /* Form Variables */
+      employerIdentificationNumber: null,
+      name: null,
+      tradeName: null,
+      address: null,
+      city: null,
+      state: null,
+      zip: null,
+      f_countryName: null,
+      f_countryProvince: null,
+      f_countryZIP: null,
+      reportForThisQuarter: null,
+
+      /* Field ID for generated fields in Part1 */
+      numberOfEmployees: null,
+      totalWages: null,
+      withheldTax: 0,
+      noWages: null,
+      taxableSSWages: null,
+      taxableSSTips: null,
+      taxableMedicalWages: null,
+      taxableAMTWithholding: null,
+      section3121: 0,
+      currentFractionsOfCents: 0,
+      currentSickPay: 0,
+      currentTipAndGroupTerm: 0,
+      qualifiedSmallBusinessPayroll: 0,
+      totalQuarterDeposits: 0,
+      overpaymentOption: null,
+      errors: {
+        ein: null,
+        name: null,
+        address: null,
+        city: null,
+        state: null,
+        zip: null,
+        numberOfEmployees: null,
+        totalWages: null,
+        withheldTax: null,
+        taxableSSWages: null,
+        taxableSSTips: null,
+        taxableMedicalWages: null,
+        taxableAMTWithholding: null,
+        line5E: null,
+        totalTaxesBeforeAdjustments: null,
+        line10Sum: null,
+        line12TotalTaxesAfterAdjustments: null,
+        totalQuarterDeposits: null,
+        line15Overpayment: null
+      }
     };
   },
+  computed: {
+    taxable5A: function taxable5A() {
+      return Number((this.taxableSSWages * 0.124).toFixed(2));
+    },
+    taxable5B: function taxable5B() {
+      return Number((this.taxableSSTips * 0.124).toFixed(2));
+    },
+    taxable5C: function taxable5C() {
+      return Number((this.taxableMedicalWages * 0.029).toFixed(2));
+    },
+    taxable5D: function taxable5D() {
+      return Number((this.taxableAMTWithholding * 0.009).toFixed(2));
+    },
+    line5E: function line5E() {
+      var sums = [this.taxable5A, this.taxable5B, this.taxable5C, this.taxable5D];
+      return parseFloat(sums.reduce(function (a, b) {
+        return a + b;
+      }, 0));
+    },
+    totalTaxesBeforeAdjustments: function totalTaxesBeforeAdjustments() {
+      var amounts = [parseFloat(this.withheldTax), this.line5E, parseFloat(this.section3121)];
+      return amounts.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2);
+    },
+    line10Sum: function line10Sum() {
+      var amounts = [parseFloat(this.totalTaxesBeforeAdjustments), parseFloat(this.currentFractionsOfCents), parseFloat(this.currentSickPay), parseFloat(this.currentTipAndGroupTerm)];
+      var total = amounts.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2);
+      this.totalQuarterDeposits = total;
+      return total;
+    },
+    line12TotalTaxesAfterAdjustments: function line12TotalTaxesAfterAdjustments() {
+      return (parseFloat(this.line10Sum) - parseFloat(this.qualifiedSmallBusinessPayroll)).toFixed(2);
+    },
+    line14BalanceDue: function line14BalanceDue() {
+      // console.log()
+      if (parseFloat(this.line12TotalTaxesAfterAdjustments) > parseFloat(this.totalQuarterDeposits)) {
+        return (parseFloat(this.line12TotalTaxesAfterAdjustments) - parseFloat(this.totalQuarterDeposits)).toFixed(2);
+      } else return 0;
+    },
+    line15Overpayment: function line15Overpayment() {
+      if (parseFloat(this.totalQuarterDeposits) > parseFloat(this.line12TotalTaxesAfterAdjustments)) {
+        return (parseFloat(this.totalQuarterDeposits) - parseFloat(this.line12TotalTaxesAfterAdjustments)).toFixed(2);
+      } else return 0;
+    }
+  },
   methods: {
-    modifyPdf: function () {
-      var _modifyPdf = _asyncToGenerator(
+    validateFormFields: function validateFormFields() {
+      console.log(this.numberOfEmployees);
+      console.log(this.totalWages);
+      /* REQUIREMENTS
+      * EIN
+      * Name
+      * Address
+      * City
+      * State
+      * Zip
+      * 1
+      * 2
+      * 3
+      * 5a - 5d
+      * 6
+      * 10
+      * 12
+      * 13
+      * 15
+      * */
+
+      if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
+        this.errors.ein = true;
+        return false;
+      } else this.errors.ein = false;
+
+      if (this.name === null || this.name.trim().length < 1) {
+        this.errors.name = true;
+        return false;
+      } else this.errors.name = false;
+
+      if (this.address === null || this.address.trim().length < 1) {
+        this.errors.address = true;
+        return false;
+      } else this.errors.address = false;
+
+      if (this.city === null || this.city.trim().length < 1) {
+        this.errors.city = true;
+        return false;
+      } else this.errors.city = false;
+
+      if (this.state === null || this.state.trim().length < 1) {
+        this.errors.state = true;
+        return false;
+      } else this.errors.state = false;
+
+      if (this.zip === null || this.zip.trim().length < 1) {
+        this.errors.zip = true;
+        return false;
+      } else this.errors.zip = false;
+
+      if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+        this.errors.numberOfEmployees = true;
+        return false;
+      } else this.errors.numberOfEmployees = false; // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+      //   this.errors.totalWages = true;
+      //   return false
+      // } else this.errors.totalWages = false;
+      //
+      // if (parseFloat(this.withheldTax) < 0) {
+      //   this.errors.withheldTax = true;
+      //   return false
+      // } else this.errors.withheldTax = false;
+      //
+      // /*5E*/
+      // if (parseFloat(this.line5E) < 0) {
+      //   this.errors.line5E = true;
+      //   return false
+      // } else this.errors.line5E = false;
+
+
+      return true;
+    },
+    exportToPDF: function () {
+      var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, _firstPage$getSize, width, height, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, COLOR, baseOptions, baseYOffset, ein_mutated, i, ein_XCoord, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                console.log('modifyPdf');
-                _context.next = 3;
+                /*  TODO Validate all fields before exporting */
+                validated = this.validateFormFields();
+                /*EIN*/
+
+                console.log(validated);
+
+                if (validated) {
+                  _context.next = 6;
+                  break;
+                }
+
+                /* Prompt Error */
+                console.error('Form errors!');
+                _context.next = 34;
+                break;
+
+              case 6:
+                _context.next = 8;
                 return fetch(this.url).then(function (res) {
                   return res.arrayBuffer();
                 });
 
-              case 3:
+              case 8:
                 existingPdfBytes = _context.sent;
-                _context.next = 6;
+                _context.next = 11;
                 return pdf_lib__WEBPACK_IMPORTED_MODULE_1__["PDFDocument"].load(existingPdfBytes);
 
-              case 6:
+              case 11:
                 pdfDoc = _context.sent;
-                _context.next = 9;
+                _context.next = 14;
                 return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["StandardFonts"].Helvetica);
 
-              case 9:
+              case 14:
                 helveticaFont = _context.sent;
                 pages = pdfDoc.getPages();
                 firstPage = pages[0];
+                secondPage = pages[1];
                 _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
-                firstPage.drawText('This text was added with JavaScript!', {
-                  x: 5,
-                  y: height / 2 + 300,
+                COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0, 0, 0);
+                baseOptions = {
                   size: 10,
                   font: helveticaFont,
-                  color: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0.95, 0.1, 0.1),
-                  rotate: Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["degrees"])(-45)
-                });
-                _context.next = 16;
+                  color: COLOR
+                };
+                baseYOffset = 23;
+                /*EIN
+                * clone name
+                * mutate
+                * output
+                * */
+
+                ein_mutated = this.employerIdentificationNumber.split('');
+
+                for (i = 0; i < 9; i++) {
+                  ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+                  firstPage.drawText(ein_mutated[i], _objectSpread({
+                    x: ein_XCoord[i],
+                    y: height / 2 + 318
+                  }, baseOptions));
+                }
+
+                firstPage.drawText(this.name, _objectSpread({
+                  x: 150,
+                  y: height / 2 + 295
+                }, baseOptions));
+                /*  IF – TradeName */
+                // firstPage.drawText(this.tradeName, {
+                //   x: 135,
+                //   y: height / 2 + 270,
+                //   ...baseOptions
+                // });
+
+                /*Address*/
+
+                firstPage.drawText(this.address, _objectSpread({
+                  x: 95,
+                  y: height / 2 + 245
+                }, baseOptions));
+                /*City*/
+
+                firstPage.drawText(this.city, _objectSpread({
+                  x: 95,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /*State*/
+
+                firstPage.drawText(this.state, _objectSpread({
+                  x: 285,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /*ZIP*/
+
+                firstPage.drawText(this.zip, _objectSpread({
+                  x: 325,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /* IF – Foreign Country*/
+                // firstPage.drawText(this.f_countryName, {
+                //   x: 95,
+                //   y: height / 2 + 185,
+                //   ...baseOptions
+                // });
+
+                /* IF – Foreign Province*/
+                // firstPage.drawText(this.f_countryProvince, {
+                //   x: 235,
+                //   y: height / 2 + 185,
+                //   ...baseOptions
+                // });
+
+                /* IF – Foreign Province*/
+                // firstPage.drawText(this.f_countryZIP, {
+                //   x: 335,
+                //   y: height / 2 + 185,
+                //   ...baseOptions
+                // });
+
+                /* Report For Quarter */
+
+                /* Number Of Employees */
+
+                firstPage.drawText(this.numberOfEmployees, _objectSpread({
+                  x: 455,
+                  y: height / 2 + 115
+                }, baseOptions));
+                /* Save report and Download*/
+
+                _context.next = 32;
                 return pdfDoc.save();
 
-              case 16:
+              case 32:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
-                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "pdf-lib_modification_example.pdf", "application/pdf");
+                downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
+                /* TODO Clear out the form */
 
-              case 18:
+              case 34:
               case "end":
                 return _context.stop();
             }
@@ -3470,13 +4261,32 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }, _callee, this);
       }));
 
-      function modifyPdf() {
-        return _modifyPdf.apply(this, arguments);
+      function exportToPDF() {
+        return _exportToPDF.apply(this, arguments);
       }
 
-      return modifyPdf;
+      return exportToPDF;
     }()
   }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  name: "Form_941_Schedule_B"
 });
 
 /***/ }),
@@ -3491,6 +4301,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _IRS_Forms_Form_8974__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./IRS Forms/Form_8974 */ "./resources/js/components/IRS Forms/Form_8974.vue");
+/* harmony import */ var _IRS_Forms_Form_941__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./IRS Forms/Form_941 */ "./resources/js/components/IRS Forms/Form_941.vue");
+/* harmony import */ var _IRS_Forms_Form_941S__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./IRS Forms/Form_941S */ "./resources/js/components/IRS Forms/Form_941S.vue");
+//
+//
 //
 //
 //
@@ -3525,27 +4339,66 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   components: {
-    Form_8974: _IRS_Forms_Form_8974__WEBPACK_IMPORTED_MODULE_0__["default"]
+    Form_941: _IRS_Forms_Form_941__WEBPACK_IMPORTED_MODULE_1__["default"],
+    Form_8974: _IRS_Forms_Form_8974__WEBPACK_IMPORTED_MODULE_0__["default"],
+    Form_941S: _IRS_Forms_Form_941S__WEBPACK_IMPORTED_MODULE_2__["default"]
   },
   props: {
-    type_8974: String
+    type_8974: String,
+    type_941: String,
+    type_941_url: String,
+    type_941s: String
   },
   data: function data() {
     return {
-      t1: this.type_8974,
-      activeForm: false
+      forms: [{
+        title: 'Form 8974',
+        imageSource: this.type_8974,
+        name: 'Qualified Small Business Payroll Tax Credit for Increasing Research Activities',
+        code: '8974'
+      }, {
+        title: 'Form 941',
+        imageSource: this.type_941,
+        name: "Employer's Quarterly Federal Tax Return",
+        code: '941'
+      }, {
+        title: 'Schedule B',
+        imageSource: this.type_941s,
+        name: "Report of Tax Liability for Semiweekly Schedule Depositors",
+        code: '941SB'
+      }],
+      activeForm_8974: false,
+      activeForm_941: true,
+      activeForm_941_Schedule_B: false
     };
   },
   methods: {
     setActiveForm: function setActiveForm(arg) {
       switch (arg) {
-        case 8974:
-          this.activeForm = !this.activeForm;
+        case '8974':
+          this.activeForm_8974 = !this.activeForm_8974;
+          break;
+
+        case '941':
+          console.log('941');
+          this.activeForm_941 = !this.activeForm_941;
+          break;
+
+        case '941SB':
+          console.log('941SB');
+          this.activeForm_941_Schedule_B = !this.activeForm_941_Schedule_B;
           break;
       }
     }
+  },
+  mounted: function mounted() {
+    console.error(this.type_8974);
+    console.error(this.type_941);
+    console.error(this.type_941s);
   }
 });
 
@@ -8172,7 +9025,26 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nbutton[data-v-21ebfa70] {\n    border-radius: 0;\n}\n.clear[data-v-21ebfa70] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-21ebfa70] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n.col-lg-12[data-v-21ebfa70] {\n    /*max-width: 130%;*/\n    /*flex: 0 0 130%;*/\n}\n", ""]);
+exports.push([module.i, "\nbutton[data-v-21ebfa70] {\n    border-radius: 0;\n    width: 5rem !important;\n}\n.clear[data-v-21ebfa70] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-21ebfa70] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n.col-lg-12[data-v-21ebfa70] {\n    /*max-width: 130%;*/\n    /*flex: 0 0 130%;*/\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css&":
+/*!************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css& ***!
+  \************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nbutton[data-v-f35b2788] {\n    border-radius: 0;\n    width: 5rem !important;\n}\n.clear[data-v-f35b2788] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-f35b2788] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n", ""]);
 
 // exports
 
@@ -60839,6 +61711,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css&":
+/*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css& ***!
+  \****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SelectFormTemplate.vue?vue&type=style&index=0&id=0cc775b6&scoped=true&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SelectFormTemplate.vue?vue&type=style&index=0&id=0cc775b6&scoped=true&lang=css& ***!
@@ -61789,7 +62691,7 @@ var render = function() {
         staticStyle: { right: "1rem", bottom: "1rem" }
       },
       [
-        _c("div", { staticClass: "bg-white text-center mb-3 p-2" }, [
+        _c("div", { staticClass: "bg-dark text-center mb-3 p-2" }, [
           _c(
             "div",
             { class: _vm.validation.ein ? "alert-success" : "alert-danger" },
@@ -61824,7 +62726,6 @@ var render = function() {
             "button",
             {
               staticClass: "btn btn-danger d-inline clear",
-              staticStyle: { width: "68.77px" },
               on: {
                 click: function($event) {
                   return _vm.clearFields()
@@ -61849,13 +62750,15 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
+      _vm._m(0),
+      _vm._v(" "),
       _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-7" }, [
             _vm._v(
-              "\n                        " +
+              "\n                    " +
                 _vm._s(_vm.limitEIN) +
-                "\n                        "
+                "\n                    "
             ),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
@@ -61930,7 +62833,7 @@ var render = function() {
                 { staticClass: "font-weight-bold bg-dark p-2 text-white" },
                 [
                   _vm._v(
-                    "The credit from Part 2, line 12, will be\n                                reported on (check only one box):"
+                    "The credit from Part 2, line 12, will be\n                            reported on (check only one box):"
                   )
                 ]
               ),
@@ -61955,7 +62858,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                                Form 941, 941-PR, or 941-SS\n                            "
+                  "\n                            Form 941, 941-PR, or 941-SS\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -61979,7 +62882,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                                Form 943 or 943-PR\n                            "
+                  "\n                            Form 943 or 943-PR\n                        "
                 )
               ]),
               _vm._v(" "),
@@ -62003,7 +62906,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                                Form 944 or 944(SP)\n                            "
+                  "\n                            Form 944 or 944(SP)\n                        "
                 )
               ])
             ])
@@ -62014,7 +62917,7 @@ var render = function() {
             { staticClass: "col-5" },
             [
               _c("div", { staticClass: "form-check" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("label", { staticClass: "form-check-label d-block mt-2" }, [
                   _c("input", {
@@ -62038,7 +62941,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                1: January, February, March\n                            "
+                    "\n                            1: January, February, March\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -62064,7 +62967,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                2: April, May, June\n                            "
+                    "\n                            2: April, May, June\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -62090,7 +62993,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                3: July, August, September\n                            "
+                    "\n                            3: July, August, September\n                        "
                   )
                 ]),
                 _vm._v(" "),
@@ -62116,12 +63019,12 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                                4: October, November, December\n                            "
+                    "\n                            4: October, November, December\n                        "
                   )
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("flatpickr", {
                 attrs: { timeFormat: "Y", id: "calendar_year_select" },
@@ -62140,13 +63043,13 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-12 col-12 bg-white mt-4 p-3" }, [
-        _vm._m(2),
+        _vm._m(3),
         _vm._v(" "),
         _c(
           "table",
           { staticClass: "table table-striped table-responsive text-center" },
           [
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c(
               "tbody",
@@ -62190,11 +63093,11 @@ var render = function() {
                             [_vm._v("Select ...")]
                           ),
                           _vm._v(" "),
-                          _c("option", [_vm._v("1040")]),
+                          _c("option", [_vm._v("1065")]),
                           _vm._v(" "),
-                          _c("option", [_vm._v("1040EZ")]),
+                          _c("option", [_vm._v("1120")]),
                           _vm._v(" "),
-                          _c("option", [_vm._v("1040A")])
+                          _c("option", [_vm._v("1120S")])
                         ]
                       )
                     ]),
@@ -62218,9 +63121,9 @@ var render = function() {
                       index === 1
                         ? _c("div", [
                             _vm._v(
-                              "\n                                " +
+                              "\n                            " +
                                 _vm._s(_vm.limitEIND1) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             _c("input", {
                               directives: [
@@ -62258,9 +63161,9 @@ var render = function() {
                       index === 2
                         ? _c("div", [
                             _vm._v(
-                              "\n                                " +
+                              "\n                            " +
                                 _vm._s(_vm.limitEIND2) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             _c("input", {
                               directives: [
@@ -62298,9 +63201,9 @@ var render = function() {
                       index === 3
                         ? _c("div", [
                             _vm._v(
-                              "\n                                " +
+                              "\n                            " +
                                 _vm._s(_vm.limitEIND3) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             _c("input", {
                               directives: [
@@ -62338,9 +63241,9 @@ var render = function() {
                       index === 4
                         ? _c("div", [
                             _vm._v(
-                              "\n                                " +
+                              "\n                            " +
                                 _vm._s(_vm.limitEIND4) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             _c("input", {
                               directives: [
@@ -62378,9 +63281,9 @@ var render = function() {
                       index === 5
                         ? _c("div", [
                             _vm._v(
-                              "\n                                " +
+                              "\n                            " +
                                 _vm._s(_vm.limitEIND5) +
-                                "\n                                "
+                                "\n                            "
                             ),
                             _c("input", {
                               directives: [
@@ -62774,7 +63677,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("tr", [
-                  _vm._m(4),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -62784,9 +63687,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                            " +
+                        "\n                        " +
                           _vm._s(_vm.rowSixTotal) +
-                          "\n                        "
+                          "\n                    "
                       )
                     ]
                   )
@@ -62802,13 +63705,13 @@ var render = function() {
         "div",
         { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
         [
-          _vm._m(5),
+          _vm._m(6),
           _vm._v(" "),
           _vm._l(_vm.partTwoFieldInfo, function(info, index) {
             return _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-8 bg-light p-2" }, [
                 _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index + 7))]),
-                _vm._v(" " + _vm._s(info) + "\n\n                        "),
+                _vm._v(" " + _vm._s(info) + "\n\n                    "),
                 index === 4
                   ? _c("div", [
                       _c("div", { staticClass: "form-check mt-3" }, [
@@ -62882,7 +63785,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("b", [
                               _vm._v(
-                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                        instructions before completing line 11"
+                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
                               )
                             ])
                           ]
@@ -62978,14 +63881,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 mt-3" }, [
+      _c("h4", { staticClass: "alert-info p-2 text-center" }, [
+        _vm._v("Form 8974")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "h6",
       { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
       [
         _vm._v("Report for this quarter "),
-        _c("small", [
-          _vm._v("check\n                                only one box")
-        ])
+        _c("small", [_vm._v("check\n                            only one box")])
       ]
     )
   },
@@ -63000,7 +63911,7 @@ var staticRenderFns = [
         _vm._v("Calendar year "),
         _c("small", [
           _vm._v(
-            "You must select a quarter\n                            if you file Form 941, 941-PR, or 941-SS."
+            "You must select a quarter\n                        if you file Form 941, 941-PR, or 941-SS."
           )
         ])
       ]
@@ -63027,43 +63938,43 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(a)\n                            Ending date\n                            of income\n                            tax period\n                        "
+            "(a)\n                        Ending date\n                        of income\n                        tax period\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(b)\n                            Income\n                            tax return\n                            filed that\n                            included\n                            Form 6765\n                        "
+            "(b)\n                        Income\n                        tax return\n                        filed that\n                        included\n                        Form 6765\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(c)\n                            Date income\n                            tax return\n                            was filed\n                        "
+            "(c)\n                        Date income\n                        tax return\n                        was filed\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "14.5%" } }, [
           _vm._v(
-            "(d)\n                            EIN\n                            used on\n                            Form 6765\n                        "
+            "(d)\n                        EIN\n                        used on\n                        Form 6765\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(e)\n                            Amount from\n                            Form 6765, line 44,\n                            or if applicable,\n                            the amount that\n                            was allocated\n                            to your EIN\n                        "
+            "(e)\n                        Amount from\n                        Form 6765, line 44,\n                        or if applicable,\n                        the amount that\n                        was allocated\n                        to your EIN\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(f)\n                            Amount of credit\n                            from column (e)\n                            taken on a\n                            previous period(s)\n                        "
+            "(f)\n                        Amount of credit\n                        from column (e)\n                        taken on a\n                        previous period(s)\n                    "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(g)\n                            Remaining credit\n                            (subtract column (f)\n                            from column (e))\n                        "
+            "(g)\n                        Remaining credit\n                        (subtract column (f)\n                        from column (e))\n                    "
           )
         ])
       ])
@@ -63076,7 +63987,7 @@ var staticRenderFns = [
     return _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
       _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
       _vm._v(
-        "Add lines 1(g) through 5(g) and enter the total here\n                        "
+        "Add lines 1(g) through 5(g) and enter the total here\n                    "
       )
     ])
   },
@@ -63098,10 +64009,10 @@ render._withStripped = true
 
 /***/ }),
 
-/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModifyDocument.vue?vue&type=template&id=36a6bca0&":
-/*!*****************************************************************************************************************************************************************************************************************!*\
-  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/ModifyDocument.vue?vue&type=template&id=36a6bca0& ***!
-  \*****************************************************************************************************************************************************************************************************************/
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=template&id=f35b2788&scoped=true&":
+/*!*********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941.vue?vue&type=template&id=f35b2788&scoped=true& ***!
+  \*********************************************************************************************************************************************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -63114,10 +64025,1282 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
-    _c("p", [_vm._v("Modify component")]),
+    _c(
+      "div",
+      {
+        staticClass: "position-fixed",
+        staticStyle: { right: "1rem", bottom: "1rem" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary d-inline export",
+              on: { click: _vm.exportToPDF }
+            },
+            [_vm._v("Export")]
+          )
+        ])
+      ]
+    ),
     _vm._v(" "),
-    _c("img", { attrs: { src: _vm.url, alt: "" } })
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-lg-10 col-12 bg-white mt-4 p-3 text-left" },
+        [
+          _c("div", { staticClass: "row" }, [
+            _c("div", { staticClass: "col-8" }, [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Employer identification number\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.employerIdentificationNumber,
+                        expression: "employerIdentificationNumber"
+                      }
+                    ],
+                    staticClass: "form-control",
+                    class: {
+                      "is-invalid": _vm.errors.ein,
+                      "is-valid": _vm.errors.ein === false
+                    },
+                    attrs: { type: "text", minlength: "9", maxlength: "9" },
+                    domProps: { value: _vm.employerIdentificationNumber },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.employerIdentificationNumber = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Name\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.name,
+                        expression: "name"
+                      }
+                    ],
+                    staticClass: "form-control mb-2",
+                    class: {
+                      "is-invalid": _vm.errors.name,
+                      "is-valid": _vm.errors.name === false
+                    },
+                    attrs: { type: "text", minlength: "1" },
+                    domProps: { value: _vm.name },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.name = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Trade Name\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tradeName,
+                        expression: "tradeName"
+                      }
+                    ],
+                    staticClass: "form-control mb-2",
+                    class: {
+                      "is-invalid": _vm.errors.tradeName,
+                      "is-valid": _vm.errors.tradeName === false
+                    },
+                    attrs: { type: "text", minlength: "1" },
+                    domProps: { value: _vm.tradeName },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.tradeName = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                  _vm._v(
+                    "\n                            Address\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-7 my-auto" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.address,
+                            expression: "address"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        class: {
+                          "is-invalid": _vm.errors.address,
+                          "is-valid": _vm.errors.address === false
+                        },
+                        attrs: {
+                          type: "text",
+                          placeholder: "Number     Street",
+                          minlength: "1"
+                        },
+                        domProps: { value: _vm.address },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.address = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.city,
+                            expression: "city"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        class: {
+                          "is-invalid": _vm.errors.city,
+                          "is-valid": _vm.errors.city === false
+                        },
+                        attrs: { type: "text", placeholder: "City" },
+                        domProps: { value: _vm.city },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.city = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.state,
+                            expression: "state"
+                          }
+                        ],
+                        staticClass: "form-control mb-2 text-uppercase",
+                        class: {
+                          "is-invalid": _vm.errors.state,
+                          "is-valid": _vm.errors.state === false
+                        },
+                        attrs: {
+                          type: "text",
+                          placeholder: "State",
+                          minlength: "2",
+                          maxlength: "2"
+                        },
+                        domProps: { value: _vm.state },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.state = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.zip,
+                            expression: "zip"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        class: {
+                          "is-invalid": _vm.errors.zip,
+                          "is-valid": _vm.errors.zip === false
+                        },
+                        attrs: {
+                          type: "text",
+                          placeholder: "ZIP",
+                          minlength: "5",
+                          maxlength: "5"
+                        },
+                        domProps: { value: _vm.zip },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.zip = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.f_countryName,
+                            expression: "f_countryName"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Foreign country name"
+                        },
+                        domProps: { value: _vm.f_countryName },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.f_countryName = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.f_countryProvince,
+                            expression: "f_countryProvince"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Foreign province/country"
+                        },
+                        domProps: { value: _vm.f_countryProvince },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.f_countryProvince = $event.target.value
+                          }
+                        }
+                      })
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "col-12" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.f_countryZIP,
+                            expression: "f_countryZIP"
+                          }
+                        ],
+                        staticClass: "form-control mb-2",
+                        attrs: {
+                          type: "text",
+                          placeholder: "Foreign postal code"
+                        },
+                        domProps: { value: _vm.f_countryZIP },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.f_countryZIP = $event.target.value
+                          }
+                        }
+                      })
+                    ])
+                  ])
+                ])
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-4" }, [
+              _c("div", { staticClass: "form-check" }, [
+                _vm._m(2),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "1" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "1")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "1"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            1: January, February, March\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "2" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "2")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "2"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            2: April, May, June\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "3" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "3")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "3"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            3: July, August, September\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("label", { staticClass: "form-check-label d-block mt-2" }, [
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.reportForThisQuarter,
+                        expression: "reportForThisQuarter"
+                      }
+                    ],
+                    staticClass: "form-check-input",
+                    attrs: { type: "radio", name: "quarterReport", value: "4" },
+                    domProps: {
+                      checked: _vm._q(_vm.reportForThisQuarter, "4")
+                    },
+                    on: {
+                      change: function($event) {
+                        _vm.reportForThisQuarter = "4"
+                      }
+                    }
+                  }),
+                  _vm._v(
+                    "\n                            4: October, November, December\n                        "
+                  )
+                ])
+              ])
+            ])
+          ])
+        ]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4 p-3" }, [
+        _vm._m(3),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[0].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[0].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.numberOfEmployees,
+                  expression: "numberOfEmployees"
+                }
+              ],
+              staticClass: "form-control",
+              class: {
+                "is-invalid": _vm.errors.numberOfEmployees,
+                "is-valid": _vm.errors.numberOfEmployees === false
+              },
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.numberOfEmployees },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.numberOfEmployees = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[1].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[1].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.totalWages,
+                  expression: "totalWages"
+                }
+              ],
+              staticClass: "form-control",
+              class: {
+                "is-invalid": _vm.errors.totalWages,
+                "is-valid": _vm.errors.totalWages === false
+              },
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.totalWages },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.totalWages = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[2].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[2].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.withheldTax,
+                  expression: "withheldTax"
+                }
+              ],
+              staticClass: "form-control",
+              class: {
+                "is-invalid": _vm.errors.withheldTax,
+                "is-valid": _vm.errors.withheldTax === false
+              },
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.withheldTax },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.withheldTax = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[3].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[3].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "form-check" }, [
+              _c("label", { staticClass: "form-check-label" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.noWages,
+                      expression: "noWages"
+                    }
+                  ],
+                  staticClass: "form-check-input",
+                  attrs: {
+                    type: "radio",
+                    name: "",
+                    id: "",
+                    value: "checkedValue"
+                  },
+                  domProps: { checked: _vm._q(_vm.noWages, "checkedValue") },
+                  on: {
+                    change: function($event) {
+                      _vm.noWages = "checkedValue"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                            Check and go to line 6\n                        "
+                )
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[4].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[4].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableSSWages,
+                      expression: "taxableSSWages"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableSSWages },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableSSWages = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5A))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[5].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[5].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableSSTips,
+                      expression: "taxableSSTips"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableSSTips },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableSSTips = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5B))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[6].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[6].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableMedicalWages,
+                      expression: "taxableMedicalWages"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableMedicalWages },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableMedicalWages = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5C))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[7].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[7].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-6" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.taxableAMTWithholding,
+                      expression: "taxableAMTWithholding"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.taxableAMTWithholding },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.taxableAMTWithholding = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6 my-auto" }, [
+                _vm._v(_vm._s(_vm.taxable5D))
+              ])
+            ])
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[8].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[8].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-4 my-auto text-center",
+              class: {
+                "alert-danger": _vm.errors.line5E,
+                "alert-success": _vm.errors.line5E === false
+              }
+            },
+            [_vm._v(_vm._s(_vm.line5E))]
+          )
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[9].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[9].description) + "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.section3121,
+                  expression: "section3121"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.section3121 },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.section3121 = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[10].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[10].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _vm._v(_vm._s(_vm.totalTaxesBeforeAdjustments))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[11].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[11].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.currentFractionsOfCents,
+                  expression: "currentFractionsOfCents"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.currentFractionsOfCents },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.currentFractionsOfCents = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[12].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[12].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.currentSickPay,
+                  expression: "currentSickPay"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.currentSickPay },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.currentSickPay = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[13].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[13].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.currentTipAndGroupTerm,
+                  expression: "currentTipAndGroupTerm"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.currentTipAndGroupTerm },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.currentTipAndGroupTerm = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[14].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[14].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _vm._v(_vm._s(_vm.line10Sum))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[15].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[15].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.qualifiedSmallBusinessPayroll,
+                  expression: "qualifiedSmallBusinessPayroll"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.qualifiedSmallBusinessPayroll },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.qualifiedSmallBusinessPayroll = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[16].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[16].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _vm._v(_vm._s(_vm.line12TotalTaxesAfterAdjustments))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[17].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[17].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.totalQuarterDeposits,
+                  expression: "totalQuarterDeposits"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text", placeholder: "Fill in" },
+              domProps: { value: _vm.totalQuarterDeposits },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.totalQuarterDeposits = $event.target.value
+                }
+              }
+            })
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2" }, [
+          _c("div", { staticClass: "col-8 my-auto" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[18].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[18].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 my-auto text-center" }, [
+            _vm._v(_vm._s(_vm.line14BalanceDue))
+          ])
+        ]),
+        _vm._v(" "),
+        _c("div", { staticClass: "row mb-2 bg-light" }, [
+          _c("div", { staticClass: "col-8" }, [
+            _c("b", { staticClass: "mr-3" }, [
+              _vm._v(_vm._s(_vm.partTwoFieldInfo[19].id))
+            ]),
+            _vm._v(
+              _vm._s(_vm.partTwoFieldInfo[19].description) +
+                "\n                "
+            )
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-4 text-center" }, [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-12 mb-2" }, [
+                _vm._v(_vm._s(_vm.line15Overpayment))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("div", { staticClass: "form-check" }, [
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.overpaymentOption,
+                          expression: "overpaymentOption"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "radio",
+                        name: "OverpaymentOption",
+                        value: "1"
+                      },
+                      domProps: { checked: _vm._q(_vm.overpaymentOption, "1") },
+                      on: {
+                        change: function($event) {
+                          _vm.overpaymentOption = "1"
+                        }
+                      }
+                    }),
+                    _vm._v(
+                      "\n                                    Apply to next return\n                                "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-6" }, [
+                _c("div", { staticClass: "form-check" }, [
+                  _c("label", { staticClass: "form-check-label" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.overpaymentOption,
+                          expression: "overpaymentOption"
+                        }
+                      ],
+                      staticClass: "form-check-input",
+                      attrs: {
+                        type: "radio",
+                        name: "OverpaymentOption",
+                        value: "2"
+                      },
+                      domProps: { checked: _vm._q(_vm.overpaymentOption, "2") },
+                      on: {
+                        change: function($event) {
+                          _vm.overpaymentOption = "2"
+                        }
+                      }
+                    }),
+                    _vm._v(
+                      "\n                                    Send a refund\n                                "
+                    )
+                  ])
+                ])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(4)
+    ])
   ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("button", { staticClass: "btn btn-danger d-inline clear" }, [
+        _vm._v("Clear")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 mt-3 mb-3" }, [
+      _c("h4", { staticClass: "alert-info p-2 text-center" }, [
+        _vm._v("Form 941")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h6",
+      { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
+      [
+        _vm._v("Report for this quarter "),
+        _c("small", [_vm._v("check\n                            only one box")])
+      ]
+    )
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "bg-dark p-2 text-white mb-3" }, [
+      _vm._v("Part 1 "),
+      _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
+        _vm._v("Answer these questions for this quarter")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4" }, [
+      _c("div", { staticClass: "bg-dark p-2 text-white" }, [
+        _vm._v("Part 2 "),
+        _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
+          _vm._v(
+            "Tell us about your deposit schedule and tax liability for this quarter"
+          )
+        ])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true&":
+/*!**********************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true& ***!
+  \**********************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("p", [_vm._v("Schedule B")])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -63145,71 +65328,94 @@ var render = function() {
     "div",
     { staticClass: "container" },
     [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-lg-9 col-12" }, [
-          _c("div", { staticClass: "card" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _c("div", { staticClass: "container" }, [
-                _c("div", { staticClass: "row" }, [
-                  _c("div", { staticClass: "col-3" }, [
-                    _c("img", {
-                      staticClass: "img-fluid",
-                      attrs: { src: _vm.t1, alt: "" }
-                    })
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "col-9 my-auto" }, [
-                    _vm._m(1),
+      _c(
+        "div",
+        { staticClass: "row justify-content-center" },
+        _vm._l(_vm.forms, function(form) {
+          return _c("div", { staticClass: "col-lg-9 col-12 mt-3" }, [
+            _c("div", { staticClass: "card" }, [
+              _c("div", { staticClass: "card-header font-weight-bold" }, [
+                _vm._v(_vm._s(form.title))
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("div", { staticClass: "container" }, [
+                  _c("div", { staticClass: "row" }, [
+                    _c("div", { staticClass: "col-3" }, [
+                      _c("img", {
+                        staticClass: "img-fluid",
+                        attrs: { src: form.imageSource, alt: "" }
+                      })
+                    ]),
                     _vm._v(" "),
-                    _c(
-                      "button",
-                      {
-                        staticClass: "btn btn-primary mt-3",
-                        on: {
-                          click: function($event) {
-                            return _vm.setActiveForm(8974)
+                    _c("div", { staticClass: "col-9 my-auto" }, [
+                      _c("h4", [
+                        _c("span", { staticClass: "text-primary" }, [
+                          _vm._v(_vm._s(form.title) + ":")
+                        ]),
+                        _vm._v(" " + _vm._s(form.name))
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-primary mt-3",
+                          on: {
+                            click: function($event) {
+                              return _vm.setActiveForm(form.code)
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Select Form 8974")]
-                    )
+                        },
+                        [_vm._v("Select " + _vm._s(form.title))]
+                      )
+                    ])
                   ])
                 ])
               ])
             ])
           ])
-        ])
-      ]),
+        }),
+        0
+      ),
       _vm._v(" "),
-      _vm.activeForm ? _c("form_8974") : _vm._e()
+      _c("form_8974", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.activeForm_8974,
+            expression: "activeForm_8974"
+          }
+        ]
+      }),
+      _vm._v(" "),
+      _c("form_941", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.activeForm_941,
+            expression: "activeForm_941"
+          }
+        ],
+        attrs: { formUrl: _vm.type_941_url }
+      }),
+      _vm._v(" "),
+      _c("form_941-s", {
+        directives: [
+          {
+            name: "show",
+            rawName: "v-show",
+            value: _vm.activeForm_941_Schedule_B,
+            expression: "activeForm_941_Schedule_B"
+          }
+        ]
+      })
     ],
     1
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header" }, [
-      _vm._v("Form "),
-      _c("b", [_vm._v("8974")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("h4", [
-      _c("span", { staticClass: "text-primary" }, [_vm._v("Form 8974:")]),
-      _vm._v(
-        " Qualified Small Business Payroll Tax Credit for Increasing Research Activities"
-      )
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -75384,7 +77590,8 @@ var map = {
 	"./components/Calendar/Flatpickr.vue": "./resources/js/components/Calendar/Flatpickr.vue",
 	"./components/ExampleComponent.vue": "./resources/js/components/ExampleComponent.vue",
 	"./components/IRS Forms/Form_8974.vue": "./resources/js/components/IRS Forms/Form_8974.vue",
-	"./components/ModifyDocument.vue": "./resources/js/components/ModifyDocument.vue",
+	"./components/IRS Forms/Form_941.vue": "./resources/js/components/IRS Forms/Form_941.vue",
+	"./components/IRS Forms/Form_941S.vue": "./resources/js/components/IRS Forms/Form_941S.vue",
 	"./components/SelectFormTemplate.vue": "./resources/js/components/SelectFormTemplate.vue"
 };
 
@@ -75721,18 +77928,105 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./resources/js/components/ModifyDocument.vue":
-/*!****************************************************!*\
-  !*** ./resources/js/components/ModifyDocument.vue ***!
-  \****************************************************/
+/***/ "./resources/js/components/IRS Forms/Form_941.vue":
+/*!********************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941.vue ***!
+  \********************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _ModifyDocument_vue_vue_type_template_id_36a6bca0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ModifyDocument.vue?vue&type=template&id=36a6bca0& */ "./resources/js/components/ModifyDocument.vue?vue&type=template&id=36a6bca0&");
-/* harmony import */ var _ModifyDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ModifyDocument.vue?vue&type=script&lang=js& */ "./resources/js/components/ModifyDocument.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony import */ var _Form_941_vue_vue_type_template_id_f35b2788_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form_941.vue?vue&type=template&id=f35b2788&scoped=true& */ "./resources/js/components/IRS Forms/Form_941.vue?vue&type=template&id=f35b2788&scoped=true&");
+/* harmony import */ var _Form_941_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form_941.vue?vue&type=script&lang=js& */ "./resources/js/components/IRS Forms/Form_941.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _Form_941_vue_vue_type_style_index_0_id_f35b2788_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css& */ "./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
+  _Form_941_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Form_941_vue_vue_type_template_id_f35b2788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Form_941_vue_vue_type_template_id_f35b2788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  "f35b2788",
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/components/IRS Forms/Form_941.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/components/IRS Forms/Form_941.vue?vue&type=script&lang=js&":
+/*!*********************************************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941.vue?vue&type=script&lang=js& ***!
+  \*********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css&":
+/*!*****************************************************************************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_style_index_0_id_f35b2788_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=style&index=0&id=f35b2788&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_style_index_0_id_f35b2788_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_style_index_0_id_f35b2788_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_style_index_0_id_f35b2788_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_style_index_0_id_f35b2788_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_style_index_0_id_f35b2788_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
+
+/***/ }),
+
+/***/ "./resources/js/components/IRS Forms/Form_941.vue?vue&type=template&id=f35b2788&scoped=true&":
+/*!***************************************************************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941.vue?vue&type=template&id=f35b2788&scoped=true& ***!
+  \***************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_template_id_f35b2788_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941.vue?vue&type=template&id=f35b2788&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941.vue?vue&type=template&id=f35b2788&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_template_id_f35b2788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941_vue_vue_type_template_id_f35b2788_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/components/IRS Forms/Form_941S.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941S.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true& */ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true&");
+/* harmony import */ var _Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form_941S.vue?vue&type=script&lang=js& */ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -75741,50 +78035,50 @@ __webpack_require__.r(__webpack_exports__);
 /* normalize component */
 
 var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
-  _ModifyDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
-  _ModifyDocument_vue_vue_type_template_id_36a6bca0___WEBPACK_IMPORTED_MODULE_0__["render"],
-  _ModifyDocument_vue_vue_type_template_id_36a6bca0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  _Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
   false,
   null,
-  null,
+  "45e3cc47",
   null
   
 )
 
 /* hot reload */
 if (false) { var api; }
-component.options.__file = "resources/js/components/ModifyDocument.vue"
+component.options.__file = "resources/js/components/IRS Forms/Form_941S.vue"
 /* harmony default export */ __webpack_exports__["default"] = (component.exports);
 
 /***/ }),
 
-/***/ "./resources/js/components/ModifyDocument.vue?vue&type=script&lang=js&":
-/*!*****************************************************************************!*\
-  !*** ./resources/js/components/ModifyDocument.vue?vue&type=script&lang=js& ***!
-  \*****************************************************************************/
+/***/ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
 /*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModifyDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/babel-loader/lib??ref--4-0!../../../node_modules/vue-loader/lib??vue-loader-options!./ModifyDocument.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModifyDocument.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_ModifyDocument_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941S.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
 
 /***/ }),
 
-/***/ "./resources/js/components/ModifyDocument.vue?vue&type=template&id=36a6bca0&":
-/*!***********************************************************************************!*\
-  !*** ./resources/js/components/ModifyDocument.vue?vue&type=template&id=36a6bca0& ***!
-  \***********************************************************************************/
+/***/ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true&":
+/*!****************************************************************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true& ***!
+  \****************************************************************************************************/
 /*! exports provided: render, staticRenderFns */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModifyDocument_vue_vue_type_template_id_36a6bca0___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../node_modules/vue-loader/lib??vue-loader-options!./ModifyDocument.vue?vue&type=template&id=36a6bca0& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/ModifyDocument.vue?vue&type=template&id=36a6bca0&");
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModifyDocument_vue_vue_type_template_id_36a6bca0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
-/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_ModifyDocument_vue_vue_type_template_id_36a6bca0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
