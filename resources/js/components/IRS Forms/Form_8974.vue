@@ -466,6 +466,7 @@
           /* All Validation Passed */
           /* Mutate EIN */
           /*EIN*/
+
           let ein_mutated = this.ein.slice(0).replace(' - ', '');
           ein_mutated.split('');
           for (let i = 0; i < 9; i++) {
@@ -478,7 +479,6 @@
             });
 
           }
-
           /*Draw Name*/
           firstPage.drawText(this.name, {
             x: 145,

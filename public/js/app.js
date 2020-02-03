@@ -3391,6 +3391,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
 
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -4088,16 +4090,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
         this.errors.numberOfEmployees = true;
         return false;
-      } else this.errors.numberOfEmployees = false; // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
-      //   this.errors.totalWages = true;
-      //   return false
-      // } else this.errors.totalWages = false;
-      //
-      // if (parseFloat(this.withheldTax) < 0) {
-      //   this.errors.withheldTax = true;
-      //   return false
-      // } else this.errors.withheldTax = false;
-      //
+      } else this.errors.numberOfEmployees = false;
+
+      if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+        this.errors.totalWages = true;
+        return false;
+      } else this.errors.totalWages = false;
+
+      if (parseFloat(this.withheldTax) < 0) {
+        this.errors.withheldTax = true;
+        return false;
+      } else this.errors.withheldTax = false; //
       // /*5E*/
       // if (parseFloat(this.line5E) < 0) {
       //   this.errors.line5E = true;
@@ -4106,6 +4109,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 
       return true;
+    },
+    isNumberRegex: function isNumberRegex(_input) {
+      var reg = new RegExp(/^[0-9]+([,.][0-9]+)?$/g);
+      return reg.test(_input);
     },
     exportToPDF: function () {
       var _exportToPDF = _asyncToGenerator(
@@ -4130,7 +4137,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 34;
+                _context.next = 54;
                 break;
 
               case 6:
@@ -4234,26 +4241,141 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 //   ...baseOptions
                 // });
 
-                /* Report For Quarter */
+                /* Report for this quarter */
 
+                console.log(_typeof(this.reportForThisQuarter), ' --- ', this.reportForThisQuarter);
+                _context.t0 = this.reportForThisQuarter;
+                _context.next = _context.t0 === '1' ? 33 : _context.t0 === '2' ? 35 : _context.t0 === '3' ? 37 : _context.t0 === '4' ? 39 : 41;
+                break;
+
+              case 33:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 294
+                }, baseOptions));
+                return _context.abrupt("break", 41);
+
+              case 35:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 277
+                }, baseOptions));
+                return _context.abrupt("break", 41);
+
+              case 37:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 260
+                }, baseOptions));
+                return _context.abrupt("break", 41);
+
+              case 39:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 243
+                }, baseOptions));
+                return _context.abrupt("break", 41);
+
+              case 41:
                 /* Number Of Employees */
-
-                firstPage.drawText(this.numberOfEmployees, _objectSpread({
+                firstPage.drawText(parseInt(this.numberOfEmployees).toString(), _objectSpread({
                   x: 455,
                   y: height / 2 + 115
                 }, baseOptions));
+                /* 2: Wages... */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), _objectSpread({
+                  x: 455,
+                  y: height / 2 + 91
+                }, baseOptions));
+                /* 3: Federal... */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), _objectSpread({
+                  x: 455,
+                  y: height / 2 + 68
+                }, baseOptions));
+                /* 4: If no wages... */
+
+                if (parseInt(this.noWages) === 1) {
+                  firstPage.drawText('x', _objectSpread({
+                    x: 449,
+                    y: height / 2 + 43
+                  }, baseOptions));
+                }
+                /* 5A */
+
+
+                if (parseInt(this.taxableSSWages)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), _objectSpread({
+                    x: 225,
+                    y: height / 2 + 13
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), _objectSpread({
+                    x: 360,
+                    y: height / 2 + 13
+                  }, baseOptions));
+                }
+                /* 5B */
+
+
+                if (parseInt(this.taxableSSTips)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 5
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 5
+                  }, baseOptions));
+                }
+                /* 5C */
+
+
+                if (parseInt(this.taxableMedicalWages)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 23
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 23
+                  }, baseOptions));
+                }
+                /* 5D */
+
+
+                if (parseInt(this.taxableAMTWithholding)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 47
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 47
+                  }, baseOptions));
+                }
+                /* 5E */
+
+
+                if (parseInt(this.line5E)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 70
+                  }, baseOptions));
+                }
                 /* Save report and Download*/
 
-                _context.next = 32;
+
+                _context.next = 52;
                 return pdfDoc.save();
 
-              case 32:
+              case 52:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 34:
+              case 54:
               case "end":
                 return _context.stop();
             }
@@ -4266,7 +4388,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return exportToPDF;
-    }()
+    }(),
+    convertToStringAndAddDecimal: function convertToStringAndAddDecimal(_number) {
+      var formatToString = _number.toString();
+
+      var formatToCurrency = formatToString.includes('.') ? formatToString : formatToString += '.00';
+      return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
   }
 });
 
@@ -64634,16 +64762,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-check-input",
-                  attrs: {
-                    type: "radio",
-                    name: "",
-                    id: "",
-                    value: "checkedValue"
-                  },
-                  domProps: { checked: _vm._q(_vm.noWages, "checkedValue") },
+                  attrs: { type: "radio", name: "", id: "", value: "1" },
+                  domProps: { checked: _vm._q(_vm.noWages, "1") },
                   on: {
                     change: function($event) {
-                      _vm.noWages = "checkedValue"
+                      _vm.noWages = "1"
                     }
                   }
                 }),

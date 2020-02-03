@@ -194,7 +194,7 @@
                     <div class="col-4 my-auto">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="" id="" value="checkedValue" v-model="noWages">
+                                <input type="radio" class="form-check-input" name="" id="" value="1" v-model="noWages">
                                 Check and go to line 6
                             </label>
                         </div>
@@ -621,15 +621,15 @@
           return false
         } else this.errors.numberOfEmployees = false;
 
-        // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
-        //   this.errors.totalWages = true;
-        //   return false
-        // } else this.errors.totalWages = false;
-        //
-        // if (parseFloat(this.withheldTax) < 0) {
-        //   this.errors.withheldTax = true;
-        //   return false
-        // } else this.errors.withheldTax = false;
+        if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+          this.errors.totalWages = true;
+          return false
+        } else this.errors.totalWages = false;
+
+        if (parseFloat(this.withheldTax) < 0) {
+          this.errors.withheldTax = true;
+          return false
+        } else this.errors.withheldTax = false;
         //
         // /*5E*/
         // if (parseFloat(this.line5E) < 0) {
@@ -638,6 +638,10 @@
         // } else this.errors.line5E = false;
 
         return true;
+      },
+      isNumberRegex(_input){
+        const reg = new RegExp(/^[0-9]+([,.][0-9]+)?$/g);
+        return reg.test(_input);
       },
       exportToPDF: async function () {
 
@@ -746,14 +750,137 @@
           //   ...baseOptions
           // });
 
-          /* Report For Quarter */
+          /* Report for this quarter */
+          console.log(typeof this.reportForThisQuarter, ' --- ', this.reportForThisQuarter);
+          switch (this.reportForThisQuarter) {
+            case '1':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 294,
+                ...baseOptions
+              });
+              break;
+            case '2':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 277,
+                ...baseOptions
+              });
+              break;
+            case '3':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 260,
+                ...baseOptions
+              });
+              break;
+            case '4':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 243,
+                ...baseOptions
+              });
+              break;
+          }
 
           /* Number Of Employees */
-          firstPage.drawText(this.numberOfEmployees, {
+          firstPage.drawText(parseInt(this.numberOfEmployees).toString(), {
             x: 455,
             y: height / 2 + 115,
             ...baseOptions
           });
+
+          /* 2: Wages... */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), {
+            x: 455,
+            y: height / 2 + 91,
+            ...baseOptions
+          });
+
+          /* 3: Federal... */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), {
+            x: 455,
+            y: height / 2 + 68,
+            ...baseOptions
+          });
+
+          /* 4: If no wages... */
+          if(parseInt(this.noWages) === 1) {
+              firstPage.drawText('x', {
+                x: 449,
+                y: height / 2 + 43,
+                ...baseOptions
+              });
+          }
+
+          /* 5A */
+          if (parseInt(this.taxableSSWages)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
+              x: 225,
+              y: height / 2 + 13,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), {
+              x: 360,
+              y: height / 2 + 13,
+              ...baseOptions
+            });
+          }
+
+          /* 5B */
+          if (parseInt(this.taxableSSTips)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
+              x: 225,
+              y: height / 2 - 5,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), {
+              x: 360,
+              y: height / 2 - 5,
+              ...baseOptions
+            });
+          }
+
+          /* 5C */
+          if (parseInt(this.taxableMedicalWages)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
+              x: 225,
+              y: height / 2 - 23,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), {
+              x: 360,
+              y: height / 2 - 23,
+              ...baseOptions
+            });
+          }
+
+          /* 5D */
+          if (parseInt(this.taxableAMTWithholding)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
+              x: 225,
+              y: height / 2 - 47,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), {
+              x: 360,
+              y: height / 2 - 47,
+              ...baseOptions
+            });
+          }
+
+          /* 5E */
+          if (parseInt(this.line5E)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
+              x: 455,
+              y: height / 2 - 70,
+              ...baseOptions
+            });
+          }
 
 
           /* Save report and Download*/
@@ -764,7 +891,12 @@
           /* TODO Clear out the form */
         }
       },
+      convertToStringAndAddDecimal(_number) {
+        let formatToString = _number.toString();
+        let formatToCurrency = (formatToString.includes('.')) ? formatToString : formatToString+='.00';
+        return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
+      },
     }
   }
 </script>
