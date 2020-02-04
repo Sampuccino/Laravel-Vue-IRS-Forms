@@ -96,7 +96,9 @@
                                         <input type="text" placeholder="Foreign province/country" class="form-control mb-2" v-model="f_countryProvince">
                                     </div>
                                     <div class="col-12">
-                                        <input type="text" placeholder="Foreign postal code" class="form-control mb-2" v-model="f_countryZIP">
+                                        <input type="text" placeholder="Foreign postal code"
+                                               class="form-control mb-2" minlength="5" maxlength="5"
+                                               v-model="f_countryZIP">
                                     </div>
                                 </div>
 
@@ -300,7 +302,9 @@
                     <div class="col-8 my-auto">
                         <b class="mr-3">{{partTwoFieldInfo[10].id}}</b>{{partTwoFieldInfo[10].description}}
                     </div>
-                    <div class="col-4 my-auto text-center">{{totalTaxesBeforeAdjustments}}</div>
+                    <div class="col-4 my-auto text-center"
+                         :class="{'alert-danger': errors.totalTaxesBeforeAdjustments, 'alert-success': (errors.totalTaxesBeforeAdjustments===false)}">
+                        {{totalTaxesBeforeAdjustments}}</div>
                 </div>
 
                 <!--###########-->
@@ -400,7 +404,8 @@
                     <div class="col-8">
                         <b class="mr-3">{{partTwoFieldInfo[19].id}}</b>{{partTwoFieldInfo[19].description}}
                     </div>
-                    <div class="col-4 text-center">
+                    <div class="col-4 text-center"
+                         :class="{'alert-danger': errors.overpaymentOption, 'alert-success': (errors.overpaymentOption===false)}">
                         <div class="row">
                             <div class="col-12 mb-2">{{line15Overpayment}}</div>
                             <div class="col-6">
@@ -414,7 +419,8 @@
                             <div class="col-6">
                                 <div class="form-check">
                                     <label class="form-check-label">
-                                        <input type="radio" class="form-check-input" name="OverpaymentOption" v-model="overpaymentOption" value="2">
+                                        <input type="radio" class="form-check-input" name="OverpaymentOption"
+                                               v-model="overpaymentOption" value="2" checked>
                                         Send a refund
                                     </label>
                                 </div>
@@ -520,6 +526,7 @@
           line12TotalTaxesAfterAdjustments: null,
           totalQuarterDeposits: null,
           line15Overpayment: null,
+          overpaymentOption: null
         }
       }
     },
@@ -567,25 +574,7 @@
     },
     methods: {
       validateFormFields: function(){
-        console.log(this.numberOfEmployees)
-        console.log(this.totalWages)
-        /* REQUIREMENTS
-        * EIN
-        * Name
-        * Address
-        * City
-        * State
-        * Zip
-        * 1
-        * 2
-        * 3
-        * 5a - 5d
-        * 6
-        * 10
-        * 12
-        * 13
-        * 15
-        * */
+
         if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
           this.errors.ein = true;
           return false
@@ -630,12 +619,56 @@
           this.errors.withheldTax = true;
           return false
         } else this.errors.withheldTax = false;
-        //
-        // /*5E*/
-        // if (parseFloat(this.line5E) < 0) {
-        //   this.errors.line5E = true;
-        //   return false
-        // } else this.errors.line5E = false;
+
+        /*5E*/
+        if (parseFloat(this.line5E) <= 0) {
+          this.errors.line5E = true;
+          return false
+        } else this.errors.line5E = false;
+
+        /*6*/
+        if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
+          this.errors.totalTaxesBeforeAdjustments = true;
+          return false
+        } else this.errors.totalTaxesBeforeAdjustments = false;
+
+        /*10*/
+        if (parseFloat(this.line10Sum) <= 0) {
+          this.errors.line10Sum = true;
+          return false
+        } else this.errors.line10Sum = false;
+
+        /*12*/
+        if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
+          this.errors.line12TotalTaxesAfterAdjustments = true;
+          return false
+        } else this.errors.line12TotalTaxesAfterAdjustments = false;
+
+        /*13*/
+        if (parseFloat(this.totalQuarterDeposits) <= 0) {
+          this.errors.totalQuarterDeposits = true;
+          return false
+        } else this.errors.totalQuarterDeposits = false;
+
+        /*15*/
+        if (parseFloat(this.line15Overpayment) < 0) {
+          this.errors.line15Overpayment = true;
+          return false
+        } else this.errors.line15Overpayment = false;
+
+        /* Overpayment Option */
+        switch (parseInt(this.overpaymentOption)) {
+          case 1:
+            this.errors.overpaymentOption = false;
+            break;
+          case 2:
+            this.errors.overpaymentOption = false;
+            break;
+          default:
+            console.log('No Overpayment Option Selected!');
+            this.errors.overpaymentOption = true;
+            return false;
+        }
 
         return true;
       },
@@ -695,11 +728,13 @@
           });
 
           /*  IF – TradeName */
-          // firstPage.drawText(this.tradeName, {
-          //   x: 135,
-          //   y: height / 2 + 270,
-          //   ...baseOptions
-          // });
+          if (this.tradeName !== null){
+            firstPage.drawText(this.tradeName, {
+              x: 135,
+              y: height / 2 + 270,
+              ...baseOptions
+            });
+          }
 
           /*Address*/
           firstPage.drawText(this.address, {
@@ -730,28 +765,33 @@
           });
 
           /* IF – Foreign Country*/
-          // firstPage.drawText(this.f_countryName, {
-          //   x: 95,
-          //   y: height / 2 + 185,
-          //   ...baseOptions
-          // });
+          if (this.f_countryName !== null) {
+              firstPage.drawText(this.f_countryName.toString(), {
+                x: 95,
+                y: height / 2 + 185,
+                ...baseOptions
+              });
+          }
 
           /* IF – Foreign Province*/
-          // firstPage.drawText(this.f_countryProvince, {
-          //   x: 235,
-          //   y: height / 2 + 185,
-          //   ...baseOptions
-          // });
+          if (this.f_countryProvince !== null) {
+            firstPage.drawText(this.f_countryProvince.toString(), {
+              x: 235,
+              y: height / 2 + 185,
+              ...baseOptions
+            });
+          }
 
           /* IF – Foreign Province*/
-          // firstPage.drawText(this.f_countryZIP, {
-          //   x: 335,
-          //   y: height / 2 + 185,
-          //   ...baseOptions
-          // });
+          if (this.f_countryZIP !== null) {
+            firstPage.drawText(this.f_countryZIP.toString(), {
+              x: 335,
+              y: height / 2 + 185,
+              ...baseOptions
+            });
+          }
 
           /* Report for this quarter */
-          console.log(typeof this.reportForThisQuarter, ' --- ', this.reportForThisQuarter);
           switch (this.reportForThisQuarter) {
             case '1':
               firstPage.drawText('x', {
@@ -814,7 +854,7 @@
           }
 
           /* 5A */
-          if (parseInt(this.taxableSSWages)) {
+          if (parseFloat(this.taxableSSWages)) {
             firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
               x: 225,
               y: height / 2 + 13,
@@ -829,7 +869,7 @@
           }
 
           /* 5B */
-          if (parseInt(this.taxableSSTips)) {
+          if (parseFloat(this.taxableSSTips)) {
             firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
               x: 225,
               y: height / 2 - 5,
@@ -844,7 +884,7 @@
           }
 
           /* 5C */
-          if (parseInt(this.taxableMedicalWages)) {
+          if (parseFloat(this.taxableMedicalWages)) {
             firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
               x: 225,
               y: height / 2 - 23,
@@ -859,7 +899,7 @@
           }
 
           /* 5D */
-          if (parseInt(this.taxableAMTWithholding)) {
+          if (parseFloat(this.taxableAMTWithholding)) {
             firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
               x: 225,
               y: height / 2 - 47,
@@ -874,7 +914,7 @@
           }
 
           /* 5E */
-          if (parseInt(this.line5E)) {
+          if (parseFloat(this.line5E)) {
             firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
               x: 455,
               y: height / 2 - 70,
@@ -882,6 +922,114 @@
             });
           }
 
+          /* 5F */
+          if (parseFloat(this.section3121)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), {
+              x: 455,
+              y: height / 2 - 94,
+              ...baseOptions
+            });
+          }
+
+          /* 6 */
+          if (this.totalTaxesBeforeAdjustments) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), {
+              x: 455,
+              y: height / 2 - 118,
+              ...baseOptions
+            });
+          }
+
+          /* 7 */
+          if (parseFloat(this.currentFractionsOfCents)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), {
+              x: 455,
+              y: height / 2 - 142,
+              ...baseOptions
+            });
+          }
+
+          /* 8 */
+          if (parseFloat(this.currentSickPay)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), {
+              x: 455,
+              y: height / 2 - 166,
+              ...baseOptions
+            });
+          }
+
+          /* 9 */
+          if (parseFloat(this.currentTipAndGroupTerm)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), {
+              x: 455,
+              y: height / 2 - 190,
+              ...baseOptions
+            });
+          }
+
+          /* 10 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), {
+            x: 455,
+            y: height / 2 - 214,
+            ...baseOptions
+          });
+
+          /* 11 */
+          if(parseFloat(this.qualifiedSmallBusinessPayroll)){
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), {
+                x: 455,
+                y: height / 2 - 238,
+                ...baseOptions
+              });
+          }
+
+          /* 12 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), {
+            x: 455,
+            y: height / 2 - 262,
+            ...baseOptions
+          });
+
+          /* 13 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), {
+            x: 455,
+            y: height / 2 - 293,
+            ...baseOptions
+          });
+
+          /* 14 */
+          if(parseFloat(this.line14BalanceDue)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), {
+              x: 455,
+              y: height / 2 - 317,
+              ...baseOptions
+            });
+          }
+
+          /* 15 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), {
+            x: 310,
+            y: height / 2 - 340,
+            ...baseOptions
+          });
+
+          /* Overpayment Option */
+          switch (parseInt(this.overpaymentOption)) {
+            case 1:
+              firstPage.drawText('x', {
+                x: 448,
+                y: height / 2 - 342,
+                ...baseOptions
+              });
+              break;
+            case 2:
+              firstPage.drawText('x', {
+                x: 521,
+                y: height / 2 - 342,
+                ...baseOptions
+              });
+              break;
+          }
 
           /* Save report and Download*/
           const pdfBytes = await pdfDoc.save();

@@ -3391,8 +3391,6 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
 
 
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
-
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3403,6 +3401,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3983,7 +3987,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         line10Sum: null,
         line12TotalTaxesAfterAdjustments: null,
         totalQuarterDeposits: null,
-        line15Overpayment: null
+        line15Overpayment: null,
+        overpaymentOption: null
       }
     };
   },
@@ -4037,26 +4042,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   },
   methods: {
     validateFormFields: function validateFormFields() {
-      console.log(this.numberOfEmployees);
-      console.log(this.totalWages);
-      /* REQUIREMENTS
-      * EIN
-      * Name
-      * Address
-      * City
-      * State
-      * Zip
-      * 1
-      * 2
-      * 3
-      * 5a - 5d
-      * 6
-      * 10
-      * 12
-      * 13
-      * 15
-      * */
-
       if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
         this.errors.ein = true;
         return false;
@@ -4100,13 +4085,66 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (parseFloat(this.withheldTax) < 0) {
         this.errors.withheldTax = true;
         return false;
-      } else this.errors.withheldTax = false; //
-      // /*5E*/
-      // if (parseFloat(this.line5E) < 0) {
-      //   this.errors.line5E = true;
-      //   return false
-      // } else this.errors.line5E = false;
+      } else this.errors.withheldTax = false;
+      /*5E*/
 
+
+      if (parseFloat(this.line5E) <= 0) {
+        this.errors.line5E = true;
+        return false;
+      } else this.errors.line5E = false;
+      /*6*/
+
+
+      if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
+        this.errors.totalTaxesBeforeAdjustments = true;
+        return false;
+      } else this.errors.totalTaxesBeforeAdjustments = false;
+      /*10*/
+
+
+      if (parseFloat(this.line10Sum) <= 0) {
+        this.errors.line10Sum = true;
+        return false;
+      } else this.errors.line10Sum = false;
+      /*12*/
+
+
+      if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
+        this.errors.line12TotalTaxesAfterAdjustments = true;
+        return false;
+      } else this.errors.line12TotalTaxesAfterAdjustments = false;
+      /*13*/
+
+
+      if (parseFloat(this.totalQuarterDeposits) <= 0) {
+        this.errors.totalQuarterDeposits = true;
+        return false;
+      } else this.errors.totalQuarterDeposits = false;
+      /*15*/
+
+
+      if (parseFloat(this.line15Overpayment) < 0) {
+        this.errors.line15Overpayment = true;
+        return false;
+      } else this.errors.line15Overpayment = false;
+      /* Overpayment Option */
+
+
+      switch (parseInt(this.overpaymentOption)) {
+        case 1:
+          this.errors.overpaymentOption = false;
+          break;
+
+        case 2:
+          this.errors.overpaymentOption = false;
+          break;
+
+        default:
+          console.log('No Overpayment Option Selected!');
+          this.errors.overpaymentOption = true;
+          return false;
+      }
 
       return true;
     },
@@ -4137,7 +4175,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 54;
+                _context.next = 75;
                 break;
 
               case 6:
@@ -4190,13 +4228,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   y: height / 2 + 295
                 }, baseOptions));
                 /*  IF – TradeName */
-                // firstPage.drawText(this.tradeName, {
-                //   x: 135,
-                //   y: height / 2 + 270,
-                //   ...baseOptions
-                // });
 
+                if (this.tradeName !== null) {
+                  firstPage.drawText(this.tradeName, _objectSpread({
+                    x: 135,
+                    y: height / 2 + 270
+                  }, baseOptions));
+                }
                 /*Address*/
+
 
                 firstPage.drawText(this.address, _objectSpread({
                   x: 95,
@@ -4221,62 +4261,67 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   y: height / 2 + 215
                 }, baseOptions));
                 /* IF – Foreign Country*/
-                // firstPage.drawText(this.f_countryName, {
-                //   x: 95,
-                //   y: height / 2 + 185,
-                //   ...baseOptions
-                // });
 
+                if (this.f_countryName !== null) {
+                  firstPage.drawText(this.f_countryName.toString(), _objectSpread({
+                    x: 95,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
                 /* IF – Foreign Province*/
-                // firstPage.drawText(this.f_countryProvince, {
-                //   x: 235,
-                //   y: height / 2 + 185,
-                //   ...baseOptions
-                // });
 
+
+                if (this.f_countryProvince !== null) {
+                  firstPage.drawText(this.f_countryProvince.toString(), _objectSpread({
+                    x: 235,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
                 /* IF – Foreign Province*/
-                // firstPage.drawText(this.f_countryZIP, {
-                //   x: 335,
-                //   y: height / 2 + 185,
-                //   ...baseOptions
-                // });
 
+
+                if (this.f_countryZIP !== null) {
+                  firstPage.drawText(this.f_countryZIP.toString(), _objectSpread({
+                    x: 335,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
                 /* Report for this quarter */
 
-                console.log(_typeof(this.reportForThisQuarter), ' --- ', this.reportForThisQuarter);
+
                 _context.t0 = this.reportForThisQuarter;
-                _context.next = _context.t0 === '1' ? 33 : _context.t0 === '2' ? 35 : _context.t0 === '3' ? 37 : _context.t0 === '4' ? 39 : 41;
+                _context.next = _context.t0 === '1' ? 36 : _context.t0 === '2' ? 38 : _context.t0 === '3' ? 40 : _context.t0 === '4' ? 42 : 44;
                 break;
 
-              case 33:
+              case 36:
                 firstPage.drawText('x', _objectSpread({
                   x: 427,
                   y: height / 2 + 294
                 }, baseOptions));
-                return _context.abrupt("break", 41);
+                return _context.abrupt("break", 44);
 
-              case 35:
+              case 38:
                 firstPage.drawText('x', _objectSpread({
                   x: 427,
                   y: height / 2 + 277
                 }, baseOptions));
-                return _context.abrupt("break", 41);
+                return _context.abrupt("break", 44);
 
-              case 37:
+              case 40:
                 firstPage.drawText('x', _objectSpread({
                   x: 427,
                   y: height / 2 + 260
                 }, baseOptions));
-                return _context.abrupt("break", 41);
+                return _context.abrupt("break", 44);
 
-              case 39:
+              case 42:
                 firstPage.drawText('x', _objectSpread({
                   x: 427,
                   y: height / 2 + 243
                 }, baseOptions));
-                return _context.abrupt("break", 41);
+                return _context.abrupt("break", 44);
 
-              case 41:
+              case 44:
                 /* Number Of Employees */
                 firstPage.drawText(parseInt(this.numberOfEmployees).toString(), _objectSpread({
                   x: 455,
@@ -4305,7 +4350,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /* 5A */
 
 
-                if (parseInt(this.taxableSSWages)) {
+                if (parseFloat(this.taxableSSWages)) {
                   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), _objectSpread({
                     x: 225,
                     y: height / 2 + 13
@@ -4318,7 +4363,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /* 5B */
 
 
-                if (parseInt(this.taxableSSTips)) {
+                if (parseFloat(this.taxableSSTips)) {
                   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), _objectSpread({
                     x: 225,
                     y: height / 2 - 5
@@ -4331,7 +4376,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /* 5C */
 
 
-                if (parseInt(this.taxableMedicalWages)) {
+                if (parseFloat(this.taxableMedicalWages)) {
                   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), _objectSpread({
                     x: 225,
                     y: height / 2 - 23
@@ -4344,7 +4389,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /* 5D */
 
 
-                if (parseInt(this.taxableAMTWithholding)) {
+                if (parseFloat(this.taxableAMTWithholding)) {
                   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), _objectSpread({
                     x: 225,
                     y: height / 2 - 47
@@ -4357,25 +4402,131 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 /* 5E */
 
 
-                if (parseInt(this.line5E)) {
+                if (parseFloat(this.line5E)) {
                   firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), _objectSpread({
                     x: 455,
                     y: height / 2 - 70
                   }, baseOptions));
                 }
-                /* Save report and Download*/
+                /* 5F */
 
 
-                _context.next = 52;
+                if (parseFloat(this.section3121)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 94
+                  }, baseOptions));
+                }
+                /* 6 */
+
+
+                if (this.totalTaxesBeforeAdjustments) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 118
+                  }, baseOptions));
+                }
+                /* 7 */
+
+
+                if (parseFloat(this.currentFractionsOfCents)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 142
+                  }, baseOptions));
+                }
+                /* 8 */
+
+
+                if (parseFloat(this.currentSickPay)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 166
+                  }, baseOptions));
+                }
+                /* 9 */
+
+
+                if (parseFloat(this.currentTipAndGroupTerm)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 190
+                  }, baseOptions));
+                }
+                /* 10 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 214
+                }, baseOptions));
+                /* 11 */
+
+                if (parseFloat(this.qualifiedSmallBusinessPayroll)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 238
+                  }, baseOptions));
+                }
+                /* 12 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 262
+                }, baseOptions));
+                /* 13 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 293
+                }, baseOptions));
+                /* 14 */
+
+                if (parseFloat(this.line14BalanceDue)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 317
+                  }, baseOptions));
+                }
+                /* 15 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), _objectSpread({
+                  x: 310,
+                  y: height / 2 - 340
+                }, baseOptions));
+                /* Overpayment Option */
+
+                _context.t1 = parseInt(this.overpaymentOption);
+                _context.next = _context.t1 === 1 ? 67 : _context.t1 === 2 ? 69 : 71;
+                break;
+
+              case 67:
+                firstPage.drawText('x', _objectSpread({
+                  x: 448,
+                  y: height / 2 - 342
+                }, baseOptions));
+                return _context.abrupt("break", 71);
+
+              case 69:
+                firstPage.drawText('x', _objectSpread({
+                  x: 521,
+                  y: height / 2 - 342
+                }, baseOptions));
+                return _context.abrupt("break", 71);
+
+              case 71:
+                _context.next = 73;
                 return pdfDoc.save();
 
-              case 52:
+              case 73:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 54:
+              case 75:
               case "end":
                 return _context.stop();
             }
@@ -64488,7 +64639,9 @@ var render = function() {
                         staticClass: "form-control mb-2",
                         attrs: {
                           type: "text",
-                          placeholder: "Foreign postal code"
+                          placeholder: "Foreign postal code",
+                          minlength: "5",
+                          maxlength: "5"
                         },
                         domProps: { value: _vm.f_countryZIP },
                         on: {
@@ -65019,9 +65172,23 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 my-auto text-center" }, [
-            _vm._v(_vm._s(_vm.totalTaxesBeforeAdjustments))
-          ])
+          _c(
+            "div",
+            {
+              staticClass: "col-4 my-auto text-center",
+              class: {
+                "alert-danger": _vm.errors.totalTaxesBeforeAdjustments,
+                "alert-success":
+                  _vm.errors.totalTaxesBeforeAdjustments === false
+              }
+            },
+            [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.totalTaxesBeforeAdjustments)
+              )
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row mb-2" }, [
@@ -65263,77 +65430,92 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 text-center" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 mb-2" }, [
-                _vm._v(_vm._s(_vm.line15Overpayment))
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("label", { staticClass: "form-check-label" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.overpaymentOption,
-                          expression: "overpaymentOption"
+          _c(
+            "div",
+            {
+              staticClass: "col-4 text-center",
+              class: {
+                "alert-danger": _vm.errors.overpaymentOption,
+                "alert-success": _vm.errors.overpaymentOption === false
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12 mb-2" }, [
+                  _vm._v(_vm._s(_vm.line15Overpayment))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("label", { staticClass: "form-check-label" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overpaymentOption,
+                            expression: "overpaymentOption"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "OverpaymentOption",
+                          value: "1"
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.overpaymentOption, "1")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.overpaymentOption = "1"
+                          }
                         }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: {
-                        type: "radio",
-                        name: "OverpaymentOption",
-                        value: "1"
-                      },
-                      domProps: { checked: _vm._q(_vm.overpaymentOption, "1") },
-                      on: {
-                        change: function($event) {
-                          _vm.overpaymentOption = "1"
-                        }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                                    Apply to next return\n                                "
-                    )
+                      }),
+                      _vm._v(
+                        "\n                                    Apply to next return\n                                "
+                      )
+                    ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("label", { staticClass: "form-check-label" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.overpaymentOption,
-                          expression: "overpaymentOption"
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("label", { staticClass: "form-check-label" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overpaymentOption,
+                            expression: "overpaymentOption"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "OverpaymentOption",
+                          value: "2",
+                          checked: ""
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.overpaymentOption, "2")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.overpaymentOption = "2"
+                          }
                         }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: {
-                        type: "radio",
-                        name: "OverpaymentOption",
-                        value: "2"
-                      },
-                      domProps: { checked: _vm._q(_vm.overpaymentOption, "2") },
-                      on: {
-                        change: function($event) {
-                          _vm.overpaymentOption = "2"
-                        }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                                    Send a refund\n                                "
-                    )
+                      }),
+                      _vm._v(
+                        "\n                                    Send a refund\n                                "
+                      )
+                    ])
                   ])
                 ])
               ])
-            ])
-          ])
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
