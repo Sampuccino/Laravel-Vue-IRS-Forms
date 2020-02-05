@@ -3391,13 +3391,13 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
 
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
-function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
@@ -4139,91 +4139,101 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.name === null || this.name.trim().length < 1) {
         this.errors.name = true;
         return false;
-      } else this.errors.name = false; // if (this.address === null || this.address.trim().length < 1) {
-      //   this.errors.address = true;
-      //   return false
-      // } else this.errors.address = false;
-      //
-      // if (this.city === null || this.city.trim().length < 1) {
-      //   this.errors.city = true;
-      //   return false
-      // } else this.errors.city = false;
-      //
-      // if (this.state === null || this.state.trim().length < 1) {
-      //   this.errors.state = true;
-      //   return false
-      // } else this.errors.state = false;
-      //
-      // if (this.zip === null || this.zip.trim().length < 1) {
-      //   this.errors.zip = true;
-      //   return false
-      // } else this.errors.zip = false;
-      //
-      // if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
-      //   this.errors.numberOfEmployees = true;
-      //   return false
-      // } else this.errors.numberOfEmployees = false;
-      //
-      // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
-      //   this.errors.totalWages = true;
-      //   return false
-      // } else this.errors.totalWages = false;
-      //
-      // if (parseFloat(this.withheldTax) < 0) {
-      //   this.errors.withheldTax = true;
-      //   return false
-      // } else this.errors.withheldTax = false;
-      //
-      // /*5E*/
-      // if (parseFloat(this.line5E) <= 0) {
-      //   this.errors.line5E = true;
-      //   return false
-      // } else this.errors.line5E = false;
-      //
-      // /*6*/
-      // if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
-      //   this.errors.totalTaxesBeforeAdjustments = true;
-      //   return false
-      // } else this.errors.totalTaxesBeforeAdjustments = false;
-      //
-      // /*10*/
-      // if (parseFloat(this.line10Sum) <= 0) {
-      //   this.errors.line10Sum = true;
-      //   return false
-      // } else this.errors.line10Sum = false;
-      //
-      // /*12*/
-      // if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
-      //   this.errors.line12TotalTaxesAfterAdjustments = true;
-      //   return false
-      // } else this.errors.line12TotalTaxesAfterAdjustments = false;
-      //
-      // /*13*/
-      // if (parseFloat(this.totalQuarterDeposits) <= 0) {
-      //   this.errors.totalQuarterDeposits = true;
-      //   return false
-      // } else this.errors.totalQuarterDeposits = false;
-      //
-      // /*15*/
-      // if (parseFloat(this.line15Overpayment) < 0) {
-      //   this.errors.line15Overpayment = true;
-      //   return false
-      // } else this.errors.line15Overpayment = false;
-      //
-      // /* Overpayment Option */
-      // switch (parseInt(this.overpaymentOption)) {
-      //   case 1:
-      //     this.errors.overpaymentOption = false;
-      //     break;
-      //   case 2:
-      //     this.errors.overpaymentOption = false;
-      //     break;
-      //   default:
-      //     console.log('No Overpayment Option Selected!');
-      //     this.errors.overpaymentOption = true;
-      //     return false;
-      // }
+      } else this.errors.name = false;
 
+      if (this.address === null || this.address.trim().length < 1) {
+        this.errors.address = true;
+        return false;
+      } else this.errors.address = false;
+
+      if (this.city === null || this.city.trim().length < 1) {
+        this.errors.city = true;
+        return false;
+      } else this.errors.city = false;
+
+      if (this.state === null || this.state.trim().length < 1) {
+        this.errors.state = true;
+        return false;
+      } else this.errors.state = false;
+
+      if (this.zip === null || this.zip.trim().length < 1) {
+        this.errors.zip = true;
+        return false;
+      } else this.errors.zip = false;
+
+      if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+        this.errors.numberOfEmployees = true;
+        return false;
+      } else this.errors.numberOfEmployees = false;
+
+      if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+        this.errors.totalWages = true;
+        return false;
+      } else this.errors.totalWages = false;
+
+      if (parseFloat(this.withheldTax) < 0) {
+        this.errors.withheldTax = true;
+        return false;
+      } else this.errors.withheldTax = false;
+      /*5E*/
+
+
+      if (parseFloat(this.line5E) <= 0) {
+        this.errors.line5E = true;
+        return false;
+      } else this.errors.line5E = false;
+      /*6*/
+
+
+      if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
+        this.errors.totalTaxesBeforeAdjustments = true;
+        return false;
+      } else this.errors.totalTaxesBeforeAdjustments = false;
+      /*10*/
+
+
+      if (parseFloat(this.line10Sum) <= 0) {
+        this.errors.line10Sum = true;
+        return false;
+      } else this.errors.line10Sum = false;
+      /*12*/
+
+
+      if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
+        this.errors.line12TotalTaxesAfterAdjustments = true;
+        return false;
+      } else this.errors.line12TotalTaxesAfterAdjustments = false;
+      /*13*/
+
+
+      if (parseFloat(this.totalQuarterDeposits) <= 0) {
+        this.errors.totalQuarterDeposits = true;
+        return false;
+      } else this.errors.totalQuarterDeposits = false;
+      /*15*/
+
+
+      if (parseFloat(this.line15Overpayment) < 0) {
+        this.errors.line15Overpayment = true;
+        return false;
+      } else this.errors.line15Overpayment = false;
+      /* Overpayment Option */
+
+
+      switch (parseInt(this.overpaymentOption)) {
+        case 1:
+          this.errors.overpaymentOption = false;
+          break;
+
+        case 2:
+          this.errors.overpaymentOption = false;
+          break;
+
+        default:
+          console.log('No Overpayment Option Selected!');
+          this.errors.overpaymentOption = true;
+          return false;
+      }
       /*16*/
 
 
@@ -4242,7 +4252,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, _secondPage$getSize, widthP2, heightP2, COLOR, baseOptions, baseYOffset, mutatedEIN, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, _secondPage$getSize, widthP2, heightP2, COLOR, baseOptions, baseYOffset, ein_mutated, i, ein_XCoord, mutatedEIN, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -4261,7 +4271,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 52;
+                _context.next = 101;
                 break;
 
               case 6:
@@ -4299,329 +4309,312 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 * mutate
                 * output
                 * */
-                // let ein_mutated = this.employerIdentificationNumber.split('');
-                // for (let i = 0; i < 9; i++) {
-                //   let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-                //
-                //   firstPage.drawText(ein_mutated[i], {
-                //     x: ein_XCoord[i],
-                //     y: height / 2 + 318,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // firstPage.drawText(this.name, {
-                //   x: 150,
-                //   y: height / 2 + 295,
-                //   ...baseOptions
-                // });
-                //
-                // /*  IF – TradeName */
-                // if (this.tradeName !== null){
-                //   firstPage.drawText(this.tradeName, {
-                //     x: 135,
-                //     y: height / 2 + 270,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /*Address*/
-                // firstPage.drawText(this.address, {
-                //   x: 95,
-                //   y: height / 2 + 245,
-                //   ...baseOptions
-                // });
-                //
-                // /*City*/
-                // firstPage.drawText(this.city, {
-                //   x: 95,
-                //   y: height / 2 + 215,
-                //   ...baseOptions
-                // });
-                //
-                // /*State*/
-                // firstPage.drawText(this.state, {
-                //   x: 285 ,
-                //   y: height / 2 + 215,
-                //   ...baseOptions
-                // });
-                //
-                // /*ZIP*/
-                // firstPage.drawText(this.zip, {
-                //   x: 325 ,
-                //   y: height / 2 + 215,
-                //   ...baseOptions
-                // });
-                //
-                // /* IF – Foreign Country*/
-                // if (this.f_countryName !== null) {
-                //     firstPage.drawText(this.f_countryName.toString(), {
-                //       x: 95,
-                //       y: height / 2 + 185,
-                //       ...baseOptions
-                //     });
-                // }
-                //
-                // /* IF – Foreign Province*/
-                // if (this.f_countryProvince !== null) {
-                //   firstPage.drawText(this.f_countryProvince.toString(), {
-                //     x: 235,
-                //     y: height / 2 + 185,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* IF – Foreign Province*/
-                // if (this.f_countryZIP !== null) {
-                //   firstPage.drawText(this.f_countryZIP.toString(), {
-                //     x: 335,
-                //     y: height / 2 + 185,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* Report for this quarter */
-                // switch (this.reportForThisQuarter) {
-                //   case '1':
-                //     firstPage.drawText('x', {
-                //       x: 427,
-                //       y: height / 2 + 294,
-                //       ...baseOptions
-                //     });
-                //     break;
-                //   case '2':
-                //     firstPage.drawText('x', {
-                //       x: 427,
-                //       y: height / 2 + 277,
-                //       ...baseOptions
-                //     });
-                //     break;
-                //   case '3':
-                //     firstPage.drawText('x', {
-                //       x: 427,
-                //       y: height / 2 + 260,
-                //       ...baseOptions
-                //     });
-                //     break;
-                //   case '4':
-                //     firstPage.drawText('x', {
-                //       x: 427,
-                //       y: height / 2 + 243,
-                //       ...baseOptions
-                //     });
-                //     break;
-                // }
-                //
-                // /* Number Of Employees */
-                // firstPage.drawText(parseInt(this.numberOfEmployees).toString(), {
-                //   x: 455,
-                //   y: height / 2 + 115,
-                //   ...baseOptions
-                // });
-                //
-                // /* 2: Wages... */
-                // firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), {
-                //   x: 455,
-                //   y: height / 2 + 91,
-                //   ...baseOptions
-                // });
-                //
-                // /* 3: Federal... */
-                // firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), {
-                //   x: 455,
-                //   y: height / 2 + 68,
-                //   ...baseOptions
-                // });
-                //
-                // /* 4: If no wages... */
-                // if(parseInt(this.noWages) === 1) {
-                //     firstPage.drawText('x', {
-                //       x: 449,
-                //       y: height / 2 + 43,
-                //       ...baseOptions
-                //     });
-                // }
-                //
-                // /* 5A */
-                // if (parseFloat(this.taxableSSWages)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
-                //     x: 225,
-                //     y: height / 2 + 13,
-                //     ...baseOptions
-                //   });
-                //
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), {
-                //     x: 360,
-                //     y: height / 2 + 13,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 5B */
-                // if (parseFloat(this.taxableSSTips)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
-                //     x: 225,
-                //     y: height / 2 - 5,
-                //     ...baseOptions
-                //   });
-                //
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), {
-                //     x: 360,
-                //     y: height / 2 - 5,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 5C */
-                // if (parseFloat(this.taxableMedicalWages)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
-                //     x: 225,
-                //     y: height / 2 - 23,
-                //     ...baseOptions
-                //   });
-                //
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), {
-                //     x: 360,
-                //     y: height / 2 - 23,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 5D */
-                // if (parseFloat(this.taxableAMTWithholding)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
-                //     x: 225,
-                //     y: height / 2 - 47,
-                //     ...baseOptions
-                //   });
-                //
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), {
-                //     x: 360,
-                //     y: height / 2 - 47,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 5E */
-                // if (parseFloat(this.line5E)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
-                //     x: 455,
-                //     y: height / 2 - 70,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 5F */
-                // if (parseFloat(this.section3121)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), {
-                //     x: 455,
-                //     y: height / 2 - 94,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 6 */
-                // if (this.totalTaxesBeforeAdjustments) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), {
-                //     x: 455,
-                //     y: height / 2 - 118,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 7 */
-                // if (parseFloat(this.currentFractionsOfCents)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), {
-                //     x: 455,
-                //     y: height / 2 - 142,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 8 */
-                // if (parseFloat(this.currentSickPay)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), {
-                //     x: 455,
-                //     y: height / 2 - 166,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 9 */
-                // if (parseFloat(this.currentTipAndGroupTerm)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), {
-                //     x: 455,
-                //     y: height / 2 - 190,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 10 */
-                // firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), {
-                //   x: 455,
-                //   y: height / 2 - 214,
-                //   ...baseOptions
-                // });
-                //
-                // /* 11 */
-                // if(parseFloat(this.qualifiedSmallBusinessPayroll)){
-                //     firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), {
-                //       x: 455,
-                //       y: height / 2 - 238,
-                //       ...baseOptions
-                //     });
-                // }
-                //
-                // /* 12 */
-                // firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), {
-                //   x: 455,
-                //   y: height / 2 - 262,
-                //   ...baseOptions
-                // });
-                //
-                // /* 13 */
-                // firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), {
-                //   x: 455,
-                //   y: height / 2 - 293,
-                //   ...baseOptions
-                // });
-                //
-                // /* 14 */
-                // if(parseFloat(this.line14BalanceDue)) {
-                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), {
-                //     x: 455,
-                //     y: height / 2 - 317,
-                //     ...baseOptions
-                //   });
-                // }
-                //
-                // /* 15 */
-                // firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), {
-                //   x: 310,
-                //   y: height / 2 - 340,
-                //   ...baseOptions
-                // });
-                //
-                // /* Overpayment Option */
-                // switch (parseInt(this.overpaymentOption)) {
-                //   case 1:
-                //     firstPage.drawText('x', {
-                //       x: 448,
-                //       y: height / 2 - 342,
-                //       ...baseOptions
-                //     });
-                //     break;
-                //   case 2:
-                //     firstPage.drawText('x', {
-                //       x: 521,
-                //       y: height / 2 - 342,
-                //       ...baseOptions
-                //     });
-                //     break;
-                // }
 
+                ein_mutated = this.employerIdentificationNumber.split('');
+
+                for (i = 0; i < 9; i++) {
+                  ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+                  firstPage.drawText(ein_mutated[i], _objectSpread({
+                    x: ein_XCoord[i],
+                    y: height / 2 + 318
+                  }, baseOptions));
+                }
+
+                firstPage.drawText(this.name, _objectSpread({
+                  x: 150,
+                  y: height / 2 + 295
+                }, baseOptions));
+                /*  IF – TradeName */
+
+                if (this.tradeName !== null) {
+                  firstPage.drawText(this.tradeName, _objectSpread({
+                    x: 135,
+                    y: height / 2 + 270
+                  }, baseOptions));
+                }
+                /*Address*/
+
+
+                firstPage.drawText(this.address, _objectSpread({
+                  x: 95,
+                  y: height / 2 + 245
+                }, baseOptions));
+                /*City*/
+
+                firstPage.drawText(this.city, _objectSpread({
+                  x: 95,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /*State*/
+
+                firstPage.drawText(this.state, _objectSpread({
+                  x: 285,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /*ZIP*/
+
+                firstPage.drawText(this.zip, _objectSpread({
+                  x: 325,
+                  y: height / 2 + 215
+                }, baseOptions));
+                /* IF – Foreign Country*/
+
+                if (this.f_countryName !== null) {
+                  firstPage.drawText(this.f_countryName.toString(), _objectSpread({
+                    x: 95,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
+                /* IF – Foreign Province*/
+
+
+                if (this.f_countryProvince !== null) {
+                  firstPage.drawText(this.f_countryProvince.toString(), _objectSpread({
+                    x: 235,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
+                /* IF – Foreign Province*/
+
+
+                if (this.f_countryZIP !== null) {
+                  firstPage.drawText(this.f_countryZIP.toString(), _objectSpread({
+                    x: 335,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
+                /* Report for this quarter */
+
+
+                _context.t0 = this.reportForThisQuarter;
+                _context.next = _context.t0 === '1' ? 37 : _context.t0 === '2' ? 39 : _context.t0 === '3' ? 41 : _context.t0 === '4' ? 43 : 45;
+                break;
+
+              case 37:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 294
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 39:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 277
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 41:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 260
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 43:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 243
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 45:
+                /* Number Of Employees */
+                firstPage.drawText(parseInt(this.numberOfEmployees).toString(), _objectSpread({
+                  x: 455,
+                  y: height / 2 + 115
+                }, baseOptions));
+                /* 2: Wages... */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), _objectSpread({
+                  x: 455,
+                  y: height / 2 + 91
+                }, baseOptions));
+                /* 3: Federal... */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), _objectSpread({
+                  x: 455,
+                  y: height / 2 + 68
+                }, baseOptions));
+                /* 4: If no wages... */
+
+                if (parseInt(this.noWages) === 1) {
+                  firstPage.drawText('x', _objectSpread({
+                    x: 449,
+                    y: height / 2 + 43
+                  }, baseOptions));
+                }
+                /* 5A */
+
+
+                if (parseFloat(this.taxableSSWages)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), _objectSpread({
+                    x: 225,
+                    y: height / 2 + 13
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), _objectSpread({
+                    x: 360,
+                    y: height / 2 + 13
+                  }, baseOptions));
+                }
+                /* 5B */
+
+
+                if (parseFloat(this.taxableSSTips)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 5
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 5
+                  }, baseOptions));
+                }
+                /* 5C */
+
+
+                if (parseFloat(this.taxableMedicalWages)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 23
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 23
+                  }, baseOptions));
+                }
+                /* 5D */
+
+
+                if (parseFloat(this.taxableAMTWithholding)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 47
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 47
+                  }, baseOptions));
+                }
+                /* 5E */
+
+
+                if (parseFloat(this.line5E)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 70
+                  }, baseOptions));
+                }
+                /* 5F */
+
+
+                if (parseFloat(this.section3121)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 94
+                  }, baseOptions));
+                }
+                /* 6 */
+
+
+                if (this.totalTaxesBeforeAdjustments) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 118
+                  }, baseOptions));
+                }
+                /* 7 */
+
+
+                if (parseFloat(this.currentFractionsOfCents)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 142
+                  }, baseOptions));
+                }
+                /* 8 */
+
+
+                if (parseFloat(this.currentSickPay)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 166
+                  }, baseOptions));
+                }
+                /* 9 */
+
+
+                if (parseFloat(this.currentTipAndGroupTerm)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 190
+                  }, baseOptions));
+                }
+                /* 10 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 214
+                }, baseOptions));
+                /* 11 */
+
+                if (parseFloat(this.qualifiedSmallBusinessPayroll)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 238
+                  }, baseOptions));
+                }
+                /* 12 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 262
+                }, baseOptions));
+                /* 13 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 293
+                }, baseOptions));
+                /* 14 */
+
+                if (parseFloat(this.line14BalanceDue)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 317
+                  }, baseOptions));
+                }
+                /* 15 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), _objectSpread({
+                  x: 310,
+                  y: height / 2 - 340
+                }, baseOptions));
+                /* Overpayment Option */
+
+                _context.t1 = parseInt(this.overpaymentOption);
+                _context.next = _context.t1 === 1 ? 68 : _context.t1 === 2 ? 70 : 72;
+                break;
+
+              case 68:
+                firstPage.drawText('x', _objectSpread({
+                  x: 448,
+                  y: height / 2 - 342
+                }, baseOptions));
+                return _context.abrupt("break", 72);
+
+              case 70:
+                firstPage.drawText('x', _objectSpread({
+                  x: 521,
+                  y: height / 2 - 342
+                }, baseOptions));
+                return _context.abrupt("break", 72);
+
+              case 72:
                 /* PAGE 2*/
-
                 console.log(_typeof(this.employerIdentificationNumber), ' __ ', this.employerIdentificationNumber);
                 console.log(_typeof(this.name), ' __ ', this.name);
                 secondPage.drawText(this.name.toString(), _objectSpread({
@@ -4633,19 +4626,19 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   x: 420,
                   y: height / 2 + 330
                 }, baseOptions));
-                _context.t0 = parseInt(this.partTwoNumberSixteen);
-                _context.next = _context.t0 === 1 ? 31 : _context.t0 === 2 ? 33 : _context.t0 === 3 ? 46 : 48;
+                _context.t2 = parseInt(this.partTwoNumberSixteen);
+                _context.next = _context.t2 === 1 ? 80 : _context.t2 === 2 ? 82 : _context.t2 === 3 ? 95 : 97;
                 break;
 
-              case 31:
+              case 80:
                 /* Option 1*/
                 secondPage.drawText('x', _objectSpread({
                   x: 118,
                   y: height / 2 + 273
                 }, baseOptions));
-                return _context.abrupt("break", 48);
+                return _context.abrupt("break", 97);
 
-              case 33:
+              case 82:
                 /* Option 2 MUST VALIDATE ALL BOXES*/
                 secondPage.drawText('x', _objectSpread({
                   x: 118,
@@ -4688,7 +4681,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 if (!(this.line16TotalLiability !== this.line12TotalTaxesAfterAdjustments)) {
-                  _context.next = 44;
+                  _context.next = 93;
                   break;
                 }
 
@@ -4696,31 +4689,31 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 this.errors.partTwoNumberSixteen = true;
                 return _context.abrupt("return", false);
 
-              case 44:
+              case 93:
                 this.errors.partTwoNumberSixteen = false;
 
-              case 45:
-                return _context.abrupt("break", 48);
+              case 94:
+                return _context.abrupt("break", 97);
 
-              case 46:
+              case 95:
                 /* Option 3*/
                 secondPage.drawText('x', _objectSpread({
                   x: 118,
                   y: height / 2 + 112
                 }, baseOptions));
-                return _context.abrupt("break", 48);
+                return _context.abrupt("break", 97);
 
-              case 48:
-                _context.next = 50;
+              case 97:
+                _context.next = 99;
                 return pdfDoc.save();
 
-              case 50:
+              case 99:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 52:
+              case 101:
               case "end":
                 return _context.stop();
             }

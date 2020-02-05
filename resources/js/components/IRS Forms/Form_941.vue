@@ -670,90 +670,90 @@
           return false
         } else this.errors.name = false;
 
-        // if (this.address === null || this.address.trim().length < 1) {
-        //   this.errors.address = true;
-        //   return false
-        // } else this.errors.address = false;
-        //
-        // if (this.city === null || this.city.trim().length < 1) {
-        //   this.errors.city = true;
-        //   return false
-        // } else this.errors.city = false;
-        //
-        // if (this.state === null || this.state.trim().length < 1) {
-        //   this.errors.state = true;
-        //   return false
-        // } else this.errors.state = false;
-        //
-        // if (this.zip === null || this.zip.trim().length < 1) {
-        //   this.errors.zip = true;
-        //   return false
-        // } else this.errors.zip = false;
-        //
-        // if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
-        //   this.errors.numberOfEmployees = true;
-        //   return false
-        // } else this.errors.numberOfEmployees = false;
-        //
-        // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
-        //   this.errors.totalWages = true;
-        //   return false
-        // } else this.errors.totalWages = false;
-        //
-        // if (parseFloat(this.withheldTax) < 0) {
-        //   this.errors.withheldTax = true;
-        //   return false
-        // } else this.errors.withheldTax = false;
-        //
-        // /*5E*/
-        // if (parseFloat(this.line5E) <= 0) {
-        //   this.errors.line5E = true;
-        //   return false
-        // } else this.errors.line5E = false;
-        //
-        // /*6*/
-        // if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
-        //   this.errors.totalTaxesBeforeAdjustments = true;
-        //   return false
-        // } else this.errors.totalTaxesBeforeAdjustments = false;
-        //
-        // /*10*/
-        // if (parseFloat(this.line10Sum) <= 0) {
-        //   this.errors.line10Sum = true;
-        //   return false
-        // } else this.errors.line10Sum = false;
-        //
-        // /*12*/
-        // if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
-        //   this.errors.line12TotalTaxesAfterAdjustments = true;
-        //   return false
-        // } else this.errors.line12TotalTaxesAfterAdjustments = false;
-        //
-        // /*13*/
-        // if (parseFloat(this.totalQuarterDeposits) <= 0) {
-        //   this.errors.totalQuarterDeposits = true;
-        //   return false
-        // } else this.errors.totalQuarterDeposits = false;
-        //
-        // /*15*/
-        // if (parseFloat(this.line15Overpayment) < 0) {
-        //   this.errors.line15Overpayment = true;
-        //   return false
-        // } else this.errors.line15Overpayment = false;
-        //
-        // /* Overpayment Option */
-        // switch (parseInt(this.overpaymentOption)) {
-        //   case 1:
-        //     this.errors.overpaymentOption = false;
-        //     break;
-        //   case 2:
-        //     this.errors.overpaymentOption = false;
-        //     break;
-        //   default:
-        //     console.log('No Overpayment Option Selected!');
-        //     this.errors.overpaymentOption = true;
-        //     return false;
-        // }
+        if (this.address === null || this.address.trim().length < 1) {
+          this.errors.address = true;
+          return false
+        } else this.errors.address = false;
+
+        if (this.city === null || this.city.trim().length < 1) {
+          this.errors.city = true;
+          return false
+        } else this.errors.city = false;
+
+        if (this.state === null || this.state.trim().length < 1) {
+          this.errors.state = true;
+          return false
+        } else this.errors.state = false;
+
+        if (this.zip === null || this.zip.trim().length < 1) {
+          this.errors.zip = true;
+          return false
+        } else this.errors.zip = false;
+
+        if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+          this.errors.numberOfEmployees = true;
+          return false
+        } else this.errors.numberOfEmployees = false;
+
+        if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+          this.errors.totalWages = true;
+          return false
+        } else this.errors.totalWages = false;
+
+        if (parseFloat(this.withheldTax) < 0) {
+          this.errors.withheldTax = true;
+          return false
+        } else this.errors.withheldTax = false;
+
+        /*5E*/
+        if (parseFloat(this.line5E) <= 0) {
+          this.errors.line5E = true;
+          return false
+        } else this.errors.line5E = false;
+
+        /*6*/
+        if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
+          this.errors.totalTaxesBeforeAdjustments = true;
+          return false
+        } else this.errors.totalTaxesBeforeAdjustments = false;
+
+        /*10*/
+        if (parseFloat(this.line10Sum) <= 0) {
+          this.errors.line10Sum = true;
+          return false
+        } else this.errors.line10Sum = false;
+
+        /*12*/
+        if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
+          this.errors.line12TotalTaxesAfterAdjustments = true;
+          return false
+        } else this.errors.line12TotalTaxesAfterAdjustments = false;
+
+        /*13*/
+        if (parseFloat(this.totalQuarterDeposits) <= 0) {
+          this.errors.totalQuarterDeposits = true;
+          return false
+        } else this.errors.totalQuarterDeposits = false;
+
+        /*15*/
+        if (parseFloat(this.line15Overpayment) < 0) {
+          this.errors.line15Overpayment = true;
+          return false
+        } else this.errors.line15Overpayment = false;
+
+        /* Overpayment Option */
+        switch (parseInt(this.overpaymentOption)) {
+          case 1:
+            this.errors.overpaymentOption = false;
+            break;
+          case 2:
+            this.errors.overpaymentOption = false;
+            break;
+          default:
+            console.log('No Overpayment Option Selected!');
+            this.errors.overpaymentOption = true;
+            return false;
+        }
 
         /*16*/
         if (this.partTwoNumberSixteen === null) {
@@ -802,326 +802,326 @@
           * mutate
           * output
           * */
-          // let ein_mutated = this.employerIdentificationNumber.split('');
-          // for (let i = 0; i < 9; i++) {
-          //   let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-          //
-          //   firstPage.drawText(ein_mutated[i], {
-          //     x: ein_XCoord[i],
-          //     y: height / 2 + 318,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // firstPage.drawText(this.name, {
-          //   x: 150,
-          //   y: height / 2 + 295,
-          //   ...baseOptions
-          // });
-          //
-          // /*  IF – TradeName */
-          // if (this.tradeName !== null){
-          //   firstPage.drawText(this.tradeName, {
-          //     x: 135,
-          //     y: height / 2 + 270,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /*Address*/
-          // firstPage.drawText(this.address, {
-          //   x: 95,
-          //   y: height / 2 + 245,
-          //   ...baseOptions
-          // });
-          //
-          // /*City*/
-          // firstPage.drawText(this.city, {
-          //   x: 95,
-          //   y: height / 2 + 215,
-          //   ...baseOptions
-          // });
-          //
-          // /*State*/
-          // firstPage.drawText(this.state, {
-          //   x: 285 ,
-          //   y: height / 2 + 215,
-          //   ...baseOptions
-          // });
-          //
-          // /*ZIP*/
-          // firstPage.drawText(this.zip, {
-          //   x: 325 ,
-          //   y: height / 2 + 215,
-          //   ...baseOptions
-          // });
-          //
-          // /* IF – Foreign Country*/
-          // if (this.f_countryName !== null) {
-          //     firstPage.drawText(this.f_countryName.toString(), {
-          //       x: 95,
-          //       y: height / 2 + 185,
-          //       ...baseOptions
-          //     });
-          // }
-          //
-          // /* IF – Foreign Province*/
-          // if (this.f_countryProvince !== null) {
-          //   firstPage.drawText(this.f_countryProvince.toString(), {
-          //     x: 235,
-          //     y: height / 2 + 185,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* IF – Foreign Province*/
-          // if (this.f_countryZIP !== null) {
-          //   firstPage.drawText(this.f_countryZIP.toString(), {
-          //     x: 335,
-          //     y: height / 2 + 185,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* Report for this quarter */
-          // switch (this.reportForThisQuarter) {
-          //   case '1':
-          //     firstPage.drawText('x', {
-          //       x: 427,
-          //       y: height / 2 + 294,
-          //       ...baseOptions
-          //     });
-          //     break;
-          //   case '2':
-          //     firstPage.drawText('x', {
-          //       x: 427,
-          //       y: height / 2 + 277,
-          //       ...baseOptions
-          //     });
-          //     break;
-          //   case '3':
-          //     firstPage.drawText('x', {
-          //       x: 427,
-          //       y: height / 2 + 260,
-          //       ...baseOptions
-          //     });
-          //     break;
-          //   case '4':
-          //     firstPage.drawText('x', {
-          //       x: 427,
-          //       y: height / 2 + 243,
-          //       ...baseOptions
-          //     });
-          //     break;
-          // }
-          //
-          // /* Number Of Employees */
-          // firstPage.drawText(parseInt(this.numberOfEmployees).toString(), {
-          //   x: 455,
-          //   y: height / 2 + 115,
-          //   ...baseOptions
-          // });
-          //
-          // /* 2: Wages... */
-          // firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), {
-          //   x: 455,
-          //   y: height / 2 + 91,
-          //   ...baseOptions
-          // });
-          //
-          // /* 3: Federal... */
-          // firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), {
-          //   x: 455,
-          //   y: height / 2 + 68,
-          //   ...baseOptions
-          // });
-          //
-          // /* 4: If no wages... */
-          // if(parseInt(this.noWages) === 1) {
-          //     firstPage.drawText('x', {
-          //       x: 449,
-          //       y: height / 2 + 43,
-          //       ...baseOptions
-          //     });
-          // }
-          //
-          // /* 5A */
-          // if (parseFloat(this.taxableSSWages)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
-          //     x: 225,
-          //     y: height / 2 + 13,
-          //     ...baseOptions
-          //   });
-          //
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), {
-          //     x: 360,
-          //     y: height / 2 + 13,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 5B */
-          // if (parseFloat(this.taxableSSTips)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
-          //     x: 225,
-          //     y: height / 2 - 5,
-          //     ...baseOptions
-          //   });
-          //
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), {
-          //     x: 360,
-          //     y: height / 2 - 5,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 5C */
-          // if (parseFloat(this.taxableMedicalWages)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
-          //     x: 225,
-          //     y: height / 2 - 23,
-          //     ...baseOptions
-          //   });
-          //
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), {
-          //     x: 360,
-          //     y: height / 2 - 23,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 5D */
-          // if (parseFloat(this.taxableAMTWithholding)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
-          //     x: 225,
-          //     y: height / 2 - 47,
-          //     ...baseOptions
-          //   });
-          //
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), {
-          //     x: 360,
-          //     y: height / 2 - 47,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 5E */
-          // if (parseFloat(this.line5E)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
-          //     x: 455,
-          //     y: height / 2 - 70,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 5F */
-          // if (parseFloat(this.section3121)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), {
-          //     x: 455,
-          //     y: height / 2 - 94,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 6 */
-          // if (this.totalTaxesBeforeAdjustments) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), {
-          //     x: 455,
-          //     y: height / 2 - 118,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 7 */
-          // if (parseFloat(this.currentFractionsOfCents)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), {
-          //     x: 455,
-          //     y: height / 2 - 142,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 8 */
-          // if (parseFloat(this.currentSickPay)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), {
-          //     x: 455,
-          //     y: height / 2 - 166,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 9 */
-          // if (parseFloat(this.currentTipAndGroupTerm)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), {
-          //     x: 455,
-          //     y: height / 2 - 190,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 10 */
-          // firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), {
-          //   x: 455,
-          //   y: height / 2 - 214,
-          //   ...baseOptions
-          // });
-          //
-          // /* 11 */
-          // if(parseFloat(this.qualifiedSmallBusinessPayroll)){
-          //     firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), {
-          //       x: 455,
-          //       y: height / 2 - 238,
-          //       ...baseOptions
-          //     });
-          // }
-          //
-          // /* 12 */
-          // firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), {
-          //   x: 455,
-          //   y: height / 2 - 262,
-          //   ...baseOptions
-          // });
-          //
-          // /* 13 */
-          // firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), {
-          //   x: 455,
-          //   y: height / 2 - 293,
-          //   ...baseOptions
-          // });
-          //
-          // /* 14 */
-          // if(parseFloat(this.line14BalanceDue)) {
-          //   firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), {
-          //     x: 455,
-          //     y: height / 2 - 317,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* 15 */
-          // firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), {
-          //   x: 310,
-          //   y: height / 2 - 340,
-          //   ...baseOptions
-          // });
-          //
-          // /* Overpayment Option */
-          // switch (parseInt(this.overpaymentOption)) {
-          //   case 1:
-          //     firstPage.drawText('x', {
-          //       x: 448,
-          //       y: height / 2 - 342,
-          //       ...baseOptions
-          //     });
-          //     break;
-          //   case 2:
-          //     firstPage.drawText('x', {
-          //       x: 521,
-          //       y: height / 2 - 342,
-          //       ...baseOptions
-          //     });
-          //     break;
-          // }
+          let ein_mutated = this.employerIdentificationNumber.split('');
+          for (let i = 0; i < 9; i++) {
+            let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+
+            firstPage.drawText(ein_mutated[i], {
+              x: ein_XCoord[i],
+              y: height / 2 + 318,
+              ...baseOptions
+            });
+          }
+
+          firstPage.drawText(this.name, {
+            x: 150,
+            y: height / 2 + 295,
+            ...baseOptions
+          });
+
+          /*  IF – TradeName */
+          if (this.tradeName !== null){
+            firstPage.drawText(this.tradeName, {
+              x: 135,
+              y: height / 2 + 270,
+              ...baseOptions
+            });
+          }
+
+          /*Address*/
+          firstPage.drawText(this.address, {
+            x: 95,
+            y: height / 2 + 245,
+            ...baseOptions
+          });
+
+          /*City*/
+          firstPage.drawText(this.city, {
+            x: 95,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /*State*/
+          firstPage.drawText(this.state, {
+            x: 285 ,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /*ZIP*/
+          firstPage.drawText(this.zip, {
+            x: 325 ,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /* IF – Foreign Country*/
+          if (this.f_countryName !== null) {
+              firstPage.drawText(this.f_countryName.toString(), {
+                x: 95,
+                y: height / 2 + 185,
+                ...baseOptions
+              });
+          }
+
+          /* IF – Foreign Province*/
+          if (this.f_countryProvince !== null) {
+            firstPage.drawText(this.f_countryProvince.toString(), {
+              x: 235,
+              y: height / 2 + 185,
+              ...baseOptions
+            });
+          }
+
+          /* IF – Foreign Province*/
+          if (this.f_countryZIP !== null) {
+            firstPage.drawText(this.f_countryZIP.toString(), {
+              x: 335,
+              y: height / 2 + 185,
+              ...baseOptions
+            });
+          }
+
+          /* Report for this quarter */
+          switch (this.reportForThisQuarter) {
+            case '1':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 294,
+                ...baseOptions
+              });
+              break;
+            case '2':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 277,
+                ...baseOptions
+              });
+              break;
+            case '3':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 260,
+                ...baseOptions
+              });
+              break;
+            case '4':
+              firstPage.drawText('x', {
+                x: 427,
+                y: height / 2 + 243,
+                ...baseOptions
+              });
+              break;
+          }
+
+          /* Number Of Employees */
+          firstPage.drawText(parseInt(this.numberOfEmployees).toString(), {
+            x: 455,
+            y: height / 2 + 115,
+            ...baseOptions
+          });
+
+          /* 2: Wages... */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), {
+            x: 455,
+            y: height / 2 + 91,
+            ...baseOptions
+          });
+
+          /* 3: Federal... */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), {
+            x: 455,
+            y: height / 2 + 68,
+            ...baseOptions
+          });
+
+          /* 4: If no wages... */
+          if(parseInt(this.noWages) === 1) {
+              firstPage.drawText('x', {
+                x: 449,
+                y: height / 2 + 43,
+                ...baseOptions
+              });
+          }
+
+          /* 5A */
+          if (parseFloat(this.taxableSSWages)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
+              x: 225,
+              y: height / 2 + 13,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), {
+              x: 360,
+              y: height / 2 + 13,
+              ...baseOptions
+            });
+          }
+
+          /* 5B */
+          if (parseFloat(this.taxableSSTips)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
+              x: 225,
+              y: height / 2 - 5,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), {
+              x: 360,
+              y: height / 2 - 5,
+              ...baseOptions
+            });
+          }
+
+          /* 5C */
+          if (parseFloat(this.taxableMedicalWages)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
+              x: 225,
+              y: height / 2 - 23,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), {
+              x: 360,
+              y: height / 2 - 23,
+              ...baseOptions
+            });
+          }
+
+          /* 5D */
+          if (parseFloat(this.taxableAMTWithholding)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
+              x: 225,
+              y: height / 2 - 47,
+              ...baseOptions
+            });
+
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), {
+              x: 360,
+              y: height / 2 - 47,
+              ...baseOptions
+            });
+          }
+
+          /* 5E */
+          if (parseFloat(this.line5E)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
+              x: 455,
+              y: height / 2 - 70,
+              ...baseOptions
+            });
+          }
+
+          /* 5F */
+          if (parseFloat(this.section3121)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), {
+              x: 455,
+              y: height / 2 - 94,
+              ...baseOptions
+            });
+          }
+
+          /* 6 */
+          if (this.totalTaxesBeforeAdjustments) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), {
+              x: 455,
+              y: height / 2 - 118,
+              ...baseOptions
+            });
+          }
+
+          /* 7 */
+          if (parseFloat(this.currentFractionsOfCents)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), {
+              x: 455,
+              y: height / 2 - 142,
+              ...baseOptions
+            });
+          }
+
+          /* 8 */
+          if (parseFloat(this.currentSickPay)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), {
+              x: 455,
+              y: height / 2 - 166,
+              ...baseOptions
+            });
+          }
+
+          /* 9 */
+          if (parseFloat(this.currentTipAndGroupTerm)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), {
+              x: 455,
+              y: height / 2 - 190,
+              ...baseOptions
+            });
+          }
+
+          /* 10 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), {
+            x: 455,
+            y: height / 2 - 214,
+            ...baseOptions
+          });
+
+          /* 11 */
+          if(parseFloat(this.qualifiedSmallBusinessPayroll)){
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), {
+                x: 455,
+                y: height / 2 - 238,
+                ...baseOptions
+              });
+          }
+
+          /* 12 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), {
+            x: 455,
+            y: height / 2 - 262,
+            ...baseOptions
+          });
+
+          /* 13 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), {
+            x: 455,
+            y: height / 2 - 293,
+            ...baseOptions
+          });
+
+          /* 14 */
+          if(parseFloat(this.line14BalanceDue)) {
+            firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), {
+              x: 455,
+              y: height / 2 - 317,
+              ...baseOptions
+            });
+          }
+
+          /* 15 */
+          firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), {
+            x: 310,
+            y: height / 2 - 340,
+            ...baseOptions
+          });
+
+          /* Overpayment Option */
+          switch (parseInt(this.overpaymentOption)) {
+            case 1:
+              firstPage.drawText('x', {
+                x: 448,
+                y: height / 2 - 342,
+                ...baseOptions
+              });
+              break;
+            case 2:
+              firstPage.drawText('x', {
+                x: 521,
+                y: height / 2 - 342,
+                ...baseOptions
+              });
+              break;
+          }
 
           /* PAGE 2*/
           console.log(typeof this.employerIdentificationNumber, ' __ ', this.employerIdentificationNumber);
