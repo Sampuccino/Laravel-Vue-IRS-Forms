@@ -3391,6 +3391,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
 
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
 function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
@@ -3401,6 +3403,88 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3962,6 +4046,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       qualifiedSmallBusinessPayroll: 0,
       totalQuarterDeposits: 0,
       overpaymentOption: null,
+      partTwoNumberSixteen: null,
+      month1: 0,
+      month2: 0,
+      month3: 0,
       errors: {
         ein: null,
         name: null,
@@ -3981,7 +4069,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         line10Sum: null,
         line12TotalTaxesAfterAdjustments: null,
         totalQuarterDeposits: null,
-        line15Overpayment: null
+        line15Overpayment: null,
+        overpaymentOption: null,
+        partTwoNumberSixteen: null
       }
     };
   },
@@ -4031,30 +4121,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (parseFloat(this.totalQuarterDeposits) > parseFloat(this.line12TotalTaxesAfterAdjustments)) {
         return (parseFloat(this.totalQuarterDeposits) - parseFloat(this.line12TotalTaxesAfterAdjustments)).toFixed(2);
       } else return 0;
+    },
+    line16TotalLiability: function line16TotalLiability() {
+      var amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)];
+      return amounts.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2);
     }
   },
   methods: {
     validateFormFields: function validateFormFields() {
-      console.log(this.numberOfEmployees);
-      console.log(this.totalWages);
-      /* REQUIREMENTS
-      * EIN
-      * Name
-      * Address
-      * City
-      * State
-      * Zip
-      * 1
-      * 2
-      * 3
-      * 5a - 5d
-      * 6
-      * 10
-      * 12
-      * 13
-      * 15
-      * */
-
       if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
         this.errors.ein = true;
         return false;
@@ -4088,30 +4164,95 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
         this.errors.numberOfEmployees = true;
         return false;
-      } else this.errors.numberOfEmployees = false; // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
-      //   this.errors.totalWages = true;
-      //   return false
-      // } else this.errors.totalWages = false;
-      //
-      // if (parseFloat(this.withheldTax) < 0) {
-      //   this.errors.withheldTax = true;
-      //   return false
-      // } else this.errors.withheldTax = false;
-      //
-      // /*5E*/
-      // if (parseFloat(this.line5E) < 0) {
-      //   this.errors.line5E = true;
-      //   return false
-      // } else this.errors.line5E = false;
+      } else this.errors.numberOfEmployees = false;
 
+      if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+        this.errors.totalWages = true;
+        return false;
+      } else this.errors.totalWages = false;
+
+      if (parseFloat(this.withheldTax) < 0) {
+        this.errors.withheldTax = true;
+        return false;
+      } else this.errors.withheldTax = false;
+      /*5E*/
+
+
+      if (parseFloat(this.line5E) <= 0) {
+        this.errors.line5E = true;
+        return false;
+      } else this.errors.line5E = false;
+      /*6*/
+
+
+      if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
+        this.errors.totalTaxesBeforeAdjustments = true;
+        return false;
+      } else this.errors.totalTaxesBeforeAdjustments = false;
+      /*10*/
+
+
+      if (parseFloat(this.line10Sum) <= 0) {
+        this.errors.line10Sum = true;
+        return false;
+      } else this.errors.line10Sum = false;
+      /*12*/
+
+
+      if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
+        this.errors.line12TotalTaxesAfterAdjustments = true;
+        return false;
+      } else this.errors.line12TotalTaxesAfterAdjustments = false;
+      /*13*/
+
+
+      if (parseFloat(this.totalQuarterDeposits) <= 0) {
+        this.errors.totalQuarterDeposits = true;
+        return false;
+      } else this.errors.totalQuarterDeposits = false;
+      /*15*/
+
+
+      if (parseFloat(this.line15Overpayment) < 0) {
+        this.errors.line15Overpayment = true;
+        return false;
+      } else this.errors.line15Overpayment = false;
+      /* Overpayment Option */
+
+
+      switch (parseInt(this.overpaymentOption)) {
+        case 1:
+          this.errors.overpaymentOption = false;
+          break;
+
+        case 2:
+          this.errors.overpaymentOption = false;
+          break;
+
+        default:
+          console.log('No Overpayment Option Selected!');
+          this.errors.overpaymentOption = true;
+          return false;
+      }
+      /*16*/
+
+
+      if (this.partTwoNumberSixteen === null) {
+        this.errors.partTwoNumberSixteen = true;
+        return false;
+      } else this.errors.partTwoNumberSixteen = false;
 
       return true;
+    },
+    isNumberRegex: function isNumberRegex(_input) {
+      var reg = new RegExp(/^[0-9]+([,.][0-9]+)?$/g);
+      return reg.test(_input);
     },
     exportToPDF: function () {
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, COLOR, baseOptions, baseYOffset, ein_mutated, i, ein_XCoord, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, _secondPage$getSize, widthP2, heightP2, COLOR, baseOptions, baseYOffset, ein_mutated, i, ein_XCoord, mutatedEIN, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -4130,7 +4271,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 34;
+                _context.next = 101;
                 break;
 
               case 6:
@@ -4155,6 +4296,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 firstPage = pages[0];
                 secondPage = pages[1];
                 _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                _secondPage$getSize = secondPage.getSize(), widthP2 = _secondPage$getSize.widthP2, heightP2 = _secondPage$getSize.heightP2;
                 COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0, 0, 0);
                 baseOptions = {
                   size: 10,
@@ -4183,13 +4325,15 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   y: height / 2 + 295
                 }, baseOptions));
                 /*  IF – TradeName */
-                // firstPage.drawText(this.tradeName, {
-                //   x: 135,
-                //   y: height / 2 + 270,
-                //   ...baseOptions
-                // });
 
+                if (this.tradeName !== null) {
+                  firstPage.drawText(this.tradeName, _objectSpread({
+                    x: 135,
+                    y: height / 2 + 270
+                  }, baseOptions));
+                }
                 /*Address*/
+
 
                 firstPage.drawText(this.address, _objectSpread({
                   x: 95,
@@ -4214,46 +4358,362 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   y: height / 2 + 215
                 }, baseOptions));
                 /* IF – Foreign Country*/
-                // firstPage.drawText(this.f_countryName, {
-                //   x: 95,
-                //   y: height / 2 + 185,
-                //   ...baseOptions
-                // });
 
+                if (this.f_countryName !== null) {
+                  firstPage.drawText(this.f_countryName.toString(), _objectSpread({
+                    x: 95,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
                 /* IF – Foreign Province*/
-                // firstPage.drawText(this.f_countryProvince, {
-                //   x: 235,
-                //   y: height / 2 + 185,
-                //   ...baseOptions
-                // });
 
+
+                if (this.f_countryProvince !== null) {
+                  firstPage.drawText(this.f_countryProvince.toString(), _objectSpread({
+                    x: 235,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
                 /* IF – Foreign Province*/
-                // firstPage.drawText(this.f_countryZIP, {
-                //   x: 335,
-                //   y: height / 2 + 185,
-                //   ...baseOptions
-                // });
 
-                /* Report For Quarter */
 
+                if (this.f_countryZIP !== null) {
+                  firstPage.drawText(this.f_countryZIP.toString(), _objectSpread({
+                    x: 335,
+                    y: height / 2 + 185
+                  }, baseOptions));
+                }
+                /* Report for this quarter */
+
+
+                _context.t0 = this.reportForThisQuarter;
+                _context.next = _context.t0 === '1' ? 37 : _context.t0 === '2' ? 39 : _context.t0 === '3' ? 41 : _context.t0 === '4' ? 43 : 45;
+                break;
+
+              case 37:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 294
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 39:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 277
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 41:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 260
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 43:
+                firstPage.drawText('x', _objectSpread({
+                  x: 427,
+                  y: height / 2 + 243
+                }, baseOptions));
+                return _context.abrupt("break", 45);
+
+              case 45:
                 /* Number Of Employees */
-
-                firstPage.drawText(this.numberOfEmployees, _objectSpread({
+                firstPage.drawText(parseInt(this.numberOfEmployees).toString(), _objectSpread({
                   x: 455,
                   y: height / 2 + 115
                 }, baseOptions));
-                /* Save report and Download*/
+                /* 2: Wages... */
 
-                _context.next = 32;
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), _objectSpread({
+                  x: 455,
+                  y: height / 2 + 91
+                }, baseOptions));
+                /* 3: Federal... */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), _objectSpread({
+                  x: 455,
+                  y: height / 2 + 68
+                }, baseOptions));
+                /* 4: If no wages... */
+
+                if (parseInt(this.noWages) === 1) {
+                  firstPage.drawText('x', _objectSpread({
+                    x: 449,
+                    y: height / 2 + 43
+                  }, baseOptions));
+                }
+                /* 5A */
+
+
+                if (parseFloat(this.taxableSSWages)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), _objectSpread({
+                    x: 225,
+                    y: height / 2 + 13
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), _objectSpread({
+                    x: 360,
+                    y: height / 2 + 13
+                  }, baseOptions));
+                }
+                /* 5B */
+
+
+                if (parseFloat(this.taxableSSTips)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 5
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 5
+                  }, baseOptions));
+                }
+                /* 5C */
+
+
+                if (parseFloat(this.taxableMedicalWages)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 23
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 23
+                  }, baseOptions));
+                }
+                /* 5D */
+
+
+                if (parseFloat(this.taxableAMTWithholding)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), _objectSpread({
+                    x: 225,
+                    y: height / 2 - 47
+                  }, baseOptions));
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), _objectSpread({
+                    x: 360,
+                    y: height / 2 - 47
+                  }, baseOptions));
+                }
+                /* 5E */
+
+
+                if (parseFloat(this.line5E)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 70
+                  }, baseOptions));
+                }
+                /* 5F */
+
+
+                if (parseFloat(this.section3121)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 94
+                  }, baseOptions));
+                }
+                /* 6 */
+
+
+                if (this.totalTaxesBeforeAdjustments) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 118
+                  }, baseOptions));
+                }
+                /* 7 */
+
+
+                if (parseFloat(this.currentFractionsOfCents)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 142
+                  }, baseOptions));
+                }
+                /* 8 */
+
+
+                if (parseFloat(this.currentSickPay)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 166
+                  }, baseOptions));
+                }
+                /* 9 */
+
+
+                if (parseFloat(this.currentTipAndGroupTerm)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 190
+                  }, baseOptions));
+                }
+                /* 10 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 214
+                }, baseOptions));
+                /* 11 */
+
+                if (parseFloat(this.qualifiedSmallBusinessPayroll)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 238
+                  }, baseOptions));
+                }
+                /* 12 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 262
+                }, baseOptions));
+                /* 13 */
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), _objectSpread({
+                  x: 455,
+                  y: height / 2 - 293
+                }, baseOptions));
+                /* 14 */
+
+                if (parseFloat(this.line14BalanceDue)) {
+                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), _objectSpread({
+                    x: 455,
+                    y: height / 2 - 317
+                  }, baseOptions));
+                }
+                /* 15 */
+
+
+                firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), _objectSpread({
+                  x: 310,
+                  y: height / 2 - 340
+                }, baseOptions));
+                /* Overpayment Option */
+
+                _context.t1 = parseInt(this.overpaymentOption);
+                _context.next = _context.t1 === 1 ? 68 : _context.t1 === 2 ? 70 : 72;
+                break;
+
+              case 68:
+                firstPage.drawText('x', _objectSpread({
+                  x: 448,
+                  y: height / 2 - 342
+                }, baseOptions));
+                return _context.abrupt("break", 72);
+
+              case 70:
+                firstPage.drawText('x', _objectSpread({
+                  x: 521,
+                  y: height / 2 - 342
+                }, baseOptions));
+                return _context.abrupt("break", 72);
+
+              case 72:
+                /* PAGE 2*/
+                console.log(_typeof(this.employerIdentificationNumber), ' __ ', this.employerIdentificationNumber);
+                console.log(_typeof(this.name), ' __ ', this.name);
+                secondPage.drawText(this.name.toString(), _objectSpread({
+                  x: 50,
+                  y: height / 2 + 330
+                }, baseOptions));
+                mutatedEIN = this.employerIdentificationNumber.substr(0, 2) + '-' + this.employerIdentificationNumber.substr(2);
+                secondPage.drawText(mutatedEIN.toString(), _objectSpread({
+                  x: 420,
+                  y: height / 2 + 330
+                }, baseOptions));
+                _context.t2 = parseInt(this.partTwoNumberSixteen);
+                _context.next = _context.t2 === 1 ? 80 : _context.t2 === 2 ? 82 : _context.t2 === 3 ? 95 : 97;
+                break;
+
+              case 80:
+                /* Option 1*/
+                secondPage.drawText('x', _objectSpread({
+                  x: 118,
+                  y: height / 2 + 273
+                }, baseOptions));
+                return _context.abrupt("break", 97);
+
+              case 82:
+                /* Option 2 MUST VALIDATE ALL BOXES*/
+                secondPage.drawText('x', _objectSpread({
+                  x: 118,
+                  y: height / 2 + 226
+                }, baseOptions));
+                /*Write Month 1 IF*/
+
+                if (parseFloat(this.month1) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.month1)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 195
+                  }, baseOptions));
+                }
+                /*Write Month 2 IF*/
+
+
+                if (parseFloat(this.month2) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.month2)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 170
+                  }, baseOptions));
+                }
+                /*Write Month 3 IF*/
+
+
+                if (parseFloat(this.month3) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.month3)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 150
+                  }, baseOptions));
+                }
+                /*Write Total IF*/
+
+
+                if (parseFloat(this.line16TotalLiability) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.line16TotalLiability)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 129
+                  }, baseOptions));
+                }
+
+                if (!(this.line16TotalLiability !== this.line12TotalTaxesAfterAdjustments)) {
+                  _context.next = 93;
+                  break;
+                }
+
+                console.log('Line 12/16 Mismatch!');
+                this.errors.partTwoNumberSixteen = true;
+                return _context.abrupt("return", false);
+
+              case 93:
+                this.errors.partTwoNumberSixteen = false;
+
+              case 94:
+                return _context.abrupt("break", 97);
+
+              case 95:
+                /* Option 3*/
+                secondPage.drawText('x', _objectSpread({
+                  x: 118,
+                  y: height / 2 + 112
+                }, baseOptions));
+                return _context.abrupt("break", 97);
+
+              case 97:
+                _context.next = 99;
                 return pdfDoc.save();
 
-              case 32:
+              case 99:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 34:
+              case 101:
               case "end":
                 return _context.stop();
             }
@@ -4266,7 +4726,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
 
       return exportToPDF;
-    }()
+    }(),
+    convertToStringAndAddDecimal: function convertToStringAndAddDecimal(_number) {
+      var formatToString = _number.toString();
+
+      var formatToCurrency = formatToString.includes('.') ? formatToString : formatToString += '.00';
+      return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    }
   }
 });
 
@@ -9044,7 +9510,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nbutton[data-v-f35b2788] {\n    border-radius: 0;\n    width: 5rem !important;\n}\n.clear[data-v-f35b2788] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-f35b2788] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n", ""]);
+exports.push([module.i, "\nbutton[data-v-f35b2788] {\n     border-radius: 0;\n     width: 5rem !important;\n}\n.clear[data-v-f35b2788] {\n     border-top-left-radius: 1rem;\n     border-top-right-radius: 1rem;\n     -moz-border-radius-topright: 1rem !important;\n     -moz-border-radius-topleft: 1rem !important;\n     -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-f35b2788] {\n     border-bottom-left-radius: 1rem;\n     border-bottom-right-radius: 1rem;\n     -moz-border-radius-bottomright: 1rem !important;\n     -moz-border-radius-bottomleft: 1rem !important;\n     -webkit-border-bottom-left-radius: 1rem !important;\n}\n.sixteenB[data-v-f35b2788] {\n width: 15rem !important;\n}\n", ""]);
 
 // exports
 
@@ -64360,7 +64826,9 @@ var render = function() {
                         staticClass: "form-control mb-2",
                         attrs: {
                           type: "text",
-                          placeholder: "Foreign postal code"
+                          placeholder: "Foreign postal code",
+                          minlength: "5",
+                          maxlength: "5"
                         },
                         domProps: { value: _vm.f_countryZIP },
                         on: {
@@ -64634,16 +65102,11 @@ var render = function() {
                     }
                   ],
                   staticClass: "form-check-input",
-                  attrs: {
-                    type: "radio",
-                    name: "",
-                    id: "",
-                    value: "checkedValue"
-                  },
-                  domProps: { checked: _vm._q(_vm.noWages, "checkedValue") },
+                  attrs: { type: "radio", name: "", id: "", value: "1" },
+                  domProps: { checked: _vm._q(_vm.noWages, "1") },
                   on: {
                     change: function($event) {
-                      _vm.noWages = "checkedValue"
+                      _vm.noWages = "1"
                     }
                   }
                 }),
@@ -64896,9 +65359,23 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 my-auto text-center" }, [
-            _vm._v(_vm._s(_vm.totalTaxesBeforeAdjustments))
-          ])
+          _c(
+            "div",
+            {
+              staticClass: "col-4 my-auto text-center",
+              class: {
+                "alert-danger": _vm.errors.totalTaxesBeforeAdjustments,
+                "alert-success":
+                  _vm.errors.totalTaxesBeforeAdjustments === false
+              }
+            },
+            [
+              _vm._v(
+                "\n                    " +
+                  _vm._s(_vm.totalTaxesBeforeAdjustments)
+              )
+            ]
+          )
         ]),
         _vm._v(" "),
         _c("div", { staticClass: "row mb-2" }, [
@@ -65140,81 +65617,342 @@ var render = function() {
             )
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-4 text-center" }, [
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "col-12 mb-2" }, [
-                _vm._v(_vm._s(_vm.line15Overpayment))
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("label", { staticClass: "form-check-label" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.overpaymentOption,
-                          expression: "overpaymentOption"
+          _c(
+            "div",
+            {
+              staticClass: "col-4 text-center",
+              class: {
+                "alert-danger": _vm.errors.overpaymentOption,
+                "alert-success": _vm.errors.overpaymentOption === false
+              }
+            },
+            [
+              _c("div", { staticClass: "row" }, [
+                _c("div", { staticClass: "col-12 mb-2" }, [
+                  _vm._v(_vm._s(_vm.line15Overpayment))
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("label", { staticClass: "form-check-label" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overpaymentOption,
+                            expression: "overpaymentOption"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "OverpaymentOption",
+                          value: "1"
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.overpaymentOption, "1")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.overpaymentOption = "1"
+                          }
                         }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: {
-                        type: "radio",
-                        name: "OverpaymentOption",
-                        value: "1"
-                      },
-                      domProps: { checked: _vm._q(_vm.overpaymentOption, "1") },
-                      on: {
-                        change: function($event) {
-                          _vm.overpaymentOption = "1"
-                        }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                                    Apply to next return\n                                "
-                    )
+                      }),
+                      _vm._v(
+                        "\n                                    Apply to next return\n                                "
+                      )
+                    ])
                   ])
-                ])
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-6" }, [
-                _c("div", { staticClass: "form-check" }, [
-                  _c("label", { staticClass: "form-check-label" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.overpaymentOption,
-                          expression: "overpaymentOption"
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "col-6" }, [
+                  _c("div", { staticClass: "form-check" }, [
+                    _c("label", { staticClass: "form-check-label" }, [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.overpaymentOption,
+                            expression: "overpaymentOption"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "OverpaymentOption",
+                          value: "2",
+                          checked: ""
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.overpaymentOption, "2")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.overpaymentOption = "2"
+                          }
                         }
-                      ],
-                      staticClass: "form-check-input",
-                      attrs: {
-                        type: "radio",
-                        name: "OverpaymentOption",
-                        value: "2"
-                      },
-                      domProps: { checked: _vm._q(_vm.overpaymentOption, "2") },
-                      on: {
-                        change: function($event) {
-                          _vm.overpaymentOption = "2"
-                        }
-                      }
-                    }),
-                    _vm._v(
-                      "\n                                    Send a refund\n                                "
-                    )
+                      }),
+                      _vm._v(
+                        "\n                                    Send a refund\n                                "
+                      )
+                    ])
                   ])
                 ])
               ])
-            ])
-          ])
+            ]
+          )
         ])
       ]),
       _vm._v(" "),
-      _vm._m(4)
+      _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-6" }, [
+            _c("div", { staticClass: "form-group bg-light p-2" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  model: {
+                    value: _vm.name,
+                    callback: function($$v) {
+                      _vm.name = $$v
+                    },
+                    expression: "name"
+                  }
+                },
+                [_vm._v(_vm._s(_vm.name))]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6" }, [
+            _c("div", { staticClass: "form-group bg-light p-2" }, [
+              _c("label", { attrs: { for: "" } }, [
+                _vm._v("Employer identification number (EIN)")
+              ]),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  model: {
+                    value: _vm.employerIdentificationNumber,
+                    callback: function($$v) {
+                      _vm.employerIdentificationNumber = $$v
+                    },
+                    expression: "employerIdentificationNumber"
+                  }
+                },
+                [_vm._v(_vm._s(_vm.employerIdentificationNumber))]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-12",
+              class: {
+                "alert-danger": _vm.errors.partTwoNumberSixteen,
+                "alert-success": _vm.errors.partTwoNumberSixteen === false
+              }
+            },
+            [
+              _c("h6", [_vm._v("16 Check one:")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.partTwoNumberSixteen,
+                      expression: "partTwoNumberSixteen"
+                    }
+                  ],
+                  staticClass: "d-inline mr-3",
+                  attrs: {
+                    type: "radio",
+                    value: "1",
+                    name: "partTwoNumberSixteen"
+                  },
+                  domProps: { checked: _vm._q(_vm.partTwoNumberSixteen, "1") },
+                  on: {
+                    change: function($event) {
+                      _vm.partTwoNumberSixteen = "1"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                        Line\n                        12 on\n                        this\n                        return\n                        is less than\n                        $2,500 or line 12 on the return for the prior quarter was less than $2,500, and you didn’t\n                        incur a $100,000 next-day deposit obligation during the current quarter. If line 12 for the prior quarter was less than $2,500 but\n                        line 12 on this return is $100,000 or more, you must provide a record of your federal tax liability. If you are a monthly schedule\n                        depositor, complete the deposit schedule below; if you are a semiweekly schedule depositor, attach Schedule B (Form 941). Go to\n                        Part 3.\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3 bg-light" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.partTwoNumberSixteen,
+                      expression: "partTwoNumberSixteen"
+                    }
+                  ],
+                  staticClass: "d-inline mr-3",
+                  attrs: {
+                    type: "radio",
+                    value: "2",
+                    name: "partTwoNumberSixteen"
+                  },
+                  domProps: { checked: _vm._q(_vm.partTwoNumberSixteen, "2") },
+                  on: {
+                    change: function($event) {
+                      _vm.partTwoNumberSixteen = "2"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                        You\n                        were a\n                        monthly\n                        schedule\n                        depositor for the entire quarter. Enter your tax liability for each month and total\n                        liability for the quarter, then go to Part 3.\n                        "
+                ),
+                _c("h6", { staticClass: "font-weight-bold mt-3" }, [
+                  _vm._v("Tax Liability")
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", { staticClass: "mr-3 font-weight-bold" }, [
+                    _vm._v("Month 1")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.month1,
+                        expression: "month1"
+                      }
+                    ],
+                    staticClass: "form-control mb-2 sixteenB d-inline",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.month1 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.month1 = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", { staticClass: "mr-3 font-weight-bold" }, [
+                    _vm._v("Month 2")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.month2,
+                        expression: "month2"
+                      }
+                    ],
+                    staticClass: "form-control mb-2 sixteenB d-inline",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.month2 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.month2 = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", { staticClass: "mr-3 font-weight-bold" }, [
+                    _vm._v("Month 3")
+                  ]),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.month3,
+                        expression: "month3"
+                      }
+                    ],
+                    staticClass: "form-control mb-2 sixteenB d-inline",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.month3 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.month3 = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._m(5),
+                  _vm._v(
+                    " " +
+                      _vm._s(_vm.line16TotalLiability) +
+                      "\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "font-weight-bolder mt-2" }, [
+                  _vm._v("\n                            Current Line 12 Sum "),
+                  _c("span", { staticClass: "ml-2 alert-success p-2" }, [
+                    _vm._v(_vm._s(_vm.line12TotalTaxesAfterAdjustments))
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.partTwoNumberSixteen,
+                      expression: "partTwoNumberSixteen"
+                    }
+                  ],
+                  staticClass: "d-inline mr-3",
+                  attrs: {
+                    type: "radio",
+                    value: "3",
+                    name: "partTwoNumberSixteen"
+                  },
+                  domProps: { checked: _vm._q(_vm.partTwoNumberSixteen, "3") },
+                  on: {
+                    change: function($event) {
+                      _vm.partTwoNumberSixteen = "3"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                        You\n                        were a\n                        semiweekly\n                        schedule\n                        depositor for any part of this quarter. Complete Schedule B (Form 941),\n                        Report of Tax Liability for Semiweekly Schedule Depositors, and attach it to Form 941.\n                    "
+                )
+              ])
+            ]
+          )
+        ])
+      ])
     ])
   ])
 }
@@ -65267,14 +66005,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4" }, [
-      _c("div", { staticClass: "bg-dark p-2 text-white" }, [
-        _vm._v("Part 2 "),
-        _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
-          _vm._v(
-            "Tell us about your deposit schedule and tax liability for this quarter"
-          )
-        ])
+    return _c("div", { staticClass: "bg-dark p-2 text-white" }, [
+      _vm._v("Part 2 "),
+      _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
+        _vm._v(
+          "Tell us about your deposit schedule and tax liability for this quarter"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "font-weight-bolder mr-3" }, [
+      _vm._v("Total liability for quarter. "),
+      _c("small", [
+        _vm._v(
+          "Total must\n                                equal line\n                                12"
+        )
       ])
     ])
   }
