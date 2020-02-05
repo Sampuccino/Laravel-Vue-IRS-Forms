@@ -4747,12 +4747,216 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Calendar/Flatpickr */ "./resources/js/components/Calendar/Flatpickr.vue");
 //
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "Form_941_Schedule_B"
+  name: "Form_941_Schedule_B",
+  data: function data() {
+    return {
+      url: null,
+
+      /* Form Variables */
+      employerIdentificationNumber: null,
+      name: null,
+      calendarYear: null,
+      reportForThisQuarter: null,
+
+      /* Month 1 table generator/map */
+      monthOneTable: ['filler', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+      /* Month 2 table generator/map */
+      monthTwoTable: ['filler', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+
+      /* Month 3 table generator/map */
+      monthThreeTable: ['filler', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      errors: {
+        ein: null
+      }
+    };
+  },
+  methods: {
+    exportToPDF: function exportToPDF() {
+      console.log(this.monthOneTable);
+    }
+  },
+  computed: {
+    monthOneTableSum: function monthOneTableSum() {
+      var mutatedMonthOne = this.monthOneTable.slice();
+      mutatedMonthOne.shift();
+      return mutatedMonthOne.reduce(function (a, b) {
+        return parseFloat(a) + parseFloat(b);
+      }, 0);
+    },
+    monthTwoTableSum: function monthTwoTableSum() {
+      var mutatedMonthTwo = this.monthTwoTable.slice();
+      mutatedMonthTwo.shift();
+      return mutatedMonthTwo.reduce(function (a, b) {
+        return parseFloat(a) + parseFloat(b);
+      }, 0);
+    },
+    monthThreeTableSum: function monthThreeTableSum() {
+      var mutatedMonthThree = this.monthThreeTable.slice();
+      mutatedMonthThree.shift();
+      return mutatedMonthThree.reduce(function (a, b) {
+        return parseFloat(a) + parseFloat(b);
+      }, 0);
+    }
+  }
 });
 
 /***/ }),
@@ -4838,8 +5042,8 @@ __webpack_require__.r(__webpack_exports__);
         code: '941SB'
       }],
       activeForm_8974: false,
-      activeForm_941: true,
-      activeForm_941_Schedule_B: false
+      activeForm_941: false,
+      activeForm_941_Schedule_B: true
     };
   },
   methods: {
@@ -9511,6 +9715,25 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 // module
 exports.push([module.i, "\nbutton[data-v-f35b2788] {\n     border-radius: 0;\n     width: 5rem !important;\n}\n.clear[data-v-f35b2788] {\n     border-top-left-radius: 1rem;\n     border-top-right-radius: 1rem;\n     -moz-border-radius-topright: 1rem !important;\n     -moz-border-radius-topleft: 1rem !important;\n     -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-f35b2788] {\n     border-bottom-left-radius: 1rem;\n     border-bottom-right-radius: 1rem;\n     -moz-border-radius-bottomright: 1rem !important;\n     -moz-border-radius-bottomleft: 1rem !important;\n     -webkit-border-bottom-left-radius: 1rem !important;\n}\n.sixteenB[data-v-f35b2788] {\n width: 15rem !important;\n}\n", ""]);
+
+// exports
+
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css&":
+/*!*************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css& ***!
+  \*************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/lib/css-base.js */ "./node_modules/css-loader/lib/css-base.js")(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nbutton[data-v-45e3cc47] {\n    border-radius: 0;\n    width: 5rem !important;\n}\n.clear[data-v-45e3cc47] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-45e3cc47] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n", ""]);
 
 // exports
 
@@ -62207,6 +62430,36 @@ if(false) {}
 
 /***/ }),
 
+/***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css&":
+/*!*****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css& ***!
+  \*****************************************************************************************************************************************************************************************************************************************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+
+var content = __webpack_require__(/*! !../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css& */ "./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css&");
+
+if(typeof content === 'string') content = [[module.i, content, '']];
+
+var transform;
+var insertInto;
+
+
+
+var options = {"hmr":true}
+
+options.transform = transform
+options.insertInto = undefined;
+
+var update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ "./node_modules/style-loader/lib/addStyles.js")(content, options);
+
+if(content.locals) module.exports = content.locals;
+
+if(false) {}
+
+/***/ }),
+
 /***/ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/SelectFormTemplate.vue?vue&type=style&index=0&id=0cc775b6&scoped=true&lang=css&":
 /*!****************************************************************************************************************************************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/style-loader!./node_modules/css-loader??ref--6-1!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src??ref--6-2!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/SelectFormTemplate.vue?vue&type=style&index=0&id=0cc775b6&scoped=true&lang=css& ***!
@@ -66049,9 +66302,539 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("p", [_vm._v("Schedule B")])
+  return _c("div", { staticClass: "container" }, [
+    _c(
+      "div",
+      {
+        staticClass: "position-fixed",
+        staticStyle: { right: "1rem", bottom: "1rem" }
+      },
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _c("div", [
+          _c(
+            "button",
+            {
+              staticClass: "btn btn-primary d-inline export",
+              on: { click: _vm.exportToPDF }
+            },
+            [_vm._v("Export")]
+          )
+        ])
+      ]
+    ),
+    _vm._v(" "),
+    _c("div", { staticClass: "row justify-content-center" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "col-lg-10 col-12 bg-white mt-4 p-3 text-left" },
+        [
+          _c(
+            "div",
+            { staticClass: "row" },
+            [
+              _c("div", { staticClass: "col-8" }, [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                    _vm._v(
+                      "\n                            Employer identification number\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-7 my-auto" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.employerIdentificationNumber,
+                          expression: "employerIdentificationNumber"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      class: {
+                        "is-invalid": _vm.errors.ein,
+                        "is-valid": _vm.errors.ein === false
+                      },
+                      attrs: { type: "text", minlength: "9", maxlength: "9" },
+                      domProps: { value: _vm.employerIdentificationNumber },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.employerIdentificationNumber = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                    _vm._v(
+                      "\n                            Name\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-7 my-auto" }, [
+                    _c("input", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.name,
+                          expression: "name"
+                        }
+                      ],
+                      staticClass: "form-control mb-2",
+                      class: {
+                        "is-invalid": _vm.errors.name,
+                        "is-valid": _vm.errors.name === false
+                      },
+                      attrs: { type: "text", minlength: "1" },
+                      domProps: { value: _vm.name },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.name = $event.target.value
+                        }
+                      }
+                    })
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
+                    _vm._v(
+                      "\n                            Calendar year\n                        "
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "col-7 my-auto" },
+                    [
+                      _c("flatpickr", {
+                        attrs: { timeFormat: "Y", id: "calendar_year_select" },
+                        model: {
+                          value: _vm.calendarYear,
+                          callback: function($$v) {
+                            _vm.calendarYear = $$v
+                          },
+                          expression: "calendarYear"
+                        }
+                      })
+                    ],
+                    1
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-4" }, [
+                _c("div", { staticClass: "form-check" }, [
+                  _vm._m(2),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "form-check-label d-block mt-2" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.reportForThisQuarter,
+                            expression: "reportForThisQuarter"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "quarterReport",
+                          value: "1"
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.reportForThisQuarter, "1")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.reportForThisQuarter = "1"
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        "\n                            1: January, February, March\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "form-check-label d-block mt-2" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.reportForThisQuarter,
+                            expression: "reportForThisQuarter"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "quarterReport",
+                          value: "2"
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.reportForThisQuarter, "2")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.reportForThisQuarter = "2"
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        "\n                            2: April, May, June\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "form-check-label d-block mt-2" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.reportForThisQuarter,
+                            expression: "reportForThisQuarter"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "quarterReport",
+                          value: "3"
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.reportForThisQuarter, "3")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.reportForThisQuarter = "3"
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        "\n                            3: July, August, September\n                        "
+                      )
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "label",
+                    { staticClass: "form-check-label d-block mt-2" },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.reportForThisQuarter,
+                            expression: "reportForThisQuarter"
+                          }
+                        ],
+                        staticClass: "form-check-input",
+                        attrs: {
+                          type: "radio",
+                          name: "quarterReport",
+                          value: "4"
+                        },
+                        domProps: {
+                          checked: _vm._q(_vm.reportForThisQuarter, "4")
+                        },
+                        on: {
+                          change: function($event) {
+                            _vm.reportForThisQuarter = "4"
+                          }
+                        }
+                      }),
+                      _vm._v(
+                        "\n                            4: October, November, December\n                        "
+                      )
+                    ]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 font-weight-bold mt-3 mb-3" }, [
+                _vm._v(
+                  "\n                    Use this schedule to show your TAX LIABILITY for the quarter; don't use it to show your\n                    deposits. When you file this form with Form 941 or Form 941-SS, don't change your tax\n                    liability by adjustments reported on any Forms 941-X or 944-X. You must fill out this\n                    form and attach it to Form 941 or Form 941-SS if you're a semiweekly schedule depositor\n                    or became one because your accumulated tax liability on any day was $100,000 or more.\n                    Write your daily tax liability on the numbered space that corresponds to the date wages\n                    were paid. See Section 11 in Pub. 15 for details.\n                "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 mb-3" }, [
+                _c("div", { staticClass: "w-50" }, [
+                  _c("h6", { staticClass: "alert-warning p-1" }, [
+                    _vm._v("Tax liability for month 1")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "display-4 text-right bg-light" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.monthOneTableSum) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.monthOneTable, function(month1, index) {
+                return _c(
+                  "div",
+                  {
+                    staticClass: "col-3",
+                    class: index % 2 > 0 ? "bg-light" : ""
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: index !== 0,
+                            expression: "index !== 0"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("label", [_vm._v(_vm._s(index))]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.monthOneTable[index],
+                              expression: "monthOneTable[index]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.monthOneTable[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.monthOneTable,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 mb-3" }, [
+                _c("div", { staticClass: "w-50" }, [
+                  _c("h6", { staticClass: "alert-warning p-1" }, [
+                    _vm._v("Tax liability for month 2")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "display-4 text-right bg-light" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.monthTwoTableSum) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.monthTwoTable, function(month2, index) {
+                return _c(
+                  "div",
+                  {
+                    staticClass: "col-3",
+                    class: index % 2 > 0 ? "bg-light" : ""
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: index !== 0,
+                            expression: "index !== 0"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("label", [_vm._v(_vm._s(index))]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.monthTwoTable[index],
+                              expression: "monthTwoTable[index]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.monthTwoTable[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.monthTwoTable,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-12 mb-3" }, [
+                _c("div", { staticClass: "w-50" }, [
+                  _c("h6", { staticClass: "alert-warning p-1" }, [
+                    _vm._v("Tax liability for month 3")
+                  ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "display-4 text-right bg-light" }, [
+                    _vm._v(
+                      "\n                            " +
+                        _vm._s(_vm.monthThreeTableSum) +
+                        "\n                        "
+                    )
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _vm._l(_vm.monthThreeTable, function(month3, index) {
+                return _c(
+                  "div",
+                  {
+                    staticClass: "col-3",
+                    class: index % 2 > 0 ? "bg-light" : ""
+                  },
+                  [
+                    _c(
+                      "div",
+                      {
+                        directives: [
+                          {
+                            name: "show",
+                            rawName: "v-show",
+                            value: index !== 0,
+                            expression: "index !== 0"
+                          }
+                        ],
+                        staticClass: "form-group"
+                      },
+                      [
+                        _c("label", [_vm._v(_vm._s(index))]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.monthThreeTable[index],
+                              expression: "monthThreeTable[index]"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { type: "text" },
+                          domProps: { value: _vm.monthThreeTable[index] },
+                          on: {
+                            input: function($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.monthThreeTable,
+                                index,
+                                $event.target.value
+                              )
+                            }
+                          }
+                        })
+                      ]
+                    )
+                  ]
+                )
+              })
+            ],
+            2
+          )
+        ]
+      )
+    ])
+  ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", [
+      _c("button", { staticClass: "btn btn-danger d-inline clear" }, [
+        _vm._v("Clear")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 mt-3 mb-3" }, [
+      _c("h4", { staticClass: "alert-info p-2 text-center" }, [
+        _vm._v("Form 941 Schedule B")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c(
+      "h6",
+      { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
+      [
+        _vm._v("Report for this quarter "),
+        _c("small", [_vm._v("check\n                            only one box")])
+      ]
+    )
+  }
+]
 render._withStripped = true
 
 
@@ -78775,7 +79558,9 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true& */ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=template&id=45e3cc47&scoped=true&");
 /* harmony import */ var _Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./Form_941S.vue?vue&type=script&lang=js& */ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _Form_941S_vue_vue_type_style_index_0_id_45e3cc47_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css& */ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
 
 
 
@@ -78783,7 +79568,7 @@ __webpack_require__.r(__webpack_exports__);
 
 /* normalize component */
 
-var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_3__["default"])(
   _Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
   _Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__["render"],
   _Form_941S_vue_vue_type_template_id_45e3cc47_scoped_true___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
@@ -78812,6 +79597,22 @@ component.options.__file = "resources/js/components/IRS Forms/Form_941S.vue"
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/babel-loader/lib??ref--4-0!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941S.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=script&lang=js&");
 /* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css&":
+/*!******************************************************************************************************************!*\
+  !*** ./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css& ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_style_index_0_id_45e3cc47_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../node_modules/style-loader!../../../../node_modules/css-loader??ref--6-1!../../../../node_modules/vue-loader/lib/loaders/stylePostLoader.js!../../../../node_modules/postcss-loader/src??ref--6-2!../../../../node_modules/vue-loader/lib??vue-loader-options!./Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css& */ "./node_modules/style-loader/index.js!./node_modules/css-loader/index.js?!./node_modules/vue-loader/lib/loaders/stylePostLoader.js!./node_modules/postcss-loader/src/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/IRS Forms/Form_941S.vue?vue&type=style&index=0&id=45e3cc47&scoped=true&lang=css&");
+/* harmony import */ var _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_style_index_0_id_45e3cc47_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_style_index_0_id_45e3cc47_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__);
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_style_index_0_id_45e3cc47_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_style_index_0_id_45e3cc47_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_style_loader_index_js_node_modules_css_loader_index_js_ref_6_1_node_modules_vue_loader_lib_loaders_stylePostLoader_js_node_modules_postcss_loader_src_index_js_ref_6_2_node_modules_vue_loader_lib_index_js_vue_loader_options_Form_941S_vue_vue_type_style_index_0_id_45e3cc47_scoped_true_lang_css___WEBPACK_IMPORTED_MODULE_0___default.a); 
 
 /***/ }),
 
@@ -78938,8 +79739,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/Sam/Documents/Github-Local/IRS-Forms/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/Sam/Documents/Github-Local/IRS-Forms/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /Users/Sam/Documents/Github Local/Laravel-Vue-IRS-Forms/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /Users/Sam/Documents/Github Local/Laravel-Vue-IRS-Forms/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

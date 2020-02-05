@@ -69,8 +69,8 @@
          }
         ],
         activeForm_8974: false,
-        activeForm_941: true,
-        activeForm_941_Schedule_B: false
+        activeForm_941: false,
+        activeForm_941_Schedule_B: true
       }
     },
     methods: {
