@@ -3397,10 +3397,88 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
 function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -3968,6 +4046,10 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       qualifiedSmallBusinessPayroll: 0,
       totalQuarterDeposits: 0,
       overpaymentOption: null,
+      partTwoNumberSixteen: null,
+      month1: 0,
+      month2: 0,
+      month3: 0,
       errors: {
         ein: null,
         name: null,
@@ -3988,7 +4070,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         line12TotalTaxesAfterAdjustments: null,
         totalQuarterDeposits: null,
         line15Overpayment: null,
-        overpaymentOption: null
+        overpaymentOption: null,
+        partTwoNumberSixteen: null
       }
     };
   },
@@ -4038,6 +4121,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (parseFloat(this.totalQuarterDeposits) > parseFloat(this.line12TotalTaxesAfterAdjustments)) {
         return (parseFloat(this.totalQuarterDeposits) - parseFloat(this.line12TotalTaxesAfterAdjustments)).toFixed(2);
       } else return 0;
+    },
+    line16TotalLiability: function line16TotalLiability() {
+      var amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)];
+      return amounts.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2);
     }
   },
   methods: {
@@ -4050,101 +4139,98 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       if (this.name === null || this.name.trim().length < 1) {
         this.errors.name = true;
         return false;
-      } else this.errors.name = false;
+      } else this.errors.name = false; // if (this.address === null || this.address.trim().length < 1) {
+      //   this.errors.address = true;
+      //   return false
+      // } else this.errors.address = false;
+      //
+      // if (this.city === null || this.city.trim().length < 1) {
+      //   this.errors.city = true;
+      //   return false
+      // } else this.errors.city = false;
+      //
+      // if (this.state === null || this.state.trim().length < 1) {
+      //   this.errors.state = true;
+      //   return false
+      // } else this.errors.state = false;
+      //
+      // if (this.zip === null || this.zip.trim().length < 1) {
+      //   this.errors.zip = true;
+      //   return false
+      // } else this.errors.zip = false;
+      //
+      // if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
+      //   this.errors.numberOfEmployees = true;
+      //   return false
+      // } else this.errors.numberOfEmployees = false;
+      //
+      // if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
+      //   this.errors.totalWages = true;
+      //   return false
+      // } else this.errors.totalWages = false;
+      //
+      // if (parseFloat(this.withheldTax) < 0) {
+      //   this.errors.withheldTax = true;
+      //   return false
+      // } else this.errors.withheldTax = false;
+      //
+      // /*5E*/
+      // if (parseFloat(this.line5E) <= 0) {
+      //   this.errors.line5E = true;
+      //   return false
+      // } else this.errors.line5E = false;
+      //
+      // /*6*/
+      // if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
+      //   this.errors.totalTaxesBeforeAdjustments = true;
+      //   return false
+      // } else this.errors.totalTaxesBeforeAdjustments = false;
+      //
+      // /*10*/
+      // if (parseFloat(this.line10Sum) <= 0) {
+      //   this.errors.line10Sum = true;
+      //   return false
+      // } else this.errors.line10Sum = false;
+      //
+      // /*12*/
+      // if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
+      //   this.errors.line12TotalTaxesAfterAdjustments = true;
+      //   return false
+      // } else this.errors.line12TotalTaxesAfterAdjustments = false;
+      //
+      // /*13*/
+      // if (parseFloat(this.totalQuarterDeposits) <= 0) {
+      //   this.errors.totalQuarterDeposits = true;
+      //   return false
+      // } else this.errors.totalQuarterDeposits = false;
+      //
+      // /*15*/
+      // if (parseFloat(this.line15Overpayment) < 0) {
+      //   this.errors.line15Overpayment = true;
+      //   return false
+      // } else this.errors.line15Overpayment = false;
+      //
+      // /* Overpayment Option */
+      // switch (parseInt(this.overpaymentOption)) {
+      //   case 1:
+      //     this.errors.overpaymentOption = false;
+      //     break;
+      //   case 2:
+      //     this.errors.overpaymentOption = false;
+      //     break;
+      //   default:
+      //     console.log('No Overpayment Option Selected!');
+      //     this.errors.overpaymentOption = true;
+      //     return false;
+      // }
 
-      if (this.address === null || this.address.trim().length < 1) {
-        this.errors.address = true;
+      /*16*/
+
+
+      if (this.partTwoNumberSixteen === null) {
+        this.errors.partTwoNumberSixteen = true;
         return false;
-      } else this.errors.address = false;
-
-      if (this.city === null || this.city.trim().length < 1) {
-        this.errors.city = true;
-        return false;
-      } else this.errors.city = false;
-
-      if (this.state === null || this.state.trim().length < 1) {
-        this.errors.state = true;
-        return false;
-      } else this.errors.state = false;
-
-      if (this.zip === null || this.zip.trim().length < 1) {
-        this.errors.zip = true;
-        return false;
-      } else this.errors.zip = false;
-
-      if (parseFloat(this.numberOfEmployees) < 0 || this.numberOfEmployees === null) {
-        this.errors.numberOfEmployees = true;
-        return false;
-      } else this.errors.numberOfEmployees = false;
-
-      if (parseFloat(this.totalWages) < 0 || this.totalWages === null) {
-        this.errors.totalWages = true;
-        return false;
-      } else this.errors.totalWages = false;
-
-      if (parseFloat(this.withheldTax) < 0) {
-        this.errors.withheldTax = true;
-        return false;
-      } else this.errors.withheldTax = false;
-      /*5E*/
-
-
-      if (parseFloat(this.line5E) <= 0) {
-        this.errors.line5E = true;
-        return false;
-      } else this.errors.line5E = false;
-      /*6*/
-
-
-      if (parseFloat(this.totalTaxesBeforeAdjustments) <= 0) {
-        this.errors.totalTaxesBeforeAdjustments = true;
-        return false;
-      } else this.errors.totalTaxesBeforeAdjustments = false;
-      /*10*/
-
-
-      if (parseFloat(this.line10Sum) <= 0) {
-        this.errors.line10Sum = true;
-        return false;
-      } else this.errors.line10Sum = false;
-      /*12*/
-
-
-      if (parseFloat(this.line12TotalTaxesAfterAdjustments) <= 0) {
-        this.errors.line12TotalTaxesAfterAdjustments = true;
-        return false;
-      } else this.errors.line12TotalTaxesAfterAdjustments = false;
-      /*13*/
-
-
-      if (parseFloat(this.totalQuarterDeposits) <= 0) {
-        this.errors.totalQuarterDeposits = true;
-        return false;
-      } else this.errors.totalQuarterDeposits = false;
-      /*15*/
-
-
-      if (parseFloat(this.line15Overpayment) < 0) {
-        this.errors.line15Overpayment = true;
-        return false;
-      } else this.errors.line15Overpayment = false;
-      /* Overpayment Option */
-
-
-      switch (parseInt(this.overpaymentOption)) {
-        case 1:
-          this.errors.overpaymentOption = false;
-          break;
-
-        case 2:
-          this.errors.overpaymentOption = false;
-          break;
-
-        default:
-          console.log('No Overpayment Option Selected!');
-          this.errors.overpaymentOption = true;
-          return false;
-      }
+      } else this.errors.partTwoNumberSixteen = false;
 
       return true;
     },
@@ -4156,7 +4242,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, COLOR, baseOptions, baseYOffset, ein_mutated, i, ein_XCoord, pdfBytes;
+        var validated, existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, _secondPage$getSize, widthP2, heightP2, COLOR, baseOptions, baseYOffset, mutatedEIN, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -4175,7 +4261,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
                 /* Prompt Error */
                 console.error('Form errors!');
-                _context.next = 75;
+                _context.next = 52;
                 break;
 
               case 6:
@@ -4200,6 +4286,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 firstPage = pages[0];
                 secondPage = pages[1];
                 _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                _secondPage$getSize = secondPage.getSize(), widthP2 = _secondPage$getSize.widthP2, heightP2 = _secondPage$getSize.heightP2;
                 COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_1__["rgb"])(0, 0, 0);
                 baseOptions = {
                   size: 10,
@@ -4212,321 +4299,428 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 * mutate
                 * output
                 * */
+                // let ein_mutated = this.employerIdentificationNumber.split('');
+                // for (let i = 0; i < 9; i++) {
+                //   let ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+                //
+                //   firstPage.drawText(ein_mutated[i], {
+                //     x: ein_XCoord[i],
+                //     y: height / 2 + 318,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // firstPage.drawText(this.name, {
+                //   x: 150,
+                //   y: height / 2 + 295,
+                //   ...baseOptions
+                // });
+                //
+                // /*  IF – TradeName */
+                // if (this.tradeName !== null){
+                //   firstPage.drawText(this.tradeName, {
+                //     x: 135,
+                //     y: height / 2 + 270,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /*Address*/
+                // firstPage.drawText(this.address, {
+                //   x: 95,
+                //   y: height / 2 + 245,
+                //   ...baseOptions
+                // });
+                //
+                // /*City*/
+                // firstPage.drawText(this.city, {
+                //   x: 95,
+                //   y: height / 2 + 215,
+                //   ...baseOptions
+                // });
+                //
+                // /*State*/
+                // firstPage.drawText(this.state, {
+                //   x: 285 ,
+                //   y: height / 2 + 215,
+                //   ...baseOptions
+                // });
+                //
+                // /*ZIP*/
+                // firstPage.drawText(this.zip, {
+                //   x: 325 ,
+                //   y: height / 2 + 215,
+                //   ...baseOptions
+                // });
+                //
+                // /* IF – Foreign Country*/
+                // if (this.f_countryName !== null) {
+                //     firstPage.drawText(this.f_countryName.toString(), {
+                //       x: 95,
+                //       y: height / 2 + 185,
+                //       ...baseOptions
+                //     });
+                // }
+                //
+                // /* IF – Foreign Province*/
+                // if (this.f_countryProvince !== null) {
+                //   firstPage.drawText(this.f_countryProvince.toString(), {
+                //     x: 235,
+                //     y: height / 2 + 185,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* IF – Foreign Province*/
+                // if (this.f_countryZIP !== null) {
+                //   firstPage.drawText(this.f_countryZIP.toString(), {
+                //     x: 335,
+                //     y: height / 2 + 185,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* Report for this quarter */
+                // switch (this.reportForThisQuarter) {
+                //   case '1':
+                //     firstPage.drawText('x', {
+                //       x: 427,
+                //       y: height / 2 + 294,
+                //       ...baseOptions
+                //     });
+                //     break;
+                //   case '2':
+                //     firstPage.drawText('x', {
+                //       x: 427,
+                //       y: height / 2 + 277,
+                //       ...baseOptions
+                //     });
+                //     break;
+                //   case '3':
+                //     firstPage.drawText('x', {
+                //       x: 427,
+                //       y: height / 2 + 260,
+                //       ...baseOptions
+                //     });
+                //     break;
+                //   case '4':
+                //     firstPage.drawText('x', {
+                //       x: 427,
+                //       y: height / 2 + 243,
+                //       ...baseOptions
+                //     });
+                //     break;
+                // }
+                //
+                // /* Number Of Employees */
+                // firstPage.drawText(parseInt(this.numberOfEmployees).toString(), {
+                //   x: 455,
+                //   y: height / 2 + 115,
+                //   ...baseOptions
+                // });
+                //
+                // /* 2: Wages... */
+                // firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), {
+                //   x: 455,
+                //   y: height / 2 + 91,
+                //   ...baseOptions
+                // });
+                //
+                // /* 3: Federal... */
+                // firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), {
+                //   x: 455,
+                //   y: height / 2 + 68,
+                //   ...baseOptions
+                // });
+                //
+                // /* 4: If no wages... */
+                // if(parseInt(this.noWages) === 1) {
+                //     firstPage.drawText('x', {
+                //       x: 449,
+                //       y: height / 2 + 43,
+                //       ...baseOptions
+                //     });
+                // }
+                //
+                // /* 5A */
+                // if (parseFloat(this.taxableSSWages)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
+                //     x: 225,
+                //     y: height / 2 + 13,
+                //     ...baseOptions
+                //   });
+                //
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), {
+                //     x: 360,
+                //     y: height / 2 + 13,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 5B */
+                // if (parseFloat(this.taxableSSTips)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
+                //     x: 225,
+                //     y: height / 2 - 5,
+                //     ...baseOptions
+                //   });
+                //
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), {
+                //     x: 360,
+                //     y: height / 2 - 5,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 5C */
+                // if (parseFloat(this.taxableMedicalWages)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
+                //     x: 225,
+                //     y: height / 2 - 23,
+                //     ...baseOptions
+                //   });
+                //
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), {
+                //     x: 360,
+                //     y: height / 2 - 23,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 5D */
+                // if (parseFloat(this.taxableAMTWithholding)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
+                //     x: 225,
+                //     y: height / 2 - 47,
+                //     ...baseOptions
+                //   });
+                //
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), {
+                //     x: 360,
+                //     y: height / 2 - 47,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 5E */
+                // if (parseFloat(this.line5E)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
+                //     x: 455,
+                //     y: height / 2 - 70,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 5F */
+                // if (parseFloat(this.section3121)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), {
+                //     x: 455,
+                //     y: height / 2 - 94,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 6 */
+                // if (this.totalTaxesBeforeAdjustments) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), {
+                //     x: 455,
+                //     y: height / 2 - 118,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 7 */
+                // if (parseFloat(this.currentFractionsOfCents)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), {
+                //     x: 455,
+                //     y: height / 2 - 142,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 8 */
+                // if (parseFloat(this.currentSickPay)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), {
+                //     x: 455,
+                //     y: height / 2 - 166,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 9 */
+                // if (parseFloat(this.currentTipAndGroupTerm)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), {
+                //     x: 455,
+                //     y: height / 2 - 190,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 10 */
+                // firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), {
+                //   x: 455,
+                //   y: height / 2 - 214,
+                //   ...baseOptions
+                // });
+                //
+                // /* 11 */
+                // if(parseFloat(this.qualifiedSmallBusinessPayroll)){
+                //     firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), {
+                //       x: 455,
+                //       y: height / 2 - 238,
+                //       ...baseOptions
+                //     });
+                // }
+                //
+                // /* 12 */
+                // firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), {
+                //   x: 455,
+                //   y: height / 2 - 262,
+                //   ...baseOptions
+                // });
+                //
+                // /* 13 */
+                // firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), {
+                //   x: 455,
+                //   y: height / 2 - 293,
+                //   ...baseOptions
+                // });
+                //
+                // /* 14 */
+                // if(parseFloat(this.line14BalanceDue)) {
+                //   firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), {
+                //     x: 455,
+                //     y: height / 2 - 317,
+                //     ...baseOptions
+                //   });
+                // }
+                //
+                // /* 15 */
+                // firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), {
+                //   x: 310,
+                //   y: height / 2 - 340,
+                //   ...baseOptions
+                // });
+                //
+                // /* Overpayment Option */
+                // switch (parseInt(this.overpaymentOption)) {
+                //   case 1:
+                //     firstPage.drawText('x', {
+                //       x: 448,
+                //       y: height / 2 - 342,
+                //       ...baseOptions
+                //     });
+                //     break;
+                //   case 2:
+                //     firstPage.drawText('x', {
+                //       x: 521,
+                //       y: height / 2 - 342,
+                //       ...baseOptions
+                //     });
+                //     break;
+                // }
 
-                ein_mutated = this.employerIdentificationNumber.split('');
+                /* PAGE 2*/
 
-                for (i = 0; i < 9; i++) {
-                  ein_XCoord = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-                  firstPage.drawText(ein_mutated[i], _objectSpread({
-                    x: ein_XCoord[i],
-                    y: height / 2 + 318
-                  }, baseOptions));
-                }
-
-                firstPage.drawText(this.name, _objectSpread({
-                  x: 150,
-                  y: height / 2 + 295
+                console.log(_typeof(this.employerIdentificationNumber), ' __ ', this.employerIdentificationNumber);
+                console.log(_typeof(this.name), ' __ ', this.name);
+                secondPage.drawText(this.name.toString(), _objectSpread({
+                  x: 50,
+                  y: height / 2 + 330
                 }, baseOptions));
-                /*  IF – TradeName */
-
-                if (this.tradeName !== null) {
-                  firstPage.drawText(this.tradeName, _objectSpread({
-                    x: 135,
-                    y: height / 2 + 270
-                  }, baseOptions));
-                }
-                /*Address*/
-
-
-                firstPage.drawText(this.address, _objectSpread({
-                  x: 95,
-                  y: height / 2 + 245
+                mutatedEIN = this.employerIdentificationNumber.substr(0, 2) + '-' + this.employerIdentificationNumber.substr(2);
+                secondPage.drawText(mutatedEIN.toString(), _objectSpread({
+                  x: 420,
+                  y: height / 2 + 330
                 }, baseOptions));
-                /*City*/
-
-                firstPage.drawText(this.city, _objectSpread({
-                  x: 95,
-                  y: height / 2 + 215
-                }, baseOptions));
-                /*State*/
-
-                firstPage.drawText(this.state, _objectSpread({
-                  x: 285,
-                  y: height / 2 + 215
-                }, baseOptions));
-                /*ZIP*/
-
-                firstPage.drawText(this.zip, _objectSpread({
-                  x: 325,
-                  y: height / 2 + 215
-                }, baseOptions));
-                /* IF – Foreign Country*/
-
-                if (this.f_countryName !== null) {
-                  firstPage.drawText(this.f_countryName.toString(), _objectSpread({
-                    x: 95,
-                    y: height / 2 + 185
-                  }, baseOptions));
-                }
-                /* IF – Foreign Province*/
-
-
-                if (this.f_countryProvince !== null) {
-                  firstPage.drawText(this.f_countryProvince.toString(), _objectSpread({
-                    x: 235,
-                    y: height / 2 + 185
-                  }, baseOptions));
-                }
-                /* IF – Foreign Province*/
-
-
-                if (this.f_countryZIP !== null) {
-                  firstPage.drawText(this.f_countryZIP.toString(), _objectSpread({
-                    x: 335,
-                    y: height / 2 + 185
-                  }, baseOptions));
-                }
-                /* Report for this quarter */
-
-
-                _context.t0 = this.reportForThisQuarter;
-                _context.next = _context.t0 === '1' ? 36 : _context.t0 === '2' ? 38 : _context.t0 === '3' ? 40 : _context.t0 === '4' ? 42 : 44;
+                _context.t0 = parseInt(this.partTwoNumberSixteen);
+                _context.next = _context.t0 === 1 ? 31 : _context.t0 === 2 ? 33 : _context.t0 === 3 ? 46 : 48;
                 break;
 
-              case 36:
-                firstPage.drawText('x', _objectSpread({
-                  x: 427,
-                  y: height / 2 + 294
+              case 31:
+                /* Option 1*/
+                secondPage.drawText('x', _objectSpread({
+                  x: 118,
+                  y: height / 2 + 273
                 }, baseOptions));
-                return _context.abrupt("break", 44);
+                return _context.abrupt("break", 48);
 
-              case 38:
-                firstPage.drawText('x', _objectSpread({
-                  x: 427,
-                  y: height / 2 + 277
+              case 33:
+                /* Option 2 MUST VALIDATE ALL BOXES*/
+                secondPage.drawText('x', _objectSpread({
+                  x: 118,
+                  y: height / 2 + 226
                 }, baseOptions));
-                return _context.abrupt("break", 44);
+                /*Write Month 1 IF*/
 
-              case 40:
-                firstPage.drawText('x', _objectSpread({
-                  x: 427,
-                  y: height / 2 + 260
-                }, baseOptions));
-                return _context.abrupt("break", 44);
+                if (parseFloat(this.month1) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.month1)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 195
+                  }, baseOptions));
+                }
+                /*Write Month 2 IF*/
 
-              case 42:
-                firstPage.drawText('x', _objectSpread({
-                  x: 427,
-                  y: height / 2 + 243
-                }, baseOptions));
-                return _context.abrupt("break", 44);
+
+                if (parseFloat(this.month2) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.month2)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 170
+                  }, baseOptions));
+                }
+                /*Write Month 3 IF*/
+
+
+                if (parseFloat(this.month3) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.month3)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 150
+                  }, baseOptions));
+                }
+                /*Write Total IF*/
+
+
+                if (parseFloat(this.line16TotalLiability) > 0) {
+                  secondPage.drawText(this.convertToStringAndAddDecimal(parseFloat(this.line16TotalLiability)), _objectSpread({
+                    x: 250,
+                    y: height / 2 + 129
+                  }, baseOptions));
+                }
+
+                if (!(this.line16TotalLiability !== this.line12TotalTaxesAfterAdjustments)) {
+                  _context.next = 44;
+                  break;
+                }
+
+                console.log('Line 12/16 Mismatch!');
+                this.errors.partTwoNumberSixteen = true;
+                return _context.abrupt("return", false);
 
               case 44:
-                /* Number Of Employees */
-                firstPage.drawText(parseInt(this.numberOfEmployees).toString(), _objectSpread({
-                  x: 455,
-                  y: height / 2 + 115
+                this.errors.partTwoNumberSixteen = false;
+
+              case 45:
+                return _context.abrupt("break", 48);
+
+              case 46:
+                /* Option 3*/
+                secondPage.drawText('x', _objectSpread({
+                  x: 118,
+                  y: height / 2 + 112
                 }, baseOptions));
-                /* 2: Wages... */
+                return _context.abrupt("break", 48);
 
-                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalWages), _objectSpread({
-                  x: 455,
-                  y: height / 2 + 91
-                }, baseOptions));
-                /* 3: Federal... */
-
-                firstPage.drawText(this.convertToStringAndAddDecimal(this.withheldTax), _objectSpread({
-                  x: 455,
-                  y: height / 2 + 68
-                }, baseOptions));
-                /* 4: If no wages... */
-
-                if (parseInt(this.noWages) === 1) {
-                  firstPage.drawText('x', _objectSpread({
-                    x: 449,
-                    y: height / 2 + 43
-                  }, baseOptions));
-                }
-                /* 5A */
-
-
-                if (parseFloat(this.taxableSSWages)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), _objectSpread({
-                    x: 225,
-                    y: height / 2 + 13
-                  }, baseOptions));
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), _objectSpread({
-                    x: 360,
-                    y: height / 2 + 13
-                  }, baseOptions));
-                }
-                /* 5B */
-
-
-                if (parseFloat(this.taxableSSTips)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), _objectSpread({
-                    x: 225,
-                    y: height / 2 - 5
-                  }, baseOptions));
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), _objectSpread({
-                    x: 360,
-                    y: height / 2 - 5
-                  }, baseOptions));
-                }
-                /* 5C */
-
-
-                if (parseFloat(this.taxableMedicalWages)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), _objectSpread({
-                    x: 225,
-                    y: height / 2 - 23
-                  }, baseOptions));
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), _objectSpread({
-                    x: 360,
-                    y: height / 2 - 23
-                  }, baseOptions));
-                }
-                /* 5D */
-
-
-                if (parseFloat(this.taxableAMTWithholding)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), _objectSpread({
-                    x: 225,
-                    y: height / 2 - 47
-                  }, baseOptions));
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), _objectSpread({
-                    x: 360,
-                    y: height / 2 - 47
-                  }, baseOptions));
-                }
-                /* 5E */
-
-
-                if (parseFloat(this.line5E)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 70
-                  }, baseOptions));
-                }
-                /* 5F */
-
-
-                if (parseFloat(this.section3121)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 94
-                  }, baseOptions));
-                }
-                /* 6 */
-
-
-                if (this.totalTaxesBeforeAdjustments) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.totalTaxesBeforeAdjustments), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 118
-                  }, baseOptions));
-                }
-                /* 7 */
-
-
-                if (parseFloat(this.currentFractionsOfCents)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentFractionsOfCents), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 142
-                  }, baseOptions));
-                }
-                /* 8 */
-
-
-                if (parseFloat(this.currentSickPay)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentSickPay), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 166
-                  }, baseOptions));
-                }
-                /* 9 */
-
-
-                if (parseFloat(this.currentTipAndGroupTerm)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.currentTipAndGroupTerm), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 190
-                  }, baseOptions));
-                }
-                /* 10 */
-
-
-                firstPage.drawText(this.convertToStringAndAddDecimal(this.line10Sum), _objectSpread({
-                  x: 455,
-                  y: height / 2 - 214
-                }, baseOptions));
-                /* 11 */
-
-                if (parseFloat(this.qualifiedSmallBusinessPayroll)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.qualifiedSmallBusinessPayroll), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 238
-                  }, baseOptions));
-                }
-                /* 12 */
-
-
-                firstPage.drawText(this.convertToStringAndAddDecimal(this.line12TotalTaxesAfterAdjustments), _objectSpread({
-                  x: 455,
-                  y: height / 2 - 262
-                }, baseOptions));
-                /* 13 */
-
-                firstPage.drawText(this.convertToStringAndAddDecimal(this.totalQuarterDeposits), _objectSpread({
-                  x: 455,
-                  y: height / 2 - 293
-                }, baseOptions));
-                /* 14 */
-
-                if (parseFloat(this.line14BalanceDue)) {
-                  firstPage.drawText(this.convertToStringAndAddDecimal(this.line14BalanceDue), _objectSpread({
-                    x: 455,
-                    y: height / 2 - 317
-                  }, baseOptions));
-                }
-                /* 15 */
-
-
-                firstPage.drawText(this.convertToStringAndAddDecimal(this.line15Overpayment), _objectSpread({
-                  x: 310,
-                  y: height / 2 - 340
-                }, baseOptions));
-                /* Overpayment Option */
-
-                _context.t1 = parseInt(this.overpaymentOption);
-                _context.next = _context.t1 === 1 ? 67 : _context.t1 === 2 ? 69 : 71;
-                break;
-
-              case 67:
-                firstPage.drawText('x', _objectSpread({
-                  x: 448,
-                  y: height / 2 - 342
-                }, baseOptions));
-                return _context.abrupt("break", 71);
-
-              case 69:
-                firstPage.drawText('x', _objectSpread({
-                  x: 521,
-                  y: height / 2 - 342
-                }, baseOptions));
-                return _context.abrupt("break", 71);
-
-              case 71:
-                _context.next = 73;
+              case 48:
+                _context.next = 50;
                 return pdfDoc.save();
 
-              case 73:
+              case 50:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_2___default()(pdfBytes, "IRS-941-".concat(Date.now(), ".pdf"), "application/pdf");
                 /* TODO Clear out the form */
 
-              case 75:
+              case 52:
               case "end":
                 return _context.stop();
             }
@@ -9323,7 +9517,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nbutton[data-v-f35b2788] {\n    border-radius: 0;\n    width: 5rem !important;\n}\n.clear[data-v-f35b2788] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-f35b2788] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n", ""]);
+exports.push([module.i, "\nbutton[data-v-f35b2788] {\n     border-radius: 0;\n     width: 5rem !important;\n}\n.clear[data-v-f35b2788] {\n     border-top-left-radius: 1rem;\n     border-top-right-radius: 1rem;\n     -moz-border-radius-topright: 1rem !important;\n     -moz-border-radius-topleft: 1rem !important;\n     -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-f35b2788] {\n     border-bottom-left-radius: 1rem;\n     border-bottom-right-radius: 1rem;\n     -moz-border-radius-bottomright: 1rem !important;\n     -moz-border-radius-bottomleft: 1rem !important;\n     -webkit-border-bottom-left-radius: 1rem !important;\n}\n.sixteenB[data-v-f35b2788] {\n width: 15rem !important;\n}\n", ""]);
 
 // exports
 
@@ -65519,7 +65713,253 @@ var render = function() {
         ])
       ]),
       _vm._v(" "),
-      _vm._m(4)
+      _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4" }, [
+        _vm._m(4),
+        _vm._v(" "),
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-6" }, [
+            _c("div", { staticClass: "form-group bg-light p-2" }, [
+              _c("label", { attrs: { for: "" } }, [_vm._v("Name")]),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  model: {
+                    value: _vm.name,
+                    callback: function($$v) {
+                      _vm.name = $$v
+                    },
+                    expression: "name"
+                  }
+                },
+                [_vm._v(_vm._s(_vm.name))]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-6" }, [
+            _c("div", { staticClass: "form-group bg-light p-2" }, [
+              _c("label", { attrs: { for: "" } }, [
+                _vm._v("Employer identification number (EIN)")
+              ]),
+              _vm._v(" "),
+              _c(
+                "p",
+                {
+                  model: {
+                    value: _vm.employerIdentificationNumber,
+                    callback: function($$v) {
+                      _vm.employerIdentificationNumber = $$v
+                    },
+                    expression: "employerIdentificationNumber"
+                  }
+                },
+                [_vm._v(_vm._s(_vm.employerIdentificationNumber))]
+              )
+            ])
+          ]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass: "col-12",
+              class: {
+                "alert-danger": _vm.errors.partTwoNumberSixteen,
+                "alert-success": _vm.errors.partTwoNumberSixteen === false
+              }
+            },
+            [
+              _c("h6", [_vm._v("16 Check one:")]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.partTwoNumberSixteen,
+                      expression: "partTwoNumberSixteen"
+                    }
+                  ],
+                  staticClass: "d-inline mr-3",
+                  attrs: {
+                    type: "radio",
+                    value: "1",
+                    name: "partTwoNumberSixteen"
+                  },
+                  domProps: { checked: _vm._q(_vm.partTwoNumberSixteen, "1") },
+                  on: {
+                    change: function($event) {
+                      _vm.partTwoNumberSixteen = "1"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                        Line\n                        12 on\n                        this\n                        return\n                        is less than\n                        $2,500 or line 12 on the return for the prior quarter was less than $2,500, and you didn’t\n                        incur a $100,000 next-day deposit obligation during the current quarter. If line 12 for the prior quarter was less than $2,500 but\n                        line 12 on this return is $100,000 or more, you must provide a record of your federal tax liability. If you are a monthly schedule\n                        depositor, complete the deposit schedule below; if you are a semiweekly schedule depositor, attach Schedule B (Form 941). Go to\n                        Part 3.\n                    "
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3 bg-light" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.partTwoNumberSixteen,
+                      expression: "partTwoNumberSixteen"
+                    }
+                  ],
+                  staticClass: "d-inline mr-3",
+                  attrs: {
+                    type: "radio",
+                    value: "2",
+                    name: "partTwoNumberSixteen"
+                  },
+                  domProps: { checked: _vm._q(_vm.partTwoNumberSixteen, "2") },
+                  on: {
+                    change: function($event) {
+                      _vm.partTwoNumberSixteen = "2"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                        You\n                        were a\n                        monthly\n                        schedule\n                        depositor for the entire quarter. Enter your tax liability for each month and total\n                        liability for the quarter, then go to Part 3.\n                        "
+                ),
+                _c("h6", { staticClass: "font-weight-bold mt-3" }, [
+                  _vm._v("Tax Liability")
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", { staticClass: "mr-3 font-weight-bold" }, [
+                    _vm._v("Month 1")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.month1,
+                        expression: "month1"
+                      }
+                    ],
+                    staticClass: "form-control mb-2 sixteenB d-inline",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.month1 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.month1 = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", { staticClass: "mr-3 font-weight-bold" }, [
+                    _vm._v("Month 2")
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.month2,
+                        expression: "month2"
+                      }
+                    ],
+                    staticClass: "form-control mb-2 sixteenB d-inline",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.month2 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.month2 = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _c("span", { staticClass: "mr-3 font-weight-bold" }, [
+                    _vm._v("Month 3")
+                  ]),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.month3,
+                        expression: "month3"
+                      }
+                    ],
+                    staticClass: "form-control mb-2 sixteenB d-inline",
+                    attrs: { type: "text" },
+                    domProps: { value: _vm.month3 },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.month3 = $event.target.value
+                      }
+                    }
+                  })
+                ]),
+                _vm._v(" "),
+                _c("div", [
+                  _vm._m(5),
+                  _vm._v(
+                    " " +
+                      _vm._s(_vm.line16TotalLiability) +
+                      "\n                        "
+                  )
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "font-weight-bolder mt-2" }, [
+                  _vm._v("\n                            Current Line 12 Sum "),
+                  _c("span", { staticClass: "ml-2 alert-success p-2" }, [
+                    _vm._v(_vm._s(_vm.line12TotalTaxesAfterAdjustments))
+                  ])
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "mb-3" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.partTwoNumberSixteen,
+                      expression: "partTwoNumberSixteen"
+                    }
+                  ],
+                  staticClass: "d-inline mr-3",
+                  attrs: {
+                    type: "radio",
+                    value: "3",
+                    name: "partTwoNumberSixteen"
+                  },
+                  domProps: { checked: _vm._q(_vm.partTwoNumberSixteen, "3") },
+                  on: {
+                    change: function($event) {
+                      _vm.partTwoNumberSixteen = "3"
+                    }
+                  }
+                }),
+                _vm._v(
+                  "\n                        You\n                        were a\n                        semiweekly\n                        schedule\n                        depositor for any part of this quarter. Complete Schedule B (Form 941),\n                        Report of Tax Liability for Semiweekly Schedule Depositors, and attach it to Form 941.\n                    "
+                )
+              ])
+            ]
+          )
+        ])
+      ])
     ])
   ])
 }
@@ -65572,14 +66012,25 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-lg-10 col-12 bg-white mt-4" }, [
-      _c("div", { staticClass: "bg-dark p-2 text-white" }, [
-        _vm._v("Part 2 "),
-        _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
-          _vm._v(
-            "Tell us about your deposit schedule and tax liability for this quarter"
-          )
-        ])
+    return _c("div", { staticClass: "bg-dark p-2 text-white" }, [
+      _vm._v("Part 2 "),
+      _c("span", { staticClass: "bg-white text-dark p-1 ml-2" }, [
+        _vm._v(
+          "Tell us about your deposit schedule and tax liability for this quarter"
+        )
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("span", { staticClass: "font-weight-bolder mr-3" }, [
+      _vm._v("Total liability for quarter. "),
+      _c("small", [
+        _vm._v(
+          "Total must\n                                equal line\n                                12"
+        )
       ])
     ])
   }
