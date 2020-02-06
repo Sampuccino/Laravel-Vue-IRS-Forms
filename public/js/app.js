@@ -4934,6 +4934,23 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -4968,42 +4985,79 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         ein: null,
         name: null,
         calendarYear: null,
-        reportForThisQuarter: null
+        reportForThisQuarter: null,
+        liabilityMonthOne: null,
+        liabilityMonthTwo: null,
+        liabilityMonthThree: null,
+        totalLiabilityForQuarter: null
       }
     };
   },
   methods: {
     validation: function validation() {
-      // /*EIN*/
-      // if (this.employerIdentificationNumber.length < 9) {
-      //   this.errors.ein = true;
-      //   return false;
-      // } else this.errors.ein = false;
-      //
-      // /*Name*/
-      // if (this.name.trim().length === 0) {
-      //   this.errors.name = true;
-      //   return false;
-      // } else this.errors.name = false;
-      //
-      // /*Calendar*/
-      // if ($('#sb_calendar_year_select').val().length === 0) {
-      //   this.errors.calendarYear = true;
-      //   return false;
-      // } else this.errors.calendarYear = false;
-      //
-      // /*Report for this Quarter*/
-      // if (this.reportForThisQuarter == null) {
-      //   this.errors.reportForThisQuarter = true;
-      //   return false;
-      // } else this.errors.reportForThisQuarter = false;
+      /*EIN*/
+      if (this.employerIdentificationNumber.length < 9) {
+        this.errors.ein = true;
+        return false;
+      } else this.errors.ein = false;
+      /*Name*/
+
+
+      if (this.name.trim().length === 0) {
+        this.errors.name = true;
+        return false;
+      } else this.errors.name = false;
+      /*Calendar*/
+
+
+      if (jquery__WEBPACK_IMPORTED_MODULE_2__('#sb_calendar_year_select').val().length === 0) {
+        this.errors.calendarYear = true;
+        return false;
+      } else this.errors.calendarYear = false;
+      /*Report for this Quarter*/
+
+
+      if (this.reportForThisQuarter == null) {
+        this.errors.reportForThisQuarter = true;
+        return false;
+      } else this.errors.reportForThisQuarter = false;
+      /*Month 1 Liability */
+
+
+      if (this.monthOneTableSum == null || isNaN(this.monthOneTableSum)) {
+        this.errors.liabilityMonthOne = true;
+        return false;
+      } else this.errors.liabilityMonthOne = false;
+      /*Month 2 Liability */
+
+
+      if (this.monthTwoTableSum == null || isNaN(this.monthTwoTableSum)) {
+        this.errors.liabilityMonthTwo = true;
+        return false;
+      } else this.errors.liabilityMonthTwo = false;
+      /*Month 3 Liability */
+
+
+      if (this.monthThreeTableSum == null || isNaN(this.monthThreeTableSum)) {
+        this.errors.liabilityMonthThree = true;
+        return false;
+      } else this.errors.liabilityMonthThree = false;
+      /* Quarter Liability */
+
+
+      if (this.totalLiabilityForQuarter == null || isNaN(this.totalLiabilityForQuarter.replace(',', ''))) {
+        this.errors.totalLiabilityForQuarter = true;
+        console.error(this.totalLiabilityForQuarter);
+        return false;
+      } else this.errors.totalLiabilityForQuarter = false;
+
       return true;
     },
     exportToPDF: function () {
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var existingPdfBytes, pdfDoc, helveticaFont, pages, _page, _page$getSize, width, height, COLOR, _options, pdfBytes;
+        var existingPdfBytes, pdfDoc, helveticaFont, pages, _page, _page$getSize, width, height, COLOR, _options, ein_mutated, i, ein_XCoord, calendarYear_mutated, _i, xCoord, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
@@ -5015,7 +5069,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                 }
 
                 console.error('Form errors!');
-                _context.next = 24;
+                _context.next = 43;
                 break;
 
               case 4:
@@ -5045,83 +5099,95 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
                   font: helveticaFont,
                   color: COLOR
                 };
-                console.log(_typeof(this.calendarYear), ' has a value of ', this.calendarYear); // /*Write EIN*/
-                // let ein_mutated = this.employerIdentificationNumber.split('');
-                // for (let i = 0; i < 9; i++) {
-                //   let ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
-                //
-                //   _page.drawText(ein_mutated[i], {
-                //     x: ein_XCoord[i],
-                //     y: height / 2 + 295,
-                //     ..._options
-                //   });
-                // }
-                //
-                // /*Write Name*/
-                // _page.drawText(this.name, {
-                //   x: 140,
-                //   y: height / 2 + 270,
-                //   ..._options
-                // });
-                //
-                // /*Write Calendar Year*/
-                // let calendarYear_mutated = $('#sb_calendar_year_select').val();
-                // calendarYear_mutated.split('');
-                // for (let i = 0; i < 4; i++) {
-                //   let xCoord = [155, 180, 203, 230];
-                //
-                //   _page.drawText(calendarYear_mutated[i], {
-                //     x: xCoord[i],
-                //     y: height / 2 + 245,
-                //     ..._options
-                //   });
-                // }
-                //
-                // /* Report for this quarter */
-                // switch (this.reportForThisQuarter) {
-                //   case '1':
-                //     _page.drawText('x', {
-                //       x: 424,
-                //       y: height / 2 + 280, //294
-                //       ..._options
-                //     });
-                //     break;
-                //   case '2':
-                //     _page.drawText('x', {
-                //       x: 424,
-                //       y: height / 2 + 261,
-                //       ..._options
-                //     });
-                //     break;
-                //   case '3':
-                //     _page.drawText('x', {
-                //       x: 424,
-                //       y: height / 2 + 243,
-                //       ..._options
-                //     });
-                //     break;
-                //   case '4':
-                //     _page.drawText('x', {
-                //       x: 424,
-                //       y: height / 2 + 226,
-                //       ..._options
-                //     });
-                //     break;
-                // }
-                // Write first table
+                console.log(_typeof(this.calendarYear), ' has a value of ', this.calendarYear);
+                /*Write EIN*/
 
+                ein_mutated = this.employerIdentificationNumber.split('');
+
+                for (i = 0; i < 9; i++) {
+                  ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
+
+                  _page.drawText(ein_mutated[i], _objectSpread({
+                    x: ein_XCoord[i],
+                    y: height / 2 + 295
+                  }, _options));
+                }
+                /*Write Name*/
+
+
+                _page.drawText(this.name, _objectSpread({
+                  x: 140,
+                  y: height / 2 + 270
+                }, _options));
+                /*Write Calendar Year*/
+
+
+                calendarYear_mutated = jquery__WEBPACK_IMPORTED_MODULE_2__('#sb_calendar_year_select').val();
+                calendarYear_mutated.split('');
+
+                for (_i = 0; _i < 4; _i++) {
+                  xCoord = [155, 180, 203, 230];
+
+                  _page.drawText(calendarYear_mutated[_i], _objectSpread({
+                    x: xCoord[_i],
+                    y: height / 2 + 245
+                  }, _options));
+                }
+                /* Report for this quarter */
+
+
+                _context.t0 = this.reportForThisQuarter;
+                _context.next = _context.t0 === '1' ? 28 : _context.t0 === '2' ? 30 : _context.t0 === '3' ? 32 : _context.t0 === '4' ? 34 : 36;
+                break;
+
+              case 28:
+                _page.drawText('x', _objectSpread({
+                  x: 424,
+                  y: height / 2 + 280
+                }, _options));
+
+                return _context.abrupt("break", 36);
+
+              case 30:
+                _page.drawText('x', _objectSpread({
+                  x: 424,
+                  y: height / 2 + 261
+                }, _options));
+
+                return _context.abrupt("break", 36);
+
+              case 32:
+                _page.drawText('x', _objectSpread({
+                  x: 424,
+                  y: height / 2 + 243
+                }, _options));
+
+                return _context.abrupt("break", 36);
+
+              case 34:
+                _page.drawText('x', _objectSpread({
+                  x: 424,
+                  y: height / 2 + 226
+                }, _options));
+
+                return _context.abrupt("break", 36);
+
+              case 36:
+                // Write first table
+                this.writeTableToPDF(_page, height, _options, this.monthOneTable);
+                this.writeTableToPDF(_page, height, _options, this.monthTwoTable);
                 this.writeTableToPDF(_page, height, _options, this.monthThreeTable);
                 /* Save report and Download*/
 
-                _context.next = 22;
+                _context.next = 41;
                 return pdfDoc.save();
 
-              case 22:
+              case 41:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_4___default()(pdfBytes, "IRS-941-Schedule-B-".concat(Date.now(), ".pdf"), "application/pdf");
 
-              case 24:
+              case 43:
               case "end":
                 return _context.stop();
             }
@@ -5142,6 +5208,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
     },
     writeTableToPDF: function writeTableToPDF(_page, height, _options, tableArr) {
+      var _this = this;
+
       // *N* is STARTING POINT
       // OFFSET X is 107 for All Tables
       // [ *53*, 155, 257, 357 ]
@@ -5159,101 +5227,90 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         // ✅ Modify the X coordinate based on Index 0 i.e ['table1', 'table2',...]
         if (item === 'table1') {
           //  Update yCoordinate
-          yCoordinate = Y[0];
+          yCoordinate = Y[0]; // Write the Months Liability
+
+          _page.drawText(_this.convertToStringAndAddDecimal(_this.monthOneTableSum), _objectSpread({
+            x: X[3] + yOff * 5.5,
+            y: height / 2 + (yCoordinate - 15)
+          }, _options));
+
           console.error('We are on Table 1, with a Y Coordinate of ', yCoordinate);
         }
 
         if (item === 'table2') {
           //  Update yCoordinate
-          yCoordinate = Y[1];
+          yCoordinate = Y[1]; // Write the Months Liability
+
+          _page.drawText(_this.convertToStringAndAddDecimal(_this.monthTwoTableSum), _objectSpread({
+            x: X[3] + yOff * 5.5,
+            y: height / 2 + (yCoordinate - 15)
+          }, _options));
+
           console.error('We are on Table 2, with a Y Coordinate of ', yCoordinate);
         }
 
         if (item === 'table3') {
           //  Update yCoordinate
-          yCoordinate = Y[2];
+          yCoordinate = Y[2]; // Write the Months Liability
+
+          _page.drawText(_this.convertToStringAndAddDecimal(_this.monthThreeTableSum), _objectSpread({
+            x: X[3] + yOff * 5.5,
+            y: height / 2 + (yCoordinate - 15)
+          }, _options));
+
           console.error('We are on Table 3, with a Y Coordinate of ', yCoordinate);
-        } // Update xOffset based on table and Index
+        }
+        /* Write Total Liability */
+
+
+        _page.drawText(_this.convertToStringAndAddDecimal(_this.totalLiabilityForQuarter), _objectSpread({
+          x: X[3] + yOff * 5.5,
+          y: height / 2 + (Y[2] - X[1])
+        }, _options)); // Update xOffset based on table and Index
         // Conditions for 1-8  9-16  17-24  25-31
         // console.warn('Item\'s value is ', item, ' with and index of type ', typeof index , ' and a index of ', index);
+
+        /* Ignore 0 */
 
 
         if (index > 24) {
           console.warn('Column 4 with an index of ', index);
 
-          _page.drawText('Column 4', _objectSpread({
-            x: X[3],
-            y: height / 2 + (yCoordinate - yOff * (index - 25))
-          }, _options));
+          if (parseFloat(item) > 0) {
+            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+              x: X[3],
+              y: height / 2 + (yCoordinate - yOff * (index - 25))
+            }, _options));
+          }
         } else if (index > 16) {
           console.warn('Column 3 with an index of ', index);
 
-          _page.drawText('Column 3', _objectSpread({
-            x: X[2],
-            y: height / 2 + (yCoordinate - yOff * (index - 17))
-          }, _options));
+          if (parseFloat(item) > 0) {
+            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+              x: X[2],
+              y: height / 2 + (yCoordinate - yOff * (index - 17))
+            }, _options));
+          }
         } else if (index > 8) {
           console.warn('Column 2 with an index of ', index);
 
-          _page.drawText('Column 2', _objectSpread({
-            x: X[1],
-            y: height / 2 + (yCoordinate - yOff * (index - 9))
-          }, _options));
+          if (parseFloat(item) > 0) {
+            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+              x: X[1],
+              y: height / 2 + (yCoordinate - yOff * (index - 9))
+            }, _options));
+          }
         } else if (index >= 1) {
           console.warn('Column 1');
 
-          _page.drawText('Column 1', _objectSpread({
-            x: X[0],
-            y: height / 2 + (yCoordinate - yOff * (index - 1))
-          }, _options));
+          if (parseFloat(item) > 0) {
+            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+              x: X[0],
+              y: height / 2 + (yCoordinate - yOff * (index - 1))
+            }, _options));
+          }
         }
-      }); // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + Y,
-      //   ..._options
-      // });
-      //
-      // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + (Y - yOff),
-      //   ..._options
-      // });
-      //
-      // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + (Y - yOff * 2),
-      //   ..._options
-      // });
-      //
-      // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + (Y - yOff * 3),
-      //   ..._options
-      // });
-      //
-      // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + (Y - yOff * 4),
-      //   ..._options
-      // });
-      //
-      // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + (Y - yOff * 5),
-      //   ..._options
-      // });
-      //
-      // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + (Y - yOff * 6),
-      //   ..._options
-      // });
-      //
-      // _page.drawText('1000.00', {
-      //   x: X,
-      //   y: height / 2 + (Y - yOff * 7),
-      //   ..._options
-      // });
+      });
     }
   },
   computed: {
@@ -5282,7 +5339,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
       return this.convertToStringAndAddDecimal(totals.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
-      }, 0));
+      }, 0)); // return totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
     }
   }
 });
@@ -66639,6 +66696,74 @@ var render = function() {
         staticStyle: { right: "1rem", bottom: "7rem" }
       },
       [
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.liabilityMonthOne,
+                expression: "errors.liabilityMonthOne"
+              }
+            ],
+            staticClass:
+              " alert-danger p-2 text-center text-danger font-weight-bolder mb-2"
+          },
+          [_vm._v("\n            Error in Table 1\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.liabilityMonthTwo,
+                expression: "errors.liabilityMonthTwo"
+              }
+            ],
+            staticClass:
+              " alert-danger p-2 text-center text-danger font-weight-bolder mb-2"
+          },
+          [_vm._v("\n            Error in Table 2\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.liabilityMonthThree,
+                expression: "errors.liabilityMonthThree"
+              }
+            ],
+            staticClass:
+              "alert-danger p-2 text-center text-danger font-weight-bolder mb-2"
+          },
+          [_vm._v("\n            Error in Table 3\n        ")]
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.errors.totalLiabilityForQuarter,
+                expression: "errors.totalLiabilityForQuarter"
+              }
+            ],
+            staticClass:
+              "alert-danger p-2 text-center text-danger font-weight-bolder mb-2"
+          },
+          [_vm._v("\n            Check all tables for bad input\n        ")]
+        ),
+        _vm._v(" "),
         _c("h6", [_vm._v("Total liability for quarter")]),
         _vm._v(" "),
         _c(

@@ -3,6 +3,23 @@
 
 
         <div class="position-fixed" style="right: 1rem; bottom:7rem;">
+
+            <div v-show="errors.liabilityMonthOne" class=" alert-danger p-2 text-center text-danger font-weight-bolder mb-2">
+                Error in Table 1
+            </div>
+
+            <div v-show="errors.liabilityMonthTwo" class=" alert-danger p-2 text-center text-danger font-weight-bolder mb-2">
+                Error in Table 2
+            </div>
+
+            <div v-show="errors.liabilityMonthThree" class="alert-danger p-2 text-center text-danger font-weight-bolder mb-2">
+                Error in Table 3
+            </div>
+
+            <div v-show="errors.totalLiabilityForQuarter" class="alert-danger p-2 text-center text-danger font-weight-bolder mb-2">
+                Check all tables for bad input
+            </div>
+
             <h6>Total liability for quarter</h6>
             <div class="text-right text-success font-weight-bolder">
                 {{ totalLiabilityForQuarter }}
@@ -294,36 +311,65 @@
           ein: null,
           name: null,
           calendarYear: null,
-          reportForThisQuarter: null
+          reportForThisQuarter: null,
+          liabilityMonthOne: null,
+          liabilityMonthTwo: null,
+          liabilityMonthThree: null,
+          totalLiabilityForQuarter: null,
         }
       }
     },
     methods: {
       validation: function() {
 
-        // /*EIN*/
-        // if (this.employerIdentificationNumber.length < 9) {
-        //   this.errors.ein = true;
-        //   return false;
-        // } else this.errors.ein = false;
-        //
-        // /*Name*/
-        // if (this.name.trim().length === 0) {
-        //   this.errors.name = true;
-        //   return false;
-        // } else this.errors.name = false;
-        //
-        // /*Calendar*/
-        // if ($('#sb_calendar_year_select').val().length === 0) {
-        //   this.errors.calendarYear = true;
-        //   return false;
-        // } else this.errors.calendarYear = false;
-        //
-        // /*Report for this Quarter*/
-        // if (this.reportForThisQuarter == null) {
-        //   this.errors.reportForThisQuarter = true;
-        //   return false;
-        // } else this.errors.reportForThisQuarter = false;
+        /*EIN*/
+        if (this.employerIdentificationNumber.length < 9) {
+          this.errors.ein = true;
+          return false;
+        } else this.errors.ein = false;
+
+        /*Name*/
+        if (this.name.trim().length === 0) {
+          this.errors.name = true;
+          return false;
+        } else this.errors.name = false;
+
+        /*Calendar*/
+        if ($('#sb_calendar_year_select').val().length === 0) {
+          this.errors.calendarYear = true;
+          return false;
+        } else this.errors.calendarYear = false;
+
+        /*Report for this Quarter*/
+        if (this.reportForThisQuarter == null) {
+          this.errors.reportForThisQuarter = true;
+          return false;
+        } else this.errors.reportForThisQuarter = false;
+
+        /*Month 1 Liability */
+        if (this.monthOneTableSum == null || isNaN(this.monthOneTableSum) ) {
+          this.errors.liabilityMonthOne = true;
+          return false;
+        } else this.errors.liabilityMonthOne = false;
+
+        /*Month 2 Liability */
+        if (this.monthTwoTableSum == null || isNaN(this.monthTwoTableSum) ) {
+          this.errors.liabilityMonthTwo = true;
+          return false;
+        } else this.errors.liabilityMonthTwo = false;
+
+        /*Month 3 Liability */
+        if (this.monthThreeTableSum == null || isNaN(this.monthThreeTableSum) ) {
+          this.errors.liabilityMonthThree = true;
+          return false;
+        } else this.errors.liabilityMonthThree = false;
+
+        /* Quarter Liability */
+        if (this.totalLiabilityForQuarter == null || isNaN(this.totalLiabilityForQuarter.replace(',','')) ) {
+          this.errors.totalLiabilityForQuarter = true;
+          console.error(this.totalLiabilityForQuarter);
+          return false;
+        } else this.errors.totalLiabilityForQuarter = false;
 
         return true;
       },
@@ -350,71 +396,73 @@
 
           console.log(typeof this.calendarYear , ' has a value of ', this.calendarYear);
 
-          // /*Write EIN*/
-          // let ein_mutated = this.employerIdentificationNumber.split('');
-          // for (let i = 0; i < 9; i++) {
-          //   let ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
-          //
-          //   _page.drawText(ein_mutated[i], {
-          //     x: ein_XCoord[i],
-          //     y: height / 2 + 295,
-          //     ..._options
-          //   });
-          // }
-          //
-          // /*Write Name*/
-          // _page.drawText(this.name, {
-          //   x: 140,
-          //   y: height / 2 + 270,
-          //   ..._options
-          // });
-          //
-          // /*Write Calendar Year*/
-          // let calendarYear_mutated = $('#sb_calendar_year_select').val();
-          // calendarYear_mutated.split('');
-          // for (let i = 0; i < 4; i++) {
-          //   let xCoord = [155, 180, 203, 230];
-          //
-          //   _page.drawText(calendarYear_mutated[i], {
-          //     x: xCoord[i],
-          //     y: height / 2 + 245,
-          //     ..._options
-          //   });
-          // }
-          //
-          // /* Report for this quarter */
-          // switch (this.reportForThisQuarter) {
-          //   case '1':
-          //     _page.drawText('x', {
-          //       x: 424,
-          //       y: height / 2 + 280, //294
-          //       ..._options
-          //     });
-          //     break;
-          //   case '2':
-          //     _page.drawText('x', {
-          //       x: 424,
-          //       y: height / 2 + 261,
-          //       ..._options
-          //     });
-          //     break;
-          //   case '3':
-          //     _page.drawText('x', {
-          //       x: 424,
-          //       y: height / 2 + 243,
-          //       ..._options
-          //     });
-          //     break;
-          //   case '4':
-          //     _page.drawText('x', {
-          //       x: 424,
-          //       y: height / 2 + 226,
-          //       ..._options
-          //     });
-          //     break;
-          // }
+          /*Write EIN*/
+          let ein_mutated = this.employerIdentificationNumber.split('');
+          for (let i = 0; i < 9; i++) {
+            let ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
+
+            _page.drawText(ein_mutated[i], {
+              x: ein_XCoord[i],
+              y: height / 2 + 295,
+              ..._options
+            });
+          }
+
+          /*Write Name*/
+          _page.drawText(this.name, {
+            x: 140,
+            y: height / 2 + 270,
+            ..._options
+          });
+
+          /*Write Calendar Year*/
+          let calendarYear_mutated = $('#sb_calendar_year_select').val();
+          calendarYear_mutated.split('');
+          for (let i = 0; i < 4; i++) {
+            let xCoord = [155, 180, 203, 230];
+
+            _page.drawText(calendarYear_mutated[i], {
+              x: xCoord[i],
+              y: height / 2 + 245,
+              ..._options
+            });
+          }
+
+          /* Report for this quarter */
+          switch (this.reportForThisQuarter) {
+            case '1':
+              _page.drawText('x', {
+                x: 424,
+                y: height / 2 + 280, //294
+                ..._options
+              });
+              break;
+            case '2':
+              _page.drawText('x', {
+                x: 424,
+                y: height / 2 + 261,
+                ..._options
+              });
+              break;
+            case '3':
+              _page.drawText('x', {
+                x: 424,
+                y: height / 2 + 243,
+                ..._options
+              });
+              break;
+            case '4':
+              _page.drawText('x', {
+                x: 424,
+                y: height / 2 + 226,
+                ..._options
+              });
+              break;
+          }
 
           // Write first table
+          this.writeTableToPDF(_page, height, _options, this.monthOneTable);
+          this.writeTableToPDF(_page, height, _options, this.monthTwoTable);
           this.writeTableToPDF(_page, height, _options, this.monthThreeTable);
 
           /* Save report and Download*/
@@ -450,106 +498,92 @@
           if (item==='table1') {
           //  Update yCoordinate
             yCoordinate = Y[0];
+            // Write the Months Liability
+            _page.drawText(this.convertToStringAndAddDecimal(this.monthOneTableSum), {
+              x: X[3] + (yOff * 5.5),
+              y: height / 2 + (yCoordinate - 15),
+              ..._options
+            });
+
             console.error('We are on Table 1, with a Y Coordinate of ', yCoordinate);
           }
 
           if (item==='table2') {
           //  Update yCoordinate
             yCoordinate = Y[1];
+            // Write the Months Liability
+            _page.drawText(this.convertToStringAndAddDecimal(this.monthTwoTableSum), {
+              x: X[3] + (yOff * 5.5),
+              y: height / 2 + (yCoordinate - 15),
+              ..._options
+            });
             console.error('We are on Table 2, with a Y Coordinate of ', yCoordinate);
           }
 
           if (item==='table3') {
           //  Update yCoordinate
             yCoordinate = Y[2];
+            // Write the Months Liability
+            _page.drawText(this.convertToStringAndAddDecimal(this.monthThreeTableSum), {
+              x: X[3] + (yOff * 5.5),
+              y: height / 2 + (yCoordinate - 15),
+              ..._options
+            });
             console.error('We are on Table 3, with a Y Coordinate of ', yCoordinate);
           }
+
+          /* Write Total Liability */
+          _page.drawText(this.convertToStringAndAddDecimal(this.totalLiabilityForQuarter), {
+            x: X[3] + (yOff * 5.5),
+            y: height / 2 + (Y[2] - X[1]),
+            ..._options
+          });
 
           // Update xOffset based on table and Index
           // Conditions for 1-8  9-16  17-24  25-31
 
             // console.warn('Item\'s value is ', item, ' with and index of type ', typeof index , ' and a index of ', index);
-
+            /* Ignore 0 */
             if (index > 24) {
               console.warn('Column 4 with an index of ', index);
-              _page.drawText('Column 4', {
-                x: X[3],
-                y: height / 2 + (yCoordinate - yOff * (index - 25)),
-                ..._options
-              });
+              if (parseFloat(item) > 0) {
+                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                  x: X[3],
+                  y: height / 2 + (yCoordinate - yOff * (index - 25)),
+                  ..._options
+                });
+              }
             } else if (index > 16) {
               console.warn('Column 3 with an index of ', index);
-              _page.drawText('Column 3', {
-                x: X[2],
-                y: height / 2 + (yCoordinate - yOff * (index - 17)),
-                ..._options
-              });
+              if (parseFloat(item) > 0) {
+                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                  x: X[2],
+                  y: height / 2 + (yCoordinate - yOff * (index - 17)),
+                  ..._options
+                });
+              }
             }  else if (index > 8) {
               console.warn('Column 2 with an index of ', index);
-              _page.drawText('Column 2', {
-                x: X[1],
-                y: height / 2 + (yCoordinate - yOff * (index - 9)),
-                ..._options
-              });
+              if (parseFloat(item) > 0) {
+                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                  x: X[1],
+                  y: height / 2 + (yCoordinate - yOff * (index - 9)),
+                  ..._options
+                });
+              }
             } else if (index >= 1) {
               console.warn('Column 1');
-              _page.drawText('Column 1', {
-                x: X[0],
-                y: height / 2 + (yCoordinate - yOff * (index - 1)),
-                ..._options
-              });
+
+              if (parseFloat(item) > 0) {
+                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                  x: X[0],
+                  y: height / 2 + (yCoordinate - yOff * (index - 1)),
+                  ..._options
+                });
+              }
+
             }
         });
-
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + Y,
-        //   ..._options
-        // });
-        //
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + (Y - yOff),
-        //   ..._options
-        // });
-        //
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + (Y - yOff * 2),
-        //   ..._options
-        // });
-        //
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + (Y - yOff * 3),
-        //   ..._options
-        // });
-        //
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + (Y - yOff * 4),
-        //   ..._options
-        // });
-        //
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + (Y - yOff * 5),
-        //   ..._options
-        // });
-        //
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + (Y - yOff * 6),
-        //   ..._options
-        // });
-        //
-        // _page.drawText('1000.00', {
-        //   x: X,
-        //   y: height / 2 + (Y - yOff * 7),
-        //   ..._options
-        // });
-
-
       }
     },
     computed: {
@@ -571,6 +605,7 @@
       totalLiabilityForQuarter: function () {
         const totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
         return this.convertToStringAndAddDecimal(totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0));
+        // return totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
       }
     }
   }
