@@ -1,7 +1,14 @@
 <template>
     <div class="container">
-        <div class="position-fixed" style="right: 1rem; bottom:1rem;">
 
+
+        <div class="position-fixed" style="right: 1rem; bottom:7rem;">
+            <h6>Total liability for quarter</h6>
+            <div class="text-right text-success font-weight-bolder">
+                {{ totalLiabilityForQuarter }}
+            </div>
+        </div>
+        <div class="position-fixed" style="right: 1rem; bottom:1rem;">
             <div>
                 <button class="btn btn-danger d-inline clear">Clear</button>
             </div>
@@ -49,7 +56,7 @@
                                 Calendar year
                             </div>
                             <div class="col-7 my-auto">
-                                <flatpickr timeFormat="Y" v-model="calendarYear" id="calendar_year_select"/>
+                                <flatpickr timeFormat="Y" v-model="calendarYear" id="sb_calendar_year_select"/>
                             </div>
                         </div>
                     </div>
@@ -155,15 +162,25 @@
 
 <script>
   import Flatpickr from "../Calendar/Flatpickr";
+  import * as $ from 'jquery';
+  import {degrees, PDFDocument, rgb, StandardFonts} from 'pdf-lib';
+  import download from 'downloadjs';
+
   export default {
     name: "Form_941_Schedule_B",
+    mounted() {
+      console.log('Schedule B Url is ', this.formUrl )
+    },
+    props: {
+      formUrl: String
+    },
     data(){
       return {
-        url: null,
+        url: this.formUrl,
         /* Form Variables */
         employerIdentificationNumber:  null,
         name: null,
-        calendarYear: null,
+        calendarYear: '',
         reportForThisQuarter: null,
         /* Month 1 table generator/map */
         monthOneTable: [
@@ -276,8 +293,69 @@
       }
     },
     methods: {
-      exportToPDF() {
-        console.log(this.monthOneTable)
+      exportToPDF: async function () {
+        /* Write all contents to Final PDF */
+        const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
+
+        const pdfDoc = await PDFDocument.load(existingPdfBytes);
+        const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+        const pages = pdfDoc.getPages();
+        const firstPage = pages[0];
+        const secondPage = pages[1];
+        const {width, height} = firstPage.getSize();
+        const COLOR = rgb(0, 0, 0);
+        const baseOptions = {
+          size: 10,
+          font: helveticaFont,
+          color: COLOR,
+        };
+
+        console.log(typeof this.calendarYear , ' has a value of ', this.calendarYear);
+
+        /*Write EIN*/
+        let ein_mutated = this.employerIdentificationNumber.split('');
+        for (let i = 0; i < 9; i++) {
+          let ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
+
+          firstPage.drawText(ein_mutated[i], {
+            x: ein_XCoord[i],
+            y: height / 2 + 295,
+            ...baseOptions
+          });
+        }
+
+        /*Write Name*/
+        firstPage.drawText(this.name, {
+          x: 140,
+          y: height / 2 + 270,
+          ...baseOptions
+        });
+
+        /*Write Calendar Year*/
+        let calendarYear_mutated = $('#sb_calendar_year_select').val();
+        calendarYear_mutated.split('');
+        for (let i = 0; i < 4; i++) {
+          let xCoord = [155, 180, 203, 230];
+
+          firstPage.drawText(calendarYear_mutated[i], {
+            x: xCoord[i],
+            y: height / 2 + 245,
+            ...baseOptions
+          });
+        }
+
+        console.log(this.monthOneTable);
+
+        /* Save report and Download*/
+        const pdfBytes = await pdfDoc.save();
+        // Trigger the browser to download the PDF document
+        download(pdfBytes, `IRS-941-Schedule-B-${Date.now()}.pdf`, "application/pdf");
+      },
+      convertToStringAndAddDecimal(_number) {
+        let formatToString = _number.toString();
+        let formatToCurrency = (formatToString.includes('.')) ? formatToString : formatToString+='.00';
+        return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
       }
     },
     computed: {
@@ -295,6 +373,10 @@
         let mutatedMonthThree = this.monthThreeTable.slice();
         mutatedMonthThree.shift();
         return mutatedMonthThree.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
+      },
+      totalLiabilityForQuarter: function () {
+        const totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
+        return this.convertToStringAndAddDecimal(totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0));
       }
     }
   }

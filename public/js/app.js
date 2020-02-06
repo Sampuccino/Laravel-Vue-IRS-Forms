@@ -4747,7 +4747,35 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../Calendar/Flatpickr */ "./resources/js/components/Calendar/Flatpickr.vue");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../Calendar/Flatpickr */ "./resources/js/components/Calendar/Flatpickr.vue");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
+/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var pdf_lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! pdf-lib */ "./node_modules/pdf-lib/es/index.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! downloadjs */ "./node_modules/downloadjs/download.js");
+/* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_4__);
+
+
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -4904,16 +4932,25 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 
+
+
+
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Form_941_Schedule_B",
+  mounted: function mounted() {
+    console.log('Schedule B Url is ', this.formUrl);
+  },
+  props: {
+    formUrl: String
+  },
   data: function data() {
     return {
-      url: null,
+      url: this.formUrl,
 
       /* Form Variables */
       employerIdentificationNumber: null,
       name: null,
-      calendarYear: null,
+      calendarYear: '',
       reportForThisQuarter: null,
 
       /* Month 1 table generator/map */
@@ -4930,8 +4967,105 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   methods: {
-    exportToPDF: function exportToPDF() {
-      console.log(this.monthOneTable);
+    exportToPDF: function () {
+      var _exportToPDF = _asyncToGenerator(
+      /*#__PURE__*/
+      _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+        var existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, COLOR, baseOptions, ein_mutated, i, ein_XCoord, calendarYear_mutated, _i, xCoord, pdfBytes;
+
+        return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+          while (1) {
+            switch (_context.prev = _context.next) {
+              case 0:
+                _context.next = 2;
+                return fetch(this.url).then(function (res) {
+                  return res.arrayBuffer();
+                });
+
+              case 2:
+                existingPdfBytes = _context.sent;
+                _context.next = 5;
+                return pdf_lib__WEBPACK_IMPORTED_MODULE_3__["PDFDocument"].load(existingPdfBytes);
+
+              case 5:
+                pdfDoc = _context.sent;
+                _context.next = 8;
+                return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_3__["StandardFonts"].Helvetica);
+
+              case 8:
+                helveticaFont = _context.sent;
+                pages = pdfDoc.getPages();
+                firstPage = pages[0];
+                secondPage = pages[1];
+                _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_3__["rgb"])(0, 0, 0);
+                baseOptions = {
+                  size: 10,
+                  font: helveticaFont,
+                  color: COLOR
+                };
+                console.log(_typeof(this.calendarYear), ' has a value of ', this.calendarYear);
+                /*Write EIN*/
+
+                ein_mutated = this.employerIdentificationNumber.split('');
+
+                for (i = 0; i < 9; i++) {
+                  ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
+                  firstPage.drawText(ein_mutated[i], _objectSpread({
+                    x: ein_XCoord[i],
+                    y: height / 2 + 295
+                  }, baseOptions));
+                }
+                /*Write Name*/
+
+
+                firstPage.drawText(this.name, _objectSpread({
+                  x: 140,
+                  y: height / 2 + 270
+                }, baseOptions));
+                /*Write Calendar Year*/
+
+                calendarYear_mutated = jquery__WEBPACK_IMPORTED_MODULE_2__('#sb_calendar_year_select').val();
+                calendarYear_mutated.split('');
+
+                for (_i = 0; _i < 4; _i++) {
+                  xCoord = [155, 180, 203, 230];
+                  firstPage.drawText(calendarYear_mutated[_i], _objectSpread({
+                    x: xCoord[_i],
+                    y: height / 2 + 245
+                  }, baseOptions));
+                }
+
+                console.log(this.monthOneTable);
+                /* Save report and Download*/
+
+                _context.next = 25;
+                return pdfDoc.save();
+
+              case 25:
+                pdfBytes = _context.sent;
+                // Trigger the browser to download the PDF document
+                downloadjs__WEBPACK_IMPORTED_MODULE_4___default()(pdfBytes, "IRS-941-Schedule-B-".concat(Date.now(), ".pdf"), "application/pdf");
+
+              case 27:
+              case "end":
+                return _context.stop();
+            }
+          }
+        }, _callee, this);
+      }));
+
+      function exportToPDF() {
+        return _exportToPDF.apply(this, arguments);
+      }
+
+      return exportToPDF;
+    }(),
+    convertToStringAndAddDecimal: function convertToStringAndAddDecimal(_number) {
+      var formatToString = _number.toString();
+
+      var formatToCurrency = formatToString.includes('.') ? formatToString : formatToString += '.00';
+      return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
   },
   computed: {
@@ -4955,6 +5089,12 @@ __webpack_require__.r(__webpack_exports__);
       return mutatedMonthThree.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
       }, 0);
+    },
+    totalLiabilityForQuarter: function totalLiabilityForQuarter() {
+      var totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
+      return this.convertToStringAndAddDecimal(totals.reduce(function (a, b) {
+        return parseFloat(a) + parseFloat(b);
+      }, 0));
     }
   }
 });
@@ -5021,6 +5161,7 @@ __webpack_require__.r(__webpack_exports__);
     type_8974: String,
     type_941: String,
     type_941_url: String,
+    type_941s_url: String,
     type_941s: String
   },
   data: function data() {
@@ -66307,6 +66448,29 @@ var render = function() {
       "div",
       {
         staticClass: "position-fixed",
+        staticStyle: { right: "1rem", bottom: "7rem" }
+      },
+      [
+        _c("h6", [_vm._v("Total liability for quarter")]),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "text-right text-success font-weight-bolder" },
+          [
+            _vm._v(
+              "\n            " +
+                _vm._s(_vm.totalLiabilityForQuarter) +
+                "\n        "
+            )
+          ]
+        )
+      ]
+    ),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "position-fixed",
         staticStyle: { right: "1rem", bottom: "1rem" }
       },
       [
@@ -66417,7 +66581,10 @@ var render = function() {
                     { staticClass: "col-7 my-auto" },
                     [
                       _c("flatpickr", {
-                        attrs: { timeFormat: "Y", id: "calendar_year_select" },
+                        attrs: {
+                          timeFormat: "Y",
+                          id: "sb_calendar_year_select"
+                        },
                         model: {
                           value: _vm.calendarYear,
                           callback: function($$v) {
@@ -66941,7 +67108,8 @@ var render = function() {
             value: _vm.activeForm_941_Schedule_B,
             expression: "activeForm_941_Schedule_B"
           }
-        ]
+        ],
+        attrs: { formUrl: _vm.type_941s_url }
       })
     ],
     1
