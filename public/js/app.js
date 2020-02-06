@@ -4931,6 +4931,9 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4948,106 +4951,177 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       url: this.formUrl,
 
       /* Form Variables */
-      employerIdentificationNumber: null,
-      name: null,
+      employerIdentificationNumber: '',
+      name: '',
       calendarYear: '',
       reportForThisQuarter: null,
 
       /* Month 1 table generator/map */
-      monthOneTable: ['filler', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      monthOneTable: ['table1', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
       /* Month 2 table generator/map */
-      monthTwoTable: ['filler', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      monthTwoTable: ['table2', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 
       /* Month 3 table generator/map */
-      monthThreeTable: ['filler', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+      monthThreeTable: ['table3', 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
       errors: {
-        ein: null
+        ein: null,
+        name: null,
+        calendarYear: null,
+        reportForThisQuarter: null
       }
     };
   },
   methods: {
+    validation: function validation() {
+      // /*EIN*/
+      // if (this.employerIdentificationNumber.length < 9) {
+      //   this.errors.ein = true;
+      //   return false;
+      // } else this.errors.ein = false;
+      //
+      // /*Name*/
+      // if (this.name.trim().length === 0) {
+      //   this.errors.name = true;
+      //   return false;
+      // } else this.errors.name = false;
+      //
+      // /*Calendar*/
+      // if ($('#sb_calendar_year_select').val().length === 0) {
+      //   this.errors.calendarYear = true;
+      //   return false;
+      // } else this.errors.calendarYear = false;
+      //
+      // /*Report for this Quarter*/
+      // if (this.reportForThisQuarter == null) {
+      //   this.errors.reportForThisQuarter = true;
+      //   return false;
+      // } else this.errors.reportForThisQuarter = false;
+      return true;
+    },
     exportToPDF: function () {
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
       _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
-        var existingPdfBytes, pdfDoc, helveticaFont, pages, firstPage, secondPage, _firstPage$getSize, width, height, COLOR, baseOptions, ein_mutated, i, ein_XCoord, calendarYear_mutated, _i, xCoord, pdfBytes;
+        var existingPdfBytes, pdfDoc, helveticaFont, pages, _page, _page$getSize, width, height, COLOR, _options, pdfBytes;
 
         return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
           while (1) {
             switch (_context.prev = _context.next) {
               case 0:
-                _context.next = 2;
+                if (this.validation()) {
+                  _context.next = 4;
+                  break;
+                }
+
+                console.error('Form errors!');
+                _context.next = 24;
+                break;
+
+              case 4:
+                _context.next = 6;
                 return fetch(this.url).then(function (res) {
                   return res.arrayBuffer();
                 });
 
-              case 2:
+              case 6:
                 existingPdfBytes = _context.sent;
-                _context.next = 5;
+                _context.next = 9;
                 return pdf_lib__WEBPACK_IMPORTED_MODULE_3__["PDFDocument"].load(existingPdfBytes);
 
-              case 5:
+              case 9:
                 pdfDoc = _context.sent;
-                _context.next = 8;
+                _context.next = 12;
                 return pdfDoc.embedFont(pdf_lib__WEBPACK_IMPORTED_MODULE_3__["StandardFonts"].Helvetica);
 
-              case 8:
+              case 12:
                 helveticaFont = _context.sent;
                 pages = pdfDoc.getPages();
-                firstPage = pages[0];
-                secondPage = pages[1];
-                _firstPage$getSize = firstPage.getSize(), width = _firstPage$getSize.width, height = _firstPage$getSize.height;
+                _page = pages[0];
+                _page$getSize = _page.getSize(), width = _page$getSize.width, height = _page$getSize.height;
                 COLOR = Object(pdf_lib__WEBPACK_IMPORTED_MODULE_3__["rgb"])(0, 0, 0);
-                baseOptions = {
+                _options = {
                   size: 10,
                   font: helveticaFont,
                   color: COLOR
                 };
-                console.log(_typeof(this.calendarYear), ' has a value of ', this.calendarYear);
-                /*Write EIN*/
+                console.log(_typeof(this.calendarYear), ' has a value of ', this.calendarYear); // /*Write EIN*/
+                // let ein_mutated = this.employerIdentificationNumber.split('');
+                // for (let i = 0; i < 9; i++) {
+                //   let ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
+                //
+                //   _page.drawText(ein_mutated[i], {
+                //     x: ein_XCoord[i],
+                //     y: height / 2 + 295,
+                //     ..._options
+                //   });
+                // }
+                //
+                // /*Write Name*/
+                // _page.drawText(this.name, {
+                //   x: 140,
+                //   y: height / 2 + 270,
+                //   ..._options
+                // });
+                //
+                // /*Write Calendar Year*/
+                // let calendarYear_mutated = $('#sb_calendar_year_select').val();
+                // calendarYear_mutated.split('');
+                // for (let i = 0; i < 4; i++) {
+                //   let xCoord = [155, 180, 203, 230];
+                //
+                //   _page.drawText(calendarYear_mutated[i], {
+                //     x: xCoord[i],
+                //     y: height / 2 + 245,
+                //     ..._options
+                //   });
+                // }
+                //
+                // /* Report for this quarter */
+                // switch (this.reportForThisQuarter) {
+                //   case '1':
+                //     _page.drawText('x', {
+                //       x: 424,
+                //       y: height / 2 + 280, //294
+                //       ..._options
+                //     });
+                //     break;
+                //   case '2':
+                //     _page.drawText('x', {
+                //       x: 424,
+                //       y: height / 2 + 261,
+                //       ..._options
+                //     });
+                //     break;
+                //   case '3':
+                //     _page.drawText('x', {
+                //       x: 424,
+                //       y: height / 2 + 243,
+                //       ..._options
+                //     });
+                //     break;
+                //   case '4':
+                //     _page.drawText('x', {
+                //       x: 424,
+                //       y: height / 2 + 226,
+                //       ..._options
+                //     });
+                //     break;
+                // }
+                // Write first table
 
-                ein_mutated = this.employerIdentificationNumber.split('');
-
-                for (i = 0; i < 9; i++) {
-                  ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
-                  firstPage.drawText(ein_mutated[i], _objectSpread({
-                    x: ein_XCoord[i],
-                    y: height / 2 + 295
-                  }, baseOptions));
-                }
-                /*Write Name*/
-
-
-                firstPage.drawText(this.name, _objectSpread({
-                  x: 140,
-                  y: height / 2 + 270
-                }, baseOptions));
-                /*Write Calendar Year*/
-
-                calendarYear_mutated = jquery__WEBPACK_IMPORTED_MODULE_2__('#sb_calendar_year_select').val();
-                calendarYear_mutated.split('');
-
-                for (_i = 0; _i < 4; _i++) {
-                  xCoord = [155, 180, 203, 230];
-                  firstPage.drawText(calendarYear_mutated[_i], _objectSpread({
-                    x: xCoord[_i],
-                    y: height / 2 + 245
-                  }, baseOptions));
-                }
-
-                console.log(this.monthOneTable);
+                this.writeTableToPDF(_page, height, _options, this.monthThreeTable);
                 /* Save report and Download*/
 
-                _context.next = 25;
+                _context.next = 22;
                 return pdfDoc.save();
 
-              case 25:
+              case 22:
                 pdfBytes = _context.sent;
                 // Trigger the browser to download the PDF document
                 downloadjs__WEBPACK_IMPORTED_MODULE_4___default()(pdfBytes, "IRS-941-Schedule-B-".concat(Date.now(), ".pdf"), "application/pdf");
 
-              case 27:
+              case 24:
               case "end":
                 return _context.stop();
             }
@@ -5066,6 +5140,120 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 
       var formatToCurrency = formatToString.includes('.') ? formatToString : formatToString += '.00';
       return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+    },
+    writeTableToPDF: function writeTableToPDF(_page, height, _options, tableArr) {
+      // *N* is STARTING POINT
+      // OFFSET X is 107 for All Tables
+      // [ *53*, 155, 257, 357 ]
+      // OFFSET Y is 18
+      // OFFSET Y for Shifting Tables is *155*
+      // [ *133*, 115 , 97 ] ROW *** 1
+      // [ *-22*, ... ] ROW *** 2
+      // [ *-180*, ... ] ROW *** 3
+      var X = [53, 155, 257, 357];
+      var Y = [133, -22, -180];
+      var yCoordinate;
+      var yOff = 18;
+      tableArr.forEach(function (item, index) {
+        // ✅ Ignore Index 0
+        // ✅ Modify the X coordinate based on Index 0 i.e ['table1', 'table2',...]
+        if (item === 'table1') {
+          //  Update yCoordinate
+          yCoordinate = Y[0];
+          console.error('We are on Table 1, with a Y Coordinate of ', yCoordinate);
+        }
+
+        if (item === 'table2') {
+          //  Update yCoordinate
+          yCoordinate = Y[1];
+          console.error('We are on Table 2, with a Y Coordinate of ', yCoordinate);
+        }
+
+        if (item === 'table3') {
+          //  Update yCoordinate
+          yCoordinate = Y[2];
+          console.error('We are on Table 3, with a Y Coordinate of ', yCoordinate);
+        } // Update xOffset based on table and Index
+        // Conditions for 1-8  9-16  17-24  25-31
+        // console.warn('Item\'s value is ', item, ' with and index of type ', typeof index , ' and a index of ', index);
+
+
+        if (index > 24) {
+          console.warn('Column 4 with an index of ', index);
+
+          _page.drawText('Column 4', _objectSpread({
+            x: X[3],
+            y: height / 2 + (yCoordinate - yOff * (index - 25))
+          }, _options));
+        } else if (index > 16) {
+          console.warn('Column 3 with an index of ', index);
+
+          _page.drawText('Column 3', _objectSpread({
+            x: X[2],
+            y: height / 2 + (yCoordinate - yOff * (index - 17))
+          }, _options));
+        } else if (index > 8) {
+          console.warn('Column 2 with an index of ', index);
+
+          _page.drawText('Column 2', _objectSpread({
+            x: X[1],
+            y: height / 2 + (yCoordinate - yOff * (index - 9))
+          }, _options));
+        } else if (index >= 1) {
+          console.warn('Column 1');
+
+          _page.drawText('Column 1', _objectSpread({
+            x: X[0],
+            y: height / 2 + (yCoordinate - yOff * (index - 1))
+          }, _options));
+        }
+      }); // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + Y,
+      //   ..._options
+      // });
+      //
+      // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + (Y - yOff),
+      //   ..._options
+      // });
+      //
+      // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + (Y - yOff * 2),
+      //   ..._options
+      // });
+      //
+      // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + (Y - yOff * 3),
+      //   ..._options
+      // });
+      //
+      // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + (Y - yOff * 4),
+      //   ..._options
+      // });
+      //
+      // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + (Y - yOff * 5),
+      //   ..._options
+      // });
+      //
+      // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + (Y - yOff * 6),
+      //   ..._options
+      // });
+      //
+      // _page.drawText('1000.00', {
+      //   x: X,
+      //   y: height / 2 + (Y - yOff * 7),
+      //   ..._options
+      // });
     }
   },
   computed: {
@@ -66508,33 +66696,44 @@ var render = function() {
                     )
                   ]),
                   _vm._v(" "),
-                  _c("div", { staticClass: "col-7 my-auto" }, [
-                    _c("input", {
-                      directives: [
-                        {
-                          name: "model",
-                          rawName: "v-model",
-                          value: _vm.employerIdentificationNumber,
-                          expression: "employerIdentificationNumber"
-                        }
-                      ],
-                      staticClass: "form-control",
+                  _c(
+                    "div",
+                    {
+                      staticClass: "col-7 my-auto",
                       class: {
                         "is-invalid": _vm.errors.ein,
                         "is-valid": _vm.errors.ein === false
-                      },
-                      attrs: { type: "text", minlength: "9", maxlength: "9" },
-                      domProps: { value: _vm.employerIdentificationNumber },
-                      on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.employerIdentificationNumber = $event.target.value
-                        }
                       }
-                    })
-                  ]),
+                    },
+                    [
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.employerIdentificationNumber,
+                            expression: "employerIdentificationNumber"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        class: {
+                          "is-invalid": _vm.errors.ein,
+                          "is-valid": _vm.errors.ein === false
+                        },
+                        attrs: { type: "text", minlength: "9", maxlength: "9" },
+                        domProps: { value: _vm.employerIdentificationNumber },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.employerIdentificationNumber =
+                              $event.target.value
+                          }
+                        }
+                      })
+                    ]
+                  ),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
                     _vm._v(
@@ -66578,7 +66777,13 @@ var render = function() {
                   _vm._v(" "),
                   _c(
                     "div",
-                    { staticClass: "col-7 my-auto" },
+                    {
+                      staticClass: "col-7 my-auto",
+                      class: {
+                        "is-invalid": _vm.errors.calendarYear,
+                        "is-valid": _vm.errors.calendarYear === false
+                      }
+                    },
                     [
                       _c("flatpickr", {
                         attrs: {
@@ -66601,6 +66806,22 @@ var render = function() {
               _vm._v(" "),
               _c("div", { staticClass: "col-4" }, [
                 _c("div", { staticClass: "form-check" }, [
+                  _c(
+                    "h6",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.errors.reportForThisQuarter,
+                          expression: "errors.reportForThisQuarter"
+                        }
+                      ],
+                      staticClass: "alert-danger p-1"
+                    },
+                    [_vm._v("Select a quarter")]
+                  ),
+                  _vm._v(" "),
                   _vm._m(2),
                   _vm._v(" "),
                   _c(

@@ -5,8 +5,6 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/js/components/IRS Forms/Form_941S.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/IRS Forms/Form_941S.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/SelectFormTemplate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SelectFormTemplate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -278,7 +276,8 @@
       <workItem from="1580885710526" duration="67000" />
       <workItem from="1580885781662" duration="6000" />
       <workItem from="1580885827761" duration="6679000" />
-      <workItem from="1580964200805" duration="3093000" />
+      <workItem from="1580964200805" duration="4035000" />
+      <workItem from="1581016857423" duration="8127000" />
     </task>
     <servers />
   </component>

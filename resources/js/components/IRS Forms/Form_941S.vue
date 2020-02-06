@@ -32,7 +32,8 @@
                             <div class="col-5 font-weight-bold mb-2">
                                 Employer identification number
                             </div>
-                            <div class="col-7 my-auto">
+                            <div class="col-7 my-auto"
+                                 :class="{'is-invalid': errors.ein, 'is-valid': (errors.ein===false)}">
                                 <input type="text" class="form-control"
                                        :class="{'is-invalid': errors.ein, 'is-valid': (errors.ein===false)}"
                                        v-model="employerIdentificationNumber"
@@ -55,13 +56,15 @@
                             <div class="col-5 font-weight-bold mb-2">
                                 Calendar year
                             </div>
-                            <div class="col-7 my-auto">
+                            <div class="col-7 my-auto"
+                                 :class="{'is-invalid': errors.calendarYear, 'is-valid': (errors.calendarYear===false)}">
                                 <flatpickr timeFormat="Y" v-model="calendarYear" id="sb_calendar_year_select"/>
                             </div>
                         </div>
                     </div>
                     <div class="col-4">
                         <div class="form-check">
+                            <h6 class="alert-danger p-1" v-show="errors.reportForThisQuarter">Select a quarter</h6>
                             <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Report for this quarter <small>check
                                 only one box</small></h6>
                             <label class="form-check-label d-block mt-2">
@@ -178,13 +181,13 @@
       return {
         url: this.formUrl,
         /* Form Variables */
-        employerIdentificationNumber:  null,
-        name: null,
+        employerIdentificationNumber:  '',
+        name: '',
         calendarYear: '',
         reportForThisQuarter: null,
         /* Month 1 table generator/map */
         monthOneTable: [
-          'filler',
+          'table1',
           0,
           0,
           0,
@@ -219,7 +222,7 @@
         ],
         /* Month 2 table generator/map */
         monthTwoTable: [
-          'filler',
+          'table2',
           0,
           0,
           0,
@@ -254,7 +257,7 @@
         ],
         /* Month 3 table generator/map */
         monthThreeTable: [
-          'filler',
+          'table3',
           0,
           0,
           0,
@@ -289,73 +292,264 @@
         ],
         errors: {
           ein: null,
+          name: null,
+          calendarYear: null,
+          reportForThisQuarter: null
         }
       }
     },
     methods: {
+      validation: function() {
+
+        // /*EIN*/
+        // if (this.employerIdentificationNumber.length < 9) {
+        //   this.errors.ein = true;
+        //   return false;
+        // } else this.errors.ein = false;
+        //
+        // /*Name*/
+        // if (this.name.trim().length === 0) {
+        //   this.errors.name = true;
+        //   return false;
+        // } else this.errors.name = false;
+        //
+        // /*Calendar*/
+        // if ($('#sb_calendar_year_select').val().length === 0) {
+        //   this.errors.calendarYear = true;
+        //   return false;
+        // } else this.errors.calendarYear = false;
+        //
+        // /*Report for this Quarter*/
+        // if (this.reportForThisQuarter == null) {
+        //   this.errors.reportForThisQuarter = true;
+        //   return false;
+        // } else this.errors.reportForThisQuarter = false;
+
+        return true;
+      },
       exportToPDF: async function () {
-        /* Write all contents to Final PDF */
-        const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
 
-        const pdfDoc = await PDFDocument.load(existingPdfBytes);
-        const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+        if (!this.validation()) {
+          console.error('Form errors!');
+        } else {
+          /* Write all contents to Final PDF */
+          const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
 
-        const pages = pdfDoc.getPages();
-        const firstPage = pages[0];
-        const secondPage = pages[1];
-        const {width, height} = firstPage.getSize();
-        const COLOR = rgb(0, 0, 0);
-        const baseOptions = {
-          size: 10,
-          font: helveticaFont,
-          color: COLOR,
-        };
+          const pdfDoc = await PDFDocument.load(existingPdfBytes);
+          const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
 
-        console.log(typeof this.calendarYear , ' has a value of ', this.calendarYear);
+          const pages = pdfDoc.getPages();
+          const _page = pages[0];
+          const {width, height} = _page.getSize();
+          const COLOR = rgb(0, 0, 0);
+          const _options = {
+            size: 10,
+            font: helveticaFont,
+            color: COLOR,
+          };
 
-        /*Write EIN*/
-        let ein_mutated = this.employerIdentificationNumber.split('');
-        for (let i = 0; i < 9; i++) {
-          let ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
+          console.log(typeof this.calendarYear , ' has a value of ', this.calendarYear);
 
-          firstPage.drawText(ein_mutated[i], {
-            x: ein_XCoord[i],
-            y: height / 2 + 295,
-            ...baseOptions
-          });
+          // /*Write EIN*/
+          // let ein_mutated = this.employerIdentificationNumber.split('');
+          // for (let i = 0; i < 9; i++) {
+          //   let ein_XCoord = [155, 180, 220, 245, 270, 295, 320, 345, 370];
+          //
+          //   _page.drawText(ein_mutated[i], {
+          //     x: ein_XCoord[i],
+          //     y: height / 2 + 295,
+          //     ..._options
+          //   });
+          // }
+          //
+          // /*Write Name*/
+          // _page.drawText(this.name, {
+          //   x: 140,
+          //   y: height / 2 + 270,
+          //   ..._options
+          // });
+          //
+          // /*Write Calendar Year*/
+          // let calendarYear_mutated = $('#sb_calendar_year_select').val();
+          // calendarYear_mutated.split('');
+          // for (let i = 0; i < 4; i++) {
+          //   let xCoord = [155, 180, 203, 230];
+          //
+          //   _page.drawText(calendarYear_mutated[i], {
+          //     x: xCoord[i],
+          //     y: height / 2 + 245,
+          //     ..._options
+          //   });
+          // }
+          //
+          // /* Report for this quarter */
+          // switch (this.reportForThisQuarter) {
+          //   case '1':
+          //     _page.drawText('x', {
+          //       x: 424,
+          //       y: height / 2 + 280, //294
+          //       ..._options
+          //     });
+          //     break;
+          //   case '2':
+          //     _page.drawText('x', {
+          //       x: 424,
+          //       y: height / 2 + 261,
+          //       ..._options
+          //     });
+          //     break;
+          //   case '3':
+          //     _page.drawText('x', {
+          //       x: 424,
+          //       y: height / 2 + 243,
+          //       ..._options
+          //     });
+          //     break;
+          //   case '4':
+          //     _page.drawText('x', {
+          //       x: 424,
+          //       y: height / 2 + 226,
+          //       ..._options
+          //     });
+          //     break;
+          // }
+
+          // Write first table
+          this.writeTableToPDF(_page, height, _options, this.monthThreeTable);
+
+          /* Save report and Download*/
+          const pdfBytes = await pdfDoc.save();
+          // Trigger the browser to download the PDF document
+          download(pdfBytes, `IRS-941-Schedule-B-${Date.now()}.pdf`, "application/pdf");
         }
-
-        /*Write Name*/
-        firstPage.drawText(this.name, {
-          x: 140,
-          y: height / 2 + 270,
-          ...baseOptions
-        });
-
-        /*Write Calendar Year*/
-        let calendarYear_mutated = $('#sb_calendar_year_select').val();
-        calendarYear_mutated.split('');
-        for (let i = 0; i < 4; i++) {
-          let xCoord = [155, 180, 203, 230];
-
-          firstPage.drawText(calendarYear_mutated[i], {
-            x: xCoord[i],
-            y: height / 2 + 245,
-            ...baseOptions
-          });
-        }
-
-        console.log(this.monthOneTable);
-
-        /* Save report and Download*/
-        const pdfBytes = await pdfDoc.save();
-        // Trigger the browser to download the PDF document
-        download(pdfBytes, `IRS-941-Schedule-B-${Date.now()}.pdf`, "application/pdf");
       },
       convertToStringAndAddDecimal(_number) {
         let formatToString = _number.toString();
         let formatToCurrency = (formatToString.includes('.')) ? formatToString : formatToString+='.00';
         return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
+      },
+      writeTableToPDF(_page, height, _options, tableArr){
+        // *N* is STARTING POINT
+        // OFFSET X is 107 for All Tables
+        // [ *53*, 155, 257, 357 ]
+        // OFFSET Y is 18
+        // OFFSET Y for Shifting Tables is *155*
+        // [ *133*, 115 , 97 ] ROW *** 1
+        // [ *-22*, ... ] ROW *** 2
+        // [ *-180*, ... ] ROW *** 3
+
+        const X = [ 53,155,257,357 ];
+        const Y = [ 133, -22, -180 ];
+        let yCoordinate;
+        const yOff = 18;
+
+        tableArr.forEach( (item, index) => {
+            // ✅ Ignore Index 0
+            // ✅ Modify the X coordinate based on Index 0 i.e ['table1', 'table2',...]
+
+          if (item==='table1') {
+          //  Update yCoordinate
+            yCoordinate = Y[0];
+            console.error('We are on Table 1, with a Y Coordinate of ', yCoordinate);
+          }
+
+          if (item==='table2') {
+          //  Update yCoordinate
+            yCoordinate = Y[1];
+            console.error('We are on Table 2, with a Y Coordinate of ', yCoordinate);
+          }
+
+          if (item==='table3') {
+          //  Update yCoordinate
+            yCoordinate = Y[2];
+            console.error('We are on Table 3, with a Y Coordinate of ', yCoordinate);
+          }
+
+          // Update xOffset based on table and Index
+          // Conditions for 1-8  9-16  17-24  25-31
+
+            // console.warn('Item\'s value is ', item, ' with and index of type ', typeof index , ' and a index of ', index);
+
+            if (index > 24) {
+              console.warn('Column 4 with an index of ', index);
+              _page.drawText('Column 4', {
+                x: X[3],
+                y: height / 2 + (yCoordinate - yOff * (index - 25)),
+                ..._options
+              });
+            } else if (index > 16) {
+              console.warn('Column 3 with an index of ', index);
+              _page.drawText('Column 3', {
+                x: X[2],
+                y: height / 2 + (yCoordinate - yOff * (index - 17)),
+                ..._options
+              });
+            }  else if (index > 8) {
+              console.warn('Column 2 with an index of ', index);
+              _page.drawText('Column 2', {
+                x: X[1],
+                y: height / 2 + (yCoordinate - yOff * (index - 9)),
+                ..._options
+              });
+            } else if (index >= 1) {
+              console.warn('Column 1');
+              _page.drawText('Column 1', {
+                x: X[0],
+                y: height / 2 + (yCoordinate - yOff * (index - 1)),
+                ..._options
+              });
+            }
+        });
+
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + Y,
+        //   ..._options
+        // });
+        //
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + (Y - yOff),
+        //   ..._options
+        // });
+        //
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + (Y - yOff * 2),
+        //   ..._options
+        // });
+        //
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + (Y - yOff * 3),
+        //   ..._options
+        // });
+        //
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + (Y - yOff * 4),
+        //   ..._options
+        // });
+        //
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + (Y - yOff * 5),
+        //   ..._options
+        // });
+        //
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + (Y - yOff * 6),
+        //   ..._options
+        // });
+        //
+        // _page.drawText('1000.00', {
+        //   x: X,
+        //   y: height / 2 + (Y - yOff * 7),
+        //   ..._options
+        // });
+
+
       }
     },
     computed: {
