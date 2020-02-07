@@ -5045,7 +5045,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       /* Quarter Liability */
 
 
-      if (this.totalLiabilityForQuarter == null || isNaN(this.totalLiabilityForQuarter.replace(',', ''))) {
+      if (this.totalLiabilityForQuarter == null || isNaN(this.totalLiabilityForQuarter.replace(/,/g, ''))) {
         this.errors.totalLiabilityForQuarter = true;
         console.error(this.totalLiabilityForQuarter);
         return false;
@@ -5277,7 +5277,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           console.warn('Column 4 with an index of ', index);
 
           if (parseFloat(item) > 0) {
-            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+            _page.drawText(_this.convertToStringAndAddDecimal(parseFloat(item).toFixed(2)), _objectSpread({
               x: X[3],
               y: height / 2 + (yCoordinate - yOff * (index - 25))
             }, _options));
@@ -5286,7 +5286,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           console.warn('Column 3 with an index of ', index);
 
           if (parseFloat(item) > 0) {
-            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+            _page.drawText(_this.convertToStringAndAddDecimal(parseFloat(item).toFixed(2)), _objectSpread({
               x: X[2],
               y: height / 2 + (yCoordinate - yOff * (index - 17))
             }, _options));
@@ -5295,7 +5295,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           console.warn('Column 2 with an index of ', index);
 
           if (parseFloat(item) > 0) {
-            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+            _page.drawText(_this.convertToStringAndAddDecimal(parseFloat(item).toFixed(2)), _objectSpread({
               x: X[1],
               y: height / 2 + (yCoordinate - yOff * (index - 9))
             }, _options));
@@ -5304,7 +5304,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           console.warn('Column 1');
 
           if (parseFloat(item) > 0) {
-            _page.drawText(_this.convertToStringAndAddDecimal(item), _objectSpread({
+            _page.drawText(_this.convertToStringAndAddDecimal(parseFloat(item).toFixed(2)), _objectSpread({
               x: X[0],
               y: height / 2 + (yCoordinate - yOff * (index - 1))
             }, _options));
@@ -5319,27 +5319,27 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       mutatedMonthOne.shift();
       return mutatedMonthOne.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
-      }, 0);
+      }, 0).toFixed(2);
     },
     monthTwoTableSum: function monthTwoTableSum() {
       var mutatedMonthTwo = this.monthTwoTable.slice();
       mutatedMonthTwo.shift();
       return mutatedMonthTwo.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
-      }, 0);
+      }, 0).toFixed(2);
     },
     monthThreeTableSum: function monthThreeTableSum() {
       var mutatedMonthThree = this.monthThreeTable.slice();
       mutatedMonthThree.shift();
       return mutatedMonthThree.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
-      }, 0);
+      }, 0).toFixed(2);
     },
     totalLiabilityForQuarter: function totalLiabilityForQuarter() {
       var totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
       return this.convertToStringAndAddDecimal(totals.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
-      }, 0)); // return totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
+      }, 0).toFixed(2)); // return totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
     }
   }
 });
@@ -5429,7 +5429,7 @@ __webpack_require__.r(__webpack_exports__);
       }],
       activeForm_8974: false,
       activeForm_941: false,
-      activeForm_941_Schedule_B: true
+      activeForm_941_Schedule_B: false
     };
   },
   methods: {

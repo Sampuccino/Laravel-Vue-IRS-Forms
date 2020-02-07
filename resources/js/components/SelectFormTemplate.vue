@@ -71,7 +71,7 @@
         ],
         activeForm_8974: false,
         activeForm_941: false,
-        activeForm_941_Schedule_B: true
+        activeForm_941_Schedule_B: false
       }
     },
     methods: {

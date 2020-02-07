@@ -365,7 +365,7 @@
         } else this.errors.liabilityMonthThree = false;
 
         /* Quarter Liability */
-        if (this.totalLiabilityForQuarter == null || isNaN(this.totalLiabilityForQuarter.replace(',','')) ) {
+        if (this.totalLiabilityForQuarter == null || isNaN(this.totalLiabilityForQuarter.replace(/,/g, '')) ) {
           this.errors.totalLiabilityForQuarter = true;
           console.error(this.totalLiabilityForQuarter);
           return false;
@@ -547,7 +547,7 @@
             if (index > 24) {
               console.warn('Column 4 with an index of ', index);
               if (parseFloat(item) > 0) {
-                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                _page.drawText(this.convertToStringAndAddDecimal( parseFloat(item).toFixed(2) ), {
                   x: X[3],
                   y: height / 2 + (yCoordinate - yOff * (index - 25)),
                   ..._options
@@ -556,7 +556,7 @@
             } else if (index > 16) {
               console.warn('Column 3 with an index of ', index);
               if (parseFloat(item) > 0) {
-                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                _page.drawText(this.convertToStringAndAddDecimal(parseFloat(item).toFixed(2)), {
                   x: X[2],
                   y: height / 2 + (yCoordinate - yOff * (index - 17)),
                   ..._options
@@ -565,7 +565,7 @@
             }  else if (index > 8) {
               console.warn('Column 2 with an index of ', index);
               if (parseFloat(item) > 0) {
-                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                _page.drawText(this.convertToStringAndAddDecimal(parseFloat(item).toFixed(2)), {
                   x: X[1],
                   y: height / 2 + (yCoordinate - yOff * (index - 9)),
                   ..._options
@@ -575,7 +575,7 @@
               console.warn('Column 1');
 
               if (parseFloat(item) > 0) {
-                _page.drawText(this.convertToStringAndAddDecimal(item), {
+                _page.drawText(this.convertToStringAndAddDecimal(parseFloat(item).toFixed(2)), {
                   x: X[0],
                   y: height / 2 + (yCoordinate - yOff * (index - 1)),
                   ..._options
@@ -590,21 +590,21 @@
       monthOneTableSum: function() {
         let mutatedMonthOne = this.monthOneTable.slice();
         mutatedMonthOne.shift();
-        return mutatedMonthOne.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
+        return mutatedMonthOne.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
       },
       monthTwoTableSum: function() {
         let mutatedMonthTwo = this.monthTwoTable.slice();
         mutatedMonthTwo.shift();
-        return mutatedMonthTwo.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
+        return mutatedMonthTwo.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
       },
       monthThreeTableSum: function() {
         let mutatedMonthThree = this.monthThreeTable.slice();
         mutatedMonthThree.shift();
-        return mutatedMonthThree.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
+        return mutatedMonthThree.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
       },
       totalLiabilityForQuarter: function () {
         const totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
-        return this.convertToStringAndAddDecimal(totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0));
+        return this.convertToStringAndAddDecimal(totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2));
         // return totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
       }
     }
