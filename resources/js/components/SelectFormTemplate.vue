@@ -28,7 +28,7 @@
 
         <form_8974 v-show="activeForm_8974"/>
         <form_941  v-show="activeForm_941" :formUrl="type_941_url"/>
-        <form_941-s v-show="activeForm_941_Schedule_B"/>
+        <form_941-s v-show="activeForm_941_Schedule_B" :formUrl="type_941s_url"/>
 
     </div>
 </template>
@@ -44,6 +44,7 @@
       type_8974: String,
       type_941: String,
       type_941_url: String,
+      type_941s_url: String,
       type_941s: String
     },
     data: function() {
@@ -69,7 +70,7 @@
          }
         ],
         activeForm_8974: false,
-        activeForm_941: true,
+        activeForm_941: false,
         activeForm_941_Schedule_B: false
       }
     },
