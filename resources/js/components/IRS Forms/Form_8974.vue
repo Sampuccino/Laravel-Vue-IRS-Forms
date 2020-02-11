@@ -284,6 +284,9 @@
   export default {
     name: "Form_8974",
     components: {Flatpickr},
+    props: {
+        disableDownload: String
+    },
     mounted(){
       this.calendarYear = $('#calendar_year_select').val();
     },
