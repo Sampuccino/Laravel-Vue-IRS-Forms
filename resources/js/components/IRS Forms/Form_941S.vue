@@ -30,7 +30,7 @@
                 <button class="btn btn-danger d-inline clear">Clear</button>
             </div>
 
-            <div>
+            <div v-show="disableDownload !== 'Y'">
                 <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
             </div>
         </div>
@@ -192,7 +192,8 @@
       console.log('Schedule B Url is ', this.formUrl )
     },
     props: {
-      formUrl: String
+      formUrl: String,
+      disableDownload: String
     },
     data(){
       return {

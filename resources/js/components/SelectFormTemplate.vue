@@ -56,7 +56,7 @@
 
         </div>
 
-        <div v-show="isFillingOut">
+        <div v-if="isFillingOut">
 
             <div class="row">
                 <div class="col-3">
@@ -81,6 +81,7 @@
                 <div class="col-9">
                     <p>Use the left menu to alternate between forms or use the download button to download all
                         working forms.</p>
+                    <button class="btn btn-warning" @click="returnToStart">Back</button>
                     <button class="btn btn-primary">Download</button>
                 </div>
                 <div class="col-12">
@@ -90,18 +91,18 @@
                     <form_8974 v-show="setActive.t8974" disableDownload="Y"/>
                 </div>
                 <div class="col-12">
-                    <form_941  v-show="setActive.t941" :formUrl="type_941_url"/>
+                    <form_941  v-show="setActive.t941" disableDownload="Y" :formUrl="type_941_url"/>
                 </div>
                 <div class="col-12">
-                    <form_941-s v-show="setActive.t941SB" :formUrl="type_941s_url"/>
+                    <form_941-s v-show="setActive.t941SB" disableDownload="Y" :formUrl="type_941s_url"/>
                 </div>
             </div>
 
         </div>
 
-        <form_8974 v-show="activeForm_8974"/>
-        <form_941  v-show="activeForm_941" :formUrl="type_941_url"/>
-        <form_941-s v-show="activeForm_941_Schedule_B" :formUrl="type_941s_url"/>
+        <form_8974 v-show="activeForm_8974 && !isFillingOut"/>
+        <form_941  v-show="activeForm_941 && !isFillingOut" :formUrl="type_941_url"/>
+        <form_941-s v-show="activeForm_941_Schedule_B && !isFillingOut" :formUrl="type_941s_url"/>
 
     </div>
 </template>
@@ -198,8 +199,11 @@
       },
         continueWithSelectedForms() {
           console.log(this.checkedForms);
-            this.isFillingOut = true;
+            if(this.checkedForms.length > 1) this.isFillingOut = true;
         },
+      returnToStart() {
+        this.isFillingOut = !this.isFillingOut;
+      }
     }
   }
 </script>

@@ -1,12 +1,28 @@
 <template>
     <div class="container">
+
+      <div class="row d-none">
+        {{ returnEmployerIdentificationNumber() }}
+        {{ returnName() }}
+        {{ returnTradeName() }}
+        {{ returnAddress() }}
+        {{ returnCity() }}
+        {{ returnState() }}
+        {{ returnZip() }}
+        {{ returnForeignName() }}
+        {{ returnForeignProvince() }}
+        {{ returnForeignZip() }}
+        {{ returnQuarterSelected() }}
+        {{ returnForm8974Line12 }}
+      </div>
+
         <div class="position-fixed" style="right: 1rem; bottom:1rem;">
 
             <div>
                 <button class="btn btn-danger d-inline clear">Clear</button>
             </div>
 
-            <div>
+            <div v-show="disableDownload !== 'Y'">
                 <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
             </div>
         </div>
@@ -520,14 +536,30 @@
 <script>
   import {degrees, PDFDocument, rgb, StandardFonts} from 'pdf-lib';
   import download from 'downloadjs';
+  import {mapGetters, mapActions} from "vuex";
 
   export default {
     name: "Form_941",
     props: {
-      formUrl: String
+      formUrl: String,
+      disableDownload: String
     },
     mounted(){
       this.url = this.formUrl;
+    },
+    beforeUpdate() {
+      this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+      this.name = this.returnName();
+      this.tradeName = this.returnTradeName();
+      this.address = this.returnAddress();
+      this.city = this.returnCity();
+      this.state = this.returnState();
+      this.zip = this.returnZip();
+      this.f_countryName = this.returnForeignName();
+      this.f_countryProvince = this.returnForeignProvince();
+      this.f_countryZIP = this.returnForeignZip();
+      this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12;
+      // this.reportForThisQuarter = this.returnQuarterSelected();
     },
     data(){
       return {
@@ -612,11 +644,16 @@
       }
     },
     computed: {
+      ...mapGetters(['returnForm8974Line12']),
       taxable5A: function () {
-       return Number((this.taxableSSWages * 0.124).toFixed(2))
+        const _n = Number((this.taxableSSWages * 0.124).toFixed(2));
+        this.storeForm941Line5AColumn2(_n);
+       return _n;
       },
       taxable5B: function () {
-       return Number((this.taxableSSTips * 0.124).toFixed(2))
+        const _n = Number((this.taxableSSTips * 0.124).toFixed(2));
+        this.storeForm941Line5BColumn2(_n);
+       return _n;
       },
       taxable5C: function () {
        return Number((this.taxableMedicalWages * 0.029).toFixed(2))
@@ -658,6 +695,10 @@
       }
     },
     methods: {
+      ...mapGetters(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress',
+        'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip',
+        'returnQuarterSelected', 'returnForm941Line5AColumn2']),
+      ...mapActions(['storeForm941Line5AColumn2', 'storeForm941Line5BColumn2']),
       validateFormFields: function(){
 
         if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {

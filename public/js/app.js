@@ -2312,10 +2312,15 @@ module.exports = {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! jquery */ "./node_modules/jquery/dist/jquery.js");
-/* harmony import */ var jquery__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(jquery__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 /* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! flatpickr */ "./node_modules/flatpickr/dist/flatpickr.js");
 /* harmony import */ var flatpickr__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(flatpickr__WEBPACK_IMPORTED_MODULE_1__);
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -2340,17 +2345,17 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   mounted: function mounted() {
-    console.warn(this.timeFormat);
-    console.warn(this.id);
     flatpickr__WEBPACK_IMPORTED_MODULE_1___default()("#".concat(this.id), {
       enableTime: false,
       dateFormat: this.timeFormat
     });
   },
-  methods: {
-    updateCalendarInputValue: function updateCalendarInputValue() {// this.calendarYear = event.target.value.split('-')[0];
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_0__["mapActions"])(['updateCalendarYear']), {
+    updateCalendarInputValue: function updateCalendarInputValue(event) {
+      console.warn(event.target.value);
+      this.updateCalendarYear(event.target.value); // this.calendarYear = event.target.value.split('-')[0];
     }
-  },
+  }),
   computed: {
     returnYear: function returnYear() {
       console.warn(this.calendarYear.split('-')[0]);
@@ -2702,6 +2707,39 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -2716,21 +2754,30 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     disableDownload: String
   },
   mounted: function mounted() {
-    this.calendarYear = jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val();
+    if (this.disableDownload !== 'Y') {
+      this.calendarYear = jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val();
+    }
   },
   beforeUpdate: function beforeUpdate() {
-    this.ein = this.returnEmployerIdentificationNumber();
+    /* Only enable retrieving from Vuex if working in multi form layout */
+    if (this.disableDownload === 'Y') {
+      console.warn('Calendar year from Vuex is ', this.returnCalendarYear());
+      this.ein = this.returnEmployerIdentificationNumber().substr(0, 2) + ' - ' + this.returnEmployerIdentificationNumber().substr(2);
+      this.name = this.returnName();
+      jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val(this.returnCalendarYear());
+      this.partTwoEight = this.returnForm941Line5AColumn2;
+      this.partTwoNine = this.returnForm941Line5BColumn2;
+    }
   },
   data: function data() {
     return {
-      // url: 'https://irsforms.dev/Form-8974.pdf',
       url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
 
       /* MAIN FORM FIELDS ######################## */
       ein: '',
       creditTypeBox: null,
       name: '',
-      reportForThisQuarter: null,
+      reportForThisQuarter: this.returnQuarterSelected,
       calendarYear: '',
       endingDateIncomeTax: {
         a1: null,
@@ -2794,7 +2841,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapGetters"])(['returnQuarterSelected', 'returnForm941Line5AColumn2', 'returnForm941Line5BColumn2']), {
     limitEIN: function limitEIN() {
       if (this.ein.length === 2) this.ein += ' - ';
     },
@@ -2838,13 +2885,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       return (Number(this.partTwoEight) + Number(this.partTwoNine)).toFixed(2);
     },
     partTwoGreaterThan: function partTwoGreaterThan() {
-      return Number(this.rowSixTotal) > Number(this.partTwoLineElevenPercentage) ? this.partTwoLineElevenPercentage : this.rowSixTotal;
+      var _n = Number(this.rowSixTotal) > Number(this.partTwoLineElevenPercentage) ? this.partTwoLineElevenPercentage : this.rowSixTotal;
+
+      this.storeForm8974Line12(_n);
+      return _n;
     },
     partTwoLineElevenPercentage: function partTwoLineElevenPercentage() {
       return Number(this.sumOfPartTwoEightAndNine * .50).toFixed(2);
     }
-  },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapGetters"])(['returnEmployerIdentificationNumber']), {
+  }),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapGetters"])(['returnEmployerIdentificationNumber', 'returnName', 'returnCalendarYear']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(['storeForm8974Line12']), {
     exportToPDF: function () {
       var _exportToPDF = _asyncToGenerator(
       /*#__PURE__*/
@@ -3398,9 +3448,14 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var pdf_lib__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! pdf-lib */ "./node_modules/pdf-lib/es/index.js");
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! downloadjs */ "./node_modules/downloadjs/download.js");
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
 
@@ -3408,538 +3463,565 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
-function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
-function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Form_941",
   props: {
-    formUrl: String
+    formUrl: String,
+    disableDownload: String
   },
   mounted: function mounted() {
     this.url = this.formUrl;
+  },
+  beforeUpdate: function beforeUpdate() {
+    this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+    this.name = this.returnName();
+    this.tradeName = this.returnTradeName();
+    this.address = this.returnAddress();
+    this.city = this.returnCity();
+    this.state = this.returnState();
+    this.zip = this.returnZip();
+    this.f_countryName = this.returnForeignName();
+    this.f_countryProvince = this.returnForeignProvince();
+    this.f_countryZIP = this.returnForeignZip();
+    this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12; // this.reportForThisQuarter = this.returnQuarterSelected();
   },
   data: function data() {
     return {
@@ -4084,12 +4166,18 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
   },
-  computed: {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['returnForm8974Line12']), {
     taxable5A: function taxable5A() {
-      return Number((this.taxableSSWages * 0.124).toFixed(2));
+      var _n = Number((this.taxableSSWages * 0.124).toFixed(2));
+
+      this.storeForm941Line5AColumn2(_n);
+      return _n;
     },
     taxable5B: function taxable5B() {
-      return Number((this.taxableSSTips * 0.124).toFixed(2));
+      var _n = Number((this.taxableSSTips * 0.124).toFixed(2));
+
+      this.storeForm941Line5BColumn2(_n);
+      return _n;
     },
     taxable5C: function taxable5C() {
       return Number((this.taxableMedicalWages * 0.029).toFixed(2));
@@ -4137,8 +4225,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         return a + b;
       }, 0).toFixed(2);
     }
-  },
-  methods: {
+  }),
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress', 'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip', 'returnQuarterSelected', 'returnForm941Line5AColumn2']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])(['storeForm941Line5AColumn2', 'storeForm941Line5BColumn2']), {
     validateFormFields: function validateFormFields() {
       if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
         this.errors.ein = true;
@@ -4742,7 +4830,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       var formatToCurrency = formatToString.includes('.') ? formatToString : formatToString += '.00';
       return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
     }
-  }
+  })
 });
 
 /***/ }),
@@ -4970,7 +5058,8 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     console.log('Schedule B Url is ', this.formUrl);
   },
   props: {
-    formUrl: String
+    formUrl: String,
+    disableDownload: String
   },
   data: function data() {
     return {
@@ -5520,10 +5609,6 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
-//
-//
-//
-//
 
 
 
@@ -5531,6 +5616,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   name: "PersonalDetails",
   components: {
     Flatpickr: _Calendar_Flatpickr__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  mounted: function mounted() {
+    jquery__WEBPACK_IMPORTED_MODULE_1__('#personal_calendar_year').val('');
   },
   data: function data() {
     return {
@@ -5573,12 +5661,50 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['updateEIN']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_2__["mapActions"])(['updateEIN', 'updateName', 'updateTradeName', 'updateAddress', 'updateState', 'updateCity', 'updateZip', 'updateForeignCountryName', 'updateForeignCountryProvince', 'updateForeignCountryZip', 'updateQuarterRadio']), {
     updateEINState: function updateEINState(event) {
       this.updateEIN(event.target.value);
-      console.log(event.target.value); // $('#form8974EIN').
+      console.log(event.target.value);
+    },
+    updateNameState: function updateNameState(event) {
+      this.updateName(event.target.value);
+    },
+    updateTradeNameState: function updateTradeNameState(event) {
+      this.updateTradeName(event.target.value);
+    },
+    updateAddressState: function updateAddressState(event) {
+      this.updateAddress(event.target.value);
+    },
+    updateCityState: function updateCityState(event) {
+      this.updateCity(event.target.value);
+    },
+    updateStateState: function updateStateState(event) {
+      this.updateState(event.target.value);
+    },
+    updateZipState: function updateZipState(event) {
+      this.updateZip(event.target.value);
+    },
+    updateFCountryNameState: function updateFCountryNameState(event) {
+      this.updateForeignCountryName(event.target.value);
+    },
+    updateFCountryProvinceState: function updateFCountryProvinceState(event) {
+      this.updateForeignCountryProvince(event.target.value);
+    },
+    updateFCountryZipState: function updateFCountryZipState(event) {
+      this.updateForeignCountryZip(event.target.value);
+    },
+    test: function test() {
+      console.warn('Date has changed');
     }
-  })
+  }),
+  watch: {
+    reportForThisQuarter: function reportForThisQuarter(val) {
+      console.log('Watching ', val);
+      this.reportForThisQuarter = val; // this.$store.dispatch('updateQuarterRadio', val);
+
+      this.updateQuarterRadio(val);
+    }
+  }
 });
 
 /***/ }),
@@ -5603,6 +5729,7 @@ function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { va
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
+//
 //
 //
 //
@@ -5807,7 +5934,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     continueWithSelectedForms: function continueWithSelectedForms() {
       console.log(this.checkedForms);
-      this.isFillingOut = true;
+      if (this.checkedForms.length > 1) this.isFillingOut = true;
+    },
+    returnToStart: function returnToStart() {
+      this.isFillingOut = !this.isFillingOut;
     }
   })
 });
@@ -10435,7 +10565,7 @@ exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-
 
 
 // module
-exports.push([module.i, "\nbutton[data-v-21ebfa70] {\n    border-radius: 0;\n    width: 5rem !important;\n}\n.clear[data-v-21ebfa70] {\n    border-top-left-radius: 1rem;\n    border-top-right-radius: 1rem;\n    -moz-border-radius-topright: 1rem !important;\n    -moz-border-radius-topleft: 1rem !important;\n    -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-21ebfa70] {\n    border-bottom-left-radius: 1rem;\n    border-bottom-right-radius: 1rem;\n    -moz-border-radius-bottomright: 1rem !important;\n    -moz-border-radius-bottomleft: 1rem !important;\n    -webkit-border-bottom-left-radius: 1rem !important;\n}\n.col-lg-12[data-v-21ebfa70] {\n    /*max-width: 130%;*/\n    /*flex: 0 0 130%;*/\n}\n", ""]);
+exports.push([module.i, "\nbutton[data-v-21ebfa70] {\n  border-radius: 0;\n  width: 5rem !important;\n}\n.clear[data-v-21ebfa70] {\n  border-top-left-radius: 1rem;\n  border-top-right-radius: 1rem;\n  -moz-border-radius-topright: 1rem !important;\n  -moz-border-radius-topleft: 1rem !important;\n  -webkit-border-top-left-radius: 1rem !important;\n}\n.export[data-v-21ebfa70] {\n  border-bottom-left-radius: 1rem;\n  border-bottom-right-radius: 1rem;\n  -moz-border-radius-bottomright: 1rem !important;\n  -moz-border-radius-bottomleft: 1rem !important;\n  -webkit-border-bottom-left-radius: 1rem !important;\n}\n.col-lg-12[data-v-21ebfa70] {\n  /*max-width: 130%;*/\n  /*flex: 0 0 130%;*/\n}\n", ""]);
 
 // exports
 
@@ -64064,11 +64194,7 @@ var render = function() {
         staticClass: "form-control mt-2",
         attrs: { id: _vm.id, type: "text", placeholder: "Select Date.." },
         domProps: { value: _vm.returnYear },
-        on: {
-          change: function($event) {
-            return _vm.updateCalendarInputValue()
-          }
-        }
+        on: { change: _vm.updateCalendarInputValue }
       })
     ])
   ])
@@ -64143,6 +64269,22 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row d-none" }, [
+      _vm._v(
+        "\n    " +
+          _vm._s(_vm.returnEmployerIdentificationNumber()) +
+          "\n    " +
+          _vm._s(_vm.returnName()) +
+          "\n    " +
+          _vm._s(_vm.returnCalendarYear()) +
+          "\n    " +
+          _vm._s(_vm.returnForm941Line5AColumn2) +
+          "\n    " +
+          _vm._s(_vm.returnForm941Line5BColumn2) +
+          "\n  "
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -64222,24 +64364,12 @@ var render = function() {
     ),
     _vm._v(" "),
     _c("div", { staticClass: "row justify-content-center" }, [
-      _c("div", { staticClass: "col-12 mt-3" }, [
-        _c("h4", { staticClass: "alert-info p-2 text-center" }, [
-          _vm._v("Form 8974")
-        ]),
-        _vm._v(" "),
-        _c("h4", { staticClass: "alert-info p-2 text-center" }, [
-          _vm._v(_vm._s(this.returnEmployerIdentificationNumber()))
-        ])
-      ]),
+      _vm._m(0),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" }, [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-7" }, [
-            _vm._v(
-              "\n                    " +
-                _vm._s(_vm.limitEIN) +
-                "\n                    "
-            ),
+            _vm._v("\n          " + _vm._s(_vm.limitEIN) + "\n          "),
             _vm._v(" "),
             _c("div", { staticClass: "form-group" }, [
               _c(
@@ -64313,7 +64443,7 @@ var render = function() {
                 { staticClass: "font-weight-bold bg-dark p-2 text-white" },
                 [
                   _vm._v(
-                    "The credit from Part 2, line 12, will be\n                            reported on (check only one box):"
+                    "The credit from Part 2, line 12, will be\n              reported on (check only one box):"
                   )
                 ]
               ),
@@ -64338,7 +64468,7 @@ var render = function() {
                   }
                 }),
                 _vm._v(
-                  "\n                            Form 941, 941-PR, or 941-SS\n                        "
+                  "\n              Form 941, 941-PR, or 941-SS\n            "
                 )
               ]),
               _vm._v(" "),
@@ -64361,9 +64491,7 @@ var render = function() {
                     }
                   }
                 }),
-                _vm._v(
-                  "\n                            Form 943 or 943-PR\n                        "
-                )
+                _vm._v("\n              Form 943 or 943-PR\n            ")
               ]),
               _vm._v(" "),
               _c("label", { staticClass: "form-check-label d-block mt-2" }, [
@@ -64385,9 +64513,7 @@ var render = function() {
                     }
                   }
                 }),
-                _vm._v(
-                  "\n                            Form 944 or 944(SP)\n                        "
-                )
+                _vm._v("\n              Form 944 or 944(SP)\n            ")
               ])
             ])
           ]),
@@ -64397,7 +64523,7 @@ var render = function() {
             { staticClass: "col-5" },
             [
               _c("div", { staticClass: "form-check" }, [
-                _vm._m(0),
+                _vm._m(1),
                 _vm._v(" "),
                 _c("label", { staticClass: "form-check-label d-block mt-2" }, [
                   _c("input", {
@@ -64421,7 +64547,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                            1: January, February, March\n                        "
+                    "\n              1: January, February, March\n            "
                   )
                 ]),
                 _vm._v(" "),
@@ -64446,9 +64572,7 @@ var render = function() {
                       }
                     }
                   }),
-                  _vm._v(
-                    "\n                            2: April, May, June\n                        "
-                  )
+                  _vm._v("\n              2: April, May, June\n            ")
                 ]),
                 _vm._v(" "),
                 _c("label", { staticClass: "form-check-label d-block mt-2" }, [
@@ -64473,7 +64597,7 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                            3: July, August, September\n                        "
+                    "\n              3: July, August, September\n            "
                   )
                 ]),
                 _vm._v(" "),
@@ -64499,12 +64623,12 @@ var render = function() {
                     }
                   }),
                   _vm._v(
-                    "\n                            4: October, November, December\n                        "
+                    "\n              4: October, November, December\n            "
                   )
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(1),
+              _vm._m(2),
               _vm._v(" "),
               _c("flatpickr", {
                 attrs: { timeFormat: "Y", id: "calendar_year_select" },
@@ -64523,13 +64647,13 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-lg-12 col-12 bg-white mt-4 p-3" }, [
-        _vm._m(2),
+        _vm._m(3),
         _vm._v(" "),
         _c(
           "table",
           { staticClass: "table table-striped table-responsive text-center" },
           [
-            _vm._m(3),
+            _vm._m(4),
             _vm._v(" "),
             _c(
               "tbody",
@@ -64601,9 +64725,9 @@ var render = function() {
                       index === 1
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n              " +
                                 _vm._s(_vm.limitEIND1) +
-                                "\n                            "
+                                "\n              "
                             ),
                             _c("input", {
                               directives: [
@@ -64641,9 +64765,9 @@ var render = function() {
                       index === 2
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n              " +
                                 _vm._s(_vm.limitEIND2) +
-                                "\n                            "
+                                "\n              "
                             ),
                             _c("input", {
                               directives: [
@@ -64681,9 +64805,9 @@ var render = function() {
                       index === 3
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n              " +
                                 _vm._s(_vm.limitEIND3) +
-                                "\n                            "
+                                "\n              "
                             ),
                             _c("input", {
                               directives: [
@@ -64721,9 +64845,9 @@ var render = function() {
                       index === 4
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n              " +
                                 _vm._s(_vm.limitEIND4) +
-                                "\n                            "
+                                "\n              "
                             ),
                             _c("input", {
                               directives: [
@@ -64761,9 +64885,9 @@ var render = function() {
                       index === 5
                         ? _c("div", [
                             _vm._v(
-                              "\n                            " +
+                              "\n              " +
                                 _vm._s(_vm.limitEIND5) +
-                                "\n                            "
+                                "\n              "
                             ),
                             _c("input", {
                               directives: [
@@ -65157,7 +65281,7 @@ var render = function() {
                 }),
                 _vm._v(" "),
                 _c("tr", [
-                  _vm._m(4),
+                  _vm._m(5),
                   _vm._v(" "),
                   _c(
                     "td",
@@ -65167,9 +65291,9 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                        " +
+                        "\n            " +
                           _vm._s(_vm.rowSixTotal) +
-                          "\n                    "
+                          "\n          "
                       )
                     ]
                   )
@@ -65185,13 +65309,13 @@ var render = function() {
         "div",
         { staticClass: "col-lg-9 col-12 bg-white mt-4 p-3" },
         [
-          _vm._m(5),
+          _vm._m(6),
           _vm._v(" "),
           _vm._l(_vm.partTwoFieldInfo, function(info, index) {
             return _c("div", { staticClass: "row" }, [
               _c("div", { staticClass: "col-8 bg-light p-2" }, [
                 _c("b", { staticClass: "mr-2" }, [_vm._v(_vm._s(index + 7))]),
-                _vm._v(" " + _vm._s(info) + "\n\n                    "),
+                _vm._v(" " + _vm._s(info) + "\n\n          "),
                 index === 4
                   ? _c("div", [
                       _c("div", { staticClass: "form-check mt-3" }, [
@@ -65265,7 +65389,7 @@ var render = function() {
                             _vm._v(" "),
                             _c("b", [
                               _vm._v(
-                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                                    instructions before completing line 11"
+                                "Check this box if you received a Section 3121(q) Notice and Demand. See the\n                  instructions before completing line 11"
                               )
                             ])
                           ]
@@ -65332,19 +65456,28 @@ var render = function() {
                   ? _c(
                       "div",
                       { staticClass: "form-group font-weight-bolder" },
-                      [_vm._v(_vm._s(_vm.sumOfPartTwoEightAndNine))]
+                      [
+                        _vm._v(
+                          _vm._s(_vm.sumOfPartTwoEightAndNine) + "\n          "
+                        )
+                      ]
                     )
                   : index === 4
                   ? _c(
                       "div",
                       { staticClass: "form-group font-weight-bolder" },
-                      [_vm._v(_vm._s(_vm.partTwoLineElevenPercentage))]
+                      [
+                        _vm._v(
+                          _vm._s(_vm.partTwoLineElevenPercentage) +
+                            "\n          "
+                        )
+                      ]
                     )
                   : index === 5
                   ? _c(
                       "div",
                       { staticClass: "form-group font-weight-bolder" },
-                      [_vm._v(_vm._s(_vm.partTwoGreaterThan))]
+                      [_vm._v(_vm._s(_vm.partTwoGreaterThan) + "\n          ")]
                     )
                   : _vm._e()
               ])
@@ -65361,12 +65494,22 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-12 mt-3" }, [
+      _c("h4", { staticClass: "alert-info p-2 text-center" }, [
+        _vm._v("Form 8974")
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
     return _c(
       "h6",
       { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
       [
         _vm._v("Report for this quarter "),
-        _c("small", [_vm._v("check\n                            only one box")])
+        _c("small", [_vm._v("check\n              only one box")])
       ]
     )
   },
@@ -65381,7 +65524,7 @@ var staticRenderFns = [
         _vm._v("Calendar year "),
         _c("small", [
           _vm._v(
-            "You must select a quarter\n                        if you file Form 941, 941-PR, or 941-SS."
+            "You must select a quarter\n            if you file Form 941, 941-PR, or 941-SS."
           )
         ])
       ]
@@ -65408,43 +65551,43 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(a)\n                        Ending date\n                        of income\n                        tax period\n                    "
+            "(a)\n            Ending date\n            of income\n            tax period\n          "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(b)\n                        Income\n                        tax return\n                        filed that\n                        included\n                        Form 6765\n                    "
+            "(b)\n            Income\n            tax return\n            filed that\n            included\n            Form 6765\n          "
           )
         ]),
         _vm._v(" "),
         _c("th", [
           _vm._v(
-            "(c)\n                        Date income\n                        tax return\n                        was filed\n                    "
+            "(c)\n            Date income\n            tax return\n            was filed\n          "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "14.5%" } }, [
           _vm._v(
-            "(d)\n                        EIN\n                        used on\n                        Form 6765\n                    "
+            "(d)\n            EIN\n            used on\n            Form 6765\n          "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(e)\n                        Amount from\n                        Form 6765, line 44,\n                        or if applicable,\n                        the amount that\n                        was allocated\n                        to your EIN\n                    "
+            "(e)\n            Amount from\n            Form 6765, line 44,\n            or if applicable,\n            the amount that\n            was allocated\n            to your EIN\n          "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(f)\n                        Amount of credit\n                        from column (e)\n                        taken on a\n                        previous period(s)\n                    "
+            "(f)\n            Amount of credit\n            from column (e)\n            taken on a\n            previous period(s)\n          "
           )
         ]),
         _vm._v(" "),
         _c("th", { attrs: { width: "12.5%" } }, [
           _vm._v(
-            "(g)\n                        Remaining credit\n                        (subtract column (f)\n                        from column (e))\n                    "
+            "(g)\n            Remaining credit\n            (subtract column (f)\n            from column (e))\n          "
           )
         ])
       ])
@@ -65456,9 +65599,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("td", { staticClass: "text-left", attrs: { colspan: "6" } }, [
       _c("b", { staticClass: "mr-4" }, [_vm._v("6")]),
-      _vm._v(
-        "Add lines 1(g) through 5(g) and enter the total here\n                    "
-      )
+      _vm._v("Add lines 1(g) through 5(g) and enter the total here\n          ")
     ])
   },
   function() {
@@ -65495,6 +65636,36 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "row d-none" }, [
+      _vm._v(
+        "\n    " +
+          _vm._s(_vm.returnEmployerIdentificationNumber()) +
+          "\n    " +
+          _vm._s(_vm.returnName()) +
+          "\n    " +
+          _vm._s(_vm.returnTradeName()) +
+          "\n    " +
+          _vm._s(_vm.returnAddress()) +
+          "\n    " +
+          _vm._s(_vm.returnCity()) +
+          "\n    " +
+          _vm._s(_vm.returnState()) +
+          "\n    " +
+          _vm._s(_vm.returnZip()) +
+          "\n    " +
+          _vm._s(_vm.returnForeignName()) +
+          "\n    " +
+          _vm._s(_vm.returnForeignProvince()) +
+          "\n    " +
+          _vm._s(_vm.returnForeignZip()) +
+          "\n    " +
+          _vm._s(_vm.returnQuarterSelected()) +
+          "\n    " +
+          _vm._s(_vm.returnForm8974Line12) +
+          "\n  "
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -65504,16 +65675,29 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary d-inline export",
-              on: { click: _vm.exportToPDF }
-            },
-            [_vm._v("Export")]
-          )
-        ])
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.disableDownload !== "Y",
+                expression: "disableDownload !== 'Y'"
+              }
+            ]
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary d-inline export",
+                on: { click: _vm.exportToPDF }
+              },
+              [_vm._v("Export")]
+            )
+          ]
+        )
       ]
     ),
     _vm._v(" "),
@@ -67154,16 +67338,29 @@ var render = function() {
       [
         _vm._m(0),
         _vm._v(" "),
-        _c("div", [
-          _c(
-            "button",
-            {
-              staticClass: "btn btn-primary d-inline export",
-              on: { click: _vm.exportToPDF }
-            },
-            [_vm._v("Export")]
-          )
-        ])
+        _c(
+          "div",
+          {
+            directives: [
+              {
+                name: "show",
+                rawName: "v-show",
+                value: _vm.disableDownload !== "Y",
+                expression: "disableDownload !== 'Y'"
+              }
+            ]
+          },
+          [
+            _c(
+              "button",
+              {
+                staticClass: "btn btn-primary d-inline export",
+                on: { click: _vm.exportToPDF }
+              },
+              [_vm._v("Export")]
+            )
+          ]
+        )
       ]
     ),
     _vm._v(" "),
@@ -67756,7 +67953,7 @@ var render = function() {
                 _c("div", { staticClass: "row" }, [
                   _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
                     _vm._v(
-                      "\n                                Employer identification number\n                            "
+                      "\n                                  Employer identification number\n                              "
                     )
                   ]),
                   _vm._v(" "),
@@ -67794,7 +67991,7 @@ var render = function() {
                   _vm._v(" "),
                   _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
                     _vm._v(
-                      "\n                                Name\n                            "
+                      "\n                                  Name\n                              "
                     )
                   ]),
                   _vm._v(" "),
@@ -67816,19 +68013,22 @@ var render = function() {
                       attrs: { type: "text", minlength: "1" },
                       domProps: { value: _vm.name },
                       on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.name = $event.target.value
-                        }
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.name = $event.target.value
+                          },
+                          _vm.updateNameState
+                        ]
                       }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
                     _vm._v(
-                      "\n                                Trade Name\n                            "
+                      "\n                                  Trade Name\n                              "
                     )
                   ]),
                   _vm._v(" "),
@@ -67850,19 +68050,22 @@ var render = function() {
                       attrs: { type: "text", minlength: "1" },
                       domProps: { value: _vm.tradeName },
                       on: {
-                        input: function($event) {
-                          if ($event.target.composing) {
-                            return
-                          }
-                          _vm.tradeName = $event.target.value
-                        }
+                        input: [
+                          function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.tradeName = $event.target.value
+                          },
+                          _vm.updateTradeNameState
+                        ]
                       }
                     })
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "col-5 font-weight-bold mb-2" }, [
                     _vm._v(
-                      "\n                                Address\n                            "
+                      "\n                                  Address\n                              "
                     )
                   ]),
                   _vm._v(" "),
@@ -67890,12 +68093,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.address },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.address = $event.target.value
-                            }
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.address = $event.target.value
+                              },
+                              _vm.updateAddressState
+                            ]
                           }
                         })
                       ]),
@@ -67918,12 +68124,15 @@ var render = function() {
                           attrs: { type: "text", placeholder: "City" },
                           domProps: { value: _vm.city },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.city = $event.target.value
-                            }
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.city = $event.target.value
+                              },
+                              _vm.updateCityState
+                            ]
                           }
                         })
                       ]),
@@ -67951,12 +68160,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.state },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.state = $event.target.value
-                            }
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.state = $event.target.value
+                              },
+                              _vm.updateStateState
+                            ]
                           }
                         })
                       ]),
@@ -67984,12 +68196,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.zip },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.zip = $event.target.value
-                            }
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.zip = $event.target.value
+                              },
+                              _vm.updateZipState
+                            ]
                           }
                         })
                       ]),
@@ -68011,12 +68226,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.f_countryName },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.f_countryName = $event.target.value
-                            }
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.f_countryName = $event.target.value
+                              },
+                              _vm.updateFCountryNameState
+                            ]
                           }
                         })
                       ]),
@@ -68038,12 +68256,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.f_countryProvince },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.f_countryProvince = $event.target.value
-                            }
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.f_countryProvince = $event.target.value
+                              },
+                              _vm.updateFCountryProvinceState
+                            ]
                           }
                         })
                       ]),
@@ -68067,12 +68288,15 @@ var render = function() {
                           },
                           domProps: { value: _vm.f_countryZIP },
                           on: {
-                            input: function($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.f_countryZIP = $event.target.value
-                            }
+                            input: [
+                              function($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.f_countryZIP = $event.target.value
+                              },
+                              _vm.updateFCountryZipState
+                            ]
                           }
                         })
                       ])
@@ -68085,258 +68309,8 @@ var render = function() {
                 "div",
                 { staticClass: "col-4" },
                 [
-                  _c("div", { staticClass: "form-check" }, [
-                    _vm._m(0),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "form-check-label d-block mt-2" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.reportForThisQuarter,
-                              expression: "reportForThisQuarter"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            type: "radio",
-                            name: "quarterReport",
-                            value: "1"
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.reportForThisQuarter, "1")
-                          },
-                          on: {
-                            change: function($event) {
-                              _vm.reportForThisQuarter = "1"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "\n                                1: January, February, March\n                            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "form-check-label d-block mt-2" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.reportForThisQuarter,
-                              expression: "reportForThisQuarter"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            type: "radio",
-                            name: "quarterReport",
-                            value: "2"
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.reportForThisQuarter, "2")
-                          },
-                          on: {
-                            change: function($event) {
-                              _vm.reportForThisQuarter = "2"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "\n                                2: April, May, June\n                            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "form-check-label d-block mt-2" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.reportForThisQuarter,
-                              expression: "reportForThisQuarter"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            type: "radio",
-                            name: "quarterReport",
-                            value: "3"
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.reportForThisQuarter, "3")
-                          },
-                          on: {
-                            change: function($event) {
-                              _vm.reportForThisQuarter = "3"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "\n                                3: July, August, September\n                            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "form-check-label d-block mt-2" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.reportForThisQuarter,
-                              expression: "reportForThisQuarter"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            type: "radio",
-                            name: "quarterReport",
-                            value: "4"
-                          },
-                          domProps: {
-                            checked: _vm._q(_vm.reportForThisQuarter, "4")
-                          },
-                          on: {
-                            change: function($event) {
-                              _vm.reportForThisQuarter = "4"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "\n                                4: October, November, December\n                            "
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-check mt-3" }, [
-                    _c(
-                      "h6",
-                      {
-                        staticClass: "font-weight-bold bg-dark p-2 text-white"
-                      },
-                      [
-                        _vm._v(
-                          "The credit from Part 2, line 12, will be\n                                reported on (check only one box):"
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "form-check-label d-block mt-2" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.creditTypeBox,
-                              expression: "creditTypeBox"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            type: "radio",
-                            name: "creditType",
-                            value: "1"
-                          },
-                          domProps: { checked: _vm._q(_vm.creditTypeBox, "1") },
-                          on: {
-                            change: function($event) {
-                              _vm.creditTypeBox = "1"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "\n                                Form 941, 941-PR, or 941-SS\n                            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "form-check-label d-block mt-2" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.creditTypeBox,
-                              expression: "creditTypeBox"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            type: "radio",
-                            name: "creditType",
-                            value: "2"
-                          },
-                          domProps: { checked: _vm._q(_vm.creditTypeBox, "2") },
-                          on: {
-                            change: function($event) {
-                              _vm.creditTypeBox = "2"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "\n                                Form 943 or 943-PR\n                            "
-                        )
-                      ]
-                    ),
-                    _vm._v(" "),
-                    _c(
-                      "label",
-                      { staticClass: "form-check-label d-block mt-2" },
-                      [
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.creditTypeBox,
-                              expression: "creditTypeBox"
-                            }
-                          ],
-                          staticClass: "form-check-input",
-                          attrs: {
-                            type: "radio",
-                            name: "creditType",
-                            value: "3"
-                          },
-                          domProps: { checked: _vm._q(_vm.creditTypeBox, "3") },
-                          on: {
-                            change: function($event) {
-                              _vm.creditTypeBox = "3"
-                            }
-                          }
-                        }),
-                        _vm._v(
-                          "\n                                Form 944 or 944(SP)\n                            "
-                        )
-                      ]
-                    )
-                  ]),
-                  _vm._v(" "),
                   _c("flatpickr", {
-                    attrs: { timeFormat: "Y", id: "calendar_year_select" },
+                    attrs: { timeFormat: "Y", id: "personal_calendar_year" },
                     model: {
                       value: _vm.calendarYear,
                       callback: function($$v) {
@@ -68355,23 +68329,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "h6",
-      { staticClass: "font-weight-bold bg-dark p-2 text-white mb-2" },
-      [
-        _vm._v("Report for this quarter "),
-        _c("small", [
-          _vm._v("check\n                                only one box")
-        ])
-      ]
-    )
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -68548,191 +68506,199 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c(
-        "div",
-        {
-          directives: [
-            {
-              name: "show",
-              rawName: "v-show",
-              value: _vm.isFillingOut,
-              expression: "isFillingOut"
-            }
-          ]
-        },
-        [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-3" }, [
-              _c("ul", { staticClass: "list-group" }, [
-                _c(
-                  "li",
-                  {
-                    staticClass: "list-group-item",
-                    class: { active: _vm.showPersonal },
-                    on: {
-                      click: function($event) {
-                        return _vm.setActiveForm("Personal")
+      _vm.isFillingOut
+        ? _c("div", [
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-3" }, [
+                _c("ul", { staticClass: "list-group" }, [
+                  _c(
+                    "li",
+                    {
+                      staticClass: "list-group-item",
+                      class: { active: _vm.showPersonal },
+                      on: {
+                        click: function($event) {
+                          return _vm.setActiveForm("Personal")
+                        }
                       }
-                    }
-                  },
-                  [_vm._v("Common Details")]
-                ),
+                    },
+                    [_vm._v("Common Details")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.checkedForms.includes("8974"),
+                          expression: "checkedForms.includes('8974')"
+                        }
+                      ],
+                      staticClass: "list-group-item",
+                      class: { active: _vm.setActive.t8974 },
+                      on: {
+                        click: function($event) {
+                          return _vm.setActiveForm("t8974")
+                        }
+                      }
+                    },
+                    [_vm._v("Form 8974")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.checkedForms.includes("941"),
+                          expression: "checkedForms.includes('941')"
+                        }
+                      ],
+                      staticClass: "list-group-item",
+                      class: { active: _vm.setActive.t941 },
+                      on: {
+                        click: function($event) {
+                          return _vm.setActiveForm("t941")
+                        }
+                      }
+                    },
+                    [_vm._v("Form 941")]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "li",
+                    {
+                      directives: [
+                        {
+                          name: "show",
+                          rawName: "v-show",
+                          value: _vm.checkedForms.includes("941SB"),
+                          expression: "checkedForms.includes('941SB')"
+                        }
+                      ],
+                      staticClass: "list-group-item",
+                      class: { active: _vm.setActive.t941SB },
+                      on: {
+                        click: function($event) {
+                          return _vm.setActiveForm("t941SB")
+                        }
+                      }
+                    },
+                    [_vm._v("Form Schedule B")]
+                  )
+                ])
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-9" }, [
+                _c("p", [
+                  _vm._v(
+                    "Use the left menu to alternate between forms or use the download button to download all\n                        working forms."
+                  )
+                ]),
                 _vm._v(" "),
                 _c(
-                  "li",
+                  "button",
                   {
+                    staticClass: "btn btn-warning",
+                    on: { click: _vm.returnToStart }
+                  },
+                  [_vm._v("Back")]
+                ),
+                _vm._v(" "),
+                _c("button", { staticClass: "btn btn-primary" }, [
+                  _vm._v("Download")
+                ])
+              ]),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-12" },
+                [
+                  _c("personal-details", {
                     directives: [
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.checkedForms.includes("8974"),
-                        expression: "checkedForms.includes('8974')"
+                        value: _vm.showPersonal,
+                        expression: "showPersonal"
                       }
-                    ],
-                    staticClass: "list-group-item",
-                    class: { active: _vm.setActive.t8974 },
-                    on: {
-                      click: function($event) {
-                        return _vm.setActiveForm("t8974")
-                      }
-                    }
-                  },
-                  [_vm._v("Form 8974")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
+                    ]
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-12" },
+                [
+                  _c("form_8974", {
                     directives: [
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.checkedForms.includes("941"),
-                        expression: "checkedForms.includes('941')"
+                        value: _vm.setActive.t8974,
+                        expression: "setActive.t8974"
                       }
                     ],
-                    staticClass: "list-group-item",
-                    class: { active: _vm.setActive.t941 },
-                    on: {
-                      click: function($event) {
-                        return _vm.setActiveForm("t941")
-                      }
-                    }
-                  },
-                  [_vm._v("Form 941")]
-                ),
-                _vm._v(" "),
-                _c(
-                  "li",
-                  {
+                    attrs: { disableDownload: "Y" }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-12" },
+                [
+                  _c("form_941", {
                     directives: [
                       {
                         name: "show",
                         rawName: "v-show",
-                        value: _vm.checkedForms.includes("941SB"),
-                        expression: "checkedForms.includes('941SB')"
+                        value: _vm.setActive.t941,
+                        expression: "setActive.t941"
                       }
                     ],
-                    staticClass: "list-group-item",
-                    class: { active: _vm.setActive.t941SB },
-                    on: {
-                      click: function($event) {
-                        return _vm.setActiveForm("t941SB")
+                    attrs: { disableDownload: "Y", formUrl: _vm.type_941_url }
+                  })
+                ],
+                1
+              ),
+              _vm._v(" "),
+              _c(
+                "div",
+                { staticClass: "col-12" },
+                [
+                  _c("form_941-s", {
+                    directives: [
+                      {
+                        name: "show",
+                        rawName: "v-show",
+                        value: _vm.setActive.t941SB,
+                        expression: "setActive.t941SB"
                       }
-                    }
-                  },
-                  [_vm._v("Form Schedule B")]
-                )
-              ])
-            ]),
-            _vm._v(" "),
-            _vm._m(1),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [
-                _c("personal-details", {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.showPersonal,
-                      expression: "showPersonal"
-                    }
-                  ]
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [
-                _c("form_8974", {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.setActive.t8974,
-                      expression: "setActive.t8974"
-                    }
-                  ],
-                  attrs: { disableDownload: "Y" }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [
-                _c("form_941", {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.setActive.t941,
-                      expression: "setActive.t941"
-                    }
-                  ],
-                  attrs: { formUrl: _vm.type_941_url }
-                })
-              ],
-              1
-            ),
-            _vm._v(" "),
-            _c(
-              "div",
-              { staticClass: "col-12" },
-              [
-                _c("form_941-s", {
-                  directives: [
-                    {
-                      name: "show",
-                      rawName: "v-show",
-                      value: _vm.setActive.t941SB,
-                      expression: "setActive.t941SB"
-                    }
-                  ],
-                  attrs: { formUrl: _vm.type_941s_url }
-                })
-              ],
-              1
-            )
+                    ],
+                    attrs: { disableDownload: "Y", formUrl: _vm.type_941s_url }
+                  })
+                ],
+                1
+              )
+            ])
           ])
-        ]
-      ),
+        : _vm._e(),
       _vm._v(" "),
       _c("form_8974", {
         directives: [
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.activeForm_8974,
-            expression: "activeForm_8974"
+            value: _vm.activeForm_8974 && !_vm.isFillingOut,
+            expression: "activeForm_8974 && !isFillingOut"
           }
         ]
       }),
@@ -68742,8 +68708,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.activeForm_941,
-            expression: "activeForm_941"
+            value: _vm.activeForm_941 && !_vm.isFillingOut,
+            expression: "activeForm_941 && !isFillingOut"
           }
         ],
         attrs: { formUrl: _vm.type_941_url }
@@ -68754,8 +68720,8 @@ var render = function() {
           {
             name: "show",
             rawName: "v-show",
-            value: _vm.activeForm_941_Schedule_B,
-            expression: "activeForm_941_Schedule_B"
+            value: _vm.activeForm_941_Schedule_B && !_vm.isFillingOut,
+            expression: "activeForm_941_Schedule_B && !isFillingOut"
           }
         ],
         attrs: { formUrl: _vm.type_941s_url }
@@ -68775,20 +68741,6 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", { attrs: { width: "90%" } }, [_vm._v("Form")])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-9" }, [
-      _c("p", [
-        _vm._v(
-          "Use the left menu to alternate between forms or use the download button to download all\n                        working forms."
-        )
-      ]),
-      _vm._v(" "),
-      _c("button", { staticClass: "btn btn-primary" }, [_vm._v("Download")])
     ])
   }
 ]
@@ -82728,7 +82680,21 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
     title: 'Welcome to our Vuex!',
-    employerIdentificationNumber: 'XX-XXXXXXX'
+    employerIdentificationNumber: 'XXXXXXXXX',
+    name: 'John Doe',
+    tradeName: 'John Doe Inc.',
+    address: 'Your Address Here',
+    city: 'Big City',
+    state: 'AA',
+    zip: '99999',
+    foreignCountryName: 'Country Name',
+    foreignCountryProvince: 'province',
+    foreignCountryZip: '99999',
+    reportForThisQuarter: 4,
+    calendarYear: 'YYYY',
+    form941Line5AColumn2: 0.00,
+    form941Line5BColumn2: 0.00,
+    form8974Line12: 0.00
   },
   getters: {
     returnTitle: function returnTitle(state) {
@@ -82736,17 +82702,171 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     returnEmployerIdentificationNumber: function returnEmployerIdentificationNumber(state) {
       return state.employerIdentificationNumber;
+    },
+    returnName: function returnName(state) {
+      return state.name;
+    },
+    returnTradeName: function returnTradeName(state) {
+      return state.tradeName;
+    },
+    returnAddress: function returnAddress(state) {
+      return state.address;
+    },
+    returnCity: function returnCity(state) {
+      return state.city;
+    },
+    returnState: function returnState(state) {
+      return state.state;
+    },
+    returnZip: function returnZip(state) {
+      return state.zip;
+    },
+    returnForeignName: function returnForeignName(state) {
+      return state.foreignCountryName;
+    },
+    returnForeignProvince: function returnForeignProvince(state) {
+      return state.foreignCountryProvince;
+    },
+    returnForeignZip: function returnForeignZip(state) {
+      return state.foreignCountryZip;
+    },
+    returnCalendarYear: function returnCalendarYear(state) {
+      return state.calendarYear;
+    },
+    returnQuarterSelected: function returnQuarterSelected(state) {
+      return parseInt(state.reportForThisQuarter);
+    },
+    returnForm941Line5AColumn2: function returnForm941Line5AColumn2(state) {
+      return state.form941Line5AColumn2;
+    },
+    returnForm941Line5BColumn2: function returnForm941Line5BColumn2(state) {
+      return state.form941Line5BColumn2;
+    },
+    returnForm8974Line12: function returnForm8974Line12(state) {
+      return state.form8974Line12;
     }
   },
   mutations: {
     updateEIN: function updateEIN(state, payload) {
       state.employerIdentificationNumber = payload.employerIdentificationNumber;
+    },
+    updateName: function updateName(state, payload) {
+      state.name = payload.name;
+    },
+    updateTradeName: function updateTradeName(state, payload) {
+      state.tradeName = payload.tradeName;
+    },
+    updateAddress: function updateAddress(state, payload) {
+      state.address = payload.address;
+    },
+    updateCity: function updateCity(state, payload) {
+      state.city = payload.city;
+    },
+    updateState: function updateState(state, payload) {
+      state.state = payload.state;
+    },
+    updateZip: function updateZip(state, payload) {
+      state.zip = payload.zip;
+    },
+    updateForeignCountryName: function updateForeignCountryName(state, payload) {
+      state.foreignCountryName = payload.foreignCountryName;
+    },
+    updateForeignCountryProvince: function updateForeignCountryProvince(state, payload) {
+      state.foreignCountryProvince = payload.foreignCountryProvince;
+    },
+    updateForeignCountryZip: function updateForeignCountryZip(state, payload) {
+      state.foreignCountryZip = payload.foreignCountryZip;
+    },
+    updateCalendarYear: function updateCalendarYear(state, payload) {
+      state.calendarYear = payload.calendarYear;
+    },
+    updateQuarterRadio: function updateQuarterRadio(state, payload) {
+      state.reportForThisQuarter = parseInt(payload.radioSelected);
+    },
+    storeForm941Line5AColumn2: function storeForm941Line5AColumn2(state, payload) {
+      state.form941Line5AColumn2 = parseFloat(payload.amount);
+    },
+    storeForm941Line5BColumn2: function storeForm941Line5BColumn2(state, payload) {
+      state.form941Line5BColumn2 = parseFloat(payload.amount);
+    },
+    storeForm8974Line12: function storeForm8974Line12(state, payload) {
+      state.form8974Line12 = parseFloat(payload.amount);
     }
   },
   actions: {
     updateEIN: function updateEIN(context, payload) {
       context.commit('updateEIN', {
         employerIdentificationNumber: payload
+      });
+    },
+    updateName: function updateName(context, payload) {
+      context.commit('updateName', {
+        name: payload
+      });
+    },
+    updateTradeName: function updateTradeName(context, payload) {
+      context.commit('updateTradeName', {
+        tradeName: payload
+      });
+    },
+    updateAddress: function updateAddress(context, payload) {
+      context.commit('updateAddress', {
+        address: payload
+      });
+    },
+    updateCity: function updateCity(context, payload) {
+      context.commit('updateCity', {
+        city: payload
+      });
+    },
+    updateState: function updateState(context, payload) {
+      context.commit('updateState', {
+        state: payload
+      });
+    },
+    updateZip: function updateZip(context, payload) {
+      context.commit('updateZip', {
+        zip: payload
+      });
+    },
+    updateForeignCountryName: function updateForeignCountryName(context, payload) {
+      context.commit('updateForeignCountryName', {
+        foreignCountryName: payload
+      });
+    },
+    updateForeignCountryProvince: function updateForeignCountryProvince(context, payload) {
+      context.commit('updateForeignCountryProvince', {
+        foreignCountryProvince: payload
+      });
+    },
+    updateForeignCountryZip: function updateForeignCountryZip(context, payload) {
+      context.commit('updateForeignCountryZip', {
+        foreignCountryZip: payload
+      });
+    },
+    updateCalendarYear: function updateCalendarYear(context, payload) {
+      context.commit('updateCalendarYear', {
+        calendarYear: payload
+      });
+    },
+    updateQuarterRadio: function updateQuarterRadio(context, payload) {
+      context.commit('updateQuarterRadio', {
+        radioSelected: parseInt(payload)
+      });
+    },
+    storeForm941Line5AColumn2: function storeForm941Line5AColumn2(context, payload) {
+      context.commit('storeForm941Line5AColumn2', {
+        amount: parseFloat(payload)
+      });
+    },
+    storeForm941Line5BColumn2: function storeForm941Line5BColumn2(context, payload) {
+      context.commit('storeForm941Line5BColumn2', {
+        amount: parseFloat(payload)
+      });
+    },
+    storeForm8974Line12: function storeForm8974Line12(context, payload) {
+      context.commit('storeForm8974Line12', {
+        amount: parseFloat(payload)
       });
     }
   }

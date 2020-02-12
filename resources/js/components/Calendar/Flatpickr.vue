@@ -3,13 +3,13 @@
         <div class="form-group mt-3">
             <input :id="id" :value="returnYear" class="form-control mt-2"
                    type="text" placeholder="Select Date.."
-                   @change="updateCalendarInputValue()">
+                   @change="updateCalendarInputValue">
         </div>
     </div>
 </template>
 
 <script>
-  import * as $ from 'jquery';
+  import {mapActions} from "vuex"
   import flatpickr from "flatpickr";
   export default {
     props: {
@@ -23,12 +23,13 @@
       }
     },
     mounted() {
-      console.warn(this.timeFormat);
-      console.warn(this.id);
       flatpickr(`#${this.id}`, { enableTime: false, dateFormat: this.timeFormat});
     },
     methods: {
-      updateCalendarInputValue: function() {
+      ...mapActions(['updateCalendarYear']),
+      updateCalendarInputValue: function(event) {
+        console.warn(event.target.value);
+        this.updateCalendarYear(event.target.value);
         // this.calendarYear = event.target.value.split('-')[0];
       }
     },

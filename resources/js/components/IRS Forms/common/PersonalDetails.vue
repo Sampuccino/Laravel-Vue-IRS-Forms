@@ -27,6 +27,7 @@
                               </div>
                               <div class="col-7 my-auto">
                                   <input type="text" class="form-control mb-2"
+                                         @input="updateNameState"
                                          :class="{'is-invalid': errors.name, 'is-valid': (errors.name===false)}"
                                          minlength="1"
                                          v-model="name">
@@ -39,6 +40,7 @@
                               <div class="col-7 my-auto">
                                   <input type="text" class="form-control mb-2"
                                          :class="{'is-invalid': errors.tradeName, 'is-valid': (errors.tradeName===false)}"
+                                         @input="updateTradeNameState"
                                          minlength="1"
                                          v-model="tradeName">
                               </div>
@@ -54,6 +56,7 @@
                                           <input type="text" placeholder="Number     Street"
                                                  class="form-control mb-2"
                                                  :class="{'is-invalid': errors.address, 'is-valid': (errors.address===false)}"
+                                                 @input="updateAddressState"
                                                  minlength="1"
                                                  v-model="address">
                                       </div>
@@ -61,12 +64,14 @@
                                           <input type="text" placeholder="City"
                                                  class="form-control mb-2"
                                                  :class="{'is-invalid': errors.city, 'is-valid': (errors.city===false)}"
+                                                 @input="updateCityState"
                                                  v-model="city">
                                       </div>
                                       <div class="col-12">
                                           <input type="text" placeholder="State"
                                                  class="form-control mb-2 text-uppercase"
                                                  :class="{'is-invalid': errors.state, 'is-valid': (errors.state===false)}"
+                                                 @input="updateStateState"
                                                  minlength="2" maxlength="2"
                                                  v-model="state">
                                       </div>
@@ -74,18 +79,26 @@
                                           <input type="text" placeholder="ZIP"
                                                  class="form-control mb-2"
                                                  :class="{'is-invalid': errors.zip, 'is-valid': (errors.zip===false)}"
+                                                 @input="updateZipState"
                                                  minlength="5" maxlength="5"
                                                  v-model="zip">
                                       </div>
                                       <div class="col-12">
-                                          <input type="text" placeholder="Foreign country name" class="form-control mb-2" v-model="f_countryName">
+                                          <input type="text" placeholder="Foreign country name"
+                                                 class="form-control mb-2"
+                                                 v-model="f_countryName"
+                                                 @input="updateFCountryNameState">
                                       </div>
                                       <div class="col-12">
-                                          <input type="text" placeholder="Foreign province/country" class="form-control mb-2" v-model="f_countryProvince">
+                                          <input type="text" placeholder="Foreign province/country"
+                                                 class="form-control mb-2"
+                                                 v-model="f_countryProvince"
+                                                 @input="updateFCountryProvinceState">
                                       </div>
                                       <div class="col-12">
                                           <input type="text" placeholder="Foreign postal code"
                                                  class="form-control mb-2" minlength="5" maxlength="5"
+                                                 @input="updateFCountryZipState"
                                                  v-model="f_countryZIP">
                                       </div>
                                   </div>
@@ -95,49 +108,32 @@
                           </div>
                       </div>
                       <div class="col-4">
-                          <div class="form-check">
-                              <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Report for this quarter <small>check
-                                  only one box</small></h6>
-                              <label class="form-check-label d-block mt-2">
-                                  <input type="radio" class="form-check-input" name="quarterReport"
-                                         v-model="reportForThisQuarter" value="1">
-                                  1: January, February, March
-                              </label>
-                              <label class="form-check-label d-block mt-2">
-                                  <input type="radio" class="form-check-input" name="quarterReport"
-                                         v-model="reportForThisQuarter" value="2">
-                                  2: April, May, June
-                              </label>
-                              <label class="form-check-label d-block mt-2">
-                                  <input type="radio" class="form-check-input" name="quarterReport"
-                                         v-model="reportForThisQuarter" value="3">
-                                  3: July, August, September
-                              </label>
-                              <label class="form-check-label d-block mt-2">
-                                  <input type="radio" class="form-check-input" name="quarterReport"
-                                         v-model="reportForThisQuarter" value="4">
-                                  4: October, November, December
-                              </label>
-                          </div>
-                          <!--Credity Type-->
-                          <div class="form-check mt-3">
-                              <h6 class="font-weight-bold bg-dark p-2 text-white">The credit from Part 2, line 12, will be
-                                  reported on (check only one box):</h6>
-                              <label class="form-check-label d-block mt-2">
-                                  <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType" value="1">
-                                  Form 941, 941-PR, or 941-SS
-                              </label>
-                              <label class="form-check-label d-block mt-2">
-                                  <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType" value="2">
-                                  Form 943 or 943-PR
-                              </label>
-                              <label class="form-check-label d-block mt-2">
-                                  <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType"
-                                         value="3">
-                                  Form 944 or 944(SP)
-                              </label>
-                          </div>
-                          <flatpickr timeFormat="Y" v-model="calendarYear" id="calendar_year_select"/>
+<!--                          <div class="form-check">-->
+<!--                              <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Report for this quarter <small>check-->
+<!--                                  only one box</small></h6>-->
+<!--                              <label class="form-check-label d-block mt-2">-->
+<!--                                  <input type="radio" class="form-check-input" name="personalQuarterReport"-->
+<!--                                         v-model="reportForThisQuarter" value="1">-->
+<!--                                  1: January, February, March-->
+<!--                              </label>-->
+<!--                              <label class="form-check-label d-block mt-2">-->
+<!--                                  <input type="radio" class="form-check-input" name="personalQuarterReport"-->
+<!--                                         v-model="reportForThisQuarter" value="2">-->
+<!--                                  2: April, May, June-->
+<!--                              </label>-->
+<!--                              <label class="form-check-label d-block mt-2">-->
+<!--                                  <input type="radio" class="form-check-input" name="personalQuarterReport"-->
+<!--                                         v-model="reportForThisQuarter" value="3">-->
+<!--                                  3: July, August, September-->
+<!--                              </label>-->
+<!--                              <label class="form-check-label d-block mt-2">-->
+<!--                                  <input type="radio" class="form-check-input" name="personalQuarterReport"-->
+<!--                                         v-model="reportForThisQuarter" value="4">-->
+<!--                                  4: October, November, December-->
+<!--                              </label>-->
+<!--                          </div>-->
+                          <!--Calendar Year-->
+                          <flatpickr timeFormat="Y" v-model="calendarYear" id="personal_calendar_year"/>
                       </div>
 
                   </div>
@@ -156,7 +152,10 @@
   export default {
     name: "PersonalDetails",
       components: {Flatpickr},
-      data(){
+    mounted() {
+      $('#personal_calendar_year').val('');
+    },
+    data(){
         return {
             /* Form Variables */
             employerIdentificationNumber:  null,
@@ -197,14 +196,54 @@
             }
         }
       },
-      methods: {
-        ...mapActions(['updateEIN']),
+    methods: {
+        ...mapActions(['updateEIN',
+          'updateName', 'updateTradeName',
+          'updateAddress', 'updateState', 'updateCity', 'updateZip',
+          'updateForeignCountryName', 'updateForeignCountryProvince', 'updateForeignCountryZip', 'updateQuarterRadio']),
           updateEINState(event) {
               this.updateEIN(event.target.value);
               console.log(event.target.value)
-              // $('#form8974EIN').
-          }
+          },
+          updateNameState(event) {
+            this.updateName(event.target.value);
+          },
+        updateTradeNameState(event) {
+          this.updateTradeName(event.target.value);
+        },
+        updateAddressState(event) {
+          this.updateAddress(event.target.value)
+        },
+        updateCityState(event) {
+          this.updateCity(event.target.value);
+        },
+        updateStateState(event) {
+          this.updateState(event.target.value);
+        },
+        updateZipState(event) {
+          this.updateZip(event.target.value)
+        },
+        updateFCountryNameState(event) {
+          this.updateForeignCountryName(event.target.value)
+        },
+        updateFCountryProvinceState(event) {
+          this.updateForeignCountryProvince(event.target.value)
+        },
+        updateFCountryZipState(event) {
+          this.updateForeignCountryZip(event.target.value)
+        },
+        test() {
+          console.warn('Date has changed')
+        }
+    },
+    watch: {
+      reportForThisQuarter: function(val) {
+        console.log('Watching ', val);
+        this.reportForThisQuarter = val;
+        // this.$store.dispatch('updateQuarterRadio', val);
+        this.updateQuarterRadio(val);
       }
+    }
   }
 </script>
 

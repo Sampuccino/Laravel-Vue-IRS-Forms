@@ -1,278 +1,311 @@
 <template>
-    <div class="container">
-        <div class="position-fixed" style="right: 1rem; bottom:1rem;">
+  <div class="container">
 
-            <div class="bg-dark text-center mb-3 p-2">
-                <div :class="(validation.ein) ? 'alert-success' : 'alert-danger'">EIN</div>
-                <div :class="(validation.name) ? 'alert-success' : 'alert-danger'">Name</div>
-                <div :class="(validation.partOne) ? 'alert-success' : 'alert-danger'">Part 1</div>
-                <div :class="(validation.partTwo) ? 'alert-success' : 'alert-danger'">Part 2</div>
-            </div>
-
-            <div>
-                <button class="btn btn-danger d-inline clear" @click="clearFields()">Clear</button>
-            </div>
-
-            <div v-show="disableDownload !== 'Y'">
-                <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
-            </div>
-        </div>
-        <div class="row justify-content-center">
-
-            <div class="col-12 mt-3">
-                <h4 class="alert-info p-2 text-center">Form 8974</h4>
-                <h4 class="alert-info p-2 text-center">{{ this.returnEmployerIdentificationNumber() }}</h4>
-            </div>
-
-            <!--TOP OF FORM-->
-            <div class="col-lg-9 col-12 bg-white mt-4 p-3">
-                <div class="row">
-                    <div class="col-7">
-                        {{ limitEIN }}
-                        <!--EIN-->
-                        <div class="form-group">
-                            <label for="" class="bg-dark p-2 text-white">Employer identification number (EIN)</label>
-                            <input maxlength="12" minlength="12" type="text" v-model="ein"
-                                   class="form-control mt-2" placeholder="" aria-describedby="helpId">
-                        </div>
-
-                        <!--Name-->
-                        <div class="form-group mt-3">
-                            <label for="" class="bg-dark p-2 text-white">Name (not your trade name)</label>
-                            <input type="text" class="form-control mt-2" v-model="name">
-                        </div>
-
-                        <!--Credity Type-->
-                        <div class="form-check mt-3">
-                            <h6 class="font-weight-bold bg-dark p-2 text-white">The credit from Part 2, line 12, will be
-                                reported on (check only one box):</h6>
-                            <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType" value="1">
-                                Form 941, 941-PR, or 941-SS
-                            </label>
-                            <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType" value="2">
-                                Form 943 or 943-PR
-                            </label>
-                            <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType"
-                                       value="3">
-                                Form 944 or 944(SP)
-                            </label>
-                        </div>
-
-                    </div>
-                    <!--Report For This Quarter-->
-                    <div class="col-5">
-                        <div class="form-check">
-                            <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Report for this quarter <small>check
-                                only one box</small></h6>
-                            <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport"
-                                       v-model="reportForThisQuarter" value="1">
-                                1: January, February, March
-                            </label>
-                            <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport"
-                                       v-model="reportForThisQuarter" value="2">
-                                2: April, May, June
-                            </label>
-                            <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport"
-                                       v-model="reportForThisQuarter" value="3">
-                                3: July, August, September
-                            </label>
-                            <label class="form-check-label d-block mt-2">
-                                <input type="radio" class="form-check-input" name="quarterReport"
-                                       v-model="reportForThisQuarter" value="4">
-                                4: October, November, December
-                            </label>
-                        </div>
-
-                        <!--Calendar Year-->
-                        <label for="" class="bg-dark p-2 text-white mt-4">Calendar year <small>You must select a quarter
-                            if you file Form 941, 941-PR, or 941-SS.</small> </label>
-                        <flatpickr timeFormat="Y" v-model="calendarYear" id="calendar_year_select"/>
-
-                    </div>
-                </div>
-            </div>
-
-            <!--MID or PART 1-->
-            <div class="col-lg-12 col-12 bg-white mt-4 p-3">
-                <div class="bg-dark p-2 text-white">Part 1 <span class="bg-white text-dark p-1 ml-2">Tell us about your income tax return</span>
-                </div>
-                <!--PART 1 : Table-->
-                <table class="table table-striped table-responsive text-center">
-                    <thead>
-                    <tr>
-                        <th></th>
-                        <th>(a)
-                            Ending date
-                            of income
-                            tax period
-                        </th>
-                        <th width="12.5%">(b)
-                            Income
-                            tax return
-                            filed that
-                            included
-                            Form 6765
-                        </th>
-                        <th>(c)
-                            Date income
-                            tax return
-                            was filed
-                        </th>
-                        <th width="14.5%">(d)
-                            EIN
-                            used on
-                            Form 6765
-                        </th>
-                        <th width="12.5%">(e)
-                            Amount from
-                            Form 6765, line 44,
-                            or if applicable,
-                            the amount that
-                            was allocated
-                            to your EIN
-                        </th>
-                        <th width="12.5%">(f)
-                            Amount of credit
-                            from column (e)
-                            taken on a
-                            previous period(s)
-                        </th>
-                        <th width="12.5%">(g)
-                            Remaining credit
-                            (subtract column (f)
-                            from column (e))
-                        </th>
-                    </tr>
-                    </thead>
-                    <tbody>
-                    <tr v-for="(index, row) in maxRows">
-                        <td>
-                            <div class="mt-4">
-                                <b>{{ index }}</b>
-                            </div>
-                        </td>
-                        <td scope="row" colspan="1">
-                            <flatpickr timeFormat="m-d-Y" :id="`a${index}`" fontSize=".5rem"/>
-                        </td>
-                        <td>
-                            <select class="mt-3 form-control" :id="`b${index}`">
-                                <option disabled value="" selected>Select ...</option>
-                                <option>1065</option>
-                                <option>1120</option>
-                                <option>1120S</option>
-                            </select>
-                        </td>
-                        <td scope="row">
-                            <flatpickr timeFormat="m-d-Y" :id="`c${index}`" fontSize=".5rem"/>
-                        </td>
-                        <td>
-                            <div v-if="index===1">
-                                {{ limitEIND1 }}
-                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d1">
-                            </div>
-                            <div v-if="index===2">
-                                {{ limitEIND2 }}
-                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d2">
-                            </div>
-                            <div v-if="index===3">
-                                {{ limitEIND3 }}
-                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d3">
-                            </div>
-                            <div v-if="index===4">
-                                {{ limitEIND4 }}
-                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d4">
-                            </div>
-                            <div v-if="index===5">
-                                {{ limitEIND5 }}
-                                <input maxlength="10" minlength="10" type="text" class="form-control mt-3" :id="`d${index}`" v-model="einUsed.d5">
-                            </div>
-                        </td>
-                        <td>
-                            <input v-if="index === 1" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e1" name="" placeholder="">
-                            <input v-if="index === 2" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e2" name="" placeholder="">
-                            <input v-if="index === 3" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e3" name="" placeholder="">
-                            <input v-if="index === 4" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e4" name="" placeholder="">
-                            <input v-if="index === 5" type="text" class="form-control mt-3" :id="`e${index}`" v-model="amountFromForm.e5" name="" placeholder="">
-                        </td>
-                        <td colspan="1">
-                            <input v-if="index === 1" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f1" placeholder="">
-                            <input v-if="index === 2" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f2" placeholder="">
-                            <input v-if="index === 3" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f3" placeholder="">
-                            <input v-if="index === 4" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f4" placeholder="">
-                            <input v-if="index === 5" type="text" class="form-control mt-3" :id="`f${index}`" v-model="amountOfCredit.f5" placeholder="">
-                        </td>
-                        <td>
-                            <div class="mt-4">
-                                <b v-if="index === 1" :id="`g${index}`">{{ remainingRowA }}</b>
-                                <b v-else-if="index === 2" :id="`g${index}`">{{ remainingRowB }}</b>
-                                <b v-else-if="index === 3" :id="`g${index}`">{{ remainingRowC }}</b>
-                                <b v-else-if="index === 4" :id="`g${index}`">{{ remainingRowD }}</b>
-                                <b v-else-if="index === 5" :id="`g${index}`">{{ remainingRowE }}</b>
-                            </div>
-                        </td>
-                    </tr>
-                    <!--TOTAL-->
-                    <tr>
-                        <td colspan="6" class="text-left">
-                            <b class="mr-4">6</b>Add lines 1(g) through 5(g) and enter the total here
-                        </td>
-                        <td colspan="2" class="bg-dark text-white font-weight-bold">
-                            {{ rowSixTotal }}
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
-
-            </div>
-
-            <!--BOTTOM or PART 2-->
-            <div class="col-lg-9 col-12 bg-white mt-4 p-3">
-                <div class="bg-dark p-2 text-white">Part 2 <span class="bg-white text-dark p-1 ml-2">Determine the credit that you can use this period.</span>
-                </div>
-                <div v-for="(info, index) in partTwoFieldInfo" class="row">
-                    <div class="col-8 bg-light p-2">
-                        <b class="mr-2">{{ index + 7 }}</b> {{ info }}
-
-                        <div v-if="index === 4">
-                            <!--CHECK THIS BOX-->
-                            <div class="form-check mt-3">
-                                <label class="form-check-label d-block mt-2">
-                                    <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b1" value="1" name="checkThisBox">
-                                    <b>Check this box if you're a third-party payer of sick pay</b>
-                                </label>
-                                <label class="form-check-label d-block mt-2">
-                                    <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b2" value="2" name="checkThisBox">
-                                    <b>Check this box if you received a Section 3121(q) Notice and Demand. See the
-                                        instructions before completing line 11</b>
-                                </label>
-                            </div>
-
-                        </div>
-
-                    </div>
-                    <div class="col-4 text-center p-2 my-auto">
-                        <div v-if="index === 0" class="font-weight-bold">{{ rowSixTotal }}</div>
-                        <div v-else-if="index === 1" class="form-group">
-                            <input type="text" class="form-control" v-model="partTwoEight">
-                        </div>
-                        <div v-else-if="index === 2" class="form-group">
-                            <input type="text" class="form-control" v-model="partTwoNine">
-                        </div>
-                        <div v-else-if="index === 3" class="form-group font-weight-bolder">{{ sumOfPartTwoEightAndNine }}</div>
-                        <div v-else-if="index === 4" class="form-group font-weight-bolder">{{ partTwoLineElevenPercentage }}</div>
-                        <div v-else-if="index === 5" class="form-group font-weight-bolder">{{ partTwoGreaterThan }}</div>
-                    </div>
-                </div>
-            </div>
-
-        </div>
+    <div class="row d-none">
+      <!-- Trigger the component update -->
+      {{ returnEmployerIdentificationNumber() }}
+      {{ returnName() }}
+      {{ returnCalendarYear() }}
+      {{ returnForm941Line5AColumn2 }}
+      {{ returnForm941Line5BColumn2 }}
     </div>
+
+    <div class="position-fixed" style="right: 1rem; bottom:1rem;">
+
+      <div class="bg-dark text-center mb-3 p-2">
+        <div :class="(validation.ein) ? 'alert-success' : 'alert-danger'">EIN</div>
+        <div :class="(validation.name) ? 'alert-success' : 'alert-danger'">Name</div>
+        <div :class="(validation.partOne) ? 'alert-success' : 'alert-danger'">Part 1</div>
+        <div :class="(validation.partTwo) ? 'alert-success' : 'alert-danger'">Part 2</div>
+      </div>
+
+      <div>
+        <button class="btn btn-danger d-inline clear" @click="clearFields()">Clear</button>
+      </div>
+
+      <div v-show="disableDownload !== 'Y'">
+        <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
+      </div>
+    </div>
+    <div class="row justify-content-center">
+
+      <div class="col-12 mt-3">
+        <h4 class="alert-info p-2 text-center">Form 8974</h4>
+      </div>
+
+      <!--TOP OF FORM-->
+      <div class="col-lg-9 col-12 bg-white mt-4 p-3">
+        <div class="row">
+          <div class="col-7">
+            {{ limitEIN }}
+            <!--EIN-->
+            <div class="form-group">
+              <label for="" class="bg-dark p-2 text-white">Employer identification number (EIN)</label>
+              <input maxlength="12" minlength="12" type="text" v-model="ein"
+                     class="form-control mt-2" placeholder="" aria-describedby="helpId">
+            </div>
+
+            <!--Name-->
+            <div class="form-group mt-3">
+              <label for="" class="bg-dark p-2 text-white">Name (not your trade name)</label>
+              <input type="text" class="form-control mt-2" v-model="name">
+            </div>
+
+            <!--Credity Type-->
+            <div class="form-check mt-3">
+              <h6 class="font-weight-bold bg-dark p-2 text-white">The credit from Part 2, line 12, will be
+                reported on (check only one box):</h6>
+              <label class="form-check-label d-block mt-2">
+                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType"
+                       value="1">
+                Form 941, 941-PR, or 941-SS
+              </label>
+              <label class="form-check-label d-block mt-2">
+                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType"
+                       value="2">
+                Form 943 or 943-PR
+              </label>
+              <label class="form-check-label d-block mt-2">
+                <input type="radio" class="form-check-input" v-model="creditTypeBox" name="creditType"
+                       value="3">
+                Form 944 or 944(SP)
+              </label>
+            </div>
+
+          </div>
+          <!--Report For This Quarter-->
+          <div class="col-5">
+            <div class="form-check">
+              <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Report for this quarter <small>check
+                only one box</small></h6>
+              <label class="form-check-label d-block mt-2">
+                <input type="radio" class="form-check-input" name="quarterReport"
+                       v-model="reportForThisQuarter" value="1">
+                1: January, February, March
+              </label>
+              <label class="form-check-label d-block mt-2">
+                <input type="radio" class="form-check-input" name="quarterReport"
+                       v-model="reportForThisQuarter" value="2">
+                2: April, May, June
+              </label>
+              <label class="form-check-label d-block mt-2">
+                <input type="radio" class="form-check-input" name="quarterReport"
+                       v-model="reportForThisQuarter" value="3">
+                3: July, August, September
+              </label>
+              <label class="form-check-label d-block mt-2">
+                <input type="radio" class="form-check-input" name="quarterReport"
+                       v-model="reportForThisQuarter" value="4">
+                4: October, November, December
+              </label>
+            </div>
+
+            <!--Calendar Year-->
+            <label for="" class="bg-dark p-2 text-white mt-4">Calendar year <small>You must select a quarter
+              if you file Form 941, 941-PR, or 941-SS.</small> </label>
+            <flatpickr timeFormat="Y" v-model="calendarYear" id="calendar_year_select"/>
+
+          </div>
+        </div>
+      </div>
+
+      <!--MID or PART 1-->
+      <div class="col-lg-12 col-12 bg-white mt-4 p-3">
+        <div class="bg-dark p-2 text-white">Part 1 <span class="bg-white text-dark p-1 ml-2">Tell us about your income tax return</span>
+        </div>
+        <!--PART 1 : Table-->
+        <table class="table table-striped table-responsive text-center">
+          <thead>
+          <tr>
+            <th></th>
+            <th>(a)
+              Ending date
+              of income
+              tax period
+            </th>
+            <th width="12.5%">(b)
+              Income
+              tax return
+              filed that
+              included
+              Form 6765
+            </th>
+            <th>(c)
+              Date income
+              tax return
+              was filed
+            </th>
+            <th width="14.5%">(d)
+              EIN
+              used on
+              Form 6765
+            </th>
+            <th width="12.5%">(e)
+              Amount from
+              Form 6765, line 44,
+              or if applicable,
+              the amount that
+              was allocated
+              to your EIN
+            </th>
+            <th width="12.5%">(f)
+              Amount of credit
+              from column (e)
+              taken on a
+              previous period(s)
+            </th>
+            <th width="12.5%">(g)
+              Remaining credit
+              (subtract column (f)
+              from column (e))
+            </th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="(index, row) in maxRows">
+            <td>
+              <div class="mt-4">
+                <b>{{ index }}</b>
+              </div>
+            </td>
+            <td scope="row" colspan="1">
+              <flatpickr timeFormat="m-d-Y" :id="`a${index}`" fontSize=".5rem"/>
+            </td>
+            <td>
+              <select class="mt-3 form-control" :id="`b${index}`">
+                <option disabled value="" selected>Select ...</option>
+                <option>1065</option>
+                <option>1120</option>
+                <option>1120S</option>
+              </select>
+            </td>
+            <td scope="row">
+              <flatpickr timeFormat="m-d-Y" :id="`c${index}`" fontSize=".5rem"/>
+            </td>
+            <td>
+              <div v-if="index===1">
+                {{ limitEIND1 }}
+                <input maxlength="10" minlength="10" type="text" class="form-control mt-3"
+                       :id="`d${index}`" v-model="einUsed.d1">
+              </div>
+              <div v-if="index===2">
+                {{ limitEIND2 }}
+                <input maxlength="10" minlength="10" type="text" class="form-control mt-3"
+                       :id="`d${index}`" v-model="einUsed.d2">
+              </div>
+              <div v-if="index===3">
+                {{ limitEIND3 }}
+                <input maxlength="10" minlength="10" type="text" class="form-control mt-3"
+                       :id="`d${index}`" v-model="einUsed.d3">
+              </div>
+              <div v-if="index===4">
+                {{ limitEIND4 }}
+                <input maxlength="10" minlength="10" type="text" class="form-control mt-3"
+                       :id="`d${index}`" v-model="einUsed.d4">
+              </div>
+              <div v-if="index===5">
+                {{ limitEIND5 }}
+                <input maxlength="10" minlength="10" type="text" class="form-control mt-3"
+                       :id="`d${index}`" v-model="einUsed.d5">
+              </div>
+            </td>
+            <td>
+              <input v-if="index === 1" type="text" class="form-control mt-3" :id="`e${index}`"
+                     v-model="amountFromForm.e1" name="" placeholder="">
+              <input v-if="index === 2" type="text" class="form-control mt-3" :id="`e${index}`"
+                     v-model="amountFromForm.e2" name="" placeholder="">
+              <input v-if="index === 3" type="text" class="form-control mt-3" :id="`e${index}`"
+                     v-model="amountFromForm.e3" name="" placeholder="">
+              <input v-if="index === 4" type="text" class="form-control mt-3" :id="`e${index}`"
+                     v-model="amountFromForm.e4" name="" placeholder="">
+              <input v-if="index === 5" type="text" class="form-control mt-3" :id="`e${index}`"
+                     v-model="amountFromForm.e5" name="" placeholder="">
+            </td>
+            <td colspan="1">
+              <input v-if="index === 1" type="text" class="form-control mt-3" :id="`f${index}`"
+                     v-model="amountOfCredit.f1" placeholder="">
+              <input v-if="index === 2" type="text" class="form-control mt-3" :id="`f${index}`"
+                     v-model="amountOfCredit.f2" placeholder="">
+              <input v-if="index === 3" type="text" class="form-control mt-3" :id="`f${index}`"
+                     v-model="amountOfCredit.f3" placeholder="">
+              <input v-if="index === 4" type="text" class="form-control mt-3" :id="`f${index}`"
+                     v-model="amountOfCredit.f4" placeholder="">
+              <input v-if="index === 5" type="text" class="form-control mt-3" :id="`f${index}`"
+                     v-model="amountOfCredit.f5" placeholder="">
+            </td>
+            <td>
+              <div class="mt-4">
+                <b v-if="index === 1" :id="`g${index}`">{{ remainingRowA }}</b>
+                <b v-else-if="index === 2" :id="`g${index}`">{{ remainingRowB }}</b>
+                <b v-else-if="index === 3" :id="`g${index}`">{{ remainingRowC }}</b>
+                <b v-else-if="index === 4" :id="`g${index}`">{{ remainingRowD }}</b>
+                <b v-else-if="index === 5" :id="`g${index}`">{{ remainingRowE }}</b>
+              </div>
+            </td>
+          </tr>
+          <!--TOTAL-->
+          <tr>
+            <td colspan="6" class="text-left">
+              <b class="mr-4">6</b>Add lines 1(g) through 5(g) and enter the total here
+            </td>
+            <td colspan="2" class="bg-dark text-white font-weight-bold">
+              {{ rowSixTotal }}
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+      </div>
+
+      <!--BOTTOM or PART 2-->
+      <div class="col-lg-9 col-12 bg-white mt-4 p-3">
+        <div class="bg-dark p-2 text-white">Part 2 <span class="bg-white text-dark p-1 ml-2">Determine the credit that you can use this period.</span>
+        </div>
+        <div v-for="(info, index) in partTwoFieldInfo" class="row">
+          <div class="col-8 bg-light p-2">
+            <b class="mr-2">{{ index + 7 }}</b> {{ info }}
+
+            <div v-if="index === 4">
+              <!--CHECK THIS BOX-->
+              <div class="form-check mt-3">
+                <label class="form-check-label d-block mt-2">
+                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b1"
+                         value="1" name="checkThisBox">
+                  <b>Check this box if you're a third-party payer of sick pay</b>
+                </label>
+                <label class="form-check-label d-block mt-2">
+                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b2"
+                         value="2" name="checkThisBox">
+                  <b>Check this box if you received a Section 3121(q) Notice and Demand. See the
+                    instructions before completing line 11</b>
+                </label>
+              </div>
+
+            </div>
+
+          </div>
+          <div class="col-4 text-center p-2 my-auto">
+            <div v-if="index === 0" class="font-weight-bold">{{ rowSixTotal }}</div>
+            <div v-else-if="index === 1" class="form-group">
+              <input type="text" class="form-control" v-model="partTwoEight">
+            </div>
+            <div v-else-if="index === 2" class="form-group">
+              <input type="text" class="form-control" v-model="partTwoNine">
+            </div>
+            <div v-else-if="index === 3" class="form-group font-weight-bolder">{{ sumOfPartTwoEightAndNine
+              }}
+            </div>
+            <div v-else-if="index === 4" class="form-group font-weight-bolder">{{
+              partTwoLineElevenPercentage }}
+            </div>
+            <div v-else-if="index === 5" class="form-group font-weight-bolder">{{ partTwoGreaterThan }}
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
 </template>
 
 
@@ -281,29 +314,39 @@
   import download from 'downloadjs';
   import * as $ from 'jquery';
   import Flatpickr from "../Calendar/Flatpickr";
-  import {mapGetters} from "vuex";
+  import {mapGetters, mapActions} from "vuex";
 
   export default {
     name: "Form_8974",
     components: {Flatpickr},
     props: {
-        disableDownload: String
+      disableDownload: String
     },
-    mounted(){
-      this.calendarYear = $('#calendar_year_select').val();
+    mounted() {
+      if (this.disableDownload !== 'Y') {
+        this.calendarYear = $('#calendar_year_select').val();
+      }
     },
-      beforeUpdate() {
-          this.ein = this.returnEmployerIdentificationNumber()
-      },
-      data: function () {
+    beforeUpdate() {
+      /* Only enable retrieving from Vuex if working in multi form layout */
+      if (this.disableDownload === 'Y') {
+        console.warn('Calendar year from Vuex is ', this.returnCalendarYear());
+        this.ein = this.returnEmployerIdentificationNumber().substr(0,2) + ' - ' + this.returnEmployerIdentificationNumber().substr(2);
+        this.name = this.returnName();
+        $('#calendar_year_select').val(this.returnCalendarYear());
+        this.partTwoEight = this.returnForm941Line5AColumn2;
+        this.partTwoNine = this.returnForm941Line5BColumn2;
+      }
+
+    },
+    data: function () {
       return {
-        // url: 'https://irsforms.dev/Form-8974.pdf',
         url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
         /* MAIN FORM FIELDS ######################## */
         ein: '',
         creditTypeBox: null,
         name: '',
-        reportForThisQuarter: null,
+        reportForThisQuarter: this.returnQuarterSelected,
         calendarYear: '',
         endingDateIncomeTax: {
           a1: null,
@@ -379,6 +422,7 @@
       }
     },
     computed: {
+      ...mapGetters(['returnQuarterSelected', 'returnForm941Line5AColumn2', 'returnForm941Line5BColumn2']),
       limitEIN: function () {
         if (this.ein.length === 2)
           this.ein += ' - ';
@@ -403,37 +447,40 @@
         if (this.einUsed.d5.length === 2)
           this.einUsed.d5 += '-';
       },
-      remainingRowA: function() {
+      remainingRowA: function () {
         return Number((this.amountFromForm.e1 - this.amountOfCredit.f1).toFixed(2));
       },
-      remainingRowB: function() {
+      remainingRowB: function () {
         return Number((this.amountFromForm.e2 - this.amountOfCredit.f2).toFixed(2));
       },
-      remainingRowC: function() {
+      remainingRowC: function () {
         return Number((this.amountFromForm.e3 - this.amountOfCredit.f3).toFixed(2));
       },
-      remainingRowD: function() {
+      remainingRowD: function () {
         return Number((this.amountFromForm.e4 - this.amountOfCredit.f4).toFixed(2));
       },
-      remainingRowE: function() {
+      remainingRowE: function () {
         return Number((this.amountFromForm.e5 - this.amountOfCredit.f5).toFixed(2));
       },
       rowSixTotal: function () {
         const rowTotals = [this.remainingRowA, this.remainingRowB, this.remainingRowC, this.remainingRowD, this.remainingRowE];
-        return (rowTotals.reduce((a,b) => a+b,0)).toFixed(2);
+        return (rowTotals.reduce((a, b) => a + b, 0)).toFixed(2);
       },
       sumOfPartTwoEightAndNine: function () {
         return (Number(this.partTwoEight) + Number(this.partTwoNine)).toFixed(2);
       },
-      partTwoGreaterThan: function(){
-        return ( Number(this.rowSixTotal) > Number(this.partTwoLineElevenPercentage) ) ? this.partTwoLineElevenPercentage : this.rowSixTotal;
+      partTwoGreaterThan: function () {
+        const _n = (Number(this.rowSixTotal) > Number(this.partTwoLineElevenPercentage)) ? this.partTwoLineElevenPercentage : this.rowSixTotal;
+        this.storeForm8974Line12(_n);
+        return _n;
       },
       partTwoLineElevenPercentage: function () {
         return (Number(this.sumOfPartTwoEightAndNine * .50)).toFixed(2);
       }
     },
     methods: {
-        ...mapGetters(['returnEmployerIdentificationNumber']),
+      ...mapGetters(['returnEmployerIdentificationNumber', 'returnName', 'returnCalendarYear']),
+      ...mapActions(['storeForm8974Line12']),
       exportToPDF: async function () {
 
         /*  TODO Validate all fields before exporting */
@@ -496,20 +543,20 @@
           });
 
           /*Draw Credit Type*/
-          const ctYCoord = [252,228,204];
+          const ctYCoord = [252, 228, 204];
           firstPage.drawText('X', {
             x: 180,
-            y: height / 2 + ctYCoord[this.creditTypeBox-1],
+            y: height / 2 + ctYCoord[this.creditTypeBox - 1],
             ...baseOptionsLG
           });
 
           /* Draw Report For This Quarter */
-          const rqYCoord = [283,265,247,229];
-            firstPage.drawText('X', {
-              x: 424,
-              y: height / 2 + rqYCoord[this.reportForThisQuarter-1],
-              ...baseOptionsLG
-            });
+          const rqYCoord = [283, 265, 247, 229];
+          firstPage.drawText('X', {
+            x: 424,
+            y: height / 2 + rqYCoord[this.reportForThisQuarter - 1],
+            ...baseOptionsLG
+          });
 
           /*Draw Calendar year*/
           firstPage.drawText($('#calendar_year_select').val(), {
@@ -533,7 +580,7 @@
           const yOffset = 18;
           const START_X = 80;
 
-          for(let idx=1; idx <= 6; idx++){
+          for (let idx = 1; idx <= 6; idx++) {
             console.warn('LOOP ON ', idx);
             switch (idx) {
               case 1:
@@ -554,31 +601,31 @@
                   });
                   /* Draw C */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
-                    x: START_X + (xOffset*2) - 10,
+                    x: START_X + (xOffset * 2) - 10,
                     y: height / 2 + 54,
                     ...baseOptions
                   });
                   /* Draw D */
                   firstPage.drawText($(`#d${idx}`).val(), {
-                    x: START_X + (xOffset*3) - 7,
+                    x: START_X + (xOffset * 3) - 7,
                     y: height / 2 + 54,
                     ...baseOptions
                   });
                   /* Draw E */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
-                    x: START_X + (xOffset*4) - 10,
+                    x: START_X + (xOffset * 4) - 10,
                     y: height / 2 + 54,
                     ...baseOptions
                   });
                   /* Draw F */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
-                    x: START_X + (xOffset*5) + 17 - 10,
+                    x: START_X + (xOffset * 5) + 17 - 10,
                     y: height / 2 + 54,
                     ...baseOptions
                   });
                   /* Draw G */
                   firstPage.drawText(formattedColG, {
-                    x: START_X + (xOffset*6) + 10,
+                    x: START_X + (xOffset * 6) + 10,
                     y: height / 2 + 54,
                     ...baseOptions
                   });
@@ -602,31 +649,31 @@
                   });
                   /* Draw C */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
-                    x: START_X + (xOffset*2) - 10,
+                    x: START_X + (xOffset * 2) - 10,
                     y: height / 2 + 54 - yOffset,
                     ...baseOptions
                   });
                   /* Draw D */
                   firstPage.drawText($(`#d${idx}`).val(), {
-                    x: START_X + (xOffset*3) - 7,
+                    x: START_X + (xOffset * 3) - 7,
                     y: height / 2 + 54 - yOffset,
                     ...baseOptions
                   });
                   /* Draw E */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
-                    x: START_X + (xOffset*4) - 10,
+                    x: START_X + (xOffset * 4) - 10,
                     y: height / 2 + 54 - yOffset,
                     ...baseOptions
                   });
                   /* Draw F */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
-                    x: START_X + (xOffset*5) + 5,
+                    x: START_X + (xOffset * 5) + 5,
                     y: height / 2 + 54 - yOffset,
                     ...baseOptions
                   });
                   /* Draw G */
                   firstPage.drawText(formattedColG, {
-                    x: START_X + (xOffset*6) + 10,
+                    x: START_X + (xOffset * 6) + 10,
                     y: height / 2 + 54 - yOffset,
                     ...baseOptions
                   });
@@ -639,43 +686,43 @@
                   /* Draw A */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
-                    y: height / 2 + 54 - (yOffset*2),
+                    y: height / 2 + 54 - (yOffset * 2),
                     ...baseOptions
                   });
                   /* Draw B */
                   firstPage.drawText($(`#b${idx}`).val(), {
                     x: START_X + xOffset,
-                    y: height / 2 + 54 - (yOffset*2),
+                    y: height / 2 + 54 - (yOffset * 2),
                     ...baseOptions
                   });
                   /* Draw C */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
-                    x: START_X + (xOffset*2) - 10,
-                    y: height / 2 + 54 - (yOffset*2),
+                    x: START_X + (xOffset * 2) - 10,
+                    y: height / 2 + 54 - (yOffset * 2),
                     ...baseOptions
                   });
                   /* Draw D */
                   firstPage.drawText($(`#d${idx}`).val(), {
-                    x: START_X + (xOffset*3) - 7,
-                    y: height / 2 + 54 - (yOffset*2),
+                    x: START_X + (xOffset * 3) - 7,
+                    y: height / 2 + 54 - (yOffset * 2),
                     ...baseOptions
                   });
                   /* Draw E */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
-                    x: START_X + (xOffset*4) - 10,
-                    y: height / 2 + 54 - (yOffset*2),
+                    x: START_X + (xOffset * 4) - 10,
+                    y: height / 2 + 54 - (yOffset * 2),
                     ...baseOptions
                   });
                   /* Draw F */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
-                    x: START_X + (xOffset*5) + 5,
-                    y: height / 2 + 54 - (yOffset*2),
+                    x: START_X + (xOffset * 5) + 5,
+                    y: height / 2 + 54 - (yOffset * 2),
                     ...baseOptions
                   });
                   /* Draw G */
                   firstPage.drawText(formattedColG, {
-                    x: START_X + (xOffset*6) + 10,
-                    y: height / 2 + 54 - (yOffset*2),
+                    x: START_X + (xOffset * 6) + 10,
+                    y: height / 2 + 54 - (yOffset * 2),
                     ...baseOptions
                   });
                 }
@@ -687,43 +734,43 @@
                   /* Draw A */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
-                    y: height / 2 + 54 - (yOffset*3),
+                    y: height / 2 + 54 - (yOffset * 3),
                     ...baseOptions
                   });
                   /* Draw B */
                   firstPage.drawText($(`#b${idx}`).val(), {
                     x: START_X + xOffset,
-                    y: height / 2 + 54 - (yOffset*3),
+                    y: height / 2 + 54 - (yOffset * 3),
                     ...baseOptions
                   });
                   /* Draw C */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
-                    x: START_X + (xOffset*2) - 10,
-                    y: height / 2 + 54 - (yOffset*3),
+                    x: START_X + (xOffset * 2) - 10,
+                    y: height / 2 + 54 - (yOffset * 3),
                     ...baseOptions
                   });
                   /* Draw D */
                   firstPage.drawText($(`#d${idx}`).val(), {
-                    x: START_X + (xOffset*3) - 7,
-                    y: height / 2 + 54 - (yOffset*3),
+                    x: START_X + (xOffset * 3) - 7,
+                    y: height / 2 + 54 - (yOffset * 3),
                     ...baseOptions
                   });
                   /* Draw E */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
-                    x: START_X + (xOffset*4) - 10,
-                    y: height / 2 + 54 - (yOffset*3),
+                    x: START_X + (xOffset * 4) - 10,
+                    y: height / 2 + 54 - (yOffset * 3),
                     ...baseOptions
                   });
                   /* Draw F */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
-                    x: START_X + (xOffset*5) + 5,
-                    y: height / 2 + 54 - (yOffset*3),
+                    x: START_X + (xOffset * 5) + 5,
+                    y: height / 2 + 54 - (yOffset * 3),
                     ...baseOptions
                   });
                   /* Draw G */
                   firstPage.drawText(formattedColG, {
-                    x: START_X + (xOffset*6) + 10,
-                    y: height / 2 + 54 - (yOffset*3),
+                    x: START_X + (xOffset * 6) + 10,
+                    y: height / 2 + 54 - (yOffset * 3),
                     ...baseOptions
                   });
                 }
@@ -735,43 +782,43 @@
                   /* Draw A */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#a${idx}`).val()), {
                     x: START_X,
-                    y: height / 2 + 54 - (yOffset*4),
+                    y: height / 2 + 54 - (yOffset * 4),
                     ...baseOptions
                   });
                   /* Draw B */
                   firstPage.drawText($(`#b${idx}`).val(), {
                     x: START_X + xOffset,
-                    y: height / 2 + 54 - (yOffset*4),
+                    y: height / 2 + 54 - (yOffset * 4),
                     ...baseOptions
                   });
                   /* Draw C */
                   firstPage.drawText(this.reformatDateToForwardslash($(`#c${idx}`).val()), {
-                    x: START_X + (xOffset*2) - 10,
-                    y: height / 2 + 54 - (yOffset*4),
+                    x: START_X + (xOffset * 2) - 10,
+                    y: height / 2 + 54 - (yOffset * 4),
                     ...baseOptions
                   });
                   /* Draw D */
                   firstPage.drawText($(`#d${idx}`).val(), {
-                    x: START_X + (xOffset*3) - 7,
-                    y: height / 2 + 54 - (yOffset*4),
+                    x: START_X + (xOffset * 3) - 7,
+                    y: height / 2 + 54 - (yOffset * 4),
                     ...baseOptions
                   });
                   /* Draw E */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#e${idx}`).val())), {
-                    x: START_X + (xOffset*4) - 10,
-                    y: height / 2 + 54 - (yOffset*4),
+                    x: START_X + (xOffset * 4) - 10,
+                    y: height / 2 + 54 - (yOffset * 4),
                     ...baseOptions
                   });
                   /* Draw F */
                   firstPage.drawText(this.convertToStringAndAddDecimal(Number($(`#f${idx}`).val())), {
-                    x: START_X + (xOffset*5) + 5,
-                    y: height / 2 + 54 - (yOffset*4),
+                    x: START_X + (xOffset * 5) + 5,
+                    y: height / 2 + 54 - (yOffset * 4),
                     ...baseOptions
                   });
                   /* Draw G */
                   firstPage.drawText(formattedColG, {
-                    x: START_X + (xOffset*6) + 10,
-                    y: height / 2 + 54 - (yOffset*4),
+                    x: START_X + (xOffset * 6) + 10,
+                    y: height / 2 + 54 - (yOffset * 4),
                     ...baseOptions
                   });
                 }
@@ -780,14 +827,14 @@
                 /* Map Totals and Part 2-7 */
                 const total = this.convertToStringAndAddDecimal(this.rowSixTotal);
                 firstPage.drawText(total, {
-                  x: START_X + (xOffset*6) + 10,
-                  y: height / 2 + 54 - (yOffset*5),
+                  x: START_X + (xOffset * 6) + 10,
+                  y: height / 2 + 54 - (yOffset * 5),
                   ...baseOptions
                 });
                 /*P2-7*/
                 firstPage.drawText(total, {
-                  x: START_X + (xOffset*6) - 5,
-                  y: height / 2 + 54 - (yOffset*7) - 5,
+                  x: START_X + (xOffset * 6) - 5,
+                  y: height / 2 + 54 - (yOffset * 7) - 5,
                   ...baseOptions
                 });
                 break;
@@ -796,54 +843,54 @@
 
           /* Draw 8 */
           firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoEight), {
-            x: START_X + (xOffset*4) - 10,
-            y: height / 2 + 54 - (yOffset*10) + 1,
+            x: START_X + (xOffset * 4) - 10,
+            y: height / 2 + 54 - (yOffset * 10) + 1,
             ...baseOptions
           });
 
           /* Draw 9 */
           firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoNine), {
-            x: START_X + (xOffset*4) - 10,
-            y: height / 2 + 54 - (yOffset*13) + 7,
+            x: START_X + (xOffset * 4) - 10,
+            y: height / 2 + 54 - (yOffset * 13) + 7,
             ...baseOptions
           });
 
           /* Draw 10 */
           firstPage.drawText(this.convertToStringAndAddDecimal(this.sumOfPartTwoEightAndNine), {
-            x: START_X + (xOffset*4) - 10,
-            y: height / 2 + 54 - (yOffset*15) + 13,
+            x: START_X + (xOffset * 4) - 10,
+            y: height / 2 + 54 - (yOffset * 15) + 13,
             ...baseOptions
           });
 
           /* Draw 10 CHECKBOX 1 IF Selected */
-          if(Number(this.partTwoOptional) === 1 ) {
+          if (Number(this.partTwoOptional) === 1) {
             firstPage.drawText('X', {
-              x: START_X + (xOffset*2) + 32,
-              y: height / 2 + 54 - (yOffset*17) + 17,
+              x: START_X + (xOffset * 2) + 32,
+              y: height / 2 + 54 - (yOffset * 17) + 17,
               ...baseOptionsLG
             });
           }
 
           /* Draw 10 CHECKBOX 2 IF Selected */
-          if(Number(this.partTwoOptional) === 2 ) {
+          if (Number(this.partTwoOptional) === 2) {
             firstPage.drawText('X', {
               x: START_X + (xOffset) - 23,
-              y: height / 2 + 54 - (yOffset*17) + 3,
+              y: height / 2 + 54 - (yOffset * 17) + 3,
               ...baseOptionsLG
             });
           }
 
           /* Draw 11 */
           firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoLineElevenPercentage), {
-            x: START_X + (xOffset*6) - 10,
-            y: height / 2 + 54 - (yOffset*18) + 6,
+            x: START_X + (xOffset * 6) - 10,
+            y: height / 2 + 54 - (yOffset * 18) + 6,
             ...baseOptions
           });
 
           /* Draw 12 */
           firstPage.drawText(this.convertToStringAndAddDecimal(this.partTwoGreaterThan), {
-            x: START_X + (xOffset*6) - 10,
-            y: height / 2 + 54 - (yOffset*20) + 5,
+            x: START_X + (xOffset * 6) - 10,
+            y: height / 2 + 54 - (yOffset * 20) + 5,
             ...baseOptions
           });
 
@@ -881,12 +928,12 @@
         if (this.calendarYear.trim().length === 0 || this.calendarYear === null) return false;
 
         /*PART 1*/
-        if (this.rowSixTotal <= 0.00 || this.rowSixTotal <= '0.00' ) {
+        if (this.rowSixTotal <= 0.00 || this.rowSixTotal <= '0.00') {
           this.validation.partOne = false;
           return false;
         } else this.validation.partOne = true;
 
-        if (this.sumOfPartTwoEightAndNine <= 0.00 || this.sumOfPartTwoEightAndNine <= '0.00' ) {
+        if (this.sumOfPartTwoEightAndNine <= 0.00 || this.sumOfPartTwoEightAndNine <= '0.00') {
           this.validation.partTwo = false;
           return false;
         } else this.validation.partTwo = true;
@@ -895,53 +942,53 @@
       },
       convertToStringAndAddDecimal(columnG) {
         let formatToString = columnG.toString();
-        let formatToCurrency = (formatToString.includes('.')) ? formatToString : formatToString+='.00';
+        let formatToCurrency = (formatToString.includes('.')) ? formatToString : formatToString += '.00';
         return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
 
       },
-      reformatDateToForwardslash(d){
+      reformatDateToForwardslash(d) {
         return d.replace(/-/g, '/');
       },
       clearFields() {
         this.ein = this.name = this.calendarYear = '';
         this.creditTypeBox = this.reportForThisQuarter = this.endingDateIncomeTax = this.incomeTaxReturntype =
-        this.incomeTaxDateFiled = this.total;
+          this.incomeTaxDateFiled = this.total;
         this.partTwoEight =
-        this.partTwoNine =
-        this.thirdPartyPayer =
-        this.partTwoOptional =
-        this.noticeOfDemand =
-        this.partTwoEleven =
-        this.validation.ein = this.validation.name = this.validation.partOne = this.validation.partTwo = null;
+          this.partTwoNine =
+            this.thirdPartyPayer =
+              this.partTwoOptional =
+                this.noticeOfDemand =
+                  this.partTwoEleven =
+                    this.validation.ein = this.validation.name = this.validation.partOne = this.validation.partTwo = null;
       }
     }
   }
 </script>
 
 <style scoped>
-    button {
-        border-radius: 0;
-        width: 5rem !important;
-    }
+  button {
+    border-radius: 0;
+    width: 5rem !important;
+  }
 
-    .clear {
-        border-top-left-radius: 1rem;
-        border-top-right-radius: 1rem;
-        -moz-border-radius-topright: 1rem !important;
-        -moz-border-radius-topleft: 1rem !important;
-        -webkit-border-top-left-radius: 1rem !important;
-    }
+  .clear {
+    border-top-left-radius: 1rem;
+    border-top-right-radius: 1rem;
+    -moz-border-radius-topright: 1rem !important;
+    -moz-border-radius-topleft: 1rem !important;
+    -webkit-border-top-left-radius: 1rem !important;
+  }
 
-    .export {
-        border-bottom-left-radius: 1rem;
-        border-bottom-right-radius: 1rem;
-        -moz-border-radius-bottomright: 1rem !important;
-        -moz-border-radius-bottomleft: 1rem !important;
-        -webkit-border-bottom-left-radius: 1rem !important;
-    }
+  .export {
+    border-bottom-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    -moz-border-radius-bottomright: 1rem !important;
+    -moz-border-radius-bottomleft: 1rem !important;
+    -webkit-border-bottom-left-radius: 1rem !important;
+  }
 
-    .col-lg-12 {
-        /*max-width: 130%;*/
-        /*flex: 0 0 130%;*/
-    }
+  .col-lg-12 {
+    /*max-width: 130%;*/
+    /*flex: 0 0 130%;*/
+  }
 </style>
