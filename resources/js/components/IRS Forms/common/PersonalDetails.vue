@@ -14,7 +14,7 @@
                                   Employer identification number
                               </div>
                               <div class="col-7 my-auto">
-                                  <input type="text" class="form-control"
+                                  <input type="text" class="form-control" @input="updateEINState"
                                          :class="{'is-invalid': errors.ein, 'is-valid': (errors.ein===false)}"
                                          v-model="employerIdentificationNumber"
                                          minlength="9"
@@ -150,6 +150,9 @@
 
 <script>
     import Flatpickr from "../../Calendar/Flatpickr";
+    import * as $ from 'jquery';
+    import {mapActions} from "vuex";
+
   export default {
     name: "PersonalDetails",
       components: {Flatpickr},
@@ -193,6 +196,14 @@
                 partTwoNumberSixteen: null,
             }
         }
+      },
+      methods: {
+        ...mapActions(['updateEIN']),
+          updateEINState(event) {
+              this.updateEIN(event.target.value);
+              console.log(event.target.value)
+              // $('#form8974EIN').
+          }
       }
   }
 </script>

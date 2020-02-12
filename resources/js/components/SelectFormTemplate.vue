@@ -2,6 +2,12 @@
     <div class="container">
         <div class="row justify-content-center">
 
+            <p>{{returnTitle()}}</p>
+
+<!--            <div class="col-12">-->
+<!--                <personal-details/>-->
+<!--            </div>-->
+
             <table v-show="!isFillingOut" class="table">
                 <thead>
                 <tr>
@@ -55,13 +61,27 @@
             <div class="row">
                 <div class="col-3">
                     <ul class="list-group">
-                        <li class="list-group-item active" @click="setActiveForm('Personal')">Common Details</li>
-                        <li class="list-group-item" v-show="checkedForms.includes('8974')" v-on:click="setActiveForm('t8974')">Form 8974</li>
-                        <li class="list-group-item" v-show="checkedForms.includes('941')"
+                        <li class="list-group-item"
+                            :class="{'active': showPersonal}"
+                            @click="setActiveForm('Personal')">Common Details</li>
+                        <li class="list-group-item"
+                            :class="{'active': setActive.t8974}"
+                            v-show="checkedForms.includes('8974')"
+                            v-on:click="setActiveForm('t8974')">Form 8974</li>
+                        <li class="list-group-item"
+                            :class="{'active': setActive.t941}"
+                            v-show="checkedForms.includes('941')"
                             v-on:click="setActiveForm('t941')">Form 941</li>
-                        <li class="list-group-item" v-show="checkedForms.includes('941SB')"
+                        <li class="list-group-item"
+                            :class="{'active': setActive.t941SB}"
+                            v-show="checkedForms.includes('941SB')"
                             v-on:click="setActiveForm('t941SB')">Form Schedule B</li>
                     </ul>
+                </div>
+                <div class="col-9">
+                    <p>Use the left menu to alternate between forms or use the download button to download all
+                        working forms.</p>
+                    <button class="btn btn-primary">Download</button>
                 </div>
                 <div class="col-12">
                     <personal-details v-show="showPersonal"/>
@@ -91,6 +111,7 @@
   import Form_941 from "./IRS Forms/Form_941";
   import Form_941S from "./IRS Forms/Form_941S";
   import PersonalDetails from "./IRS Forms/common/PersonalDetails";
+  import { mapGetters } from "vuex"
 
   export default {
     components: {PersonalDetails, Form_941, Form_8974, Form_941S},
@@ -128,7 +149,7 @@
         activeForm_941_Schedule_B: false,
         checkedForms: [],
         isFillingOut: false,
-        showPersonal: null,
+        showPersonal: true,
         setActive: {
             t8974: false,
             t941: false,
@@ -137,6 +158,7 @@
       }
     },
     methods: {
+      ...mapGetters(['returnTitle']),
       setActiveForm(arg) {
         switch (arg) {
           case '8974':
@@ -152,7 +174,7 @@
             this.activeForm_941 = !this.activeForm_941;
             this.activeForm_8974 = this.activeForm_941_Schedule_B = this.showPersonal = false;
             break;
-            case 't941':
+          case 't941':
             console.log('t941');
                 this.setActive.t941 = !this.setActive.t941;
                 this.setActive.t8974 = this.setActive.t941SB = this.showPersonal = false;
@@ -170,7 +192,7 @@
           case 'Personal':
             console.log('Personal');
             this.showPersonal = !this.showPersonal;
-            this.activeForm_941_Schedule_B = this.activeForm_941 = this.activeForm_8974 = false;
+            this.setActive.t8974 = this.setActive.t941 = this.setActive.t941SB = false;
             break;
         }
       },
@@ -178,11 +200,6 @@
           console.log(this.checkedForms);
             this.isFillingOut = true;
         },
-    },
-    mounted() {
-      console.error(this.type_8974);
-      console.error(this.type_941);
-      console.error(this.type_941s);
     }
   }
 </script>

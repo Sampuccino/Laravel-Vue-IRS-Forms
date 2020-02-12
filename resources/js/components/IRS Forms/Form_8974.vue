@@ -13,7 +13,7 @@
                 <button class="btn btn-danger d-inline clear" @click="clearFields()">Clear</button>
             </div>
 
-            <div>
+            <div v-show="disableDownload !== 'Y'">
                 <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
             </div>
         </div>
@@ -21,6 +21,7 @@
 
             <div class="col-12 mt-3">
                 <h4 class="alert-info p-2 text-center">Form 8974</h4>
+                <h4 class="alert-info p-2 text-center">{{ this.returnEmployerIdentificationNumber() }}</h4>
             </div>
 
             <!--TOP OF FORM-->
@@ -280,6 +281,7 @@
   import download from 'downloadjs';
   import * as $ from 'jquery';
   import Flatpickr from "../Calendar/Flatpickr";
+  import {mapGetters} from "vuex";
 
   export default {
     name: "Form_8974",
@@ -290,7 +292,10 @@
     mounted(){
       this.calendarYear = $('#calendar_year_select').val();
     },
-    data: function () {
+      beforeUpdate() {
+          this.ein = this.returnEmployerIdentificationNumber()
+      },
+      data: function () {
       return {
         // url: 'https://irsforms.dev/Form-8974.pdf',
         url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
@@ -428,6 +433,7 @@
       }
     },
     methods: {
+        ...mapGetters(['returnEmployerIdentificationNumber']),
       exportToPDF: async function () {
 
         /*  TODO Validate all fields before exporting */
