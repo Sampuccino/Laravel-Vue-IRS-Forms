@@ -1,6 +1,11 @@
 <template>
     <div class="container">
 
+      <div class="d-none">
+        {{ this.returnEmployerIdentificationNumber() }}
+        {{ this.returnName() }}
+        {{ this.returnQuarterSelected() }}
+      </div>
 
         <div class="position-fixed" style="right: 1rem; bottom:7rem;">
 
@@ -30,7 +35,7 @@
                 <button class="btn btn-danger d-inline clear">Clear</button>
             </div>
 
-            <div>
+            <div v-show="disableDownload !== 'Y'">
                 <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
             </div>
         </div>
@@ -185,6 +190,7 @@
   import * as $ from 'jquery';
   import {degrees, PDFDocument, rgb, StandardFonts} from 'pdf-lib';
   import download from 'downloadjs';
+  import {mapActions, mapGetters} from "vuex";
 
   export default {
     name: "Form_941_Schedule_B",
@@ -192,7 +198,15 @@
       console.log('Schedule B Url is ', this.formUrl )
     },
     props: {
-      formUrl: String
+      formUrl: String,
+      disableDownload: String
+    },
+    beforeUpdate() {
+      if (this.disableDownload === 'Y') {
+        this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+        this.name = this.returnName();
+        this.calendar = this.returnQuarterSelected();
+      }
     },
     data(){
       return {
@@ -320,6 +334,17 @@
       }
     },
     methods: {
+      ...mapGetters([
+        'returnEmployerIdentificationNumber',
+        'returnName',
+        'returnQuarterSelected'
+      ]),
+      ...mapActions([
+        'storeFormScheduleBTaxLiabilityMonthOne',
+        'storeFormScheduleBTaxLiabilityMonthTwo',
+        'storeFormScheduleBTaxLiabilityMonthThree',
+        'storeFormScheduleBTotalQuarterLiability',
+      ]),
       validation: function() {
 
         /*EIN*/
@@ -590,22 +615,29 @@
       monthOneTableSum: function() {
         let mutatedMonthOne = this.monthOneTable.slice();
         mutatedMonthOne.shift();
-        return mutatedMonthOne.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
+        const _final = mutatedMonthOne.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
+        this.storeFormScheduleBTaxLiabilityMonthOne(_final);
+        return _final;
       },
       monthTwoTableSum: function() {
         let mutatedMonthTwo = this.monthTwoTable.slice();
         mutatedMonthTwo.shift();
-        return mutatedMonthTwo.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
+        const _final = mutatedMonthTwo.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
+        this.storeFormScheduleBTaxLiabilityMonthTwo(_final);
+        return _final;
       },
       monthThreeTableSum: function() {
         let mutatedMonthThree = this.monthThreeTable.slice();
         mutatedMonthThree.shift();
-        return mutatedMonthThree.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
+        const _final = mutatedMonthThree.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2);
+        this.storeFormScheduleBTaxLiabilityMonthThree(_final);
+        return _final;
       },
       totalLiabilityForQuarter: function () {
         const totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
-        return this.convertToStringAndAddDecimal(totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2));
-        // return totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
+        const _final = this.convertToStringAndAddDecimal(totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0).toFixed(2));
+        this.storeFormScheduleBTotalQuarterLiability(_final);
+        return _final;
       }
     }
   }

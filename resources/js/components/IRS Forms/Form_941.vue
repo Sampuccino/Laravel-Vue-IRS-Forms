@@ -1,12 +1,31 @@
 <template>
     <div class="container">
+
+      <div class="row d-none">
+        {{ returnEmployerIdentificationNumber() }}
+        {{ returnName() }}
+        {{ returnTradeName() }}
+        {{ returnAddress() }}
+        {{ returnCity() }}
+        {{ returnState() }}
+        {{ returnZip() }}
+        {{ returnForeignName() }}
+        {{ returnForeignProvince() }}
+        {{ returnForeignZip() }}
+        {{ returnQuarterSelected() }}
+        {{ returnForm8974Line12() }}
+        {{ returnScheduleBMonthOneTaxLiability }}
+        {{ returnScheduleBMonthTwoTaxLiability }}
+        {{ returnScheduleBMonthThreeTaxLiability }}
+      </div>
+
         <div class="position-fixed" style="right: 1rem; bottom:1rem;">
 
             <div>
                 <button class="btn btn-danger d-inline clear">Clear</button>
             </div>
 
-            <div>
+            <div v-show="disableDownload !== 'Y'">
                 <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
             </div>
         </div>
@@ -520,14 +539,36 @@
 <script>
   import {degrees, PDFDocument, rgb, StandardFonts} from 'pdf-lib';
   import download from 'downloadjs';
+  import {mapGetters, mapActions} from "vuex";
 
   export default {
     name: "Form_941",
     props: {
-      formUrl: String
+      formUrl: String,
+      disableDownload: String
     },
     mounted(){
       this.url = this.formUrl;
+    },
+    beforeUpdate() {
+      if (this.disableDownload === 'Y') {
+        this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+        this.name = this.returnName();
+        this.tradeName = this.returnTradeName();
+        this.address = this.returnAddress();
+        this.city = this.returnCity();
+        this.state = this.returnState();
+        this.zip = this.returnZip();
+        this.f_countryName = this.returnForeignName();
+        this.f_countryProvince = this.returnForeignProvince();
+        this.f_countryZIP = this.returnForeignZip();
+        this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12();
+        /*Disabled as they are only meant for Part 2 Checkbox #3.*/
+        // this.month1 = this.returnScheduleBMonthOneTaxLiability;
+        // this.month2 = this.returnScheduleBMonthTwoTaxLiability;
+        // this.month3 = this.returnScheduleBMonthThreeTaxLiability;
+        // this.reportForThisQuarter = this.returnQuarterSelected();
+      }
     },
     data(){
       return {
@@ -612,11 +653,21 @@
       }
     },
     computed: {
+      ...mapGetters([
+        'returnScheduleBMonthOneTaxLiability',
+        'returnScheduleBMonthTwoTaxLiability',
+        'returnScheduleBMonthThreeTaxLiability',
+        'returnScheduleBQuarterTotalTaxLiability',
+      ]),
       taxable5A: function () {
-       return Number((this.taxableSSWages * 0.124).toFixed(2))
+        const _n = Number((this.taxableSSWages * 0.124).toFixed(2));
+        this.storeForm941Line5AColumn2(_n);
+       return _n;
       },
       taxable5B: function () {
-       return Number((this.taxableSSTips * 0.124).toFixed(2))
+        const _n = Number((this.taxableSSTips * 0.124).toFixed(2));
+        this.storeForm941Line5BColumn2(_n);
+       return _n;
       },
       taxable5C: function () {
        return Number((this.taxableMedicalWages * 0.029).toFixed(2))
@@ -626,7 +677,7 @@
       },
       line5E: function () {
         const sums = [this.taxable5A, this.taxable5B, this.taxable5C, this.taxable5D];
-        return parseFloat((sums.reduce((a,b) => a+b,0)))
+        return parseFloat((sums.reduce((a,b) => a+b,0)).toFixed(2))
       },
       totalTaxesBeforeAdjustments: function () {
         const amounts = [parseFloat(this.withheldTax), this.line5E, parseFloat(this.section3121)];
@@ -654,10 +705,20 @@
       },
       line16TotalLiability: function () {
         const amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)];
-        return (amounts.reduce((a,b) => a+b,0)).toFixed(2);
+
+        // Add condition here if working with multi forms to use computed over standard
+        // if(this.disableDownload === 'Y') {
+        //   return this.returnScheduleBQuarterTotalTaxLiability;
+        // } else {
+          return (amounts.reduce((a,b) => a+b,0)).toFixed(2);
+        // }
       }
     },
     methods: {
+      ...mapGetters(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress',
+        'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip',
+        'returnQuarterSelected', 'returnForm941Line5AColumn2', 'returnForm8974Line12']),
+      ...mapActions(['storeForm941Line5AColumn2', 'storeForm941Line5BColumn2']),
       validateFormFields: function(){
 
         if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
