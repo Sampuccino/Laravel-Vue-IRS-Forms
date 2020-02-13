@@ -563,9 +563,10 @@
         this.f_countryProvince = this.returnForeignProvince();
         this.f_countryZIP = this.returnForeignZip();
         this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12();
-        this.month1 = this.returnScheduleBMonthOneTaxLiability;
-        this.month2 = this.returnScheduleBMonthTwoTaxLiability;
-        this.month3 = this.returnScheduleBMonthThreeTaxLiability;
+        /*Disabled as they are only meant for Part 2 Checkbox #3.*/
+        // this.month1 = this.returnScheduleBMonthOneTaxLiability;
+        // this.month2 = this.returnScheduleBMonthTwoTaxLiability;
+        // this.month3 = this.returnScheduleBMonthThreeTaxLiability;
         // this.reportForThisQuarter = this.returnQuarterSelected();
       }
     },
@@ -676,7 +677,7 @@
       },
       line5E: function () {
         const sums = [this.taxable5A, this.taxable5B, this.taxable5C, this.taxable5D];
-        return parseFloat((sums.reduce((a,b) => a+b,0)))
+        return parseFloat((sums.reduce((a,b) => a+b,0)).toFixed(2))
       },
       totalTaxesBeforeAdjustments: function () {
         const amounts = [parseFloat(this.withheldTax), this.line5E, parseFloat(this.section3121)];
@@ -706,11 +707,11 @@
         const amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)];
 
         // Add condition here if working with multi forms to use computed over standard
-        if(this.disableDownload === 'Y') {
-          return this.returnScheduleBQuarterTotalTaxLiability;
-        } else {
+        // if(this.disableDownload === 'Y') {
+        //   return this.returnScheduleBQuarterTotalTaxLiability;
+        // } else {
           return (amounts.reduce((a,b) => a+b,0)).toFixed(2);
-        }
+        // }
       }
     },
     methods: {

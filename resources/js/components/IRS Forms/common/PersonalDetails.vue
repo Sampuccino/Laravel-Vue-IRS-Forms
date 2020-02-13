@@ -133,7 +133,7 @@
 <!--                              </label>-->
 <!--                          </div>-->
                           <!--Calendar Year-->
-                          <flatpickr timeFormat="Y" v-model="calendarYear" id="personal_calendar_year"/>
+<!--                          <flatpickr timeFormat="Y" v-model="calendarYear" id="personal_calendar_year"/>-->
                       </div>
 
                   </div>

@@ -2754,24 +2754,24 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     disableDownload: String
   },
   mounted: function mounted() {
-    if (this.disableDownload !== 'Y') {
-      this.calendarYear = jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val();
-    }
+    this.calendarYear = jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val();
   },
   beforeUpdate: function beforeUpdate() {
     /* Only enable retrieving from Vuex if working in multi form layout */
     if (this.disableDownload === 'Y') {
       console.warn('Calendar year from Vuex is ', this.returnCalendarYear());
       this.ein = this.returnEmployerIdentificationNumber().substr(0, 2) + ' - ' + this.returnEmployerIdentificationNumber().substr(2);
-      this.name = this.returnName();
-      jquery__WEBPACK_IMPORTED_MODULE_3__('#calendar_year_select').val(this.returnCalendarYear());
+      this.name = this.returnName(); // $('#calendar_year_select').val(this.returnCalendarYear());
+      // this.calendarYear = this.returnCalendarYear();
+
       this.partTwoEight = this.returnForm941Line5AColumn2;
       this.partTwoNine = this.returnForm941Line5BColumn2;
     }
   },
   data: function data() {
     return {
-      url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
+      // url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
+      url: 'http://irsforms.test/Form-8974.pdf',
 
       /* MAIN FORM FIELDS ######################## */
       ein: '',
@@ -3382,6 +3382,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
       /*EIN validator*/
       if (this.ein.length < this.validation.EIN_MAX_LENGTH) {
+        console.log('8974: EIN is wrong');
         this.validation.ein = false;
         return false;
       } else this.validation.ein = true;
@@ -3389,27 +3390,45 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
       if (this.name.trim().length === 0 || this.name === null) {
+        console.log('8974: Name is wrong');
         this.validation.name = false;
         return false;
       } else this.validation.name = true;
       /*CREDIT TYPE*/
 
 
-      if (!this.creditTypeBox) return false;
+      if (!this.creditTypeBox) {
+        console.log('8974: Credit Type Box is wrong');
+        return false;
+      }
       /*Report for this quarter*/
 
-      if (!this.reportForThisQuarter) return false;
+
+      if (!this.reportForThisQuarter) {
+        console.log('8974: Report for this Quarter is wrong');
+        return false;
+      }
       /*CALENDAR YEAR*/
 
-      if (this.calendarYear.trim().length === 0 || this.calendarYear === null) return false;
+
+      if (this.calendarYear.trim().length === 0 || this.calendarYear === null) {
+        console.log('8974: Calendar Year is wrong');
+        console.log(this.calendarYear);
+        return false;
+      }
       /*PART 1*/
 
+
       if (this.rowSixTotal <= 0.00 || this.rowSixTotal <= '0.00') {
+        console.log('8974: Part 1 is wrong');
+        console.log(this.rowSixTotal);
         this.validation.partOne = false;
         return false;
       } else this.validation.partOne = true;
 
       if (this.sumOfPartTwoEightAndNine <= 0.00 || this.sumOfPartTwoEightAndNine <= '0.00') {
+        console.log('8974: Part 2 is wrong');
+        console.log(this.sumOfPartTwoEightAndNine);
         this.validation.partTwo = false;
         return false;
       } else this.validation.partTwo = true;
@@ -4026,9 +4045,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       this.f_countryProvince = this.returnForeignProvince();
       this.f_countryZIP = this.returnForeignZip();
       this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12();
-      this.month1 = this.returnScheduleBMonthOneTaxLiability;
-      this.month2 = this.returnScheduleBMonthTwoTaxLiability;
-      this.month3 = this.returnScheduleBMonthThreeTaxLiability; // this.reportForThisQuarter = this.returnQuarterSelected();
+      /*Disabled as they are only meant for Part 2 Checkbox #3.*/
+      // this.month1 = this.returnScheduleBMonthOneTaxLiability;
+      // this.month2 = this.returnScheduleBMonthTwoTaxLiability;
+      // this.month3 = this.returnScheduleBMonthThreeTaxLiability;
+      // this.reportForThisQuarter = this.returnQuarterSelected();
     }
   },
   data: function data() {
@@ -4197,7 +4218,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       var sums = [this.taxable5A, this.taxable5B, this.taxable5C, this.taxable5D];
       return parseFloat(sums.reduce(function (a, b) {
         return a + b;
-      }, 0));
+      }, 0).toFixed(2));
     },
     totalTaxesBeforeAdjustments: function totalTaxesBeforeAdjustments() {
       var amounts = [parseFloat(this.withheldTax), this.line5E, parseFloat(this.section3121)];
@@ -4229,14 +4250,13 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     line16TotalLiability: function line16TotalLiability() {
       var amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)]; // Add condition here if working with multi forms to use computed over standard
+      // if(this.disableDownload === 'Y') {
+      //   return this.returnScheduleBQuarterTotalTaxLiability;
+      // } else {
 
-      if (this.disableDownload === 'Y') {
-        return this.returnScheduleBQuarterTotalTaxLiability;
-      } else {
-        return amounts.reduce(function (a, b) {
-          return a + b;
-        }, 0).toFixed(2);
-      }
+      return amounts.reduce(function (a, b) {
+        return a + b;
+      }, 0).toFixed(2); // }
     }
   }),
   methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress', 'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip', 'returnQuarterSelected', 'returnForm941Line5AColumn2', 'returnForm8974Line12']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])(['storeForm941Line5AColumn2', 'storeForm941Line5BColumn2']), {
@@ -5881,6 +5901,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
 
 
 
@@ -5928,6 +5950,11 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         t8974: false,
         t941: false,
         t941SB: false
+      },
+      errors: {
+        form8974: false,
+        form941: false,
+        form941SB: false
       }
     };
   },
@@ -5981,6 +6008,47 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     },
     returnToStart: function returnToStart() {
       this.isFillingOut = !this.isFillingOut;
+    },
+    sendDownloadEvent: function sendDownloadEvent() {
+      /*
+      * Check which forms are selected
+      * Try to download form 8974.
+      * */
+      if (this.checkedForms.includes('8974')) {
+        var _validated = this.$refs.form8974.validateFormFields();
+
+        if (_validated) {
+          this.$refs.form8974.exportToPDF();
+          this.errors.form8974 = false;
+        } else {
+          /* Toggle Error on Tab*/
+          this.errors.form8974 = true;
+        }
+      }
+
+      if (this.checkedForms.includes('941')) {
+        var _validated2 = this.$refs.form941.validateFormFields();
+
+        if (_validated2) {
+          this.$refs.form941.exportToPDF();
+          this.errors.form941 = false;
+        } else {
+          /* Toggle Error on Tab*/
+          this.errors.form941 = true;
+        }
+      }
+
+      if (this.checkedForms.includes('941SB')) {
+        var _validated3 = this.$refs.form941SB.validateFormFields();
+
+        if (_validated3) {
+          this.$refs.form941SB.exportToPDF();
+          this.errors.form94SB1 = false;
+        } else {
+          /* Toggle Error on Tab*/
+          this.errors.form941SB = true;
+        }
+      }
     }
   })
 });
@@ -68366,23 +68434,7 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "col-4" },
-                [
-                  _c("flatpickr", {
-                    attrs: { timeFormat: "Y", id: "personal_calendar_year" },
-                    model: {
-                      value: _vm.calendarYear,
-                      callback: function($$v) {
-                        _vm.calendarYear = $$v
-                      },
-                      expression: "calendarYear"
-                    }
-                  })
-                ],
-                1
-              )
+              _c("div", { staticClass: "col-4" })
             ])
           ]
         )
@@ -68555,7 +68607,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "Continue with\n                                selected forms (must select at least 2 forms.)"
+                        "Continue with\n                            selected forms (must select at least 2 forms.)"
                       )
                     ]
                   )
@@ -68605,7 +68657,24 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Form 8974")]
+                    [
+                      _vm._v("Form 8974\n                      "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.form8974,
+                              expression: "errors.form8974"
+                            }
+                          ],
+                          staticClass: "ml-2 alert-danger p-2"
+                        },
+                        [_vm._v("Has Error(s)")]
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -68627,7 +68696,24 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Form 941")]
+                    [
+                      _vm._v("Form 941\n                      "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.form941,
+                              expression: "errors.form941"
+                            }
+                          ],
+                          staticClass: "ml-2 alert-danger p-2"
+                        },
+                        [_vm._v("Has Error(s)")]
+                      )
+                    ]
                   ),
                   _vm._v(" "),
                   _c(
@@ -68649,7 +68735,24 @@ var render = function() {
                         }
                       }
                     },
-                    [_vm._v("Form Schedule B")]
+                    [
+                      _vm._v("Form Schedule B\n                      "),
+                      _c(
+                        "span",
+                        {
+                          directives: [
+                            {
+                              name: "show",
+                              rawName: "v-show",
+                              value: _vm.errors.form941SB,
+                              expression: "errors.form941SB"
+                            }
+                          ],
+                          staticClass: "ml-2 alert-danger p-2"
+                        },
+                        [_vm._v("Has Error(s)")]
+                      )
+                    ]
                   )
                 ])
               ]),
@@ -68657,7 +68760,7 @@ var render = function() {
               _c("div", { staticClass: "col-9" }, [
                 _c("p", [
                   _vm._v(
-                    "Use the left menu to alternate between forms or use the download button to download all\n                        working forms."
+                    "Use the left menu to alternate between forms or use the download button to download all\n                    working forms."
                   )
                 ]),
                 _vm._v(" "),
@@ -68670,9 +68773,14 @@ var render = function() {
                   [_vm._v("Back")]
                 ),
                 _vm._v(" "),
-                _c("button", { staticClass: "btn btn-primary" }, [
-                  _vm._v("Download")
-                ])
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    on: { click: _vm.sendDownloadEvent }
+                  },
+                  [_vm._v("Download")]
+                )
               ]),
               _vm._v(" "),
               _c(
@@ -68706,6 +68814,7 @@ var render = function() {
                         expression: "setActive.t8974"
                       }
                     ],
+                    ref: "form8974",
                     attrs: { disableDownload: "Y" }
                   })
                 ],
@@ -68725,6 +68834,7 @@ var render = function() {
                         expression: "setActive.t941"
                       }
                     ],
+                    ref: "form941",
                     attrs: { disableDownload: "Y", formUrl: _vm.type_941_url }
                   })
                 ],
@@ -68744,6 +68854,7 @@ var render = function() {
                         expression: "setActive.t941SB"
                       }
                     ],
+                    ref: "form941SB",
                     attrs: { disableDownload: "Y", formUrl: _vm.type_941s_url }
                   })
                 ],
@@ -82740,19 +82851,19 @@ __webpack_require__.r(__webpack_exports__);
 vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__["default"]);
 /* harmony default export */ __webpack_exports__["default"] = (new vuex__WEBPACK_IMPORTED_MODULE_1__["default"].Store({
   state: {
-    title: 'Welcome to our Vuex!',
+    title: 'Welcome to our Multiform!',
     employerIdentificationNumber: 'XXXXXXXXX',
-    name: 'John Doe',
-    tradeName: 'John Doe Inc.',
-    address: 'Your Address Here',
-    city: 'Big City',
-    state: 'AA',
-    zip: '99999',
-    foreignCountryName: 'Country Name',
-    foreignCountryProvince: 'province',
-    foreignCountryZip: '99999',
+    name: '',
+    tradeName: '',
+    address: '',
+    city: '',
+    state: '',
+    zip: '',
+    foreignCountryName: 'Country ',
+    foreignCountryProvince: '',
+    foreignCountryZip: '',
     reportForThisQuarter: 4,
-    calendarYear: 'YYYY',
+    calendarYear: '',
     form941Line5AColumn2: 0.00,
     form941Line5BColumn2: 0.00,
     form8974Line12: 0.00,

@@ -4,10 +4,6 @@
 
             <p>{{returnTitle()}}</p>
 
-<!--            <div class="col-12">-->
-<!--                <personal-details/>-->
-<!--            </div>-->
-
             <table v-show="!isFillingOut" class="table">
                 <thead>
                 <tr>
@@ -67,34 +63,40 @@
                         <li class="list-group-item"
                             :class="{'active': setActive.t8974}"
                             v-show="checkedForms.includes('8974')"
-                            v-on:click="setActiveForm('t8974')">Form 8974</li>
+                            v-on:click="setActiveForm('t8974')">Form 8974
+                          <span v-show="errors.form8974" class="ml-2 alert-danger p-2">Has Error(s)</span>
+                        </li>
                         <li class="list-group-item"
                             :class="{'active': setActive.t941}"
                             v-show="checkedForms.includes('941')"
-                            v-on:click="setActiveForm('t941')">Form 941</li>
+                            v-on:click="setActiveForm('t941')">Form 941
+                          <span v-show="errors.form941" class="ml-2 alert-danger p-2">Has Error(s)</span>
+                        </li>
                         <li class="list-group-item"
                             :class="{'active': setActive.t941SB}"
                             v-show="checkedForms.includes('941SB')"
-                            v-on:click="setActiveForm('t941SB')">Form Schedule B</li>
+                            v-on:click="setActiveForm('t941SB')">Form Schedule B
+                          <span v-show="errors.form941SB" class="ml-2 alert-danger p-2">Has Error(s)</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-9">
                     <p>Use the left menu to alternate between forms or use the download button to download all
                         working forms.</p>
                     <button class="btn btn-warning" @click="returnToStart">Back</button>
-                    <button class="btn btn-primary">Download</button>
+                    <button class="btn btn-primary" @click="sendDownloadEvent">Download</button>
                 </div>
                 <div class="col-12">
                     <personal-details v-show="showPersonal"/>
                 </div>
                 <div class="col-12">
-                    <form_8974 v-show="setActive.t8974" disableDownload="Y"/>
+                    <form_8974 ref="form8974" v-show="setActive.t8974" disableDownload="Y"/>
                 </div>
                 <div class="col-12">
-                    <form_941  v-show="setActive.t941" disableDownload="Y" :formUrl="type_941_url"/>
+                    <form_941 ref="form941"  v-show="setActive.t941" disableDownload="Y" :formUrl="type_941_url"/>
                 </div>
                 <div class="col-12">
-                    <form_941-s v-show="setActive.t941SB" disableDownload="Y" :formUrl="type_941s_url"/>
+                    <form_941-s ref="form941SB" v-show="setActive.t941SB" disableDownload="Y" :formUrl="type_941s_url"/>
                 </div>
             </div>
 
@@ -155,6 +157,11 @@
             t8974: false,
             t941: false,
             t941SB: false,
+        },
+        errors: {
+          form8974: false,
+          form941: false,
+          form941SB: false,
         }
       }
     },
@@ -203,6 +210,45 @@
         },
       returnToStart() {
         this.isFillingOut = !this.isFillingOut;
+      },
+      sendDownloadEvent() {
+        /*
+        * Check which forms are selected
+        * Try to download form 8974.
+        * */
+        if (this.checkedForms.includes('8974')) {
+          const _validated = this.$refs.form8974.validateFormFields();
+          if (_validated) {
+            this.$refs.form8974.exportToPDF();
+            this.errors.form8974 = false;
+          } else {
+            /* Toggle Error on Tab*/
+            this.errors.form8974 = true;
+          }
+        }
+
+        if (this.checkedForms.includes('941')) {
+          const _validated = this.$refs.form941.validateFormFields();
+          if (_validated) {
+            this.$refs.form941.exportToPDF();
+            this.errors.form941 = false;
+          } else {
+            /* Toggle Error on Tab*/
+            this.errors.form941 = true;
+          }
+        }
+
+        if (this.checkedForms.includes('941SB')) {
+          const _validated = this.$refs.form941SB.validateFormFields();
+          if (_validated) {
+            this.$refs.form941SB.exportToPDF();
+            this.errors.form94SB1 = false;
+          } else {
+            /* Toggle Error on Tab*/
+            this.errors.form941SB = true;
+          }
+        }
+
       }
     }
   }

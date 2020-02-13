@@ -323,9 +323,7 @@
       disableDownload: String
     },
     mounted() {
-      if (this.disableDownload !== 'Y') {
-        this.calendarYear = $('#calendar_year_select').val();
-      }
+      this.calendarYear = $('#calendar_year_select').val();
     },
     beforeUpdate() {
       /* Only enable retrieving from Vuex if working in multi form layout */
@@ -333,7 +331,8 @@
         console.warn('Calendar year from Vuex is ', this.returnCalendarYear());
         this.ein = this.returnEmployerIdentificationNumber().substr(0,2) + ' - ' + this.returnEmployerIdentificationNumber().substr(2);
         this.name = this.returnName();
-        $('#calendar_year_select').val(this.returnCalendarYear());
+        // $('#calendar_year_select').val(this.returnCalendarYear());
+        // this.calendarYear = this.returnCalendarYear();
         this.partTwoEight = this.returnForm941Line5AColumn2;
         this.partTwoNine = this.returnForm941Line5BColumn2;
       }
@@ -341,7 +340,8 @@
     },
     data: function () {
       return {
-        url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
+        // url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
+        url: 'http://irsforms.test/Form-8974.pdf',
         /* MAIN FORM FIELDS ######################## */
         ein: '',
         creditTypeBox: null,
@@ -908,32 +908,48 @@
 
         /*EIN validator*/
         if (this.ein.length < this.validation.EIN_MAX_LENGTH) {
+          console.log('8974: EIN is wrong');
           this.validation.ein = false;
           return false;
         } else this.validation.ein = true;
 
         /*NAME*/
         if (this.name.trim().length === 0 || this.name === null) {
+          console.log('8974: Name is wrong');
           this.validation.name = false;
           return false;
         } else this.validation.name = true;
 
         /*CREDIT TYPE*/
-        if (!this.creditTypeBox) return false;
+        if (!this.creditTypeBox) {
+          console.log('8974: Credit Type Box is wrong');
+          return false;
+        }
 
         /*Report for this quarter*/
-        if (!this.reportForThisQuarter) return false;
+        if (!this.reportForThisQuarter) {
+          console.log('8974: Report for this Quarter is wrong');
+          return false;
+        }
 
         /*CALENDAR YEAR*/
-        if (this.calendarYear.trim().length === 0 || this.calendarYear === null) return false;
+        if (this.calendarYear.trim().length === 0 || this.calendarYear === null) {
+          console.log('8974: Calendar Year is wrong');
+          console.log(this.calendarYear);
+          return false;
+        }
 
         /*PART 1*/
         if (this.rowSixTotal <= 0.00 || this.rowSixTotal <= '0.00') {
+          console.log('8974: Part 1 is wrong');
+          console.log(this.rowSixTotal);
           this.validation.partOne = false;
           return false;
         } else this.validation.partOne = true;
 
         if (this.sumOfPartTwoEightAndNine <= 0.00 || this.sumOfPartTwoEightAndNine <= '0.00') {
+          console.log('8974: Part 2 is wrong');
+          console.log(this.sumOfPartTwoEightAndNine);
           this.validation.partTwo = false;
           return false;
         } else this.validation.partTwo = true;
@@ -960,7 +976,7 @@
                 this.noticeOfDemand =
                   this.partTwoEleven =
                     this.validation.ein = this.validation.name = this.validation.partOne = this.validation.partTwo = null;
-      }
+      },
     }
   }
 </script>
