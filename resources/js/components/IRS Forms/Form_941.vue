@@ -13,7 +13,10 @@
         {{ returnForeignProvince() }}
         {{ returnForeignZip() }}
         {{ returnQuarterSelected() }}
-        {{ returnForm8974Line12 }}
+        {{ returnForm8974Line12() }}
+        {{ returnScheduleBMonthOneTaxLiability }}
+        {{ returnScheduleBMonthTwoTaxLiability }}
+        {{ returnScheduleBMonthThreeTaxLiability }}
       </div>
 
         <div class="position-fixed" style="right: 1rem; bottom:1rem;">
@@ -548,18 +551,23 @@
       this.url = this.formUrl;
     },
     beforeUpdate() {
-      this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
-      this.name = this.returnName();
-      this.tradeName = this.returnTradeName();
-      this.address = this.returnAddress();
-      this.city = this.returnCity();
-      this.state = this.returnState();
-      this.zip = this.returnZip();
-      this.f_countryName = this.returnForeignName();
-      this.f_countryProvince = this.returnForeignProvince();
-      this.f_countryZIP = this.returnForeignZip();
-      this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12;
-      // this.reportForThisQuarter = this.returnQuarterSelected();
+      if (this.disableDownload === 'Y') {
+        this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+        this.name = this.returnName();
+        this.tradeName = this.returnTradeName();
+        this.address = this.returnAddress();
+        this.city = this.returnCity();
+        this.state = this.returnState();
+        this.zip = this.returnZip();
+        this.f_countryName = this.returnForeignName();
+        this.f_countryProvince = this.returnForeignProvince();
+        this.f_countryZIP = this.returnForeignZip();
+        this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12();
+        this.month1 = this.returnScheduleBMonthOneTaxLiability;
+        this.month2 = this.returnScheduleBMonthTwoTaxLiability;
+        this.month3 = this.returnScheduleBMonthThreeTaxLiability;
+        // this.reportForThisQuarter = this.returnQuarterSelected();
+      }
     },
     data(){
       return {
@@ -644,7 +652,12 @@
       }
     },
     computed: {
-      ...mapGetters(['returnForm8974Line12']),
+      ...mapGetters([
+        'returnScheduleBMonthOneTaxLiability',
+        'returnScheduleBMonthTwoTaxLiability',
+        'returnScheduleBMonthThreeTaxLiability',
+        'returnScheduleBQuarterTotalTaxLiability',
+      ]),
       taxable5A: function () {
         const _n = Number((this.taxableSSWages * 0.124).toFixed(2));
         this.storeForm941Line5AColumn2(_n);
@@ -691,13 +704,19 @@
       },
       line16TotalLiability: function () {
         const amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)];
-        return (amounts.reduce((a,b) => a+b,0)).toFixed(2);
+
+        // Add condition here if working with multi forms to use computed over standard
+        if(this.disableDownload === 'Y') {
+          return this.returnScheduleBQuarterTotalTaxLiability;
+        } else {
+          return (amounts.reduce((a,b) => a+b,0)).toFixed(2);
+        }
       }
     },
     methods: {
       ...mapGetters(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress',
         'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip',
-        'returnQuarterSelected', 'returnForm941Line5AColumn2']),
+        'returnQuarterSelected', 'returnForm941Line5AColumn2', 'returnForm8974Line12']),
       ...mapActions(['storeForm941Line5AColumn2', 'storeForm941Line5BColumn2']),
       validateFormFields: function(){
 

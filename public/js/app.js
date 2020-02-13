@@ -3998,6 +3998,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
 
 
 
@@ -4011,17 +4014,22 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
     this.url = this.formUrl;
   },
   beforeUpdate: function beforeUpdate() {
-    this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
-    this.name = this.returnName();
-    this.tradeName = this.returnTradeName();
-    this.address = this.returnAddress();
-    this.city = this.returnCity();
-    this.state = this.returnState();
-    this.zip = this.returnZip();
-    this.f_countryName = this.returnForeignName();
-    this.f_countryProvince = this.returnForeignProvince();
-    this.f_countryZIP = this.returnForeignZip();
-    this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12; // this.reportForThisQuarter = this.returnQuarterSelected();
+    if (this.disableDownload === 'Y') {
+      this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+      this.name = this.returnName();
+      this.tradeName = this.returnTradeName();
+      this.address = this.returnAddress();
+      this.city = this.returnCity();
+      this.state = this.returnState();
+      this.zip = this.returnZip();
+      this.f_countryName = this.returnForeignName();
+      this.f_countryProvince = this.returnForeignProvince();
+      this.f_countryZIP = this.returnForeignZip();
+      this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12();
+      this.month1 = this.returnScheduleBMonthOneTaxLiability;
+      this.month2 = this.returnScheduleBMonthTwoTaxLiability;
+      this.month3 = this.returnScheduleBMonthThreeTaxLiability; // this.reportForThisQuarter = this.returnQuarterSelected();
+    }
   },
   data: function data() {
     return {
@@ -4166,7 +4174,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
     };
   },
-  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['returnForm8974Line12']), {
+  computed: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['returnScheduleBMonthOneTaxLiability', 'returnScheduleBMonthTwoTaxLiability', 'returnScheduleBMonthThreeTaxLiability', 'returnScheduleBQuarterTotalTaxLiability']), {
     taxable5A: function taxable5A() {
       var _n = Number((this.taxableSSWages * 0.124).toFixed(2));
 
@@ -4220,13 +4228,18 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       } else return 0;
     },
     line16TotalLiability: function line16TotalLiability() {
-      var amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)];
-      return amounts.reduce(function (a, b) {
-        return a + b;
-      }, 0).toFixed(2);
+      var amounts = [parseFloat(this.month1), parseFloat(this.month2), parseFloat(this.month3)]; // Add condition here if working with multi forms to use computed over standard
+
+      if (this.disableDownload === 'Y') {
+        return this.returnScheduleBQuarterTotalTaxLiability;
+      } else {
+        return amounts.reduce(function (a, b) {
+          return a + b;
+        }, 0).toFixed(2);
+      }
     }
   }),
-  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress', 'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip', 'returnQuarterSelected', 'returnForm941Line5AColumn2']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])(['storeForm941Line5AColumn2', 'storeForm941Line5BColumn2']), {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapGetters"])(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress', 'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip', 'returnQuarterSelected', 'returnForm941Line5AColumn2', 'returnForm8974Line12']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_3__["mapActions"])(['storeForm941Line5AColumn2', 'storeForm941Line5BColumn2']), {
     validateFormFields: function validateFormFields() {
       if (this.employerIdentificationNumber === null || this.employerIdentificationNumber.trim().length < 9) {
         this.errors.ein = true;
@@ -4852,13 +4865,8 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var pdf_lib__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! pdf-lib */ "./node_modules/pdf-lib/es/index.js");
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! downloadjs */ "./node_modules/downloadjs/download.js");
 /* harmony import */ var downloadjs__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(downloadjs__WEBPACK_IMPORTED_MODULE_4__);
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
 
-
-function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
-
-function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
-
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _typeof(obj) { if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") { _typeof = function _typeof(obj) { return typeof obj; }; } else { _typeof = function _typeof(obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }; } return _typeof(obj); }
 
@@ -4866,6 +4874,12 @@ function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try
 
 function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
+function ownKeys(object, enumerableOnly) { var keys = Object.keys(object); if (Object.getOwnPropertySymbols) { var symbols = Object.getOwnPropertySymbols(object); if (enumerableOnly) symbols = symbols.filter(function (sym) { return Object.getOwnPropertyDescriptor(object, sym).enumerable; }); keys.push.apply(keys, symbols); } return keys; }
+
+function _objectSpread(target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i] != null ? arguments[i] : {}; if (i % 2) { ownKeys(Object(source), true).forEach(function (key) { _defineProperty(target, key, source[key]); }); } else if (Object.getOwnPropertyDescriptors) { Object.defineProperties(target, Object.getOwnPropertyDescriptors(source)); } else { ownKeys(Object(source)).forEach(function (key) { Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key)); }); } } return target; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 //
 //
 //
@@ -5048,6 +5062,12 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
+//
+//
+//
+//
+//
+
 
 
 
@@ -5060,6 +5080,13 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
   props: {
     formUrl: String,
     disableDownload: String
+  },
+  beforeUpdate: function beforeUpdate() {
+    if (this.disableDownload === 'Y') {
+      this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+      this.name = this.returnName();
+      this.calendar = this.returnQuarterSelected();
+    }
   },
   data: function data() {
     return {
@@ -5091,7 +5118,7 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       }
     };
   },
-  methods: {
+  methods: _objectSpread({}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapGetters"])(['returnEmployerIdentificationNumber', 'returnName', 'returnQuarterSelected']), {}, Object(vuex__WEBPACK_IMPORTED_MODULE_5__["mapActions"])(['storeFormScheduleBTaxLiabilityMonthOne', 'storeFormScheduleBTaxLiabilityMonthTwo', 'storeFormScheduleBTaxLiabilityMonthThree', 'storeFormScheduleBTotalQuarterLiability']), {
     validation: function validation() {
       /*EIN*/
       if (this.employerIdentificationNumber.length < 9) {
@@ -5410,34 +5437,50 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
         }
       });
     }
-  },
+  }),
   computed: {
     monthOneTableSum: function monthOneTableSum() {
       var mutatedMonthOne = this.monthOneTable.slice();
       mutatedMonthOne.shift();
-      return mutatedMonthOne.reduce(function (a, b) {
+
+      var _final = mutatedMonthOne.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
       }, 0).toFixed(2);
+
+      this.storeFormScheduleBTaxLiabilityMonthOne(_final);
+      return _final;
     },
     monthTwoTableSum: function monthTwoTableSum() {
       var mutatedMonthTwo = this.monthTwoTable.slice();
       mutatedMonthTwo.shift();
-      return mutatedMonthTwo.reduce(function (a, b) {
+
+      var _final = mutatedMonthTwo.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
       }, 0).toFixed(2);
+
+      this.storeFormScheduleBTaxLiabilityMonthTwo(_final);
+      return _final;
     },
     monthThreeTableSum: function monthThreeTableSum() {
       var mutatedMonthThree = this.monthThreeTable.slice();
       mutatedMonthThree.shift();
-      return mutatedMonthThree.reduce(function (a, b) {
+
+      var _final = mutatedMonthThree.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
       }, 0).toFixed(2);
+
+      this.storeFormScheduleBTaxLiabilityMonthThree(_final);
+      return _final;
     },
     totalLiabilityForQuarter: function totalLiabilityForQuarter() {
       var totals = [this.monthOneTableSum, this.monthTwoTableSum, this.monthThreeTableSum];
-      return this.convertToStringAndAddDecimal(totals.reduce(function (a, b) {
+
+      var _final = this.convertToStringAndAddDecimal(totals.reduce(function (a, b) {
         return parseFloat(a) + parseFloat(b);
-      }, 0).toFixed(2)); // return totals.reduce( (a,b) => parseFloat(a)+parseFloat(b) , 0);
+      }, 0).toFixed(2));
+
+      this.storeFormScheduleBTotalQuarterLiability(_final);
+      return _final;
     }
   }
 });
@@ -65661,7 +65704,13 @@ var render = function() {
           "\n    " +
           _vm._s(_vm.returnQuarterSelected()) +
           "\n    " +
-          _vm._s(_vm.returnForm8974Line12) +
+          _vm._s(_vm.returnForm8974Line12()) +
+          "\n    " +
+          _vm._s(_vm.returnScheduleBMonthOneTaxLiability) +
+          "\n    " +
+          _vm._s(_vm.returnScheduleBMonthTwoTaxLiability) +
+          "\n    " +
+          _vm._s(_vm.returnScheduleBMonthThreeTaxLiability) +
           "\n  "
       )
     ]),
@@ -67238,6 +67287,18 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "container" }, [
+    _c("div", { staticClass: "d-none" }, [
+      _vm._v(
+        "\n    " +
+          _vm._s(this.returnEmployerIdentificationNumber()) +
+          "\n    " +
+          _vm._s(this.returnName()) +
+          "\n    " +
+          _vm._s(this.returnQuarterSelected()) +
+          "\n  "
+      )
+    ]),
+    _vm._v(" "),
     _c(
       "div",
       {
@@ -82694,7 +82755,11 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     calendarYear: 'YYYY',
     form941Line5AColumn2: 0.00,
     form941Line5BColumn2: 0.00,
-    form8974Line12: 0.00
+    form8974Line12: 0.00,
+    formScheduleBTaxLiabilityMonthOne: 0,
+    formScheduleBTaxLiabilityMonthTwo: 0,
+    formScheduleBTaxLiabilityMonthThree: 0,
+    formScheduleBTotalQuarterLiability: 0
   },
   getters: {
     returnTitle: function returnTitle(state) {
@@ -82744,6 +82809,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     returnForm8974Line12: function returnForm8974Line12(state) {
       return state.form8974Line12;
+    },
+    returnScheduleBMonthOneTaxLiability: function returnScheduleBMonthOneTaxLiability(state) {
+      return state.formScheduleBTaxLiabilityMonthOne;
+    },
+    returnScheduleBMonthTwoTaxLiability: function returnScheduleBMonthTwoTaxLiability(state) {
+      return state.formScheduleBTaxLiabilityMonthTwo;
+    },
+    returnScheduleBMonthThreeTaxLiability: function returnScheduleBMonthThreeTaxLiability(state) {
+      return state.formScheduleBTaxLiabilityMonthThree;
+    },
+    returnScheduleBQuarterTotalTaxLiability: function returnScheduleBQuarterTotalTaxLiability(state) {
+      return state.formScheduleBTotalQuarterLiability;
     }
   },
   mutations: {
@@ -82791,6 +82868,18 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     storeForm8974Line12: function storeForm8974Line12(state, payload) {
       state.form8974Line12 = parseFloat(payload.amount);
+    },
+    storeFormScheduleBTaxLiabilityMonthOne: function storeFormScheduleBTaxLiabilityMonthOne(state, payload) {
+      state.formScheduleBTaxLiabilityMonthOne = parseFloat(payload.amount);
+    },
+    storeFormScheduleBTaxLiabilityMonthTwo: function storeFormScheduleBTaxLiabilityMonthTwo(state, payload) {
+      state.formScheduleBTaxLiabilityMonthTwo = parseFloat(payload.amount);
+    },
+    storeFormScheduleBTaxLiabilityMonthThree: function storeFormScheduleBTaxLiabilityMonthThree(state, payload) {
+      state.formScheduleBTaxLiabilityMonthThree = parseFloat(payload.amount);
+    },
+    storeFormScheduleBTotalQuarterLiability: function storeFormScheduleBTotalQuarterLiability(state, payload) {
+      state.formScheduleBTotalQuarterLiability = parseFloat(payload.amount);
     }
   },
   actions: {
@@ -82866,6 +82955,26 @@ vue__WEBPACK_IMPORTED_MODULE_0___default.a.use(vuex__WEBPACK_IMPORTED_MODULE_1__
     },
     storeForm8974Line12: function storeForm8974Line12(context, payload) {
       context.commit('storeForm8974Line12', {
+        amount: parseFloat(payload)
+      });
+    },
+    storeFormScheduleBTaxLiabilityMonthOne: function storeFormScheduleBTaxLiabilityMonthOne(context, payload) {
+      context.commit('storeFormScheduleBTaxLiabilityMonthOne', {
+        amount: parseFloat(payload)
+      });
+    },
+    storeFormScheduleBTaxLiabilityMonthTwo: function storeFormScheduleBTaxLiabilityMonthTwo(context, payload) {
+      context.commit('storeFormScheduleBTaxLiabilityMonthTwo', {
+        amount: parseFloat(payload)
+      });
+    },
+    storeFormScheduleBTaxLiabilityMonthThree: function storeFormScheduleBTaxLiabilityMonthThree(context, payload) {
+      context.commit('storeFormScheduleBTaxLiabilityMonthThree', {
+        amount: parseFloat(payload)
+      });
+    },
+    storeFormScheduleBTotalQuarterLiability: function storeFormScheduleBTotalQuarterLiability(context, payload) {
+      context.commit('storeFormScheduleBTotalQuarterLiability', {
         amount: parseFloat(payload)
       });
     }
