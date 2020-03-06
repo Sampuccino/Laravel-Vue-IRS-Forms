@@ -29,6 +29,7 @@
       ...mapActions(['updateCalendarYear']),
       updateCalendarInputValue: function(event) {
         console.warn(event.target.value);
+        this.$emit('updatedDate', event.target.value);
         this.updateCalendarYear(event.target.value);
         // this.calendarYear = event.target.value.split('-')[0];
       }
