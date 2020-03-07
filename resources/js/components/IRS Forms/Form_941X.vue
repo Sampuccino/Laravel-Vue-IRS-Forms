@@ -22,7 +22,7 @@
             </div>
             <div class="col-7 my-auto">
               <input type="text" class="form-control"
-                     :class="{'is-invalid': errors.ein, 'is-valid': (errors.ein===false)}"
+                     :class="{'is-invalid': errors.employerIdentificationNumber, 'is-valid': (errors.employerIdentificationNumber===false)}"
                      v-model="employerIdentificationNumber"
                      minlength="9"
                      maxlength="9">
@@ -104,6 +104,9 @@
           </div>
         </div>
         <div class="col-4">
+
+          <div v-show="errors.correctionType" class="alert alert-danger p-2">Select correction type</div>
+
           <div class="form-check">
             <h6 class="font-weight-bold bg-dark p-2 text-white mb-2">Return You're Correcting ... </h6>
             <p>Check the type of return you're correcting.</p>
@@ -121,6 +124,9 @@
           <div class="form-check">
             <h6 class="font-weight-bold bg-dark p-2 text-white mb-2 mt-2">Report for this quarter <small>check
               only one box</small></h6>
+
+            <div v-show="errors.reportForThisQuarter" class="alert alert-danger p-2">Select correction type</div>
+
             <label class="form-check-label d-block mt-2">
               <input type="radio" class="form-check-input" name="quarterReport"
                      v-model="reportForThisQuarter" value="1">
@@ -166,8 +172,10 @@
     <div class="col-lg-10 col-12 bg-white p-3">
       <div class="row">
         <div class="col-12">
-          <div class="bg-dark p-2 text-white mb-3">Part 1 <span class="bg-white text-dark p-1 ml-2">Select ONLY one process. See page 4 for additional guidance.</span>
-          </div>
+          <div class="bg-dark p-2 text-white mb-3">Part 1 <span class="bg-white text-dark p-1 ml-2">Select ONLY one process. See page 4 for additional guidance.</span></div>
+
+          <div v-show="errors.partOneProcessType" class="alert alert-danger p-2">Select one process</div>
+
           <div class="form-check">
             <label class="form-check-label mb-2">
               <input class="form-check-input" type="radio" v-model="partOneProcessType" name="partOneProcessType" value="1">
@@ -473,13 +481,13 @@
             line 24.
           </el-checkbox>
           <!--#24-->
-          <p>24. You must give us a detailed explanation of how you determined your corrections. See the instructions.</p>
-          <el-input
-            type="textarea"
-            :autosize="{ minRows: 5}"
-            placeholder="Please input"
-            v-model="part4.line24">
-          </el-input>
+<!--          <p>24. You must give us a detailed explanation of how you determined your corrections. See the instructions.</p>-->
+<!--          <el-input-->
+<!--            type="textarea"-->
+<!--            :autosize="{ minRows: 5}"-->
+<!--            placeholder="Please input"-->
+<!--            v-model="part4.line24">-->
+<!--          </el-input>-->
 
           <!-- Max Len is 97-->
         </div>
@@ -638,12 +646,15 @@
         },
         // Errors
         errors: {
-          ein: null,
+          employerIdentificationNumber: null,
           name: null,
           address: null,
           city: null,
           state: null,
           zip: null,
+          correctionType: null,
+          reportForThisQuarter: null,
+          partOneProcessType: null,
         }
       }
     },
@@ -674,134 +685,134 @@
             color: COLOR,
           };
 
-          // let ein_mutated = this.employerIdentificationNumber.split('');
-          // for (let i = 0; i < 9; i++) {
-          //   let ein_XCoordinate = [160, 185, 225, 250, 275, 300, 325, 350, 375];
-          //
-          //   firstPage.drawText(ein_mutated[i], {
-          //     x: ein_XCoordinate[i],
-          //     y: height / 2 + 318,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // firstPage.drawText(this.name, {
-          //   x: 150,
-          //   y: height / 2 + 295,
-          //   ...baseOptions
-          // });
-          //
-          // /*  IF – TradeName */
-          // if (this.tradeName !== null){
-          //   firstPage.drawText(this.tradeName, {
-          //     x: 135,
-          //     y: height / 2 + 270,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /*Address*/
-          // firstPage.drawText(this.address, {
-          //   x: 95,
-          //   y: height / 2 + 245,
-          //   ...baseOptions
-          // });
-          //
-          // /*City*/
-          // firstPage.drawText(this.city, {
-          //   x: 95,
-          //   y: height / 2 + 215,
-          //   ...baseOptions
-          // });
-          //
-          // /*State*/
-          // firstPage.drawText(this.state, {
-          //   x: 285 ,
-          //   y: height / 2 + 215,
-          //   ...baseOptions
-          // });
-          //
-          // /*ZIP*/
-          // firstPage.drawText(this.zip, {
-          //   x: 325 ,
-          //   y: height / 2 + 215,
-          //   ...baseOptions
-          // });
-          //
-          // /* IF – Foreign Country*/
-          // if (this.f_countryName !== null) {
-          //   firstPage.drawText(this.f_countryName.toString(), {
-          //     x: 95,
-          //     y: height / 2 + 185,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* IF – Foreign Province*/
-          // if (this.f_countryProvince !== null) {
-          //   firstPage.drawText(this.f_countryProvince.toString(), {
-          //     x: 235,
-          //     y: height / 2 + 185,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* IF – Foreign Province*/
-          // if (this.f_countryZIP !== null) {
-          //   firstPage.drawText(this.f_countryZIP.toString(), {
-          //     x: 335,
-          //     y: height / 2 + 185,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // if (parseInt(this.correctionType) === 1) {
-          //   console.warn('Value of 1 ', this.correctionType);
-          //   firstPage.drawText('x', {
-          //     x: 430,
-          //     y: height / 2 + 292,
-          //     ...baseOptions
-          //   });
-          // } else {
-          //   console.warn('Value of 2 ', this.correctionType);
-          //   firstPage.drawText('x', {
-          //     x: 430,
-          //     y: height / 2 + 273,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // /* Report for this quarter */
-          // switch (this.reportForThisQuarter) {
-          //   case '1':
-          //     firstPage.drawText('x', {
-          //       x: 430,
-          //       y: height / 2 + 237,
-          //       ...baseOptions
-          //     });
-          //     break;
-          //   case '2':
-          //     firstPage.drawText('x', {
-          //       x: 430,
-          //       y: height / 2 + 220,
-          //       ...baseOptions
-          //     });
-          //     break;
-          //   case '3':
-          //     firstPage.drawText('x', {
-          //       x: 430,
-          //       y: height / 2 + 200,
-          //       ...baseOptions
-          //     });
-          //     break;
-          //   case '4':
-          //     firstPage.drawText('x', {
-          //       x: 430,
-          //       y: height / 2 + 184,
-          //       ...baseOptions
-          //     });
-          //     break;
-          // }
+          let ein_mutated = this.employerIdentificationNumber.split('');
+          for (let i = 0; i < 9; i++) {
+            let ein_XCoordinate = [160, 185, 225, 250, 275, 300, 325, 350, 375];
+
+            firstPage.drawText(ein_mutated[i], {
+              x: ein_XCoordinate[i],
+              y: height / 2 + 318,
+              ...baseOptions
+            });
+          }
+
+          firstPage.drawText(this.name, {
+            x: 150,
+            y: height / 2 + 295,
+            ...baseOptions
+          });
+
+          /*  IF – TradeName */
+          if (this.tradeName !== null){
+            firstPage.drawText(this.tradeName, {
+              x: 135,
+              y: height / 2 + 270,
+              ...baseOptions
+            });
+          }
+
+          /*Address*/
+          firstPage.drawText(this.address, {
+            x: 95,
+            y: height / 2 + 245,
+            ...baseOptions
+          });
+
+          /*City*/
+          firstPage.drawText(this.city, {
+            x: 95,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /*State*/
+          firstPage.drawText(this.state, {
+            x: 285 ,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /*ZIP*/
+          firstPage.drawText(this.zip, {
+            x: 325 ,
+            y: height / 2 + 215,
+            ...baseOptions
+          });
+
+          /* IF – Foreign Country*/
+          if (this.f_countryName !== null) {
+            firstPage.drawText(this.f_countryName.toString(), {
+              x: 95,
+              y: height / 2 + 185,
+              ...baseOptions
+            });
+          }
+
+          /* IF – Foreign Province*/
+          if (this.f_countryProvince !== null) {
+            firstPage.drawText(this.f_countryProvince.toString(), {
+              x: 235,
+              y: height / 2 + 185,
+              ...baseOptions
+            });
+          }
+
+          /* IF – Foreign Province*/
+          if (this.f_countryZIP !== null) {
+            firstPage.drawText(this.f_countryZIP.toString(), {
+              x: 335,
+              y: height / 2 + 185,
+              ...baseOptions
+            });
+          }
+
+          if (parseInt(this.correctionType) === 1) {
+            console.warn('Value of 1 ', this.correctionType);
+            firstPage.drawText('x', {
+              x: 430,
+              y: height / 2 + 292,
+              ...baseOptions
+            });
+          } else {
+            console.warn('Value of 2 ', this.correctionType);
+            firstPage.drawText('x', {
+              x: 430,
+              y: height / 2 + 273,
+              ...baseOptions
+            });
+          }
+
+          /* Report for this quarter */
+          switch (this.reportForThisQuarter) {
+            case '1':
+              firstPage.drawText('x', {
+                x: 430,
+                y: height / 2 + 237,
+                ...baseOptions
+              });
+              break;
+            case '2':
+              firstPage.drawText('x', {
+                x: 430,
+                y: height / 2 + 220,
+                ...baseOptions
+              });
+              break;
+            case '3':
+              firstPage.drawText('x', {
+                x: 430,
+                y: height / 2 + 200,
+                ...baseOptions
+              });
+              break;
+            case '4':
+              firstPage.drawText('x', {
+                x: 430,
+                y: height / 2 + 184,
+                ...baseOptions
+              });
+              break;
+          }
 
           // Calendar Year Quarter
           const _cYear = this.calendarYear.split('-');
@@ -811,33 +822,33 @@
             ...baseOptions
           });
 
-          // if (parseInt(this.partOneProcessType) === 1) {
-          //   // Part 2 #1
-          //   firstPage.drawText('x', {
-          //     x: 47,
-          //     y: height / 2 + 103,
-          //     ...baseOptions
-          //   });
-          // } else {
-          //   // Part 2 #1
-          //   firstPage.drawText('x', {
-          //     x: 47,
-          //     y: height / 2 + 46,
-          //     ...baseOptions
-          //   });
-          // }
-          //
-          // // Part 2 Number 3
-          // if (parseInt(this.part2Number3) === 1) {
-          //   firstPage.drawText('x', {
-          //     x: 47,
-          //     y: height / 2 - 3,
-          //     ...baseOptions
-          //   });
-          // }
+          if (parseInt(this.partOneProcessType) === 1) {
+            // Part 2 #1
+            firstPage.drawText('x', {
+              x: 47,
+              y: height / 2 + 103,
+              ...baseOptions
+            });
+          } else {
+            // Part 2 #1
+            firstPage.drawText('x', {
+              x: 47,
+              y: height / 2 + 46,
+              ...baseOptions
+            });
+          }
+
+          // Part 2 Number 3
+          if (parseInt(this.part2Number3) === 1) {
+            firstPage.drawText('x', {
+              x: 47,
+              y: height / 2 - 3,
+              ...baseOptions
+            });
+          }
 
           // Part 2 Number 4
-/*          if (this.part2Number4.length) {
+          if (this.part2Number4.length) {
             // Draw a/b/c if exists
             if (this.part2Number4.includes("a")) {
               firstPage.drawText('x', {
@@ -900,7 +911,7 @@
             }
           }
 
-          /!* Page 2 & 3 Name and Other Info ##########*!/
+          /* Page 2 & 3 Name and Other Info ##########*/
           // Name
           secondPage.drawText(this.name, {
             x: 50,
@@ -951,7 +962,7 @@
             x: 530,
             y: height / 2 + 330,
             ...baseOptions
-          });*/
+          });
 
           // Line 14 Col-1
           secondPage.drawText(this.part3.number14.column1.toString(), {
@@ -1011,15 +1022,15 @@
           }
 
           // Part 4 Line 24
-          if (this.part4.line24.length > 0) {
-            thirdPage.drawText(this.part4.line24, {
-              x: 47,
-              y: height / 2 + 245,
-              maxWidth: 50,
-              size: 10,
-              ...baseOptions
-            });
-          }
+          // if (this.part4.line24.length > 0) {
+          //   thirdPage.drawText(this.part4.line24, {
+          //     x: 47,
+          //     y: height / 2 + 245,
+          //     maxWidth: 50,
+          //     size: 5,
+          //     ...baseOptions
+          //   });
+          // }
 
 
           /* Save report and Download*/
@@ -1032,50 +1043,77 @@
       },
       validation(){
 
-        // if (this.employerIdentificationNumber.length < 9) {
-        //   console.warn('EID is too short');
-        //   return false;
-        // }
-        //
-        // if (this.name === '') {
-        //   console.warn('No name inputted.');
-        //   return false;
-        // }
-        //
-        // if (this.address === '') {
-        //   console.warn('No address');
-        //   return false;
-        // }
-        //
-        // if (this.city === '') {
-        //   console.warn('No city');
-        //   return false;
-        // }
-        //
-        // if (this.state === '') {
-        //   console.warn('No state');
-        //   return false;
-        // }
-        //
-        // if (this.zip.length < 5) {
-        //   console.warn('No ZIP');
-        //   return false;
-        // }
-        //
-        // if (this.correctionType === null) {
-        //   console.warn('No correction selected');
-        //   return false;
-        // }
-        //
-        // if (this.reportForThisQuarter === null) {
-        //   console.warn('No quarter selected');
-        //   return false;
-        // }
-        //
-        // if (this.partOneProcessType === null) {
-        //   console.warn('No Part 1 process type selected');
-        //   return false;
-        // }
+        if (this.employerIdentificationNumber.length < 9) {
+          console.warn('EID is too short');
+          this.errors.employerIdentificationNumber = true;
+          return false;
+        } else {
+          this.errors.employerIdentificationNumber = false;
+        }
+
+        if (this.name === '') {
+          console.warn('No name inputted.');
+          this.errors.name = true;
+          return false;
+        } else {
+          this.errors.name = false;
+        }
+
+        if (this.address === '') {
+          console.warn('No address');
+          this.errors.address = true;
+          return false;
+        } else {
+          this.errors.address = false;
+        }
+
+        if (this.city === '') {
+          console.warn('No city');
+          this.errors.city = true;
+          return false;
+        } else {
+          this.errors.city = false;
+        }
+
+        if (this.state === '') {
+          console.warn('No state');
+          this.errors.state = true;
+          return false;
+        } else {
+          this.errors.state = false;
+        }
+
+        if (this.zip.length < 5) {
+          console.warn('No ZIP');
+          this.errors.zip = true;
+          return false;
+        } else {
+          this.errors.zip = false;
+        }
+
+        if (this.correctionType === null) {
+          console.warn('No correction selected');
+          this.errors.correctionType = true;
+          return false;
+        } else {
+          this.errors.correctionType = false;
+        }
+
+        if (this.reportForThisQuarter === null) {
+          console.warn('No quarter selected');
+          this.errors.reportForThisQuarter = true;
+          return false;
+        } else {
+          this.errors.reportForThisQuarter = false;
+        }
+
+        if (this.partOneProcessType === null) {
+          console.warn('No Part 1 process type selected');
+          this.errors.partOneProcessType = true;
+          return false;
+        } else {
+          this.errors.partOneProcessType = false;
+        }
 
         return true;
       },
