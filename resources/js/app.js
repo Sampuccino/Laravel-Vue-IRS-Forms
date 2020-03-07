@@ -26,7 +26,14 @@ Vue.component('example-component', require('./components/ExampleComponent.vue').
  * the page. Then, you may begin adding components to this application
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
+import ElementUI from 'element-ui';
+import 'element-ui/lib/theme-chalk/index.css';
+
+/* Add the ELement UI Library*/
+Vue.use(ElementUI);
 import store from "./store"
+
+Vue.use(ElementUI);
 
 const app = new Vue({
     store,

@@ -2,14 +2,12 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f57c7d6b-7fc5-421d-9cbc-5b5f57a7fa99" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/IRS-Forms.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/IRS-Forms.iml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/public/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/public/js/app.js.LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/public/js/app.js.LICENSE" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/Calendar/Flatpickr.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/Calendar/Flatpickr.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/components/SelectFormTemplate.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/SelectFormTemplate.vue" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/js/store.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/store.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/views/home.blade.php" beforeDir="false" afterPath="$PROJECT_DIR$/resources/views/home.blade.php" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/app.js" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/app.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/resources/js/components/IRS Forms/Form_941X.vue" beforeDir="false" afterPath="$PROJECT_DIR$/resources/js/components/IRS Forms/Form_941X.vue" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -298,7 +296,7 @@
       <workItem from="1582089143397" duration="10000" />
       <workItem from="1582095677559" duration="5000" />
       <workItem from="1582166700636" duration="134000" />
-      <workItem from="1583451461551" duration="14091000" />
+      <workItem from="1583451461551" duration="27822000" />
     </task>
     <servers />
   </component>
@@ -327,9 +325,9 @@
       <screen x="0" y="23" width="1680" height="999" />
     </state>
     <state x="490" y="167" key="SettingsEditor/0.23.1680.999@0.23.1680.999" timestamp="1581905568962" />
-    <state x="505" y="243" width="670" height="676" key="search.everywhere.popup" timestamp="1583465969748">
+    <state x="505" y="243" width="670" height="676" key="search.everywhere.popup" timestamp="1583547492784">
       <screen x="0" y="23" width="1680" height="999" />
     </state>
-    <state x="505" y="243" width="670" height="676" key="search.everywhere.popup/0.23.1680.999@0.23.1680.999" timestamp="1583465969748" />
+    <state x="505" y="243" width="670" height="676" key="search.everywhere.popup/0.23.1680.999@0.23.1680.999" timestamp="1583547492784" />
   </component>
 </project>

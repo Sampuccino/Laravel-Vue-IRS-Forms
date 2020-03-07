@@ -378,11 +378,114 @@
     <!--#############-->
     <!--###### Part 3-->
     <!--############-->
-    <div class="col-lg-10 col-12 bg-white p-3">
-      <div class="bg-dark p-2 text-white mb-3">Part 3 <span class="bg-white text-dark p-1 ml-2">Enter the corrections for this quarter. If any line doesn't apply, leave it blank.</span>
-      </div>
+    <div class="col-lg-12 col-12 bg-white p-3">
+      <div class="bg-dark p-2 text-white mb-3">Part 3 <span class="bg-white text-dark p-1 ml-2">Enter the corrections for this quarter. If any line doesn't apply, leave it blank.</span></div>
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Description</th>
+          <th>Column 1
+            Total corrected
+            amount (for ALL
+            employees)</th>
+          <th>Column 2
+            Amount originally
+            reported or as
+            previously corrected
+            (for ALL employees)</th>
+          <th>Column 3
+            Difference
+            (If this amount is a
+            negative number,
+            use a minus sign.)</th>
+          <th>Column 4
+            Tax correction</th>
+        </tr>
+        </thead>
+        <tbody>
+        <!--P3 #14-->
+        <tr>
+          <td>14. Qualified small business payroll
+            tax credit for increasing
+            research activities (Form 941 or
+            941-SS, line 11; you must attach
+            Form 8974)
+          </td>
+          <td>
+            <el-input placeholder="Please input" v-model="part3.number14.column1"></el-input>
+          </td>
+          <td>
+            <el-input placeholder="Please input" v-model="part3.number14.column2"></el-input>
+          </td>
+          <td>
+            {{ lineFourteenDifference }}
+          </td>
+          <td>
+            {{ returnCorrectedCreditBalance }}
+          </td>
+        </tr>
+        <tr>
+          <td>19. Combine the amounts on lines 7–18 of Column 4 .</td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            {{ returnCorrectedCreditBalance }}
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <p>
+              21. Total. Combine the amounts on lines 19 and 20a of Column 4.
+            </p>
+            <p>
+              If line 21 is less than zero:
+            </p>
+            <p>
+              • If you checked line 1, this is the amount you want applied as a credit to your Form 941 for the tax period in which you're filing this
+              form. (If you're currently filing a Form 944, Employer’s ANNUAL Federal Tax Return, see the instructions.)
+              • If you checked line 2, this is the amount you want refunded or abated.
+              If line 21 is more than zero, this is the amount you owe. Pay this amount by the time you file this return. For information on how to
+              pay, see Amount you owe in the instructions.
+            </p>
+          </td>
+          <td></td>
+          <td></td>
+          <td></td>
+          <td>
+            {{ returnCorrectedCreditBalance }}
+          </td>
+        </tr>
+
+        </tbody>
+      </table>
     </div>
 
+    <div class="col-lg-12 col-12 bg-white p-3">
+      <div class="bg-dark p-2 text-white mb-3">Part 4: <span class="bg-white text-dark p-1 ml-2">Explain your corrections for this quarter</span></div>
+      <div class="row">
+        <div class="col-12">
+          <!--#22-->
+          <el-checkbox v-model="part4.line22"  class="d-block">22. Check here if any corrections you entered on a line
+            include both underreported and overreported amounts. Explain both your underreported and overreported amounts on line 24.</el-checkbox>
+          <!--#23-->
+          <el-checkbox v-model="part4.line23">23. Check here if any corrections involve reclassified workers. Explain on
+            line 24.
+          </el-checkbox>
+          <!--#24-->
+          <p>24. You must give us a detailed explanation of how you determined your corrections. See the instructions.</p>
+          <el-input
+            type="textarea"
+            :autosize="{ minRows: 5}"
+            placeholder="Please input"
+            v-model="part4.line24">
+          </el-input>
+
+          <!-- Max Len is 97-->
+        </div>
+      </div>
+
+    </div>
 
   </div>
 </template>
@@ -427,6 +530,112 @@
         part2Number3: null,
         part2Number4: [],
         part2Number5: [],
+        // Part 2
+        part3: {
+          number6: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+          },
+          number7: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number8: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number9: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number10: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number11: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number12: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number13: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number14: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number15: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number16: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number17: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number18: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number19: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number20a: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number20b: {
+            column1: 0,
+            column2: 0,
+            column3: 0,
+            column4: 0,
+          },
+          number21: {
+            column4: 0,
+          },
+        },
+        part4: {
+          line22: false,
+          line23: false,
+          line24: ''
+        },
         // Errors
         errors: {
           ein: null,
@@ -454,6 +663,9 @@
 
           const pages = pdfDoc.getPages();
           const firstPage = pages[0];
+          const secondPage = pages[1];
+          const thirdPage = pages[2];
+          const fourthPage = pages[3];
           const {width, height} = firstPage.getSize();
           const COLOR = rgb(0, 0, 0);
           const baseOptions = {
@@ -590,15 +802,15 @@
           //     });
           //     break;
           // }
-          //
-          // // Calendar Year Quarter
-          // const _cYear = this.calendarYear.split('-');
-          // firstPage.drawText(_cYear[2], {
-          //   x: 430,
-          //   y: height / 2 + 140,
-          //   ...baseOptions
-          // });
-          //
+
+          // Calendar Year Quarter
+          const _cYear = this.calendarYear.split('-');
+          firstPage.drawText(_cYear[2], {
+            x: 430,
+            y: height / 2 + 140,
+            ...baseOptions
+          });
+
           // if (parseInt(this.partOneProcessType) === 1) {
           //   // Part 2 #1
           //   firstPage.drawText('x', {
@@ -625,7 +837,7 @@
           // }
 
           // Part 2 Number 4
-          if (this.part2Number4.length) {
+/*          if (this.part2Number4.length) {
             // Draw a/b/c if exists
             if (this.part2Number4.includes("a")) {
               firstPage.drawText('x', {
@@ -687,6 +899,128 @@
               });
             }
           }
+
+          /!* Page 2 & 3 Name and Other Info ##########*!/
+          // Name
+          secondPage.drawText(this.name, {
+            x: 50,
+            y: height / 2 + 340,
+            ...baseOptions
+          });
+
+          thirdPage.drawText(this.name, {
+            x: 50,
+            y: height / 2 + 340,
+            ...baseOptions
+          });
+
+          // EIN
+          secondPage.drawText(this.employerIdentificationNumber, {
+            x: 325,
+            y: height / 2 + 340,
+            ...baseOptions
+          });
+
+          thirdPage.drawText(this.employerIdentificationNumber, {
+            x: 325,
+            y: height / 2 + 340,
+            ...baseOptions
+          });
+
+          // Correcting Quarter
+          secondPage.drawText(this.reportForThisQuarter, {
+            x: 530,
+            y: height / 2 + 351,
+            ...baseOptions
+          });
+
+          thirdPage.drawText(this.reportForThisQuarter, {
+            x: 530,
+            y: height / 2 + 351,
+            ...baseOptions
+          });
+
+          // year
+          secondPage.drawText(_cYear[2], {
+            x: 530,
+            y: height / 2 + 330,
+            ...baseOptions
+          });
+
+          thirdPage.drawText(_cYear[2], {
+            x: 530,
+            y: height / 2 + 330,
+            ...baseOptions
+          });*/
+
+          // Line 14 Col-1
+          secondPage.drawText(this.part3.number14.column1.toString(), {
+            x: 200,
+            y: height / 2 + 10,
+            ...baseOptions
+          });
+
+          secondPage.drawText(this.part3.number14.column2.toString(), {
+            x: 300,
+            y: height / 2 + 10,
+            ...baseOptions
+          });
+
+          secondPage.drawText(this.lineFourteenDifference.toString(), {
+            x: 390,
+            y: height / 2 + 10,
+            ...baseOptions
+          });
+
+          secondPage.drawText(this.returnCorrectedCreditBalance.toString(), {
+            x: 515,
+            y: height / 2 + 10,
+            ...baseOptions
+          });
+
+          // Line 19
+          secondPage.drawText(this.returnCorrectedCreditBalance.toString(), {
+            x: 515,
+            y: height / 2 - 155,
+            ...baseOptions
+          });
+
+          // Line 21
+          secondPage.drawText(this.returnCorrectedCreditBalance.toString(), {
+            x: 515,
+            y: height / 2 - 210,
+            ...baseOptions
+          });
+
+          // Part 4 Line 22
+          if (this.part4.line22) {
+            thirdPage.drawText('x', {
+              x: 47,
+              y: height / 2 + 303,
+              ...baseOptions
+            });
+          }
+
+          // Part 4 Line 23
+          if (this.part4.line23) {
+            thirdPage.drawText('x', {
+              x: 47,
+              y: height / 2 + 280,
+              ...baseOptions
+            });
+          }
+
+          // Part 4 Line 24
+          if (this.part4.line24.length > 0) {
+            thirdPage.drawText(this.part4.line24, {
+              x: 47,
+              y: height / 2 + 245,
+              maxWidth: 50,
+              size: 10,
+              ...baseOptions
+            });
+          }
+
 
           /* Save report and Download*/
           const pdfBytes = await pdfDoc.save();
@@ -750,6 +1084,14 @@
       },
       logNewDate(newDate) {
         this.calendarYear = newDate;
+      }
+    },
+    computed: {
+      lineFourteenDifference: function () {
+        return (parseFloat(this.part3.number14.column1).toFixed(2) - parseFloat(this.part3.number14.column2).toFixed(2)).toFixed(2);
+      },
+      returnCorrectedCreditBalance: function () {
+        return -(this.lineFourteenDifference);
       }
     }
   }
