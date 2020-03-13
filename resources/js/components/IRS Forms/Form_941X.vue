@@ -511,6 +511,22 @@
       formUrl: String,
       disableDownload: String
     },
+    beforeUpdate() {
+      if (this.disableDownload === 'Y') {
+        // this.part3.number14.column1 = this.returnForm8974Line12();
+        this.employerIdentificationNumber = this.returnEmployerIdentificationNumber();
+        this.name = this.returnName();
+        this.tradeName = this.returnTradeName();
+        this.address = this.returnAddress();
+        this.city = this.returnCity();
+        this.state = this.returnState();
+        this.zip = this.returnZip();
+        this.f_countryName = this.returnForeignName();
+        this.f_countryProvince = this.returnForeignProvince();
+        this.f_countryZIP = this.returnForeignZip();
+        this.qualifiedSmallBusinessPayroll = this.returnForm8974Line12();
+      }
+    },
     mounted() {
       this.url = this.formUrl;
       this.calendarYear = this.returnCalendarYear();
@@ -659,6 +675,9 @@
       }
     },
     methods: {
+      ...mapGetters(['returnForm8974Line12']),
+      ...mapGetters(['returnEmployerIdentificationNumber', 'returnName', 'returnTradeName', 'returnAddress',
+        'returnCity', 'returnState', 'returnZip', 'returnForeignName', 'returnForeignProvince', 'returnForeignZip', 'returnForm8974Line12']),
       exportToPDF: async function () {
 
         console.log('exportToPDF');
