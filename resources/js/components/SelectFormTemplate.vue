@@ -76,7 +76,7 @@
                             :class="{'active': setActive.t941X}"
                             v-show="checkedForms.includes('941X')"
                             v-on:click="setActiveForm('t941X')">Form 941-X
-                          <span v-show="errors.form941" class="ml-2 alert-danger p-2">Has Error(s)</span>
+                          <span v-show="errors.form941X" class="ml-2 alert-danger p-2">Has Error(s)</span>
                         </li>
                         <li class="list-group-item"
                             :class="{'active': setActive.t941SB}"
@@ -102,7 +102,7 @@
                     <form_941 ref="form941"  v-show="setActive.t941" disableDownload="Y" :formUrl="type_941_url"/>
                 </div>
               <div class="col-12">
-                    <form_941-x ref="form941"  v-show="setActive.t941X" disableDownload="Y" :formUrl="type_941x_url"/>
+                    <form_941-x ref="form941X"  v-show="setActive.t941X" disableDownload="Y" :formUrl="type_941x_url"/>
                 </div>
                 <div class="col-12">
                     <form_941-s ref="form941SB" v-show="setActive.t941SB" disableDownload="Y" :formUrl="type_941s_url"/>
@@ -168,7 +168,7 @@
         ],
         activeForm_8974: false,
         activeForm_941: false,
-        activeForm_941X: true,
+        activeForm_941X: false,
         activeForm_941_Schedule_B: false,
         checkedForms: [],
         isFillingOut: false,
@@ -190,6 +190,7 @@
     methods: {
       ...mapGetters(['returnTitle']),
       setActiveForm(arg) {
+
         switch (arg) {
           case '8974':
             this.activeForm_8974 = !this.activeForm_8974;
@@ -239,6 +240,7 @@
       },
         continueWithSelectedForms() {
           console.log(this.checkedForms);
+          // console.warn('Add in form 8974 if 941 or 941X is present.');
             if(this.checkedForms.length > 1) this.isFillingOut = true;
         },
       returnToStart() {
@@ -268,6 +270,18 @@
           } else {
             /* Toggle Error on Tab*/
             this.errors.form941 = true;
+          }
+        }
+
+        if (this.checkedForms.includes('941X')) {
+          const _validated = this.$refs.form941X.validation();
+          console.warn('941X Validation with a value of ', _validated);
+          if (_validated) {
+            this.$refs.form941X.exportToPDF();
+            this.errors.form941X = false;
+          } else {
+            /* Toggle Error on Tab*/
+            this.errors.form941X = true;
           }
         }
 
