@@ -268,17 +268,31 @@
             <div v-if="index === 4">
               <!--CHECK THIS BOX-->
               <div class="form-check mt-3">
-                <label class="form-check-label d-block mt-2">
-                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b1"
-                         value="1" name="checkThisBox">
-                  <b>Check this box if you're a third-party payer of sick pay</b>
-                </label>
-                <label class="form-check-label d-block mt-2">
-                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b2"
-                         value="2" name="checkThisBox">
-                  <b>Check this box if you received a Section 3121(q) Notice and Demand. See the
-                    instructions before completing line 11</b>
-                </label>
+<!--                <el-checkbox-group v-model="partTwoOptional">-->
+<!--                  <el-checkbox id="p2b1" value="1">Check this box if you're a third-party-->
+<!--                    payer of sick pay</el-checkbox>-->
+<!--                  <el-checkbox id="p2b2" value="2">Check this box if you received a-->
+<!--                    Section 3121(q) Notice and Demand. See the-->
+<!--                    instructions before completing line 11</el-checkbox>-->
+<!--                </el-checkbox-group>-->
+
+                <el-checkbox-group v-model="partTwoOptional">
+                  <el-checkbox id="p2b1" value="1" label="Check this box if you're a third-party payer of sick pay"></el-checkbox>
+                  <el-checkbox id="p2b1" value="2" label="Check this box if you received a Section 3121(q) Notice and Demand. See the instructions before completing line 11"></el-checkbox>
+                </el-checkbox-group>
+
+
+<!--                <label class="form-check-label d-block mt-2">-->
+<!--                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b1"-->
+<!--                         value="1" name="checkThisBox">-->
+<!--                  <b>Check this box if you're a third-party payer of sick pay</b>-->
+<!--                </label>-->
+<!--                <label class="form-check-label d-block mt-2">-->
+<!--                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b2"-->
+<!--                         value="2" name="checkThisBox">-->
+<!--                  <b>Check this box if you received a Section 3121(q) Notice and Demand. See the-->
+<!--                    instructions before completing line 11</b>-->
+<!--                </label>-->
               </div>
 
             </div>
@@ -333,10 +347,15 @@
         this.name = this.returnName();
         // $('#calendar_year_select').val(this.returnCalendarYear());
         // this.calendarYear = this.returnCalendarYear();
-        this.partTwoEight = this.returnForm941Line5AColumn2;
-        this.partTwoNine = this.returnForm941Line5BColumn2;
+        // this.partTwoEight = this.returnForm941Line5AColumn2;
+        // this.partTwoNine = this.returnForm941Line5BColumn2;
       }
 
+    },
+    watch: {
+      partTwoOptional: function () {
+        console.warn(this.partTwoOptional);
+      }
     },
     data: function () {
       return {
@@ -394,7 +413,7 @@
         partTwoEight: null,
         partTwoNine: null,
         thirdPartyPayer: null,
-        partTwoOptional: null,
+        partTwoOptional: [],
         noticeOfDemand: null,
         partTwoEleven: null,
         /* ######################################### */
@@ -862,22 +881,33 @@
             ...baseOptions
           });
 
-          /* Draw 10 CHECKBOX 1 IF Selected */
-          if (Number(this.partTwoOptional) === 1) {
-            firstPage.drawText('X', {
-              x: START_X + (xOffset * 2) + 32,
-              y: height / 2 + 54 - (yOffset * 17) + 17,
-              ...baseOptionsLG
+          if (this.partTwoOptional.length) {
+            const found = this.partTwoOptional.find(needle => {
+              return (needle === "Check this box if you're a third-party payer of sick pay") ? 1 : 2;
             });
-          }
 
-          /* Draw 10 CHECKBOX 2 IF Selected */
-          if (Number(this.partTwoOptional) === 2) {
-            firstPage.drawText('X', {
-              x: START_X + (xOffset) - 23,
-              y: height / 2 + 54 - (yOffset * 17) + 3,
-              ...baseOptionsLG
-            });
+            /* Draw 10 CHECKBOX 1 IF Selected */
+            // if (Number(found) === 1) {
+            if (this.partTwoOptional.includes("Check this box if you're a third-party payer of sick pay")) {
+              firstPage.drawText('X', {
+                x: START_X + (xOffset * 2) + 32,
+                y: height / 2 + 54 - (yOffset * 17) + 17,
+                ...baseOptionsLG
+              });
+            }
+
+            /* Draw 10 CHECKBOX 2 IF Selected */
+            // if (Number(found) === 2) {
+            if (this.partTwoOptional.includes("Check this box if you received a Section 3121(q) Notice and Demand. See the instructions before completing line 11")) {
+              firstPage.drawText('X', {
+                x: START_X + (xOffset) - 23,
+                y: height / 2 + 54 - (yOffset * 17) + 3,
+                ...baseOptionsLG
+              });
+            }
+
+
+
           }
 
           /* Draw 11 */

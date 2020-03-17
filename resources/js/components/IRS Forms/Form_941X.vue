@@ -1,6 +1,20 @@
 <template>
   <div class="row justify-content-center">
 
+    <div class="row d-none">
+      {{returnEmployerIdentificationNumber()}}
+      {{returnName()}}
+      {{returnTradeName()}}
+      {{returnAddress()}}
+      {{returnCity()}}
+      {{returnState()}}
+      {{returnZip()}}
+      {{returnForeignName()}}
+      {{returnForeignProvince()}}
+      {{returnForeignZip()}}
+      {{returnForm8974Line12()}}
+    </div>
+
     <div class="col-12 mt-3 mb-3">
       <h4 class="alert-info p-2 text-center">Form 941 X</h4>
     </div>
@@ -153,6 +167,10 @@
             correcting.</h6>
           <flatpickr timeFormat="m-d-Y" v-model="calendarYear" v-on:updatedDate="logNewDate" class="mt-2"
                      id="form_941X_calendar_year_select"/>
+
+          <h6 class="font-weight-bold bg-dark p-2 text-white mb-2 mt-2">Enter the date you discovered errors.</h6>
+          <flatpickr timeFormat="m-d-Y" v-model="dateDiscoveredError" v-on:updatedDate="logNewErrorDate" class="mt-2"
+                     id="form_941X_dateDiscoveredError"/>
 
         </div>
 
@@ -480,14 +498,21 @@
           <el-checkbox v-model="part4.line23">23. Check here if any corrections involve reclassified workers. Explain on
             line 24.
           </el-checkbox>
-          <!--#24-->
-<!--          <p>24. You must give us a detailed explanation of how you determined your corrections. See the instructions.</p>-->
+          <!--#24 : 27 lines total-->
+          <p>24. You must give us a detailed explanation of how you determined your corrections. See the instructions.</p>
 <!--          <el-input-->
 <!--            type="textarea"-->
 <!--            :autosize="{ minRows: 5}"-->
 <!--            placeholder="Please input"-->
 <!--            v-model="part4.line24">-->
 <!--          </el-input>-->
+
+          <div v-for="(row, index) in part4Line24Contents" class="col-12" :class="(index%2 > 0) ? 'bg-light' : ''">
+            <div class="form-group">
+              <label>{{(index)}}</label>
+              <input type="text" maxlength="100" class="form-control" v-model="part4Line24Contents[index]">
+            </div>
+          </div>
 
           <!-- Max Len is 97-->
         </div>
@@ -530,7 +555,13 @@
     mounted() {
       this.url = this.formUrl;
       this.calendarYear = this.returnCalendarYear();
+      this.dateDiscoveredError = this.returnCurrentErrorCalendarYear();
       console.log('Form 941X component with url is ', this.url);
+    },
+    watch: {
+      part4Line24Contents: function(){
+      console.log(this.part4Line24Contents);
+      },
     },
     data() {
       return {
@@ -549,6 +580,7 @@
         correctionType: null,
         reportForThisQuarter: null,
         calendarYear: null,
+        dateDiscoveredError: null,
         //Part 1
         partOneProcessType: null,
         part2Number3: null,
@@ -658,8 +690,37 @@
         part4: {
           line22: false,
           line23: false,
-          line24: ''
+          line24: '',
         },
+        part4Line24Contents : [
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+          "",
+        ],
         // Errors
         errors: {
           employerIdentificationNumber: null,
@@ -838,6 +899,26 @@
           firstPage.drawText(_cYear[2], {
             x: 430,
             y: height / 2 + 140,
+            ...baseOptions
+          });
+
+          // Date found error
+          const _errorFoundYear = this.dateDiscoveredError.split('-');
+          firstPage.drawText(_errorFoundYear[0], {
+            x: 428,
+            y: height / 2 + 86,
+            ...baseOptions
+          });
+
+          firstPage.drawText(_errorFoundYear[1], {
+            x: 450,
+            y: height / 2 + 86,
+            ...baseOptions
+          });
+
+          firstPage.drawText(_errorFoundYear[2], {
+            x: 472,
+            y: height / 2 + 86,
             ...baseOptions
           });
 
@@ -1041,15 +1122,51 @@
           }
 
           // Part 4 Line 24
-          // if (this.part4.line24.length > 0) {
-          //   thirdPage.drawText(this.part4.line24, {
-          //     x: 47,
-          //     y: height / 2 + 245,
-          //     maxWidth: 50,
-          //     size: 5,
-          //     ...baseOptions
-          //   });
-          // }
+          /*if (this.part4.line24.length > 0) {
+
+            const MAX_LEN = this.part4.line24.length;
+            const MAX_SENTENCE_LEN = 105;
+            let fullText = this.part4.line24.replace((/  |\r\n|\n|\r/gm),"");
+            let sentences = [];
+            let currentLen = MAX_SENTENCE_LEN;
+            let iteration = 0;
+
+            if (currentLen <= MAX_LEN) {
+              while ( currentLen <= MAX_LEN) {
+
+                (iteration === 0) ? sentences.push(fullText.substr(0, MAX_SENTENCE_LEN)) : sentences.push(fullText.substr((MAX_SENTENCE_LEN*iteration), MAX_SENTENCE_LEN));
+
+                currentLen+=MAX_SENTENCE_LEN;
+                iteration++;
+              }
+            } else {
+              sentences.push(fullText.substr(0, MAX_SENTENCE_LEN));
+            }
+
+            sentences.forEach((s, index) => {
+
+                thirdPage.drawText(s, {
+                  x: 60,
+                  y: (index === 0 ) ? (height / 2 + 240) : ((height / 2 + 240) - (15 * index)),
+                  size: 5,
+                  ...baseOptions
+                });
+
+            });
+
+          }*/
+
+          if (this.part4Line24Contents.length > 0) {
+            const MAX_SENTENCE_LEN = 105;
+            this.part4Line24Contents.forEach((sentence, index) => {
+              thirdPage.drawText(sentence.substr(0, MAX_SENTENCE_LEN), {
+                x: 62,
+                y: (index === 0 ) ? (height / 2 + 240) : ((height / 2 + 240) - (12 * index)),
+                size: 5,
+                ...baseOptions
+              });
+            });
+          }
 
 
           /* Save report and Download*/
@@ -1139,8 +1256,14 @@
       returnCalendarYear() {
         return $('#form_941X_calendar_year_select').val();
       },
+      returnCurrentErrorCalendarYear() {
+        return $('#form_941X_dateDiscoveredError').val();
+      },
       logNewDate(newDate) {
         this.calendarYear = newDate;
+      },
+      logNewErrorDate(newDate) {
+        this.dateDiscoveredError = newDate;
       }
     },
     computed: {
