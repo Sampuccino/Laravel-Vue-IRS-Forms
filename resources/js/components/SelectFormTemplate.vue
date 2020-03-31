@@ -115,20 +115,23 @@
         <form_941  v-show="activeForm_941 && !isFillingOut" :formUrl="type_941_url"/>
         <form_941-s v-show="activeForm_941_Schedule_B && !isFillingOut" :formUrl="type_941s_url"/>
         <form_941-x v-show="activeForm_941X && !isFillingOut" :formUrl="type_941x_url" />
+        <form_6765 v-show="activeForm_6765 && !isFillingOut" :formUrl="type_6765"/>
 
     </div>
 </template>
 
 <script>
+  import { mapGetters } from "vuex"
+
   import Form_8974 from "./IRS Forms/Form_8974";
   import Form_941 from "./IRS Forms/Form_941";
   import Form_941S from "./IRS Forms/Form_941S";
   import Form_941X from "./IRS Forms/Form_941X";
   import PersonalDetails from "./IRS Forms/common/PersonalDetails";
-  import { mapGetters } from "vuex"
+  import Form_6765 from "./IRS Forms/Form_6765";
 
   export default {
-    components: {Form_941X, PersonalDetails, Form_941, Form_8974, Form_941S},
+    components: {Form_6765, Form_941X, PersonalDetails, Form_941, Form_8974, Form_941S},
     props: {
       type_8974: String,
       type_941: String,
@@ -137,6 +140,8 @@
       type_941s: String,
       type_941x_url: String,
       type_941x: String,
+      type_6765: String,
+      type_6765_url: String
     },
     data: function() {
       return {
@@ -164,12 +169,19 @@
           imageSource: this.type_941s,
           name: "Report of Tax Liability for Semiweekly Schedule Depositors",
           code: '941SB'
-         }
+         },
+          {
+            title: 'Form 6765',
+            imageSource: this.type_6765,
+            name: "Credit for Increasing Research Activities",
+            code: '6765'
+          }
         ],
         activeForm_8974: false,
         activeForm_941: false,
         activeForm_941X: false,
         activeForm_941_Schedule_B: false,
+        activeForm_6765: true,
         checkedForms: [],
         isFillingOut: false,
         showPersonal: true,
@@ -178,12 +190,14 @@
             t941: false,
             t941X: false,
             t941SB: false,
+            t6765: false,
         },
         errors: {
           form8974: false,
           form941: false,
           form941X: false,
           form941SB: false,
+          form6765: false,
         }
       }
     },
@@ -230,6 +244,10 @@
             console.log('t941SB');
               this.setActive.t941SB = !this.setActive.t941SB;
               this.setActive.t8974 = this.setActive.t941 = this.setActive.t941X = this.showPersonal = false;
+            break;
+            case '6765': // code key from forms array object
+              break;
+            case 't6765': // active state
             break;
           case 'Personal':
             console.log('Personal');
