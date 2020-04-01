@@ -8,6 +8,8 @@
                           :type_941s_url="'{{ asset('forms/f941sb.pdf') }}'"
                           :type_941s="'{{ asset('img/941S.png') }}'"
                           :type_941x_url="'{{ asset('forms/form 941X.pdf') }}'"
-                          :type_941x="'{{ asset('img/Form941X.png') }}'"/>
+                          :type_941x="'{{ asset('img/Form941X.png') }}'"
+                          :type_6765="'{{ asset('img/form_6765.png') }}'"
+                          :type_6765_url="'{{ asset('forms/form_6765.pdf') }}'"/>
 </div>
 @endsection

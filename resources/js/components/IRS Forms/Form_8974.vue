@@ -333,8 +333,8 @@
     },
     data: function () {
       return {
-        // url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
-        url: 'http://irsforms.test/Form-8974.pdf',
+        url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
+        // url: 'http://irsforms.test/Form-8974.pdf',
         /* MAIN FORM FIELDS ######################## */
         ein: '',
         creditTypeBox: null,

@@ -1280,7 +1280,6 @@
         let formatToString = _number.toString();
         let formatToCurrency = (formatToString.includes('.')) ? formatToString : formatToString+='.00';
         return formatToCurrency.replace(/\d(?=(\d{3})+\.)/g, '$&,');
-
       },
     }
   }
