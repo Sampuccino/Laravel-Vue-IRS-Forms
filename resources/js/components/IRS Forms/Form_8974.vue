@@ -6,8 +6,6 @@
       {{ returnEmployerIdentificationNumber() }}
       {{ returnName() }}
       {{ returnCalendarYear() }}
-      {{ returnForm941Line5AColumn2 }}
-      {{ returnForm941Line5BColumn2 }}
     </div>
 
     <div class="position-fixed" style="right: 1rem; bottom:1rem;">
@@ -268,31 +266,12 @@
             <div v-if="index === 4">
               <!--CHECK THIS BOX-->
               <div class="form-check mt-3">
-<!--                <el-checkbox-group v-model="partTwoOptional">-->
-<!--                  <el-checkbox id="p2b1" value="1">Check this box if you're a third-party-->
-<!--                    payer of sick pay</el-checkbox>-->
-<!--                  <el-checkbox id="p2b2" value="2">Check this box if you received a-->
-<!--                    Section 3121(q) Notice and Demand. See the-->
-<!--                    instructions before completing line 11</el-checkbox>-->
-<!--                </el-checkbox-group>-->
 
                 <el-checkbox-group v-model="partTwoOptional">
                   <el-checkbox id="p2b1" value="1" label="Check this box if you're a third-party payer of sick pay"></el-checkbox>
                   <el-checkbox id="p2b1" value="2" label="Check this box if you received a Section 3121(q) Notice and Demand. See the instructions before completing line 11"></el-checkbox>
                 </el-checkbox-group>
 
-
-<!--                <label class="form-check-label d-block mt-2">-->
-<!--                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b1"-->
-<!--                         value="1" name="checkThisBox">-->
-<!--                  <b>Check this box if you're a third-party payer of sick pay</b>-->
-<!--                </label>-->
-<!--                <label class="form-check-label d-block mt-2">-->
-<!--                  <input type="radio" class="form-check-input" v-model="partTwoOptional" id="p2b2"-->
-<!--                         value="2" name="checkThisBox">-->
-<!--                  <b>Check this box if you received a Section 3121(q) Notice and Demand. See the-->
-<!--                    instructions before completing line 11</b>-->
-<!--                </label>-->
               </div>
 
             </div>
@@ -352,11 +331,6 @@
       }
 
     },
-    watch: {
-      partTwoOptional: function () {
-        console.warn(this.partTwoOptional);
-      }
-    },
     data: function () {
       return {
         // url: 'http://irs-8974.us-west-1.elasticbeanstalk.com/Form-8974.pdf',
@@ -410,8 +384,8 @@
           f5: null,
         },
         total: null,
-        partTwoEight: null,
-        partTwoNine: null,
+        partTwoEight: 0.00,
+        partTwoNine: 0.00,
         thirdPartyPayer: null,
         partTwoOptional: [],
         noticeOfDemand: null,
@@ -977,9 +951,9 @@
           return false;
         } else this.validation.partOne = true;
 
-        if (this.sumOfPartTwoEightAndNine <= 0.00 || this.sumOfPartTwoEightAndNine <= '0.00') {
+        if (this.sumOfPartTwoEightAndNine < 0) {
           console.log('8974: Part 2 is wrong');
-          console.log(this.sumOfPartTwoEightAndNine);
+          console.log(this.sumOfPartTwoEightAndNine, typeof this.sumOfPartTwoEightAndNine);
           this.validation.partTwo = false;
           return false;
         } else this.validation.partTwo = true;

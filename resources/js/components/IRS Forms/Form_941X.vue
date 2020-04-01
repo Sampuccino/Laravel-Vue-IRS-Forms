@@ -1092,7 +1092,7 @@
           // Line 19
           secondPage.drawText(this.returnCorrectedCreditBalance.toString(), {
             x: 515,
-            y: height / 2 - 155,
+            y: height / 2 - 132,
             ...baseOptions
           });
 
@@ -1120,41 +1120,6 @@
               ...baseOptions
             });
           }
-
-          // Part 4 Line 24
-          /*if (this.part4.line24.length > 0) {
-
-            const MAX_LEN = this.part4.line24.length;
-            const MAX_SENTENCE_LEN = 105;
-            let fullText = this.part4.line24.replace((/  |\r\n|\n|\r/gm),"");
-            let sentences = [];
-            let currentLen = MAX_SENTENCE_LEN;
-            let iteration = 0;
-
-            if (currentLen <= MAX_LEN) {
-              while ( currentLen <= MAX_LEN) {
-
-                (iteration === 0) ? sentences.push(fullText.substr(0, MAX_SENTENCE_LEN)) : sentences.push(fullText.substr((MAX_SENTENCE_LEN*iteration), MAX_SENTENCE_LEN));
-
-                currentLen+=MAX_SENTENCE_LEN;
-                iteration++;
-              }
-            } else {
-              sentences.push(fullText.substr(0, MAX_SENTENCE_LEN));
-            }
-
-            sentences.forEach((s, index) => {
-
-                thirdPage.drawText(s, {
-                  x: 60,
-                  y: (index === 0 ) ? (height / 2 + 240) : ((height / 2 + 240) - (15 * index)),
-                  size: 5,
-                  ...baseOptions
-                });
-
-            });
-
-          }*/
 
           if (this.part4Line24Contents.length > 0) {
             const MAX_SENTENCE_LEN = 105;
