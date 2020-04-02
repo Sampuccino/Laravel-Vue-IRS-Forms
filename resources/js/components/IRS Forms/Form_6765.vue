@@ -15,14 +15,16 @@
       <div class="col-6">
         <div class="form-group">
           <label>Name(s) shown on return</label>
-          <el-input placeholder="John Doe"></el-input>
+          <el-tag v-show="name.error" type="danger" class="mb-1">Error!</el-tag>
+          <el-input type="text" v-model="name.value" placeholder="John Doe"></el-input>
         </div>
       </div>
 
       <div class="col-3">
         <div class="form-group">
           <label>Identifying number</label>
-          <el-input placeholder="0"></el-input>
+          <el-tag v-show="identifyingNumber.error" type="danger" class="mb-1">Error!</el-tag>
+          <el-input type="text" v-model="identifyingNumber.value" placeholder="0"></el-input>
         </div>
       </div>
 
@@ -386,8 +388,8 @@
         <tbody>
         <tr>
           <td scope="row">
-            <!--#37-->
-            <b>37.</b> Subtract line 35 from line 17 or line 34 (whichever applies). If zero or less, enter -0-
+            <!--#36-->
+            <b>36.</b> Subtract line 35 from line 17 or line 34 (whichever applies). If zero or less, enter -0-
           </td>
           <td>
             {{ lineThirtySixCalculation }}
@@ -395,7 +397,7 @@
         </tr>
         <tr>
           <td scope="row">
-            <!--#36-->
+            <!--#38-->
             <b>38.</b> Add lines 36 and 37 . . . . . . . . . . . . . . . . . . . . . . . . . . .
             <br>
             • Estates and trusts, go to line 39.
@@ -475,94 +477,130 @@
 </template>
 
 <script>
+  import {PDFDocument, rgb, StandardFonts} from 'pdf-lib';
+  import download from 'downloadjs';
+
   import NumberFormatter from "../../utilities/NumberFormatter";
-    export default {
+
+  export default {
         props: {
+          formUrl: String,
+          disableDownload: String
         },
       data() {
           return {
            toggleSectionA: true,
+            name: {
+             value: '',
+             // value: 'John Doe',
+              error: false
+            },
+            identifyingNumber: {
+              value: '',
+              // value: 123,
+              error: false
+            },
             sectionA: {
               field5: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 0,
               },
               field6: {
                 error: false,
-                value: ''
+                // value: '',
+                value: 0,
               },
               field7: {
                 error: false,
-                value: ''
+                // value: '',
+                value: 0,
               },
               field8: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 1000,
               },
               field10: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 6.25,
               },
               field11: {
                 error: false,
                 value: '',
+                // value: 0,
                 priorYr1: {
                   error: false,
-                  value: ''
+                  value: '',
+                  // value: 0,
                 },
                 priorYr2: {
                   error: false,
-                  value: ''
+                  value: '',
+                  // value: 0,
                 },
                 priorYr3: {
                   error: false,
-                  value: ''
+                  value: '',
+                  // value: 0,
                 },
                 priorYr4: {
                   error: false,
-                  value: ''
+                  value: '',
+                  // value: 0,
                 },
               },
               field12: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 0,
               },
               field13: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 250,
               },
               field14: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 0,
               },
               field15: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 0,
               },
               field16: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 0,
               },
               field17Checkbox: true,
               field17: {
                 error: false,
-                value: ''
+                value: '',
+                // value: 0,
               },
               field29Checkbox: true,
               field29: {
                 error: false,
                 value: '',
+                // value: 0,
                 priorYr1: {
                   error: false,
-                  value: ''
+                  value: '',
+                  // value: 0,
                 },
                 priorYr2: {
                   error: false,
-                  value: ''
+                  value: '',
+                  // value: 0,
                 },
                 priorYr3: {
                   error: false,
-                  value: ''
+                  value: '',
+                  // value: 0,
                 },
               },
               field34Checkbox: true,
@@ -570,14 +608,17 @@
               field42: {
                 error: false,
                 value: '',
+                // value: 0,
               },
               field43: {
                 error: false,
                 value: '',
+                // value: 0,
               },
               field44: {
                 error: false,
                 value: '',
+                // value: 0,
               },
             },
           }
@@ -672,20 +713,311 @@
         }
       },
       methods: {
-        exportToPDF() {
+        async exportToPDF() {
+          const that = this;
 
         //  Run Validator A, B, C&D
+          if (this.validationSectionA() && this.validationSectionCandD() || this.validationSectionB() && this.validationSectionCandD()) {
+            // Output to PDF and fire download event
+            /* Write all contents to Final PDF */
+            const existingPdfBytes = await fetch(this.formUrl).then(res => res.arrayBuffer());
 
-          if (this.toggleSectionA) {
-            const validatedSA = this.validationSectionA();
-            console.log('Validator SECTION A with a value of ', validatedSA);
-          } else {
-            const validatedSB = this.validationSectionB();
-            console.log('Validator SECTION B with a value of ', validatedSB);
+            const pdfDoc = await PDFDocument.load(existingPdfBytes);
+            const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+            const pages = pdfDoc.getPages();
+            const firstPage = pages[0];
+            const secondPage = pages[1];
+            const {width, height} = firstPage.getSize();
+            const COLOR = rgb(0, 0, 0);
+            const baseOptions = {
+              size: 10,
+              font: helveticaFont,
+              color: COLOR,
+            };
+
+            // Name
+            firstPage.drawText(this.name.value, {
+              x: 50,
+              y: height / 2 + 293,
+              ...baseOptions
+            });
+
+            // Identifying Number
+            firstPage.drawText(this.identifyingNumber.value.toString(), {
+              x: 475,
+              y: height / 2 + 293,
+              ...baseOptions
+            });
+
+            // SECTION A ONLY
+            if (this.toggleSectionA) {
+              // #5
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field5.value), {
+                x: 415,
+                y: height / 2 + 195,
+                ...baseOptions
+              });
+
+              // #6
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field6.value), {
+                x: 415,
+                y: height / 2 + 182,
+                ...baseOptions
+              });
+
+              // #7
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field7.value), {
+                x: 415,
+                y: height / 2 + 169,
+                ...baseOptions
+              });
+
+              // #8
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field8.value), {
+                x: 415,
+                y: height / 2 + 158,
+                ...baseOptions
+              });
+
+              // #9
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.totalQualifiedResearchExpense), {
+                x: 415,
+                y: height / 2 + 147,
+                ...baseOptions
+              });
+
+              // #10
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field10.value), {
+                x: 415,
+                y: height / 2 + 134,
+                ...baseOptions
+              });
+
+              // #11
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.averageLineEleven), {
+                x: 415,
+                y: height / 2 + 122,
+                ...baseOptions
+              });
+
+              // #12
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineTwelveCalculation), {
+                x: 415,
+                y: height / 2 + 111,
+                ...baseOptions
+              });
+
+              // #13
+              // TODO If 0 returns, outputs -0-.00. Fix that
+              if (this.lineThirteenCalculation === '-0-') {
+                firstPage.drawText('0', {
+                  x: 415,
+                  y: height / 2 + 99,
+                  ...baseOptions
+                });
+              } else {
+                firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirteenCalculation), {
+                  x: 415,
+                  y: height / 2 + 99,
+                  ...baseOptions
+                });
+              }
+
+              // #14
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineFourteenCalculation), {
+                x: 415,
+                y: height / 2 + 87,
+                ...baseOptions
+              });
+
+              // #15
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.smallerOfLineThirteenOrFourteen), {
+                x: 515,
+                y: height / 2 + 75,
+                ...baseOptions
+              });
+
+              // #16
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.smallerOfLineThirteenOrFourteen), {
+                x: 515,
+                y: height / 2 + 63,
+                ...baseOptions
+              });
+
+              if (this.sectionA.field17Checkbox) {
+                // #17 YES Checkmark
+                firstPage.drawText('x', {
+                  x: 338,
+                  y: height / 2 + 51,
+                  ...baseOptions
+                });
+              } else {
+                // #17 NO Checkmark
+                firstPage.drawText('x', {
+                  x: 377,
+                  y: height / 2 + 51,
+                  ...baseOptions
+                });
+              }
+
+              // #17
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineSeventeenCalculation), {
+                x: 515,
+                y: height / 2 + 15,
+                ...baseOptions
+              });
+            } else {
+            // SECTION B ONLY
+              // #24
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field5.value), {
+                x: 415,
+                y: height / 2 - 105,
+                ...baseOptions
+              });
+
+            // #25
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field6.value), {
+              x: 415,
+              y: height / 2 - 117,
+              ...baseOptions
+            });
+
+            // #26
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field7.value), {
+              x: 415,
+              y: height / 2 - 129,
+              ...baseOptions
+            });
+
+            // #27
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field8.value), {
+              x: 415,
+              y: height / 2 - 153,
+              ...baseOptions
+            });
+
+            // #28
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.totalQualifiedResearchExpense), {
+              x: 415,
+              y: height / 2 - 165,
+              ...baseOptions
+            });
+
+            // #29
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.averageLineTwentyNine), {
+              x: 415,
+              y: height / 2 - 189,
+              ...baseOptions
+            });
+
+            // #30
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirtyCalculation), {
+              x: 415,
+              y: height / 2 - 201,
+              ...baseOptions
+            });
+
+            // #31
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirtyOneCalculation), {
+              x: 415,
+              y: height / 2 - 213,
+              ...baseOptions
+            });
+
+            // #32
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirtyTwoCalculation), {
+              x: 515,
+              y: height / 2 - 225,
+              ...baseOptions
+            });
+
+            // #33
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirtyTwoCalculation), {
+              x: 515,
+              y: height / 2 - 237,
+              ...baseOptions
+            });
+
+            // #34 Checkbox
+              if (this.sectionA.field34Checkbox) {
+                // #34 YES Checkmark
+                firstPage.drawText('x', {
+                  x: 337,
+                  y: height / 2 - 249,
+                  ...baseOptions
+                });
+              } else {
+                // #34 NO Checkmark
+                firstPage.drawText('x', {
+                  x: 377,
+                  y: height / 2 - 249,
+                  ...baseOptions
+                });
+              }
+
+              // #34
+              firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirtyFourCalculation), {
+                x: 515,
+                y: height / 2 - 285,
+                ...baseOptions
+              });
+
+
+            }
+
+            // SECTION C & D
+            // #36
+            secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirtySixCalculation), {
+              x: 515,
+              y: height / 2 + 290,
+              ...baseOptions
+            });
+
+            // #38
+            secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirtySixCalculation), {
+              x: 515,
+              y: height / 2 + 267,
+              ...baseOptions
+            });
+
+            if (this.sectionA.field41Checkbox) {
+              // #41
+              secondPage.drawText('x', {
+                x: 469,
+                y: height / 2 + 63,
+                ...baseOptions
+              });
+            }
+
+          // #42
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field42.value), {
+            x: 515,
+            y: height / 2 + 50,
+            ...baseOptions
+          });
+
+          // #43
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field43.value), {
+            x: 515,
+            y: height / 2 + 20,
+            ...baseOptions
+          });
+
+          // #44
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.sectionA.field44.value), {
+            x: 515,
+            y: height / 2 - 30,
+            ...baseOptions
+          });
+
+
+
+            /* Save report and Download*/
+            const pdfBytes = await pdfDoc.save();
+            // Trigger the browser to download the PDF document
+            download(pdfBytes, `IRS-6765-${Date.now()}.pdf`, "application/pdf");
           }
-
-          const validatedCandD = this.validationSectionCandD();
-
 
         },
         validationSectionA(){
@@ -838,6 +1170,16 @@
           return true;
         },
         validationSectionCandD(){
+
+          if (this.name.value.length === 0) {
+            this.name.error = true;
+            return false;
+          } else this.name.error = false;
+
+          if (this.identifyingNumber.value.length === 0) {
+            this.identifyingNumber.error = true;
+            return false;
+          } else this.identifyingNumber.error = false;
 
           if (this.sectionA.field41Checkbox) {
             /* #42 */
