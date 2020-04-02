@@ -115,13 +115,13 @@
         <form_941  v-show="activeForm_941 && !isFillingOut" :formUrl="type_941_url"/>
         <form_941-s v-show="activeForm_941_Schedule_B && !isFillingOut" :formUrl="type_941s_url"/>
         <form_941-x v-show="activeForm_941X && !isFillingOut" :formUrl="type_941x_url" />
-        <form_6765 v-show="activeForm_6765 && !isFillingOut" :formUrl="type_6765"/>
+        <form_6765 v-show="activeForm_6765 && !isFillingOut" :formUrl="type_6765_url"/>
 
     </div>
 </template>
 
 <script>
-  import { mapGetters } from "vuex"
+  import {mapGetters} from "vuex"
 
   import Form_8974 from "./IRS Forms/Form_8974";
   import Form_941 from "./IRS Forms/Form_941";

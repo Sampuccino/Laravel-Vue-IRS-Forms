@@ -19,7 +19,7 @@ class NumberFormatter {
   }
 
   static parseNumberFromStringWithTwoDecimalPrecision (n) {
-    Number((n).toFixed(2))
+    return Number((n).toFixed(2))
   }
 
   static convertToStringAndAddDecimal(_number) {
