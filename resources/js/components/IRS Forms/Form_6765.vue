@@ -1,5 +1,11 @@
 <template>
   <div class="container">
+
+    <div class="d-none">
+      {{ this.returnName() }}
+      {{ this.returnEmployerIdentificationNumber() }}
+    </div>
+
     <div class="row">
 
       <div class="position-fixed text-center" style="right: 1rem; bottom:1rem;">
@@ -479,6 +485,7 @@
 <script>
   import {PDFDocument, rgb, StandardFonts} from 'pdf-lib';
   import download from 'downloadjs';
+  import {mapGetters} from "vuex";
 
   import NumberFormatter from "../../utilities/NumberFormatter";
 
@@ -486,7 +493,7 @@
         props: {
           formUrl: String,
           disableDownload: String
-        },
+    },
       data() {
           return {
            toggleSectionA: true,
@@ -623,6 +630,13 @@
             },
           }
       },
+      beforeUpdate() {
+        if (this.disableDownload === 'Y') {
+          console.warn('Form 6765 Download Disabled');
+          this.name.value = this.returnName();
+          this.identifyingNumber.value = this.returnEmployerIdentificationNumber();
+        }
+      },
       computed: {
         totalQualifiedResearchExpense: function () {
           let values = [
@@ -713,6 +727,10 @@
         }
       },
       methods: {
+        ...mapGetters([
+          'returnName',
+          'returnEmployerIdentificationNumber'
+        ]),
         async exportToPDF() {
           const that = this;
 

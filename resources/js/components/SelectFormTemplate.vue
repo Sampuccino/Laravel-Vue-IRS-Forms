@@ -84,6 +84,12 @@
                             v-on:click="setActiveForm('t941SB')">Form Schedule B
                           <span v-show="errors.form941SB" class="ml-2 alert-danger p-2">Has Error(s)</span>
                         </li>
+                      <li class="list-group-item"
+                            :class="{'active': setActive.t6765}"
+                            v-show="checkedForms.includes('6765')"
+                            v-on:click="setActiveForm('t6765')">Form 6765
+                          <span v-show="errors.form6765" class="ml-2 alert-danger p-2">Has Error(s)</span>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-9">
@@ -107,6 +113,9 @@
                 <div class="col-12">
                     <form_941-s ref="form941SB" v-show="setActive.t941SB" disableDownload="Y" :formUrl="type_941s_url"/>
                 </div>
+              <div class="col-12">
+                  <form_6765 ref="form6765" v-show="setActive.t6765" disableDownload="Y" :formUrl="type_6765_url"/>
+                </div>
             </div>
 
         </div>
@@ -116,6 +125,7 @@
         <form_941-s v-show="activeForm_941_Schedule_B && !isFillingOut" :formUrl="type_941s_url"/>
         <form_941-x v-show="activeForm_941X && !isFillingOut" :formUrl="type_941x_url" />
         <form_6765 v-show="activeForm_6765 && !isFillingOut" :formUrl="type_6765_url"/>
+        <form_3523 v-show="activeForm_3523 && !isFillingOut" :formUrl="type_3523_url"/>
 
     </div>
 </template>
@@ -129,9 +139,10 @@
   import Form_941X from "./IRS Forms/Form_941X";
   import PersonalDetails from "./IRS Forms/common/PersonalDetails";
   import Form_6765 from "./IRS Forms/Form_6765";
+  import Form_3523 from "./IRS Forms/Form_3523";
 
   export default {
-    components: {Form_6765, Form_941X, PersonalDetails, Form_941, Form_8974, Form_941S},
+    components: {Form_3523, Form_6765, Form_941X, PersonalDetails, Form_941, Form_8974, Form_941S},
     props: {
       type_8974: String,
       type_941: String,
@@ -141,7 +152,9 @@
       type_941x_url: String,
       type_941x: String,
       type_6765: String,
-      type_6765_url: String
+      type_6765_url: String,
+      type_3523: String,
+      type_3523_url: String
     },
     data: function() {
       return {
@@ -170,18 +183,25 @@
           name: "Report of Tax Liability for Semiweekly Schedule Depositors",
           code: '941SB'
          },
-          {
-            title: 'Form 6765',
-            imageSource: this.type_6765,
-            name: "Credit for Increasing Research Activities",
-            code: '6765'
-          }
+        {
+          title: 'Form 6765',
+          imageSource: this.type_6765,
+          name: "Credit for Increasing Research Activities",
+          code: '6765'
+        },
+        {
+          title: 'Form 3523',
+          imageSource: this.type_3523,
+          name: "Research Credit",
+          code: '3523'
+        }
         ],
         activeForm_8974: false,
         activeForm_941: false,
         activeForm_941X: false,
         activeForm_941_Schedule_B: false,
-        activeForm_6765: true,
+        activeForm_6765: false,
+        activeForm_3523: true,
         checkedForms: [],
         isFillingOut: false,
         showPersonal: true,
@@ -191,6 +211,7 @@
             t941X: false,
             t941SB: false,
             t6765: false,
+            t3523: false,
         },
         errors: {
           form8974: false,
@@ -198,6 +219,7 @@
           form941X: false,
           form941SB: false,
           form6765: false,
+          form3523: false,
         }
       }
     },
@@ -245,9 +267,13 @@
               this.setActive.t941SB = !this.setActive.t941SB;
               this.setActive.t8974 = this.setActive.t941 = this.setActive.t941X = this.showPersonal = false;
             break;
-            case '6765': // code key from forms array object
+          case '6765': // code key from forms array object
+              this.activeForm_6765 = !this.activeForm_6765;
+              this.activeForm_941 = this.activeForm_8974 = this.activeForm_941X = this.activeForm_941_Schedule_B = this.showPersonal = false;
               break;
-            case 't6765': // active state
+          case 't6765': // active state
+            this.setActive.t6765 = !this.setActive.t6765;
+            this.setActive.t8974 = this.setActive.t941 = this.setActive.t941X = this.showPersonal = false;
             break;
           case 'Personal':
             console.log('Personal');
@@ -304,13 +330,25 @@
         }
 
         if (this.checkedForms.includes('941SB')) {
-          const _validated = this.$refs.form941SB.validateFormFields();
+          const _validated = this.$refs.form941SB.validation();
           if (_validated) {
             this.$refs.form941SB.exportToPDF();
             this.errors.form94SB1 = false;
           } else {
             /* Toggle Error on Tab*/
             this.errors.form941SB = true;
+          }
+        }
+
+        if (this.checkedForms.includes('6765')) {
+          /* This form has 3 validations due to individual pieces */
+          const _validated = (this.$refs.form6765.validationSectionA() && this.$refs.form6765.validationSectionCandD() || this.$refs.form6765.validationSectionB() && this.$refs.form6765.validationSectionCandD());
+          if (_validated) {
+            this.$refs.form6765.exportToPDF();
+            this.errors.form6765 = false;
+          } else {
+            /* Toggle Error on Tab*/
+            this.errors.form6765 = true;
           }
         }
 
