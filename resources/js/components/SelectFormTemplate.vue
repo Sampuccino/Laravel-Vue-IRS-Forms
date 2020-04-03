@@ -115,7 +115,10 @@
                 </div>
               <div class="col-12">
                   <form_6765 ref="form6765" v-show="setActive.t6765" disableDownload="Y" :formUrl="type_6765_url"/>
-                </div>
+              </div>
+              <div class="col-12">
+                  <form_3523 ref="form3523" v-show="setActive.t3523" disableDownload="Y" :formUrl="type_3523_url"/>
+              </div>
             </div>
 
         </div>
@@ -201,7 +204,7 @@
         activeForm_941X: false,
         activeForm_941_Schedule_B: false,
         activeForm_6765: false,
-        activeForm_3523: true,
+        activeForm_3523: false,
         checkedForms: [],
         isFillingOut: false,
         showPersonal: true,
@@ -274,6 +277,14 @@
           case 't6765': // active state
             this.setActive.t6765 = !this.setActive.t6765;
             this.setActive.t8974 = this.setActive.t941 = this.setActive.t941X = this.showPersonal = false;
+            break;
+          case '3523': // code key from forms array object
+              this.activeForm_3523 = !this.activeForm_3523;
+              this.activeForm_6765 = this.activeForm_941 = this.activeForm_8974 = this.activeForm_941X = this.activeForm_941_Schedule_B = this.showPersonal = false;
+              break;
+          case 't3523': // active state
+            this.setActive.t3523 = !this.setActive.t3523;
+            this.setActive.t6765 = this.setActive.t8974 = this.setActive.t941 = this.setActive.t941X = this.showPersonal = false;
             break;
           case 'Personal':
             console.log('Personal');

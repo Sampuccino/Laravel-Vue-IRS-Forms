@@ -414,8 +414,6 @@
       },
       async exportToPDF() {
         if (this.validation()) {
-          alert('Passed');
-
           // Output to PDF and fire download event
           /* Write all contents to Final PDF */
           const existingPdfBytes = await fetch(this.formUrl).then(res => res.arrayBuffer());
