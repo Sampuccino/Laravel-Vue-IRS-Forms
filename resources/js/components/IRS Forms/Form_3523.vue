@@ -2,6 +2,10 @@
   <div class="container">
     <div class="row">
 
+      <div class="position-fixed text-center" style="right: 1rem; bottom:1rem;">
+        <el-button type="primary" @click="exportToPDF">Export</el-button>
+      </div>
+
       <div class="col-12 text-center mb-3">
         <el-tag type="primary" class="d-block">
           <h4>Form 3523</h4>
@@ -70,7 +74,7 @@
             <b>9</b> Total qualified research expenses. Add line 5 through line 8
           </td>
           <td>
-            CALC
+            {{ lineNineCalculation }}
           </td>
         </tr>
         <tr>
@@ -80,7 +84,7 @@
           </td>
           <td>
             <div class="form-group">
-              <el-tag v-show="field10.error" type="danger" class="mb-1">Error!</el-tag>
+              <el-tag v-show="field10.error" type="danger" class="mb-1">Error! Must not exceed 16%</el-tag>
               <el-input type="text" v-model="field10.value" placeholder="0"></el-input>
             </div>
           </td>
@@ -103,7 +107,7 @@
             <b>12</b> Base amount. Multiply line 11 by the percentage on line 10
           </td>
           <td>
-            CALC
+            {{ lineTwelveBaseAmountCalculation }}
           </td>
         </tr>
         <tr>
@@ -112,7 +116,7 @@
             <b>13</b> Subtract line 12 from line 9. If zero or less, enter -0-
           </td>
           <td>
-            CALC
+            {{ lineThirteenCalculation }}
           </td>
         </tr>
         <tr>
@@ -121,7 +125,7 @@
             <b>14</b> Multiply line 9 by 50% (.50)
           </td>
           <td>
-            CALC
+            {{ lineFourteenCalculation }}
           </td>
         </tr>
         <tr>
@@ -130,7 +134,7 @@
             <b>15</b> Enter the smaller of line 13 or line 14
           </td>
           <td>
-            CALC
+            {{ lineFifteenCalculation }}
           </td>
         </tr>
         <tr>
@@ -139,7 +143,7 @@
             <b>16</b> Multiply line 15 by 15% (.15)
           </td>
           <td>
-            CALC
+            {{ lineSixteenCalculation }}
           </td>
         </tr>
         <tr>
@@ -149,7 +153,7 @@
             Regular credit. Add line 4 and line 16. If you do not elect the reduced credit under IRC Section 280C(c), enter the result here, and see instructions for the schedule to attach
           </td>
           <td>
-            CALC
+            {{ lineSeventeenACalculation }}
           </td>
         </tr>
         <tr>
@@ -158,16 +162,16 @@
             <b>17b</b> Reduced regular credit under IRC Section 280C(c). Multiply line 17a by the applicable
             percentage below:
             <br>
-            • 87.7% (.877) for individuals, estates, and trusts
+            <el-radio v-model="field17RadioBtn" label="a">87.7% (.877) for individuals, estates, and trusts</el-radio>
             <br>
-            • 91.16% (.9116) for corporations
+            <el-radio v-model="field17RadioBtn" label="b">91.16% (.9116) for corporations</el-radio>
             <br>
-            • 98.5% (.985) for S corporations
+            <el-radio v-model="field17RadioBtn" label="c">98.5% (.985) for S corporations</el-radio>
             <br>
             Enter the reduced credit amount. See instructions
           </td>
           <td>
-            CALC
+            {{ lineSeventeenBCalculation }}
           </td>
         </tr>
         <tr>
@@ -177,7 +181,7 @@
             add line 17b or line 39b to line 40 and enter the result here
           </td>
           <td>
-            CALC
+            {{ lineSeventeenBCalculation }}
           </td>
         </tr>
         <tr>
@@ -186,7 +190,7 @@
             <b>43</b> Subtract line 42 from line 41
           </td>
           <td>
-            CALC
+            {{ lineSeventeenBCalculation }}
           </td>
         </tr>
         <tr>
@@ -208,7 +212,7 @@
             <b>46</b> Total. Add line 43 through line 45
           </td>
           <td>
-            CALC
+            {{ lineFortySixTotalCalculation }}
           </td>
         </tr>
         <tr>
@@ -230,7 +234,7 @@
             <b>49</b> Credit carryover available for use or assignment for future years. Subtract lines 47 and 48 from line 46
           </td>
           <td>
-            CALC
+            {{ line49Calculation }}
           </td>
         </tr>
         </tbody>
@@ -241,11 +245,16 @@
 </template>
 
 <script>
+  import {PDFDocument, rgb, StandardFonts} from 'pdf-lib';
+  import download from 'downloadjs';
+
+  import NumberFormatter from "../../utilities/NumberFormatter";
+
   export default {
     name: "Form_3523",
     props: {
-      type_3523: String,
-      type_3523_url: String
+      formUrl: String,
+      disableDownload: String
     },
     data(){
       return {
@@ -273,6 +282,7 @@
           value: 0,
           error: false
         },
+        field17RadioBtn: 'a',
         field45: {
           value: 0,
           error: false
@@ -283,22 +293,300 @@
         },
       }
     },
+    computed: {
+      lineNineCalculation() {
+        const a = [NumberFormatter.parseNumber(this.field5.value),
+          NumberFormatter.parseNumber(this.field6.value),
+          NumberFormatter.parseNumber(this.field7.value),
+          NumberFormatter.parseNumber(this.field8.value)];
+        return (a.reduce((a,b) => a+b,0)).toFixed(2);
+      },
+      lineTwelveBaseAmountCalculation(){
+        return (this.field11.value * (this.field10.value / 100)).toFixed(2);
+      },
+      lineThirteenCalculation(){
+         // Subtract line 12 from line 9. If zero or less, enter -0-
+        const t = (this.lineNineCalculation - this.lineTwelveBaseAmountCalculation).toFixed(2);
+        return (t <= 0) ? '-0-' : t;
+      },
+      lineFourteenCalculation(){
+        // Multiply line 9 by 50% (.50)
+        return (this.lineNineCalculation * .50).toFixed(2);
+      },
+      lineFifteenCalculation(){
+        // Enter the smaller of line 13 or line 14
+        return (this.lineThirteenCalculation < this.lineFourteenCalculation) ? this.lineFourteenCalculation : this.lineThirteenCalculation;
+      },
+      lineSixteenCalculation(){
+        return (NumberFormatter.parseNumber(this.lineFifteenCalculation * .15)).toFixed(2);
+      },
+      lineSeventeenACalculation(){
+        return this.lineSixteenCalculation;
+      },
+      lineSeventeenBCalculation(){
+        switch (this.field17RadioBtn) {
+          case "a":
+            return (this.lineSeventeenACalculation * .877).toFixed(2);
+          case "b":
+            return (this.lineSeventeenACalculation * .9116).toFixed(2);
+          case "c":
+            return (this.lineSeventeenACalculation * .985).toFixed(2);
+        }
+      },
+      lineFortySixTotalCalculation(){
+        // Total. Add line 43 through line 45
+        return (NumberFormatter.parseNumber(this.field45.value) + NumberFormatter.parseNumber(this.lineSeventeenBCalculation)).toFixed(2);
+      },
+      line49Calculation(){
+        // Subtract lines 47 and 48 from line 46
+        return (this.lineFortySixTotalCalculation - NumberFormatter.parseNumber(this.field47.value).toFixed(2));
+      }
+    },
     methods: {
       validation(){
-        /*
-        * 5
-        * 6
-        * 7
-        * 8
-        * 10
-        * 11
-        * 45
-        * 47*/
+        /* #5 */
+        if (!NumberFormatter.isANumber(this.field5.value) && !NumberFormatter.isEmpty(this.field5.value)) {
+          this.field5.error = false;
+        } else {
+          this.field5.error = true;
+          return false
+        }
+
+        /* #6 */
+        if (!NumberFormatter.isANumber(this.field6.value) && !NumberFormatter.isEmpty(this.field6.value)) {
+          this.field6.error = false;
+        } else {
+          this.field6.error = true;
+          return false
+        }
+
+        /* #7 */
+        if (!NumberFormatter.isANumber(this.field7.value) && !NumberFormatter.isEmpty(this.field7.value)) {
+          this.field7.error = false;
+        } else {
+          this.field7.error = true;
+          return false
+        }
+
+        /* #8 */
+        if (!NumberFormatter.isANumber(this.field8.value) && !NumberFormatter.isEmpty(this.field8.value)) {
+          this.field8.error = false;
+        } else {
+          this.field8.error = true;
+          return false
+        }
+
+        /* #10 */
+        if (!NumberFormatter.isANumber(this.field10.value) && !NumberFormatter.isEmpty(this.field10.value) && NumberFormatter.noGreaterThan16Percent(this.field10.value)) {
+          this.field10.error = false;
+        } else {
+          this.field10.error = true;
+          return false
+        }
+
+        /* #11 */
+        if (!NumberFormatter.isANumber(this.field11.value) && !NumberFormatter.isEmpty(this.field11.value)) {
+          this.field11.error = false;
+        } else {
+          this.field11.error = true;
+          return false
+        }
+
+        /* #45 */
+        if (!NumberFormatter.isANumber(this.field45.value) && !NumberFormatter.isEmpty(this.field45.value)) {
+          this.field45.error = false;
+        } else {
+          this.field45.error = true;
+          return false
+        }
+
+        /* #47 */
+        if (!NumberFormatter.isANumber(this.field47.value) && !NumberFormatter.isEmpty(this.field47.value)) {
+          this.field47.error = false;
+        } else {
+          this.field47.error = true;
+          return false
+        }
 
 
 
+        return true;
+      },
+      async exportToPDF() {
+        if (this.validation()) {
+          alert('Passed');
 
+          // Output to PDF and fire download event
+          /* Write all contents to Final PDF */
+          const existingPdfBytes = await fetch(this.formUrl).then(res => res.arrayBuffer());
 
+          const pdfDoc = await PDFDocument.load(existingPdfBytes);
+          const helveticaFont = await pdfDoc.embedFont(StandardFonts.Helvetica);
+
+          const pages = pdfDoc.getPages();
+          const firstPage = pages[0];
+          const secondPage = pages[1];
+          const {width, height} = firstPage.getSize();
+          const COLOR = rgb(0, 0, 0);
+          const baseOptions = {
+            size: 10,
+            font: helveticaFont,
+            color: COLOR,
+          };
+
+          // #5
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field5.value), {
+            x: 500,
+            y: height / 2 + 80,
+            ...baseOptions
+          });
+
+          // #6
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field6.value), {
+            x: 500,
+            y: height / 2 + 55,
+            ...baseOptions
+          });
+
+          // #7
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field7.value), {
+            x: 500,
+            y: height / 2 + 30,
+            ...baseOptions
+          });
+
+          // #8
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field8.value), {
+            x: 500,
+            y: height / 2 + 5,
+            ...baseOptions
+          });
+
+          // #9
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineNineCalculation), {
+            x: 500,
+            y: height / 2 -20,
+            ...baseOptions
+          });
+
+          // #10
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field10.value), {
+            x: 500,
+            y: height / 2 - 43,
+            ...baseOptions
+          });
+
+          // #11
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field11.value), {
+            x: 500,
+            y: height / 2 - 67,
+            ...baseOptions
+          });
+
+          // #12
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineTwelveBaseAmountCalculation), {
+            x: 500,
+            y: height / 2 - 92,
+            ...baseOptions
+          });
+
+          // #13
+          if (this.lineThirteenCalculation === '-0-') {
+            firstPage.drawText('-0-', {
+              x: 500,
+              y: height / 2 - 115,
+              ...baseOptions
+            });
+          } else {
+            firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineThirteenCalculation), {
+              x: 500,
+              y: height / 2 - 115,
+              ...baseOptions
+            });
+          }
+
+          // #14
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineFourteenCalculation), {
+            x: 500,
+            y: height / 2 - 140,
+            ...baseOptions
+          });
+
+          // #15
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineFifteenCalculation), {
+            x: 500,
+            y: height / 2 - 165,
+            ...baseOptions
+          });
+
+          // #16
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineSixteenCalculation), {
+            x: 500,
+            y: height / 2 - 188,
+            ...baseOptions
+          });
+
+          // #17A
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineSeventeenACalculation), {
+            x: 500,
+            y: height / 2 - 220,
+            ...baseOptions
+          });
+
+          // #17B
+          firstPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineSeventeenBCalculation), {
+            x: 500,
+            y: height / 2 - 285,
+            ...baseOptions
+          });
+
+          // #41
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineSeventeenBCalculation), {
+            x: 500,
+            y: height / 2 - 115,
+            ...baseOptions
+          });
+
+          // #43
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineSeventeenBCalculation), {
+            x: 500,
+            y: height / 2 - 155,
+            ...baseOptions
+          });
+
+          // #45
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field45.value), {
+            x: 500,
+            y: height / 2 - 178,
+            ...baseOptions
+          });
+
+          // #46
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.lineFortySixTotalCalculation), {
+            x: 500,
+            y: height / 2 - 190,
+            ...baseOptions
+          });
+
+          // #47
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.field47.value), {
+            x: 500,
+            y: height / 2 - 235,
+            ...baseOptions
+          });
+
+          // #49
+          secondPage.drawText(NumberFormatter.convertToStringAndAddDecimal(this.line49Calculation), {
+            x: 500,
+            y: height / 2 - 285,
+            ...baseOptions
+          });
+
+          /* Save report and Download*/
+          const pdfBytes = await pdfDoc.save();
+          // Trigger the browser to download the PDF document
+          download(pdfBytes, `IRS-3523-${Date.now()}.pdf`, "application/pdf");
+        }
       }
     }
   }
