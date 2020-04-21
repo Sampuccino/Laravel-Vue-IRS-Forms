@@ -37,6 +37,22 @@
 
             <!--TOP OF FORM-->
             <div class="col-lg-10 col-12 bg-white mt-4 p-3 text-left">
+
+              <div class="row">
+                <div class="col-12">
+                  <div class="mb-3">
+                    <span class="mr-2">Use the 2020 form heading?</span>
+
+                    <el-switch
+                      v-model="use2020Title"
+                      active-text="Yes, use 2020"
+                      inactive-text="No, use 2019">
+                    </el-switch>
+
+                  </div>
+                </div>
+              </div>
+
                 <div class="row">
                     <div class="col-8">
                         <div class="row">
@@ -215,8 +231,8 @@
                     <div class="col-4 my-auto">
                         <div class="form-check">
                             <label class="form-check-label">
-                                <input type="radio" class="form-check-input" name="" id="" value="1" v-model="noWages">
-                                Check and go to line 6
+                                <el-checkbox v-model="noWages">Check and go to line 6</el-checkbox>
+
                             </label>
                         </div>
                     </div>
@@ -573,6 +589,7 @@
     data(){
       return {
         url: null,
+        use2020Title: false,
         partTwoFieldInfo: [
           { id: '1', model: 'f5f', description: 'Number of employees who received wages, tips, or other compensation for the pay period including: Mar. 12 (Quarter 1), June 12 (Quarter 2), Sept. 12 (Quarter 3), or Dec. 12 (Quarter 4)' },
           { id: '2', model: 'f5f', description: 'Wages, tips, and other compensation' },
@@ -611,7 +628,7 @@
         numberOfEmployees: null,
         totalWages: null,
         withheldTax: 0,
-        noWages: null,
+        noWages: false,
         taxableSSWages: null,
         taxableSSTips: null,
         taxableMedicalWages: null,
@@ -766,10 +783,12 @@
           return false
         } else this.errors.withheldTax = false;
 
-        /*5E*/
-        if (parseFloat(this.line5E) <= 0) {
-          this.errors.line5E = true;
-          return false
+        /*5E, Only check if no wages #4 is false */
+        if (!this.noWages) {
+          if (parseFloat(this.line5E) <= 0) {
+            this.errors.line5E = true;
+            return false
+          } else this.errors.line5E = false;
         } else this.errors.line5E = false;
 
         /*6*/
@@ -840,6 +859,10 @@
           console.error('Form errors!');
         } else {
           /* Write all contents to Final PDF */
+          //  If selected for 2020
+          if (this.use2020Title){
+            this.url = this.url.replace('FORM_941.pdf','FORM_941_2020.pdf');
+          }
           const existingPdfBytes = await fetch(this.url).then(res => res.arrayBuffer());
 
           const pdfDoc = await PDFDocument.load(existingPdfBytes);
@@ -998,91 +1021,93 @@
           });
 
           /* 4: If no wages... */
-          if(parseInt(this.noWages) === 1) {
+          if(this.noWages) {
               firstPage.drawText('x', {
                 x: 449,
                 y: height / 2 + 43,
                 ...baseOptions
               });
+          } else {
+            /* 5A */
+            if (parseFloat(this.taxableSSWages)) {
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
+                x: 225,
+                y: height / 2 + 13,
+                ...baseOptions
+              });
+
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), {
+                x: 360,
+                y: height / 2 + 13,
+                ...baseOptions
+              });
+            }
+
+            /* 5B */
+            if (parseFloat(this.taxableSSTips)) {
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
+                x: 225,
+                y: height / 2 - 5,
+                ...baseOptions
+              });
+
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), {
+                x: 360,
+                y: height / 2 - 5,
+                ...baseOptions
+              });
+            }
+
+            /* 5C */
+            if (parseFloat(this.taxableMedicalWages)) {
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
+                x: 225,
+                y: height / 2 - 23,
+                ...baseOptions
+              });
+
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), {
+                x: 360,
+                y: height / 2 - 23,
+                ...baseOptions
+              });
+            }
+
+            /* 5D */
+            if (parseFloat(this.taxableAMTWithholding)) {
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
+                x: 225,
+                y: height / 2 - 47,
+                ...baseOptions
+              });
+
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), {
+                x: 360,
+                y: height / 2 - 47,
+                ...baseOptions
+              });
+            }
+
+            /* 5E */
+            if (parseFloat(this.line5E)) {
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
+                x: 455,
+                y: height / 2 - 70,
+                ...baseOptions
+              });
+            }
+
+            /* 5F */
+            if (parseFloat(this.section3121)) {
+              firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), {
+                x: 455,
+                y: height / 2 - 94,
+                ...baseOptions
+              });
+            }
           }
 
-          /* 5A */
-          if (parseFloat(this.taxableSSWages)) {
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSWages), {
-              x: 225,
-              y: height / 2 + 13,
-              ...baseOptions
-            });
 
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5A), {
-              x: 360,
-              y: height / 2 + 13,
-              ...baseOptions
-            });
-          }
-
-          /* 5B */
-          if (parseFloat(this.taxableSSTips)) {
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableSSTips), {
-              x: 225,
-              y: height / 2 - 5,
-              ...baseOptions
-            });
-
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5B), {
-              x: 360,
-              y: height / 2 - 5,
-              ...baseOptions
-            });
-          }
-
-          /* 5C */
-          if (parseFloat(this.taxableMedicalWages)) {
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableMedicalWages), {
-              x: 225,
-              y: height / 2 - 23,
-              ...baseOptions
-            });
-
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5C), {
-              x: 360,
-              y: height / 2 - 23,
-              ...baseOptions
-            });
-          }
-
-          /* 5D */
-          if (parseFloat(this.taxableAMTWithholding)) {
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxableAMTWithholding), {
-              x: 225,
-              y: height / 2 - 47,
-              ...baseOptions
-            });
-
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.taxable5D), {
-              x: 360,
-              y: height / 2 - 47,
-              ...baseOptions
-            });
-          }
-
-          /* 5E */
-          if (parseFloat(this.line5E)) {
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.line5E), {
-              x: 455,
-              y: height / 2 - 70,
-              ...baseOptions
-            });
-          }
-
-          /* 5F */
-          if (parseFloat(this.section3121)) {
-            firstPage.drawText(this.convertToStringAndAddDecimal(this.section3121), {
-              x: 455,
-              y: height / 2 - 94,
-              ...baseOptions
-            });
-          }
 
           /* 6 */
           if (this.totalTaxesBeforeAdjustments) {
