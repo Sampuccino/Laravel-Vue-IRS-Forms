@@ -60,7 +60,7 @@
         <thead>
         <tr>
           <th>Description</th>
-          <th>Input</th>
+          <th >Input</th>
         </tr>
         </thead>
         <tbody>
@@ -320,7 +320,7 @@
             <el-input v-model="sectionA.field29.priorYr3.value" placeholder="0"></el-input>
 
 
-            <b>Average </b> {{ averageLineTwentyNine }}
+            <b>Total </b> {{ averageLineTwentyNine }}
 
           </td>
         </tr>
@@ -388,7 +388,7 @@
         <thead>
         <tr>
           <th>Description</th>
-          <th class="col-2">Input</th>
+          <th>Input</th>
         </tr>
         </thead>
         <tbody>
@@ -510,8 +510,8 @@
             sectionA: {
               field5: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field6: {
                 error: false,
@@ -525,107 +525,107 @@
               },
               field8: {
                 error: false,
-                value: '',
-                // value: 1000,
+                // value: '',
+                value: 0,
               },
               field10: {
                 error: false,
-                value: '',
-                // value: 6.25,
+                // value: '',
+                value: 0,
               },
               field11: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
                 priorYr1: {
                   error: false,
-                  value: '',
-                  // value: 0,
+                  // value: '',
+                  value: 0,
                 },
                 priorYr2: {
                   error: false,
-                  value: '',
-                  // value: 0,
+                  // value: '',
+                  value: 0,
                 },
                 priorYr3: {
                   error: false,
-                  value: '',
-                  // value: 0,
+                  // value: '',
+                  value: 0,
                 },
                 priorYr4: {
                   error: false,
-                  value: '',
-                  // value: 0,
+                  // value: '',
+                  value: 0,
                 },
               },
               field12: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field13: {
                 error: false,
-                value: '',
-                // value: 250,
+                // value: '',
+                value: 0,
               },
               field14: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field15: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field16: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field17Checkbox: true,
               field17: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field29Checkbox: true,
               field29: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
                 priorYr1: {
                   error: false,
-                  value: '',
-                  // value: 0,
+                  // value: '',
+                  value: 0,
                 },
                 priorYr2: {
                   error: false,
-                  value: '',
-                  // value: 0,
+                  // value: '',
+                  value: 0,
                 },
                 priorYr3: {
                   error: false,
-                  value: '',
-                  // value: 0,
+                  // value: '',
+                  value: 0,
                 },
               },
               field34Checkbox: true,
               field41Checkbox: true,
               field42: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field43: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
               field44: {
                 error: false,
-                value: '',
-                // value: 0,
+                // value: '',
+                value: 0,
               },
             },
           }
@@ -693,7 +693,7 @@
             NumberFormatter.parseNumber(this.sectionA.field29.priorYr2.value),
             NumberFormatter.parseNumber(this.sectionA.field29.priorYr3.value),
           ];
-          return (arr.reduce((a,b) => a+b,0) / arr.length ).toFixed(2);
+          return (arr.reduce((a,b) => a+b,0)).toFixed(2);
         },
         lineThirtyCalculation: function () {
           return (NumberFormatter.parseNumber(this.averageLineTwentyNine) / 6.0).toFixed(2);
@@ -706,6 +706,9 @@
         lineThirtyTwoCalculation: function () {
           console.log('lineThirtyTwoCalculation with a check value of ', this.sectionA.field29Checkbox);
           // Multiply line 31 by 14% (0.14). If you skipped lines 30 and 31, multiply line 28 by 6% (0.06)
+          if (NumberFormatter.parseNumber(this.sectionA.field29.priorYr1.value) === 0 || NumberFormatter.parseNumber(this.sectionA.field29.priorYr2.value) === 0 || NumberFormatter.parseNumber(this.sectionA.field29.priorYr3.value) === 0)
+            return (this.lineThirtyOneCalculation * .06).toFixed(2);
+
           if (!this.sectionA.field29Checkbox) {
             return (this.totalQualifiedResearchExpense * .06).toFixed(2);
           } else

@@ -123,6 +123,8 @@
 
         </div>
 
+        <div class="col-12" id="formScrollToPlaceholder"></div>
+
         <form_8974 v-show="activeForm_8974 && !isFillingOut"/>
         <form_941  v-show="activeForm_941 && !isFillingOut" :formUrl="type_941_url"/>
         <form_941-s v-show="activeForm_941_Schedule_B && !isFillingOut" :formUrl="type_941s_url"/>
@@ -292,6 +294,16 @@
             this.setActive.t8974 = this.setActive.t941 = this.setActive.t941SB = this.setActive.t941X = false;
             break;
         }
+
+        // Scroll to
+        $('html, body').animate({
+          scrollTop: $('#formScrollToPlaceholder').offset().top
+        }, 800, function(){
+
+          // Add hash (#) to URL when done scrolling (default click behavior)
+          window.location.hash = $('#formScrollToPlaceholder');
+        });
+
       },
         continueWithSelectedForms() {
           console.log(this.checkedForms);

@@ -17,9 +17,9 @@
         <div :class="(validation.partTwo) ? 'alert-success' : 'alert-danger'">Part 2</div>
       </div>
 
-      <div>
-        <button class="btn btn-danger d-inline clear" @click="clearFields()">Clear</button>
-      </div>
+<!--      <div>-->
+<!--        <button class="btn btn-danger d-inline clear" @click="clearFields()">Clear</button>-->
+<!--      </div>-->
 
       <div v-show="disableDownload !== 'Y'">
         <button class="btn btn-primary d-inline export" @click="exportToPDF">Export</button>
@@ -111,6 +111,12 @@
       <div class="col-lg-12 col-12 bg-white mt-4 p-3">
         <div class="bg-dark p-2 text-white">Part 1 <span class="bg-white text-dark p-1 ml-2">Tell us about your income tax return</span>
         </div>
+
+        <el-alert
+          title="When filling out rows, make sure to select an item in Column B"
+          type="info">
+        </el-alert>
+
         <!--PART 1 : Table-->
         <table class="table table-striped table-responsive text-center">
           <thead>
