@@ -315,7 +315,7 @@
       },
       lineFifteenCalculation(){
         // Enter the smaller of line 13 or line 14
-        return (this.lineThirteenCalculation < this.lineFourteenCalculation) ? this.lineFourteenCalculation : this.lineThirteenCalculation;
+        return (this.lineThirteenCalculation < this.lineFourteenCalculation) ? this.lineThirteenCalculation : this.lineFourteenCalculation;
       },
       lineSixteenCalculation(){
         return (NumberFormatter.parseNumber(this.lineFifteenCalculation * .15)).toFixed(2);
